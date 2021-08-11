@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { postVerificarToken } from '../../services/authService'
 import AuthContext from './authContext'
 
 
@@ -8,16 +9,40 @@ const AuthState = (props) => {
         autenticado: false,
         name: null,
         token: null,
+        cargando: true
     })
-    
-    const iniciarSesionContext = (token) =>{
+
+    const iniciarSesionLocalStorage = () => {
+        const toquen = localStorage.getItem('token')
+        if (toquen) {
+
+            postVerificarToken(toquen).then(rpta => {
+                if (rpta.statusText === 'OK') {
+                    iniciarSesionContext(localStorage.getItem('token'))
+                }else{
+                    console.log("dffaw")
+                }
+            })
+
+
+        }
+    }
+
+    useEffect(() => {
+        iniciarSesionLocalStorage()
+    }, [])
+
+
+    const iniciarSesionContext = (token) => {
+        localStorage.setItem('token', token);
         const payloadString = token.split('.')[1]
         const payloadDecrypt = atob(payloadString)
         const payloadJson = JSON.parse(payloadDecrypt)
         setState({
             autenticado: true,
             name: payloadJson.name,
-            token: token
+            token: token,
+            cargando: false
         })
 
     }

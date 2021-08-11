@@ -13,3 +13,14 @@ export const postLogin = async (objLogin) => {
    
     return rpta
 }
+
+export const postVerificarToken = async (token) => {
+    const rpta = await axios.post(
+        `${URL_BACKEND}/verificarToken`,null,{
+            headers:{ 
+                "Authorization" : `Bearer ${token}`
+            }
+        }
+    )
+    return rpta
+}
