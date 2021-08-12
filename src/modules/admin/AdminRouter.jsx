@@ -9,6 +9,11 @@ import UserCrearPage from '../general/users/UserCrearPage'
 import AreaOficinaSeccionCrearPage from '../general/areaOficinaSeccion/AreaOficinaSeccionCrearPage'
 import AreaOficinaSeccionEditarPage from '../general/areaOficinaSeccion/AreaOficinaSeccionEditarPage'
 import AreaOficinaSeccionListPage from '../general/areaOficinaSeccion/AreaOficinaSeccionListPage'
+
+import PersonalCrearPage from '../general/personal/PersonalCrearPage'
+import PersonalEditarPage from '../general/personal/PersonalEditarPage'
+import PersonalListPage from '../general/personal/PersonalListPage'
+
 const AdminRouter = () => {
     return (
         <>
@@ -32,6 +37,16 @@ const AdminRouter = () => {
                 </Route>
                 <Route path="/admin/area-oficina-seccion">
                     <AreaOficinaSeccionListPage />
+                </Route>
+
+                <Route path="/admin/personal/editar/:id">
+                    <PersonalEditarPage />
+                </Route>
+                <Route path="/admin/personal/crear">
+                    <PersonalCrearPage />
+                </Route>
+                <Route path="/admin/personal">
+                    <PersonalListPage />
                 </Route>
 
                 <Route path="/admin" exact>
