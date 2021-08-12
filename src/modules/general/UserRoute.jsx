@@ -8,8 +8,8 @@ const UserRoute = () => {
         <>
         
             <Switch>
-                <Route path="/user">
-                    <h1>sdsd</h1>
+                <Route path="/usuario/cressar">
+                    <h1>Crear</h1>
                 </Route>
             </Switch>
         </>

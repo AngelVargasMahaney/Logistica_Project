@@ -74,9 +74,9 @@ const UserEditarPage = () => {
                                 </div>
                                 <div className="card-body">
                                     {
-                                        error ? <div className="alert alert-danger">
-                                            Todos los campos deben ser llenados
-                                        </div> : null
+                                        // error ? <div className="alert alert-danger">
+                                        //     Todos los campos deben ser llenados
+                                        // </div> : null
                                     }
                                     <form onSubmit={handleSubmit}>
                                         <div>
