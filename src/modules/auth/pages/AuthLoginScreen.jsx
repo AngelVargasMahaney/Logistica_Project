@@ -3,6 +3,7 @@ import { useHistory } from 'react-router'
 import AuthContext from '../../../context/auth/authContext'
 import { postLogin } from '../../../services/authService'
 
+import swal from 'sweetalert2'
 const AuthLoginScreen = () => {
 
     const [formulario, setFormulario] = useState({
@@ -26,10 +27,30 @@ const AuthLoginScreen = () => {
         postLogin(formulario).then((rpta) => {
             console.log(rpta)
             if (rpta.statusText === 'OK') {
+
                 iniciarSesionContext(rpta.data.token)
+                swal.fire({
+                    icon: 'success',
+                    title: 'Login Exitoso',
+                    text: 'BIENVENIDO',
+                    footer: 'SISTEMA DE CONTROL DE BIENES'
+                })
                 history.push("/admin")
+            }else{
+                console.log("ERRRRRRRRRRRRRRRRRo")
             }
+        }).catch(err=>{
+            swal.fire({
+                icon: 'error',
+                title: 'Login Incorrecto',
+                text: 'Contáctese con el Administrador',
+                footer: 'SISTEMA DE CONTROL DE BIENES'
+            })
         })
+            
+        
+       
+
     }
 
     return (
@@ -52,7 +73,7 @@ const AuthLoginScreen = () => {
                                         <label for="inputUserame"><i className="fa fa-envelope" aria-hidden="true"></i> Username</label>
                                     </div>
                                     <div className="form-label-group">
-                                        <input type="password" id="inputPassword"  name="password" name="password"
+                                        <input type="password" id="inputPassword" name="password" name="password"
                                             value={formulario.password} onChange={handleChange} className="form-control" placeholder="Password" required autoFocus />
                                         <label for="inputPassword"><i className="fa fa-key" aria-hidden="true"></i> Password</label>
                                     </div>
@@ -69,44 +90,44 @@ const AuthLoginScreen = () => {
             </div>
         </>
 
-/* 
-        <main classNameName="container">
-            <div classNameName="row justify-content-center align-items-center vh-100">
-                <div classNameName="col-md-4">
-                    <div classNameName="card">
-                        <div className="card-body">
-                            <form onSubmit={handleSubmit}>
-                                <div>
-                                    <label htmlFor="" className="form-label">
-                                        Email
-                                    </label>
-                                    <input type="email" 
-                                    className="form-control" 
-                                    name = "email"
-                                    value={formulario.email}
-                                    onChange={handleChange}
-                                    placeholder="Email"/>
+        /* 
+                <main classNameName="container">
+                    <div classNameName="row justify-content-center align-items-center vh-100">
+                        <div classNameName="col-md-4">
+                            <div classNameName="card">
+                                <div className="card-body">
+                                    <form onSubmit={handleSubmit}>
+                                        <div>
+                                            <label htmlFor="" className="form-label">
+                                                Email
+                                            </label>
+                                            <input type="email" 
+                                            className="form-control" 
+                                            name = "email"
+                                            value={formulario.email}
+                                            onChange={handleChange}
+                                            placeholder="Email"/>
+                                        </div>
+                                        <div>
+                                            <label htmlFor="" className="form-label">
+                                                Password
+                                            </label>
+                                            <input type="password" 
+                                            className="form-control" 
+                                            name = "password"
+                                            value={formulario.password}
+                                            onChange={handleChange}
+                                            placeholder="Password"/>
+                                        </div>
+                                        <div>
+                                            <button type="submit" className="btn btn-primary">Iniciar Sesión </button>
+                                        </div>
+                                    </form>
                                 </div>
-                                <div>
-                                    <label htmlFor="" className="form-label">
-                                        Password
-                                    </label>
-                                    <input type="password" 
-                                    className="form-control" 
-                                    name = "password"
-                                    value={formulario.password}
-                                    onChange={handleChange}
-                                    placeholder="Password"/>
-                                </div>
-                                <div>
-                                    <button type="submit" className="btn btn-primary">Iniciar Sesión </button>
-                                </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </main> */
+                </main> */
     )
 }
 

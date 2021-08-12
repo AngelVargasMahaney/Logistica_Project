@@ -35,7 +35,14 @@ const AdminSidebar = () => {
                     <span className="tooltip">Personal</span>
                 </li>
                 <li>
-                    <Link to="/#" >
+                    <Link to="/admin/area-oficina-seccion" >
+                        <i className="bx bx-tag-alt"></i>
+                        <span className="links_name">area-oficina-seccion</span>
+                    </Link>
+                    <span className="tooltip">area-oficina-seccion</span>
+                </li>
+                <li>
+                    <Link to="/admin" >
                         <i className="bx bx-history"></i>
                         <span className="links_name">Historial</span>
                     </Link>
@@ -56,14 +63,14 @@ const AdminSidebar = () => {
                     <span className="tooltip">Bienes Internados y Destruidos</span>
                 </li>
                 <li>
-                    <Link to="/#" >
+                    <Link to="/admin" >
                         <i className="bx bx-briefcase-alt-2"></i>
                         <span className="links_name">Maquinarias</span>
                     </Link>
                     <span className="tooltip">Maquinarias, Equipos, Muebles y Enseres</span>
                 </li>
                 <li>
-                    <Link to="/#" >
+                    <Link to="/admin" >
                         <i className="bx bxs-car-mechanic"></i>
                         <span className="links_name">Unidades Transporte</span>
                     </Link>
