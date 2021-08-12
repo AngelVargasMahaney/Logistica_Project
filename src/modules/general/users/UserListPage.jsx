@@ -3,9 +3,13 @@ import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { deleteUsuarioById, getUsuarios } from '../../../services/usuarioService'
 
+
+import AdminSidebar from '../../admin/components/AdminSidebar';
+import GeneralNavBar from '../../layout/GeneralNavBar';
+
 const UserListPage = () => {
 
-
+    const urlUsuarioCrear = '/admin/usuario/crear'
     const [usuarios, setUsuarios] = useState([])
     const [cargando, setCargando] = useState(true)
 
@@ -42,91 +46,101 @@ const UserListPage = () => {
         })
     }
 
+
     return (
+        <>
+            <AdminSidebar />
+            <GeneralNavBar/>
+            <div className="home_content">
 
-        <div>
+
+                <div>
 
 
 
-            <main className="container">
+                    <main className="container-fluid mt-5">
 
-                <div className="card">
-                    <div className="card-body">
+                        <div className="card">
+                            <div className="card-body">
 
-                        <div className="d-flex justify-content-between mb-3">
-                            <h5>Usuarios</h5>
-                            <Link to={"/usuarios/crear"} className="btn btn-primary "> <i class="fa fa-plus"></i> Crear Usuario</Link>
+                                <div className="d-flex justify-content-between mb-3">
+                                    <h5>Usuarios</h5>
+                                    <Link to={urlUsuarioCrear} className="btn btn-primary "> <i class="fa fa-plus"></i> Crear Usuario</Link>
+                                </div>
+
+                                <div className="row mt-2">
+
+                                    <div className="col">
+
+                                        {
+                                            cargando ? <div className="alert alert-info text-center">
+                                                <h4>Cargando ...</h4>
+                                                <div className="spinner-border text-info" role="status">
+                                                    <span className="visually-hidden">Loading...</span>
+                                                </div>
+                                            </div> :
+                                                <div className="table-responsive miTabla ">
+                                                    <table className="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Id</th>
+                                                                <th>Nombre</th>
+                                                                <th>Apellido</th>
+                                                                <th>DNI</th>
+                                                                <th>Email</th>
+                                                                <th>Fecha de Creación</th>
+                                                                <th>Última Actualización</th>
+                                                                <th className="acciones"></th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                            {
+                                                                usuarios.map((objUsuario, i) => {
+                                                                    return (
+                                                                        <tr key={objUsuario.id}>
+                                                                            <td>{objUsuario.id}</td>
+                                                                            <td>{objUsuario.name}</td>
+                                                                            <td>{objUsuario.apellido}</td>
+                                                                            <td>{objUsuario.dni}</td>
+                                                                            <td>{objUsuario.email}</td>
+                                                                            <td>{objUsuario.created_at}</td>
+                                                                            <td>{objUsuario.updated_at}</td>
+                                                                            <td>
+
+
+                                                                                <button data-toggle="tooltip" data-placement="top" title="Eliminar"
+                                                                                    className="btn btn-danger mx-1"
+                                                                                    onClick={() => {
+                                                                                        eliminarUsuario(objUsuario.id);
+                                                                                    }}
+                                                                                >
+                                                                                    <i class="fa fa-trash"></i>
+
+                                                                                </button>
+                                                                                <Link to={`usuario/editar/${objUsuario.id}`}
+                                                                                    className="btn btn-warning"
+                                                                                > <i class="fa fa-pencil"></i>
+                                                                                </Link>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                    )
+                                                                })
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                        }
+                                    </div></div>
+                            </div>
                         </div>
-
-                        <div className="row mt-2">
-
-                            <div className="col">
-
-                                {
-                                    cargando ? <div className="alert alert-info text-center">
-                                        <h4>Cargando ...</h4>
-                                        <div className="spinner-border text-info" role="status">
-                                            <span className="visually-hidden">Loading...</span>
-                                        </div>
-                                    </div> :
-                                        <div className="table-responsive miTabla ">
-                                            <table className="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Id</th>
-                                                        <th>Nombre</th>
-                                                        <th>Apellido</th>
-                                                        <th>DNI</th>
-                                                        <th>Email</th>
-                                                        <th>Fecha de Creación</th>
-                                                        <th>Última Actualización</th>
-                                                        <th className="acciones"></th>
-                                                    </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                    {
-                                                        usuarios.map((objUsuario, i) => {
-                                                            return (
-                                                                <tr key={objUsuario.id}>
-                                                                    <td>{objUsuario.id}</td>
-                                                                    <td>{objUsuario.name}</td>
-                                                                    <td>{objUsuario.apellido}</td>
-                                                                    <td>{objUsuario.dni}</td>
-                                                                    <td>{objUsuario.email}</td>
-                                                                    <td>{objUsuario.created_at}</td>
-                                                                    <td>{objUsuario.updated_at}</td>
-                                                                    <td>
-
-
-                                                                        <button data-toggle="tooltip" data-placement="top" title="Eliminar"
-                                                                            className="btn btn-danger mx-1"
-                                                                            onClick={() => {
-                                                                                eliminarUsuario(objUsuario.id);
-                                                                            }}
-                                                                        >
-                                                                            <i class="fa fa-trash"></i>
-
-                                                                        </button>
-                                                                        <Link to={`/usuarios/editar/${objUsuario.id}`}
-                                                                            className="btn btn-warning"
-                                                                        > <i class="fa fa-pencil"></i>
-                                                                        </Link>
-                                                                    </td>
-                                                                </tr>
-
-                                                            )
-                                                        })
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                }
-                            </div></div>
-                    </div>
+                    </main>
                 </div>
-            </main>
-        </div>
+            </div>
+        </>
+
+
     )
 }
 

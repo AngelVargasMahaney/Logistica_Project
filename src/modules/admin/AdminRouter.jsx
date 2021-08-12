@@ -1,17 +1,24 @@
 import React from 'react'
-import AdminSidebar from './components/AdminSidebar'
+
 import { Switch, Route } from "react-router-dom"
 import AdminDashboardPage from './pages/dashboard/AdminDashboardPage'
 import UserListPage from '../general/users/UserListPage'
-import GeneralNavBar from '../layout/GeneralNavBar'
+
+import UserEditarPage from '../general/users/UserEditarPage'
+import UserCrearPage from '../general/users/UserCrearPage'
 
 const AdminRouter = () => {
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar/>
+            
             <Switch>
-                <Route path="/admin/user">
+                <Route path="/admin/usuario/editar/:id">
+                    <UserEditarPage />
+                </Route>
+                <Route path="/admin/usuario/crear">
+                    <UserCrearPage />
+                </Route>
+                <Route path="/admin/usuario">
                     <UserListPage />
                 </Route>
                 <Route path="/admin" exact>

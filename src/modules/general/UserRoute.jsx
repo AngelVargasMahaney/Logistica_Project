@@ -6,10 +6,10 @@ import UserListPage from './users/UserListPage'
 const UserRoute = () => {
     return (
         <>
-        <AdminSidebar />
+        
             <Switch>
                 <Route path="/user">
-                    <UserListPage />
+                    <h1>sdsd</h1>
                 </Route>
             </Switch>
         </>

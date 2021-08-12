@@ -1,7 +1,11 @@
 .acciones {
-    min-width: 110px;
+    min-width: 120px;
 }
 
 .miTabla {
     font-size: 14px;
+}
+
+.home_content {
+    overflow-y: scroll;
 }

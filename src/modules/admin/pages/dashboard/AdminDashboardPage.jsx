@@ -1,11 +1,18 @@
 import React from 'react'
 import icon from '../../../../environments/iconDashAdmin'
-import GeneralNavBar from '../../../layout/GeneralNavBar'
+import AdminSidebar from '../../components/AdminSidebar'
+
+
+import GeneralNavBar from '../../../layout/GeneralNavBar';
 
 const AdminDashboardPage = () => {
+    
     return (
+
+        <>
+        <AdminSidebar/>
         <div className="home_content">
-        
+          <GeneralNavBar/>
             <div className="text ml-4">TABLERO DE CONTROL</div>
 
             <div>
@@ -171,6 +178,7 @@ const AdminDashboardPage = () => {
 
             </div>
         </div>
+        </>
     )
 }
 
