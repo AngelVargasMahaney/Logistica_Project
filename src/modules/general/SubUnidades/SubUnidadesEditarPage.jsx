@@ -8,7 +8,7 @@ import AdminSidebar from "../../admin/components/AdminSidebar";
 import GeneralNavBar from "../../layout/GeneralNavBar";
 
 const SubUnidadesEditarPage = () => {
-  const TITULO = "Formulario de Edición de Sub Unidades";
+  const TITULO = "Formulario de Edición de Subunidades";
   const HISTORY = "/admin/subunidades";
   //Variable de estado que se encarga de manejar los campos de nuestro formulario que servirán para llenar la bd (tener en cuenta los campos que el back-end envió, ver documentación)
   const [formulario, setFormulario] = useState({

@@ -7,7 +7,7 @@ import GeneralNavBar from "../../layout/GeneralNavBar";
 import { postSubunidad } from "../../../services/subunidadesService";
 
 const SubUnidadesCrearPage = () => {
-  const TITULO = "Formulario de Creación de un AreaOficinaSeccion";
+  const TITULO = "Formulario de Creación de una Subunidad";
   const HISTORY = "/admin/subunidades";
   //Variable de estado que se encarga de manejar los campos de nuestro formulario que servirán para llenar la bd (tener en cuenta los campos que el back-end envió, ver documentación)
   const [formulario, setFormulario] = useState({

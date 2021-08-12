@@ -12,7 +12,7 @@ import GeneralNavBar from "../../layout/GeneralNavBar";
 const SubUnidadesListPage = () => {
   const URL_CREAR = "/admin/subunidades/crear";
   const URL_EDITAR = "/admin/subunidades/editar";
-  const TITULO = "Sub unidades";
+  const TITULO = "Subunidades";
   const [data, setData] = useState([]);
   const [cargando, setCargando] = useState(true);
 
