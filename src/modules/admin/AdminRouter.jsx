@@ -13,6 +13,10 @@ import AreaOficinaSeccionListPage from '../general/areaOficinaSeccion/AreaOficin
 import PersonalCrearPage from '../general/personal/PersonalCrearPage'
 import PersonalEditarPage from '../general/personal/PersonalEditarPage'
 import PersonalListPage from '../general/personal/PersonalListPage'
+import EquipoPolicialListPage from '../general/equipoPolicial/EquipoPolicialListPage'
+import EquipoPolicialCrearPage from '../general/equipoPolicial/EquipoPolicialCrearPage'
+import BienesAuxiliaresCrearPage from '../general/bienesAuxiliares/BienesAuxiliaresCrearPage'
+import BienesAuxiliaresListPage from '../general/bienesAuxiliares/BienesAuxiliaresListPage'
 
 const AdminRouter = () => {
     return (
@@ -47,6 +51,20 @@ const AdminRouter = () => {
                 </Route>
                 <Route path="/admin/personal">
                     <PersonalListPage />
+                </Route>
+
+                <Route path="/admin/equipo-policial/crear">
+                    <EquipoPolicialCrearPage />
+                </Route>
+                <Route path="/admin/equipo-policial">
+                    <EquipoPolicialListPage />
+                </Route>
+
+                <Route path="/admin/bienes-auxiliares/crear">
+                    <BienesAuxiliaresCrearPage />
+                </Route>
+                <Route path="/admin/bienes-auxiliares">
+                    <BienesAuxiliaresListPage />
                 </Route>
 
                 <Route path="/admin" exact>
