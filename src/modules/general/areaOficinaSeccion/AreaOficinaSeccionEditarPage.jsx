@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { getUsuariosById, putUsuarioById } from '../../../services/usuarioService'
+import {
+    getAreaOficinaSeccion,
+    getAreaOficinaSeccionById,
+    putAreaOficinaSeccionById,
+  } from "../../../services/areaOficinaSeccionService";
 import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
 
-const UserEditarPage = () => {
+const AreaOficinaSeccionEditarPage = () => {
     
-    const tituloOperacion = 'Formulario de Edición de un Usuario'
+    const TITULO = 'Formulario de Edición de un AreaOficinaSeccion'
+    const HISTORY = "/admin/area-oficina-seccion";
     //Variable de estado que se encarga de manejar los campos de nuestro formulario que servirán para llenar la bd (tener en cuenta los campos que el back-end envió, ver documentación)
     const [formulario, setFormulario] = useState({
         id: 0,
-        name: "",
-        apellido: "",
-        dni: "",
-        email: "",
-        password: ""
+        nombre: "",
+        subunidad_id: "",
     })
     
     //Recupero los parámetros de la URL
@@ -23,7 +25,7 @@ const UserEditarPage = () => {
     const history = useHistory()
 
     //Desestructuro los campos del formulario, con el objetivo de evitar poner formulario.valor en cada atributo del forumario (por limpieza de código)
-    let { name, apellido, dni, email, password } = formulario
+    let { nombre, subunidad_id } = formulario;
 
     // Cada vez que se dispara el evento onChange del formulario, se llama a esta funcion para manejar el envío de datos
     const handleChange = (e) => {
@@ -42,17 +44,17 @@ const UserEditarPage = () => {
 
         //Validación genérica, se puede mejorar
 
-        putUsuarioById(formulario).then((rpta) => {
+        putAreaOficinaSeccionById(formulario).then((rpta) => {
             //console.log(rpta)
             if (rpta.status === 200) {
-                history.push("/admin/usuario")
+                history.push(HISTORY)
             }
         })
 
     }
 
     useEffect(() => {
-        getUsuariosById(params.id).then((rpta) => {
+        getAreaOficinaSeccionById(params.id).then((rpta) => {
             //console.log(rpta)
             setFormulario({ ...rpta.data })
         })
@@ -69,7 +71,7 @@ const UserEditarPage = () => {
                             <div className="card">
                                 <div className="card-header">
                                     <h4 className="card-title">
-                                        {tituloOperacion}
+                                        {TITULO}
                                     </h4>
                                 </div>
                                 <div className="card-body">
@@ -81,61 +83,18 @@ const UserEditarPage = () => {
                                         </div>
                                         <div>
                                             <label htmlFor="" className="form-label my-2">
-                                                Nombre del Usuario
+                                            Nombre del Area Oficina Sección
                                             </label>
                                             <input
                                                 type="text"
                                                 className="form-control mt-2"
-                                                required placeholder="Ejm: Pedro Mario"
-                                                name="name"
-                                                value={name}
-                                                onChange={handleChange}
-                                            />
-                                            <label htmlFor="" className="form-label my-2">
-                                                Apellido
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control mt-2"
-                                                required placeholder="Ejm: Pérez Sánchez"
-                                                name="apellido"
-                                                value={apellido}
-                                                onChange={handleChange}
-                                            />
-                                            <label htmlFor="" className="form-label my-2">
-                                                DNI
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control mt-2"
-                                                required placeholder="74521589"
-                                                name="dni"
-                                                value={dni}
-                                                onChange={handleChange}
-                                            />
-                                            <label htmlFor="" className="form-label my-2">
-                                                Email
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control mt-2"
-                                                required placeholder="Ejm: Pmario@pnp.gob.pe"
-                                                name="email"
-                                                value={email}
-                                                onChange={handleChange}
-                                            />
-                                            <label htmlFor="" className="form-label my-2">
-                                                Password
-                                            </label>
-                                            <input
-                                                type="password"
-                                                className="form-control mt-2"
-                                                required placeholder="Ejm: Pmario@pnp.gob.pe"
-                                                name="password"
-                                                value={password}
+                                                required 
+                                                name="nombre"
+                                                value={nombre}
                                                 onChange={handleChange}
                                             />
                                         </div>
+                                        
                                         <div>
                                             <button className="btn btn-primary" type="submit">
                                            <span className="mx-1"><i class="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
@@ -144,7 +103,7 @@ const UserEditarPage = () => {
                                                 className="btn btn-danger my-3 mx-3"
                                                 type="button"
                                                 onClick={() => {
-                                                    history.push("/admin/usuario");
+                                                    history.push(HISTORY);
                                                 }}
                                             >
                                                <span className="mx-1"><i class="fa fa-ban" aria-hidden="true"></i></span> Cancelar
@@ -161,4 +120,4 @@ const UserEditarPage = () => {
     )
 }
 
-export default UserEditarPage
+export default AreaOficinaSeccionEditarPage
