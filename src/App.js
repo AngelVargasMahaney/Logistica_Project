@@ -8,6 +8,7 @@ import AuthState from './context/auth/authState';
 import './styles/sidebar.css';
 import './styles/dashboard.css';
 import './styles/allstyles.css';
+import './styles/authLoginPage.css';
 import PrivateRoute from './PrivateRoute';
 import HomePage from './modules/layout/HomePage';
 

@@ -1,12 +1,20 @@
 import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import AuthContext from '../../context/auth/authContext'
 
 const GeneralNavBar = () => {
-    
-    
 
+    const { autenticado } = useContext(AuthContext)
+    console.log(autenticado)
     const { name, apellido } = useContext(AuthContext)
+    const history = useHistory()
+    const logoutHandler = () => {
+        localStorage.removeItem('token')
+        history.push('/auth/login')
+       
+    }
+    console.log(autenticado)
+
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark ">
@@ -22,7 +30,7 @@ const GeneralNavBar = () => {
                                 {name} {apellido}
                             </Link>
                             <div className="dropdown-menu dropdown-menu-right text-right" aria-labelledby="navbarDropdownMenuLink">
-                                <Link className="dropdown-item" href="#">Cerrar Sesión</Link>
+                                <Link className="dropdown-item" href="/" onClick={logoutHandler}>Cerrar Sesión</Link>
                             </div>
                         </li>
                     </ul>

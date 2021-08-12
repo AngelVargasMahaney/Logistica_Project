@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
-import { postFormatos } from '../../../services/formatoService'
+import { postFormatos, postFormatosFiles } from '../../../services/formatoService'
 import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
 const Formato1CrearPage = () => {
@@ -9,7 +9,6 @@ const Formato1CrearPage = () => {
     const [formulario, setFormulario] = useState({
         codigo: "",
         documento_nombre_original: "",
-        documento: "",
         descripcion: "",
         marca: "",
         modelo: "",
@@ -21,7 +20,6 @@ const Formato1CrearPage = () => {
         fecha_adquisicion: "",
         forma_adquisicion: "",
         observaciones: "",
-        imagen_bien: "",
         deleted_at: "",
         created_at: "",
         updated_at: "",
@@ -32,17 +30,32 @@ const Formato1CrearPage = () => {
     const history = useHistory()
 
     //Desestructuro los campos del formulario, con el objetivo de evitar poner formulario.valor en cada atributo del forumario (por limpieza de código)
-    let { codigo, documento, descripcion, marca,
+    let { codigo, descripcion, marca,
         modelo, serie, tipo, color, dimensiones, estado_bien, fecha_adquisicion, forma_adquisicion, observaciones,
-        imagen_bien } = formulario
+         } = formulario
 
     // Cada vez que se dispara el evento onChange del formulario, se llama a esta funcion para manejar el envío de datos
     const handleChange = (e) => {
+
         setFormulario({
             ...formulario,
-            [e.target.name]: e.target.value //Darle valor del name según el formulario
+
+            [e.target.name]: e.target.value, //Darle valor del name según el formulario
+
         })
     }
+
+    const [documento, setDocumento] = useState(null)
+    const [imagen_bien, setImagen_bien] = useState(null)
+    const handleChangeDocs = e => {
+        setDocumento(e.target.files[0])
+    }
+
+
+    const handleChangeImages = e => {
+        setImagen_bien(e.target.files[0])
+    }
+
 
     const handleSubmit = (e) => {
         e.preventDefault() //Evito que se refresque la página
@@ -52,11 +65,36 @@ const Formato1CrearPage = () => {
         //console.log(formulario)
 
 
-        postFormatos(formulario).then((rpta) => {
-            console.log(rpta)
+      
+        const formData = new FormData()
+        formData.append('codigo', codigo)
+        formData.append('descripcion', descripcion)
+        formData.append('marca', marca)
+        formData.append('modelo', modelo)
+        formData.append('serie', serie)
+        formData.append('tipo', tipo)
+        formData.append('color', color)
+        formData.append('dimensiones', dimensiones)
+        formData.append('estado_bien', estado_bien)
+        formData.append('fecha_adquisicion', fecha_adquisicion)
+        formData.append('forma_adquisicion', forma_adquisicion)
+        formData.append('observaciones', observaciones)
+        formData.append('imagen_bien', imagen_bien)
+        formData.append('documento', documento)
+
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+
+        postFormatosFiles(formData, config).then((rpta) => {
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
+                console.log("Datos subida correctamente")
                 history.push("/admin/formatos")
             }
+           
+            console.log(rpta)
         })
     }
 
@@ -96,12 +134,13 @@ const Formato1CrearPage = () => {
                                                     Documento
                                                 </label>
                                                 <input
-                                                    type="text"
+                                                    type="file"
                                                     className="form-control my-2"
                                                     placeholder="Archivo.pdf"
                                                     name="documento"
-                                                    value={documento}
-                                                    onChange={handleChange}
+
+                                                    onChange={handleChangeDocs}
+
                                                 />
                                                 <label htmlFor="" className="form-label">
                                                     Descripcion
@@ -231,12 +270,12 @@ const Formato1CrearPage = () => {
                                                     Imagen del Bien
                                                 </label>
                                                 <input
-                                                    type="text"
+                                                    type="file"
                                                     className="form-control my-2"
                                                     placeholder="laptop.png"
                                                     name="imagen_bien"
-                                                    value={imagen_bien}
-                                                    onChange={handleChange}
+                                             
+                                                    onChange={handleChangeImages}
                                                 />
                                             </div>
                                         </div>
@@ -249,7 +288,7 @@ const Formato1CrearPage = () => {
                                                     className="btn btn-danger my-3 mx-3"
                                                     type="button"
                                                     onClick={() => {
-                                                        history.push("/admin/usuario");
+                                                        history.push("/admin/formatos");
                                                     }}
                                                 >
                                                     <span className="mx-1"><i class="fa fa-ban" aria-hidden="true"></i></span> Cancelar

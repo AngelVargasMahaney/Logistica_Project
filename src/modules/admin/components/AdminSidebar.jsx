@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/logo_innova.png'
+import AuthContext from '../../../context/auth/authContext';
 
 const AdminSidebar = () => {
     const [sidebar, setsidebar] = useState(false)
@@ -20,14 +21,14 @@ const AdminSidebar = () => {
             </div>
             <ul className="nav_list">
                 <li>
-                    <Link to="/#" >
+                    <Link to="/admin" >
                         <i className="bx bx-grid-alt"></i>
                         <span className="links_name">Dashboard</span>
                     </Link>
                     <span className="tooltip">Dashboard</span>
                 </li>
                 <li>
-                    <Link to="/#" >
+                    <Link to="/admin/personal" >
                         <i className="bx bx-user"></i>
                         <span className="links_name">Personal</span>
                     </Link>
@@ -41,7 +42,14 @@ const AdminSidebar = () => {
                     <span className="tooltip">Historial</span>
                 </li>
                 <li>
-                    <Link to="/#" >
+                    <Link to="/admin/usuario" >
+                        <i className="bx bxs-user-badge"></i>
+                        <span className="links_name">Usuarios</span>
+                    </Link>
+                    <span className="tooltip">Historial</span>
+                </li>
+                <li>
+                    <Link to="/admin/formatos" >
                         <i className="bx bx-plus-circle"></i>
                         <span className="links_name">Bienes</span>
                     </Link>
@@ -62,14 +70,21 @@ const AdminSidebar = () => {
                     <span className="tooltip">Unidades</span>
                 </li>
                 <li>
-                    <Link to="/#" >
+                    <Link to="/admin/bienes-auxiliares" >
                         <i className="bx bx-heart"></i>
                         <span className="links_name">Bienes Auxiliares</span>
                     </Link>
                     <span className="tooltip">Bienes Auxiliares</span>
                 </li>
                 <li>
-                    <Link to="/#" >
+                    <Link to="/admin/subunidades" >
+                        <i className="bx bxs-component"></i>
+                        <span className="links_name">SubUnidades</span>
+                    </Link>
+                    <span className="tooltip">SubUnidades</span>
+                </li>
+                <li>
+                    <Link to="/admin/equipo-policial" >
                         <i className="bx bx-shield-quarter"></i>
                         <span className="links_name">Equipo Policial</span>
                     </Link>

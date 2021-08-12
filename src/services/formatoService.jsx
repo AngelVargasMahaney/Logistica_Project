@@ -9,9 +9,18 @@ export const getFormatos = async () => {
     return rpta
 }
 
-export const postFormatos = async (objFormato) => {
+
+
+export const postFormatosFiles = async (objFile, config) => {
+
+
     const rpta = await axios.post(`${URL_BACKEND}/formatos`,
-        JSON.stringify(objFormato),
-        { headers: { 'Content-Type': 'application/json' } })
+        objFile,
+        config)
+    return rpta
+}
+export const deleteFormatoById = async (id) => {
+
+    const rpta = await axios.delete(`${URL_BACKEND}/formatos/${id}`)
     return rpta
 }

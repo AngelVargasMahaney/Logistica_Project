@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {Link} from 'react-router-dom'
-import { getFormatos } from '../../../services/formatoService'
+import { deleteFormatoById, getFormatos } from '../../../services/formatoService'
 import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
 import Swal from 'sweetalert2'
@@ -34,13 +34,12 @@ const Formato1ListPage = () => {
             showCancelButton: true
         }).then((rpta) => {
             if (rpta.isConfirmed) {
-                //Aquí borro el usuario
-                // deleteUsuarioById(id).then((rpta) => {
-                //     if (rpta.status === 200) {
-                //         //Se comprueba que se eliminó correctamente
-                //         traerUsuarios() //Se llama otra vez para setear la variable de estado y recargar la página automáticamente al borrar un usuario
-                //     }
-                // })
+                deleteFormatoById(id).then((rpta) => {
+                    if (rpta.status === 200) {
+                        //Se comprueba que se eliminó correctamente
+                        traerFormatos() //Se llama otra vez para setear la variable de estado y recargar la página automáticamente al borrar un usuario
+                    }
+                })
             }
         })
     }
@@ -61,7 +60,7 @@ const Formato1ListPage = () => {
 
                                 <div className="d-flex justify-content-between mb-3">
                                     <h5>Lista de Bienes del Formato 1</h5>
-                                    <Link to={urlFormatoCrear} className="btn btn-primary "> <i class="fa fa-plus"></i> Crear Usuario</Link>
+                                    <Link to={urlFormatoCrear} className="btn btn-primary "> <i class="fa fa-plus"></i> Crear un Bien</Link>
                                 </div>
 
                                 <div className="row mt-2">
@@ -108,6 +107,7 @@ const Formato1ListPage = () => {
                                                                 formatos.map((objFormato, i) => {
                                                                     return (
                                                                         <tr key={objFormato.id}>
+                                                                            <td>{objFormato.id}</td>
                                                                             <td>{objFormato.codigo}</td>
                                                                             <td>{objFormato.documento_nombre_original}</td>
                                                                             <td>{objFormato.documento}</td>
@@ -126,7 +126,7 @@ const Formato1ListPage = () => {
                                                                             <td>{objFormato.deleted_at}</td>
                                                                             <td>{objFormato.created_at}</td>
                                                                             <td>{objFormato.updated_at}</td>
-                                                                            <td>{objFormato.modified_by}</td>
+                                                                          
                                                                             <td>
 
 
@@ -139,7 +139,7 @@ const Formato1ListPage = () => {
                                                                                     <i className="fa fa-trash"></i>
 
                                                                                 </button>
-                                                                                <Link to={`usuario/editar/${objFormato.id}`}
+                                                                                <Link to={`formatos/editar/${objFormato.id}`}
                                                                                     className="btn btn-warning"
                                                                                 > <i className="fa fa-pencil"></i>
                                                                                 </Link>

@@ -5,12 +5,12 @@ import { postLogin } from '../../../services/authService'
 
 const AuthLoginScreen = () => {
 
-    const {iniciarSesionContext} = useContext(AuthContext)
-
     const [formulario, setFormulario] = useState({
         email: '',
         password: ''
     })
+
+    const { iniciarSesionContext } = useContext(AuthContext)
 
     const history = useHistory()
 
@@ -23,9 +23,9 @@ const AuthLoginScreen = () => {
 
     const handleSubmit = e => {
         e.preventDefault()
-        postLogin(formulario).then(rpta=>{
+        postLogin(formulario).then((rpta) => {
             console.log(rpta)
-            if(rpta.statusText === 'OK'){
+            if (rpta.statusText === 'OK') {
                 iniciarSesionContext(rpta.data.token)
                 history.push("/admin")
             }
@@ -33,33 +33,80 @@ const AuthLoginScreen = () => {
     }
 
     return (
-        <main className="login">
-            <div className="login__form">
-                <h1>Inicio de Sesión</h1>
-                <form className="formulario" onSubmit={handleSubmit}>
-                    <label htmlFor="">Email:</label>
-                    <input
-                        name="email"
-                        onChange={handleChange}
-                        value={formulario.email}
-                        type="email"
-                        className="formulario__input"
-                        placeholder="Email" />
-                    <label htmlFor="">Password:</label>
-                    <input
-                        name="password"
-                        onChange={handleChange}
-                        value={formulario.password}
-                        type="password"
-                        className="formulario__input"
-                        placeholder="Password"
-                    />
-                    <button className="formulario__submit" type="submit">
-                        Iniciar Sesión
-                    </button>
-                </form>
+        <>
+            <div className="container">
+                <div className="row">
+                    <h1 className="card-title text-center mt-5 text-light">LOGÍSTICA PNP</h1>
+                    <div className="col-lg-10 col-xl-9 mx-auto">
+                        <div className="card card-signin flex-row my-5">
+                            <div className="card-img-left d-none d-md-flex">
+
+                            </div>
+                            <div className="card-body">
+                                <p className="card-titles">Bienvenido</p>
+                                <h3 className="card-title">Login</h3>
+                                <form className="form-signin" onSubmit={handleSubmit}>
+                                    <div className="form-label-group">
+                                        <input type="email" name="email" id="inputUserame" className="form-control" value={formulario.email}
+                                            onChange={handleChange} placeholder="Username" required autoFocus />
+                                        <label for="inputUserame"><i className="fa fa-envelope" aria-hidden="true"></i> Username</label>
+                                    </div>
+                                    <div className="form-label-group">
+                                        <input type="password" id="inputPassword"  name="password" name="password"
+                                            value={formulario.password} onChange={handleChange} className="form-control" placeholder="Password" required autoFocus />
+                                        <label for="inputPassword"><i className="fa fa-key" aria-hidden="true"></i> Password</label>
+                                    </div>
+
+                                    <button className="btn btn-lg btn-primary w-100 text-uppercase" type="submit">Ingresar</button>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </main>
+        </>
+
+/* 
+        <main classNameName="container">
+            <div classNameName="row justify-content-center align-items-center vh-100">
+                <div classNameName="col-md-4">
+                    <div classNameName="card">
+                        <div className="card-body">
+                            <form onSubmit={handleSubmit}>
+                                <div>
+                                    <label htmlFor="" className="form-label">
+                                        Email
+                                    </label>
+                                    <input type="email" 
+                                    className="form-control" 
+                                    name = "email"
+                                    value={formulario.email}
+                                    onChange={handleChange}
+                                    placeholder="Email"/>
+                                </div>
+                                <div>
+                                    <label htmlFor="" className="form-label">
+                                        Password
+                                    </label>
+                                    <input type="password" 
+                                    className="form-control" 
+                                    name = "password"
+                                    value={formulario.password}
+                                    onChange={handleChange}
+                                    placeholder="Password"/>
+                                </div>
+                                <div>
+                                    <button type="submit" className="btn btn-primary">Iniciar Sesión </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main> */
     )
 }
 
