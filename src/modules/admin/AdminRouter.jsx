@@ -18,10 +18,13 @@ import EquipoPolicialCrearPage from '../general/equipoPolicial/EquipoPolicialCre
 import BienesAuxiliaresCrearPage from '../general/bienesAuxiliares/BienesAuxiliaresCrearPage'
 import BienesAuxiliaresListPage from '../general/bienesAuxiliares/BienesAuxiliaresListPage'
 
+import SubUnidadesListPage from '../general/SubUnidades/SubUnidadesListPage'
+import SubUnidadesEditarPage from '../general/SubUnidades/SubUnidadesEditarPage'
+import SubUnidadesCrearPage from '../general/SubUnidades/SubUnidadesCrearPage'
+
 const AdminRouter = () => {
     return (
         <>
-            
             <Switch>
                 <Route path="/admin/usuario/editar/:id">
                     <UserEditarPage />
@@ -33,6 +36,8 @@ const AdminRouter = () => {
                     <UserListPage />
                 </Route>
 
+
+
                 <Route path="/admin/area-oficina-seccion/editar/:id">
                     <AreaOficinaSeccionEditarPage />
                 </Route>
@@ -42,6 +47,8 @@ const AdminRouter = () => {
                 <Route path="/admin/area-oficina-seccion">
                     <AreaOficinaSeccionListPage />
                 </Route>
+
+
 
                 <Route path="/admin/personal/editar/:id">
                     <PersonalEditarPage />
@@ -53,6 +60,8 @@ const AdminRouter = () => {
                     <PersonalListPage />
                 </Route>
 
+
+
                 <Route path="/admin/equipo-policial/crear">
                     <EquipoPolicialCrearPage />
                 </Route>
@@ -60,12 +69,27 @@ const AdminRouter = () => {
                     <EquipoPolicialListPage />
                 </Route>
 
+
+
                 <Route path="/admin/bienes-auxiliares/crear">
                     <BienesAuxiliaresCrearPage />
                 </Route>
                 <Route path="/admin/bienes-auxiliares">
                     <BienesAuxiliaresListPage />
                 </Route>
+                
+                
+                <Route path="/admin/subunidades/editar/:id">
+                    <SubUnidadesEditarPage />
+                </Route>
+                <Route path="/admin/subunidades/crear">
+                    <SubUnidadesCrearPage />
+                </Route>
+                <Route path="/admin/subunidades">
+                    <SubUnidadesListPage />
+                </Route>
+
+
 
                 <Route path="/admin" exact>
                     <AdminDashboardPage />
@@ -73,6 +97,5 @@ const AdminRouter = () => {
             </Switch>
         </>
     )
-}
-
+};
 export default AdminRouter
