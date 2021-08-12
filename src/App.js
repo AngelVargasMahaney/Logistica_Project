@@ -1,22 +1,21 @@
 import React from 'react'
 import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
-import AuthContext from './context/auth/authContext';
 import AdminRouter from './modules/admin/AdminRouter';
 import AuthRouter from './modules/auth/AuthRouter';
 import Error404Page from './modules/layout/Error404Page';
 import OtherUserRouter from './modules/otherUsers/OtherUserRouter';
 import AuthState from './context/auth/authState';
 import './styles/sidebar.css';
+import './styles/dashboard.css';
+import './styles/allstyles.css';
 import PrivateRoute from './PrivateRoute';
+import HomePage from './modules/layout/HomePage';
 
 const App = () => {
   return (
 
-    <AuthState>
-
-
-      <Router>
-
+    <Router>
+      <AuthState>
         <Switch>
           <PrivateRoute path="/admin">
             <AdminRouter />
@@ -27,16 +26,13 @@ const App = () => {
           <Route path="/otherUser">
             <OtherUserRouter />
           </Route>
-
           <Route path="/" exact>
-            <h1>Esta sería la página del login</h1>
+            <HomePage />
           </Route>
           <Route component={Error404Page} />
-
         </Switch>
-      </Router>
-
-    </AuthState>
+      </AuthState>
+    </Router>
 
 
   )

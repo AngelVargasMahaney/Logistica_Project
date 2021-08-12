@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import logo from '../../../assets/logo_innova.png'
+
 
 const AdminSidebar = () => {
 
@@ -10,7 +10,6 @@ const AdminSidebar = () => {
     const showSidebar = () => setsidebar(!sidebar);
     return (
         <>
-        <h1>sssssssssssssssAdmin SIDEBAR</h1>
             <div className={sidebar ? 'sidebar' : 'sidebar active'}>
                 <div className="logo_content" onClick={showSidebar}>
                     <div className="logo">
@@ -97,9 +96,8 @@ const AdminSidebar = () => {
                     </div>
                 </div>
             </div>
-            <div className="home_content">
-                <div className="text">Dashboard</div>
-            </div>
+            
+            
         </>
     )
 }

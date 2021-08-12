@@ -8,30 +8,10 @@ const AuthState = (props) => {
     const [state, setState] = useState({
         autenticado: false,
         name: null,
+        apellido: null,
         token: null,
         cargando: true
     })
-
-    const iniciarSesionLocalStorage = () => {
-        const toquen = localStorage.getItem('token')
-        if (toquen) {
-
-            postVerificarToken(toquen).then(rpta => {
-                if (rpta.statusText === 'OK') {
-                    iniciarSesionContext(localStorage.getItem('token'))
-                }else{
-                    console.log("dffaw")
-                }
-            })
-
-
-        }
-    }
-
-    useEffect(() => {
-        iniciarSesionLocalStorage()
-    }, [])
-
 
     const iniciarSesionContext = (token) => {
         localStorage.setItem('token', token);
@@ -41,11 +21,50 @@ const AuthState = (props) => {
         setState({
             autenticado: true,
             name: payloadJson.name,
+            apellido: payloadJson.apellido,
             token: token,
             cargando: false
         })
 
     }
+    const iniciarSesionLocalStorage = () => {
+        console.log("SFAFOJAWEORJo")
+        const toquen = localStorage.getItem('token')
+        if (toquen) {
+            postVerificarToken(toquen).then(rpta => {
+                if (rpta.statusText === 'OK') {
+                    iniciarSesionContext(localStorage.getItem('token'))
+                } else {
+                    console.log("inicio de sesión fallido");
+                    localStorage.removeItem('token')
+                    setState({
+                        autenticado: false,
+                        name: null,
+                        apellido: null,
+                        token: null,
+                        cargando: false
+                    })
+                }
+            }).catch(err => {
+                console.log(err)
+                console.log("FALLO EN CATCH")
+                localStorage.removeItem('token')
+                setState({
+                    autenticado: false,
+                    name: null,
+                    apellido: null,
+                    token: null,
+                    cargando: false
+                })
+            })
+        }
+    }
+
+    useEffect(() => {
+        iniciarSesionLocalStorage()
+    }, [])
+
+
 
     return (
         <AuthContext.Provider value={{

@@ -4,11 +4,13 @@ import AuthLoginScreen from './pages/AuthLoginScreen'
 
 const AuthRouter = () => {
     return (
-        <Switch>
-            <Route path="/auth/login">
-                <AuthLoginScreen/>
-            </Route>
-         </Switch>       
+        <>
+            <Switch>
+                <Route path="/auth/login">
+                    <AuthLoginScreen />
+                </Route>
+            </Switch>
+        </>
     )
 }
 

@@ -1,0 +1,23 @@
+body{
+    background-color: #f5f7fb;
+  }
+  .card-dash {
+      box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.15);
+      color: #939ba2;
+      margin: 0.4rem;
+    }
+    .card-dash :hover {
+      transform: scale(1.05);
+      transition: 0.7s all ease-in-out;
+      cursor: pointer;
+    }
+    
+    .card-admin {
+      box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.15);
+      color: #939ba2;
+      margin: 0.4rem;
+    }
+    .svg-img {
+      background-color: #d3e2f7;
+    }
+    
