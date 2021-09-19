@@ -1,7 +1,6 @@
 import React, { useState} from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/logo_innova.png'
-import AuthContext from '../../../context/auth/authContext';
 
 const AdminSidebar = () => {
     const [sidebar, setsidebar] = useState(false)

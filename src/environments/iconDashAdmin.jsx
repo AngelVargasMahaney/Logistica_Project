@@ -11,6 +11,7 @@ import bienesInternaDestru from "../assets/icons/icons_48/equipment_48.svg";
 import maquinariaYEquipos from "../assets/icons/icons_48/excavator_48.svg";
 
 
+/* eslint import/no-anonymous-default-export: [2, {"allowObject": true}] */
 
 export default {
   usuario: usuario,
@@ -18,7 +19,6 @@ export default {
   subUnidades: subUnidades,
   areaOficinaSeccion: areaOficinaSeccion,
   historial: historial,
-  personal: personal,
   bienesAuxiliares: bienesAuxiliares,
   equipoPolicial: equipoPolicial,
   unidadTransporte: unidadTransporte,

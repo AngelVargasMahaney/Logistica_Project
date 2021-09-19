@@ -59,7 +59,7 @@ const SubUnidadesListPage = () => {
                   <h5>{TITULO}</h5>
                   <Link to={URL_CREAR} className="btn btn-primary ">
                     {" "}
-                    <i class="fa fa-plus"></i> Crear{" "}
+                    <i className="fa fa-plus"></i> Crear{" "}
                   </Link>
                 </div>
 
@@ -103,14 +103,14 @@ const SubUnidadesListPage = () => {
                                         eliminar(obj.id);
                                       }}
                                     >
-                                      <i class="fa fa-trash"></i>
+                                      <i className="fa fa-trash"></i>
                                     </button>
                                     <Link
                                       to={`${URL_EDITAR}/${obj.id}`}
                                       className="btn btn-warning"
                                     >
                                       {" "}
-                                      <i class="fa fa-pencil"></i>
+                                      <i className="fa fa-pencil"></i>
                                     </Link>
                                   </td>
                                 </tr>

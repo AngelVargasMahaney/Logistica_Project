@@ -133,7 +133,7 @@ const UserCrearPage = () => {
 
                                             <div>
                                                 <button className="btn btn-primary" type="submit">
-                                                    <span className="mx-1"><i class="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
+                                                    <span className="mx-1"><i className="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
                                                 </button>
                                                 <button
                                                     className="btn btn-danger my-3 mx-3"
@@ -142,7 +142,7 @@ const UserCrearPage = () => {
                                                         history.push("/admin/usuario");
                                                     }}
                                                 >
-                                                    <span className="mx-1"><i class="fa fa-ban" aria-hidden="true"></i></span> Cancelar
+                                                    <span className="mx-1"><i className="fa fa-ban" aria-hidden="true"></i></span> Cancelar
                                                 </button>
                                             </div>
 

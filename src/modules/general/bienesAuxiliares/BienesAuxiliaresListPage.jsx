@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import { deleteBienAuxiliarById, getBienAuxiliar, getBienAuxiliarById} from '../../../services/bienesAuxiliaresService'
+import { deleteBienAuxiliarById, getBienAuxiliar} from '../../../services/bienesAuxiliaresService'
 
 
 import AdminSidebar from '../../admin/components/AdminSidebar';
@@ -10,7 +10,6 @@ import GeneralNavBar from '../../layout/GeneralNavBar';
 const BienesAuxiliaresListPage = () => {
 
     const URL_CREAR = '/admin/bienes-auxiliares/crear'
-    const URL_EDITAR = "/admin/bienes-auxiliares/editar";
     const TITULO = "Bienes Auxiliar";
     const [data, setData] = useState([])
     const [cargando, setCargando] = useState(true)
@@ -65,7 +64,7 @@ const BienesAuxiliaresListPage = () => {
 
                                 <div className="d-flex justify-content-between mb-3">
                                     <h5>{TITULO}</h5>
-                                    <Link to={URL_CREAR} className="btn btn-primary "> <i class="fa fa-plus"></i> Crear </Link>
+                                    <Link to={URL_CREAR} className="btn btn-primary "> <i className="fa fa-plus"></i> Crear </Link>
                                 </div>
 
                                 <div className="row mt-2">

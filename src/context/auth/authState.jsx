@@ -28,11 +28,10 @@ const AuthState = (props) => {
 
     }
     const iniciarSesionLocalStorage = () => {
-        console.log("SFAFOJAWEORJo")
         const toquen = localStorage.getItem('token')
         if (toquen) {
             postVerificarToken(toquen).then(rpta => {
-                if (rpta.statusText === 'OK') {
+                if (rpta.status === 200) {
                     iniciarSesionContext(localStorage.getItem('token'))
                 } else {
                     console.log("inicio de sesión fallido");
@@ -62,6 +61,7 @@ const AuthState = (props) => {
 
     useEffect(() => {
         iniciarSesionLocalStorage()
+        // eslint-disable-next-line
     }, [])
 
 

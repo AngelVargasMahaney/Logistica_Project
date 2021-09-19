@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { useHistory } from "react-router-dom";
 import AdminSidebar from "../../admin/components/AdminSidebar";
@@ -73,7 +73,7 @@ const SubUnidadesCrearPage = () => {
                       <div>
                         <button className="btn btn-primary" type="submit">
                           <span className="mx-1">
-                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                            <i className="fa fa-floppy-o" aria-hidden="true"></i>
                           </span>{" "}
                           Guardar
                         </button>
@@ -85,7 +85,7 @@ const SubUnidadesCrearPage = () => {
                           }}
                         >
                           <span className="mx-1">
-                            <i class="fa fa-ban" aria-hidden="true"></i>
+                            <i className="fa fa-ban" aria-hidden="true"></i>
                           </span>{" "}
                           Cancelar
                         </button>

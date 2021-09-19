@@ -50,13 +50,14 @@ const UserEditarPage = () => {
         })
 
     }
-
+ 
     useEffect(() => {
         getUsuariosById(params.id).then((rpta) => {
             //console.log(rpta)
             setFormulario({ ...rpta.data })
         })
-    }, [])
+        // eslint-disable-next-line
+    }, []) 
 
     return (
         <>

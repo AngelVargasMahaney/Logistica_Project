@@ -29,7 +29,7 @@ const AreaOficinaSeccionCrearPage = () => {
     }, []);
 
     //Desestructuro los campos del formulario, con el objetivo de evitar poner formulario.valor en cada atributo del forumario (por limpieza de código)
-    let { nombre, subunidad_id } = formulario;
+    let { nombre } = formulario;
 
     // Cada vez que se dispara el evento onChange del formulario, se llama a esta funcion para manejar el envío de datos
     const handleChange = (e) => {
@@ -90,8 +90,8 @@ const AreaOficinaSeccionCrearPage = () => {
                                                 Subunidad
                                             </label>
 
-                                            <select onChange={handleChange} name="subunidad_id" required className="form-select custom-select mr-sm-2">
-                                                <option value="" selected>--- Elegir Subunidad ---</option>
+                                            <select defaultValue="DEFAULT" onChange={handleChange} name="subunidad_id" required className="form-select custom-select mr-sm-2">
+                                                <option value="DEFAULT" disabled>--- Elegir Subunidad ---</option>
 
                                                 {subunidades.map((objTipoFormato, i) => {
                                                     return (
@@ -105,7 +105,7 @@ const AreaOficinaSeccionCrearPage = () => {
 
                                             <div>
                                                 <button className="btn btn-primary" type="submit">
-                                                    <span className="mx-1"><i class="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
+                                                    <span className="mx-1"><i className="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
                                                 </button>
                                                 <button
                                                     className="btn btn-danger my-3 mx-3"
@@ -114,7 +114,7 @@ const AreaOficinaSeccionCrearPage = () => {
                                                         history.push(HISTORY);
                                                     }}
                                                 >
-                                                    <span className="mx-1"><i class="fa fa-ban" aria-hidden="true"></i></span> Cancelar
+                                                    <span className="mx-1"><i className="fa fa-ban" aria-hidden="true"></i></span> Cancelar
                                                 </button>
                                             </div>
 
