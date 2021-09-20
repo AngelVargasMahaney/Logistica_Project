@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { postFormatos, postFormatosFiles } from '../../../services/formatoService'
+import { postFormatosFiles } from '../../../services/formatoService'
 import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
 const Formato1CrearPage = () => {
@@ -282,7 +282,7 @@ const Formato1CrearPage = () => {
                                         <div>
                                             <div>
                                                 <button className="btn btn-primary" type="submit">
-                                                    <span className="mx-1"><i class="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
+                                                    <span className="mx-1"><i className="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
                                                 </button>
                                                 <button
                                                     className="btn btn-danger my-3 mx-3"
@@ -291,7 +291,7 @@ const Formato1CrearPage = () => {
                                                         history.push("/admin/formatos");
                                                     }}
                                                 >
-                                                    <span className="mx-1"><i class="fa fa-ban" aria-hidden="true"></i></span> Cancelar
+                                                    <span className="mx-1"><i className="fa fa-ban" aria-hidden="true"></i></span> Cancelar
                                                 </button>
                                             </div>
 

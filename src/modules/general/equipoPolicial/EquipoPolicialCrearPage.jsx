@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 import { useHistory } from 'react-router-dom'
 import AdminSidebar from '../../admin/components/AdminSidebar'
@@ -31,7 +31,6 @@ const EquipoPolicialCrearPage = () => {
     //Desestructuro los campos del formulario, con el objetivo de evitar poner formulario.valor en cada atributo del forumario (por limpieza de código)
     let { 
         codigo,
-        documento,
         descripcion,
         marca,
         modelo,
@@ -41,7 +40,7 @@ const EquipoPolicialCrearPage = () => {
         fecha_adquisicion,
         tasacion,
         observaciones,
-        imagen_bien} = formulario
+        } = formulario
 
     // Cada vez que se dispara el evento onChange del formulario, se llama a esta funcion para manejar el envío de datos
     const handleChange = (e) => {
@@ -207,7 +206,7 @@ const EquipoPolicialCrearPage = () => {
 
                                             <div>
                                                 <button className="btn btn-primary" type="submit">
-                                                    <span className="mx-1"><i class="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
+                                                    <span className="mx-1"><i className="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
                                                 </button>
                                                 <button
                                                     className="btn btn-danger my-3 mx-3"
@@ -216,7 +215,7 @@ const EquipoPolicialCrearPage = () => {
                                                         history.push(HISTORY);
                                                     }}
                                                 >
-                                                    <span className="mx-1"><i class="fa fa-ban" aria-hidden="true"></i></span> Cancelar
+                                                    <span className="mx-1"><i className="fa fa-ban" aria-hidden="true"></i></span> Cancelar
                                                 </button>
                                             </div>
 

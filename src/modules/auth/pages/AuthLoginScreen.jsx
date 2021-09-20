@@ -26,7 +26,7 @@ const AuthLoginScreen = () => {
         e.preventDefault()
         postLogin(formulario).then((rpta) => {
             console.log(rpta)
-            if (rpta.statusText === 'OK') {
+            if (rpta.status === 200) {
 
                 iniciarSesionContext(rpta.data.token)
                 swal.fire({
@@ -70,12 +70,12 @@ const AuthLoginScreen = () => {
                                     <div className="form-label-group">
                                         <input type="email" name="email" id="inputUserame" className="form-control" value={formulario.email}
                                             onChange={handleChange} placeholder="Username" required autoFocus />
-                                        <label for="inputUserame"><i className="fa fa-envelope" aria-hidden="true"></i> Username</label>
+                                        <label htmlFor="inputUserame"><i className="fa fa-envelope" aria-hidden="true"></i> Username</label>
                                     </div>
                                     <div className="form-label-group">
-                                        <input type="password" id="inputPassword" name="password" name="password"
+                                        <input type="password" id="inputPassword" name="password"
                                             value={formulario.password} onChange={handleChange} className="form-control" placeholder="Password" required autoFocus />
-                                        <label for="inputPassword"><i className="fa fa-key" aria-hidden="true"></i> Password</label>
+                                        <label htmlFor="inputPassword"><i className="fa fa-key" aria-hidden="true"></i> Password</label>
                                     </div>
 
                                     <button className="btn btn-lg btn-primary w-100 text-uppercase" type="submit">Ingresar</button>

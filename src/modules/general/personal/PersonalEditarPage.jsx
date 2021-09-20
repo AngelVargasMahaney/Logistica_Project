@@ -60,6 +60,7 @@ const PersonalEditarPage = () => {
             //console.log(rpta)
             setFormulario({ ...rpta.data })
         })
+        // eslint-disable-next-line
     }, [])
 
     return (

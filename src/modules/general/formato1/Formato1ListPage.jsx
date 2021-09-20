@@ -60,7 +60,7 @@ const Formato1ListPage = () => {
 
                                 <div className="d-flex justify-content-between mb-3">
                                     <h5>Lista de Bienes del Formato 1</h5>
-                                    <Link to={urlFormatoCrear} className="btn btn-primary "> <i class="fa fa-plus"></i> Crear un Bien</Link>
+                                    <Link to={urlFormatoCrear} className="btn btn-primary "> <i className="fa fa-plus"></i> Crear un Bien</Link>
                                 </div>
 
                                 <div className="row mt-2">

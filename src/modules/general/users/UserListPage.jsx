@@ -62,7 +62,7 @@ const UserListPage = () => {
 
                                 <div className="d-flex justify-content-between mb-3">
                                     <h5>Usuarios</h5>
-                                    <Link to={urlUsuarioCrear} className="btn btn-primary "> <i class="fa fa-plus"></i> Crear Usuario</Link>
+                                    <Link to={urlUsuarioCrear} className="btn btn-primary "> <i className="fa fa-plus"></i> Crear Usuario</Link>
                                 </div>
 
                                 <div className="row mt-2">
@@ -112,12 +112,12 @@ const UserListPage = () => {
                                                                                         eliminarUsuario(objUsuario.id);
                                                                                     }}
                                                                                 >
-                                                                                    <i class="fa fa-trash"></i>
+                                                                                    <i className="fa fa-trash"></i>
 
                                                                                 </button>
                                                                                 <Link to={`usuario/editar/${objUsuario.id}`}
                                                                                     className="btn btn-warning"
-                                                                                > <i class="fa fa-pencil"></i>
+                                                                                > <i className="fa fa-pencil"></i>
                                                                                 </Link>
                                                                             </td>
                                                                         </tr>

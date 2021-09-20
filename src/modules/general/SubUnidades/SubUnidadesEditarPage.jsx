@@ -54,6 +54,7 @@ const SubUnidadesEditarPage = () => {
       //console.log(rpta)
       setFormulario({ ...rpta.data });
     });
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -99,7 +100,7 @@ const SubUnidadesEditarPage = () => {
                     <div>
                       <button className="btn btn-primary" type="submit">
                         <span className="mx-1">
-                          <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                          <i className="fa fa-floppy-o" aria-hidden="true"></i>
                         </span>{" "}
                         Guardar
                       </button>
@@ -111,7 +112,7 @@ const SubUnidadesEditarPage = () => {
                         }}
                       >
                         <span className="mx-1">
-                          <i class="fa fa-ban" aria-hidden="true"></i>
+                          <i className="fa fa-ban" aria-hidden="true"></i>
                         </span>{" "}
                         Cancelar
                       </button>

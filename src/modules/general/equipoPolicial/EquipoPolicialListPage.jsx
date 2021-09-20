@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import { deleteEquipoPolicialById, getEquipoPolicial, getEquipoPolicialById } from '../../../services/equipoPolicialService'
+import { deleteEquipoPolicialById, getEquipoPolicial } from '../../../services/equipoPolicialService'
 
 
 import AdminSidebar from '../../admin/components/AdminSidebar';
@@ -10,7 +10,6 @@ import GeneralNavBar from '../../layout/GeneralNavBar';
 const EquipoPolicialListPage = () => {
 
     const URL_CREAR = '/admin/equipo-policial/crear'
-    const URL_EDITAR = "/admin/equipo-policial/editar";
     const TITULO = "Equipo Policial";
     const [data, setData] = useState([])
     const [cargando, setCargando] = useState(true)
@@ -65,7 +64,7 @@ const EquipoPolicialListPage = () => {
 
                                 <div className="d-flex justify-content-between mb-3">
                                     <h5>{TITULO}</h5>
-                                    <Link to={URL_CREAR} className="btn btn-primary "> <i class="fa fa-plus"></i> Crear </Link>
+                                    <Link to={URL_CREAR} className="btn btn-primary "> <i className="fa fa-plus"></i> Crear </Link>
                                 </div>
 
                                 <div className="row mt-2">

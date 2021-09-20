@@ -1,1 +1,1 @@
-export const URL_BACKEND = 'https://infinite-ravine-18632.herokuapp.com/api'
+export const URL_BACKEND = 'https://demo-logistica-pnp.relengcorp.com/api'
