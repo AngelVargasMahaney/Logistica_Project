@@ -26,7 +26,7 @@ const GeneralNavBar = () => {
                     <ul className="navbar-nav ml-auto ">
 
                         <li className="nav-item dropdown">
-                            <Link to="/#" className="nav-link dropdown-toggle"  id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <Link to="#" className="nav-link dropdown-toggle"  id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {name} {apellido}
                             </Link>
                             <div className="dropdown-menu dropdown-menu-right text-right" aria-labelledby="navbarDropdownMenuLink">
