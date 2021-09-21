@@ -122,7 +122,7 @@ const Formato1ListPage = () => {
                                       id="pdf-js-viewer"
                                       src={pdfActual}
                                       title="webviewer"
-                                      frameborder="0"
+                                      frameBorder="0"
                                       width="100%"
                                       height="100%"
                                     ></iframe>
@@ -145,8 +145,9 @@ const Formato1ListPage = () => {
 
                                   <td>
                                     <img
-                                      class="tamaño-icono-pdf rounded mx-auto d-block"
+                                      className="tamaño-icono-pdf rounded mx-auto d-block"
                                       alt="some value"
+                                      title={objFormato.documento_nombre_original}
                                       src={objFormato.icon_file}
                                       onClick={() =>
                                         showModal(objFormato.documento)
@@ -168,8 +169,9 @@ const Formato1ListPage = () => {
                                   {/* <td>{objFormato.imagen_bien}</td> */}
                                   <td>
                                     <img
-                                      class="tamaño-icono-pdf rounded mx-auto d-block"
+                                      className="tamaño-icono-pdf rounded mx-auto d-block"
                                       alt="some value"
+                                      title={objFormato.documento_nombre_original}
                                       src={objFormato.icon_file}
                                       onClick={() =>
                                         showModal(objFormato.imagen_bien)
