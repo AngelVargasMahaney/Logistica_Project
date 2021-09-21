@@ -11,6 +11,7 @@ import './styles/allstyles.css';
 import './styles/authLoginPage.css';
 import PrivateRoute from './PrivateRoute';
 import HomePage from './modules/layout/HomePage';
+import PublicRoute from './modules/general/vistasPublicasQR/PublicRoute';
 
 const App = () => {
   return (
@@ -27,12 +28,16 @@ const App = () => {
           <Route path="/otherUser">
             <OtherUserRouter />
           </Route>
+          <Route path="/public">
+            <PublicRoute />
+          </Route>
           <Route path="/" exact>
             <HomePage />
           </Route>
           <Route component={Error404Page} />
         </Switch>
       </AuthState>
+
     </Router>
 
 
