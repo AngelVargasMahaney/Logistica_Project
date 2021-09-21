@@ -11,6 +11,7 @@ import './styles/allstyles.css';
 import './styles/authLoginPage.css';
 import PrivateRoute from './PrivateRoute';
 import HomePage from './modules/layout/HomePage';
+import PublicRoute from './modules/general/vistasPublicasQR/PublicRoute';
 
 const App = () => {
   return (
@@ -33,6 +34,9 @@ const App = () => {
           <Route component={Error404Page} />
         </Switch>
       </AuthState>
+      <Route path="/public">
+        <PublicRoute />
+      </Route>
     </Router>
 
 
