@@ -28,15 +28,16 @@ const App = () => {
           <Route path="/otherUser">
             <OtherUserRouter />
           </Route>
+          <Route path="/public">
+            <PublicRoute />
+          </Route>
           <Route path="/" exact>
             <HomePage />
           </Route>
           <Route component={Error404Page} />
         </Switch>
       </AuthState>
-      <Route path="/public">
-        <PublicRoute />
-      </Route>
+
     </Router>
 
 
