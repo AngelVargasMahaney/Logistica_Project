@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import {  useParams } from 'react-router-dom'
 import { getInfoBienAuxiliarById } from '../../../services/bienesPublicosService'
 
 
@@ -20,6 +20,7 @@ const PublicViewBienesAuxQr = () => {
 
     useEffect(() => {
         traerData();
+        // eslint-disable-next-line
     }, [])
 
     return (

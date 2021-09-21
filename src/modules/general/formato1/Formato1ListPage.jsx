@@ -1,16 +1,33 @@
 import React, { useState, useEffect } from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { deleteFormatoById, getFormatos } from '../../../services/formatoService'
 import AdminSidebar from '../../admin/components/AdminSidebar'
+
 import GeneralNavBar from '../../layout/GeneralNavBar'
 import Swal from 'sweetalert2'
+import Modal from "react-bootstrap/Modal";
 
 
 const Formato1ListPage = () => {
-    
+
     const urlFormatoCrear = '/admin/formatos/crear'
     const [formatos, setFormatos] = useState([])
     const [cargando, setCargando] = useState(true)
+    const [pdfActual, setpdfActual] = useState("")
+
+    const [isOpen, setIsOpen] = useState(false)
+
+    
+
+    const showModal = (pdfActual) => {
+       setpdfActual(pdfActual)
+        setIsOpen(true);
+    };
+
+    const hideModal = () => {
+        setIsOpen(false);
+    };
+
 
     const traerFormatos = () => {
         setCargando(true)
@@ -97,12 +114,33 @@ const Formato1ListPage = () => {
                                                                 <th>Deleted_at</th>
                                                                 <th>Created_at</th>
                                                                 <th>Updated_at</th>
-                                                              
+
                                                                 <th className="acciones">Acciones</th>
                                                             </tr>
                                                         </thead>
 
                                                         <tbody>
+                                                        <Modal show={isOpen} onHide={hideModal} size="lg">
+                                                                                    <div>
+                                                                                        <Modal.Body>
+                                                                                            <div className="ModalStyles">
+                                                                                                <iframe
+                                                                                                    id="pdf-js-viewer"
+                                                                                                    src={pdfActual}
+                                                                                                    title="webviewer"
+                                                                                                    frameborder="0"
+                                                                                                    width="100%"
+                                                                                                    height="100%"
+                                                                                                ></iframe>
+                                                                                               
+                                                                                            </div>
+                                                                                        </Modal.Body>
+                                                                                        <Modal.Footer>
+                                                                                            <button onClick={hideModal}>Cancel</button>
+                                                                                        </Modal.Footer>
+                                                                                    </div>
+
+                                                                                </Modal>
                                                             {
                                                                 formatos.map((objFormato, i) => {
                                                                     return (
@@ -110,7 +148,13 @@ const Formato1ListPage = () => {
                                                                             <td>{objFormato.id}</td>
                                                                             <td>{objFormato.codigo}</td>
                                                                             <td>{objFormato.documento_nombre_original}</td>
-                                                                            <td>{objFormato.documento}</td>
+                                                                            {/* <td>{objFormato.documento}</td> */}
+
+                                                                            <td>
+                                                                                
+                                                                                <img alt='some value' src={objFormato.icon_file} onClick={() => showModal(objFormato.documento)} />
+                                                                            </td>
+
                                                                             <td>{objFormato.descripcion}</td>
                                                                             <td>{objFormato.marca}</td>
                                                                             <td>{objFormato.modelo}</td>
@@ -122,11 +166,12 @@ const Formato1ListPage = () => {
                                                                             <td>{objFormato.fecha_adquisicion}</td>
                                                                             <td>{objFormato.forma_adquisicion}</td>
                                                                             <td>{objFormato.observaciones}</td>
-                                                                            <td>{objFormato.imagen_bien}</td>
+                                                                            {/* <td>{objFormato.imagen_bien}</td> */}
+                                                                            <td><img alt='some value' src={objFormato.icon_file} onClick={() => showModal(objFormato.imagen_bien)} /></td>
                                                                             <td>{objFormato.deleted_at}</td>
                                                                             <td>{objFormato.created_at}</td>
                                                                             <td>{objFormato.updated_at}</td>
-                                                                          
+
                                                                             <td>
 
 
