@@ -9,3 +9,16 @@
 .home_content {
     overflow-y: scroll;
 }
+
+.imagen_bien {
+    width: 200px;
+}
+.public_content {
+    position: absolute;
+    height: 100%;
+    width: calc(100%);
+    background: #E4E9F7;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2px);
+    transition: all 0.5s ease;
+    overflow-y: scroll;
+}
