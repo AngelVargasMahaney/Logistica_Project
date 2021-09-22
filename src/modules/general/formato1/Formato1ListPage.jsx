@@ -27,6 +27,13 @@ const Formato1ListPage = () => {
     setIsOpen(false);
   };
 
+
+  const [modalToInternate, setmodalToInternate] = useState(false);
+
+  const openModalToInternate = ()=>{
+    setmodalToInternate(true);
+  }
+
   const traerFormatos = () => {
     setCargando(true);
     getFormatos().then((rpta) => {
@@ -91,7 +98,7 @@ const Formato1ListPage = () => {
                             <tr>
                               <th>Id</th>
                               <th>Código</th>
-                              <th>Documento_nombre_original</th>
+                              {/* <th>Documento_nombre_original</th> */}
                               <th>Documento</th>
                               <th>Descripcion</th>
                               <th>Marca</th>
@@ -138,9 +145,9 @@ const Formato1ListPage = () => {
                                 <tr key={objFormato.id}>
                                   <td>{objFormato.id}</td>
                                   <td>{objFormato.codigo}</td>
-                                  <td>
+                                  {/* <td>
                                     {objFormato.documento_nombre_original}
-                                  </td>
+                                  </td> */}
                                   {/* <td>{objFormato.documento}</td> */}
 
                                   <td>
@@ -201,6 +208,7 @@ const Formato1ListPage = () => {
                                       {" "}
                                       <i className="fa fa-pencil"></i>
                                     </Link>
+                                    
                                   </td>
                                 </tr>
                               );
@@ -211,6 +219,10 @@ const Formato1ListPage = () => {
                     )}
                   </div>
                 </div>
+                <button type="button" className="btn btn-primary btn-lg btn-block mt-5" onClick={openModalToInternate}>Internar un Bien</button>
+
+               
+
               </div>
             </div>
           </main>

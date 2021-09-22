@@ -9,7 +9,7 @@ import equipoPolicial from "../assets/icons/icons_48/equipo_policial_48.svg";
 import unidadTransporte from "../assets/icons/icons_48/service_Police_48.svg";
 import bienesInternaDestru from "../assets/icons/icons_48/equipment_48.svg";
 import maquinariaYEquipos from "../assets/icons/icons_48/excavator_48.svg";
-
+import internamiento from "../assets/icons/icons_48/internamiento.svg"
 /* eslint import/no-anonymous-default-export: [2, {"allowObject": true}] */
 
 export default {
@@ -23,5 +23,5 @@ export default {
   unidadTransporte: unidadTransporte,
   bienesInternaDestru: bienesInternaDestru,
   maquinariaYEquipos: maquinariaYEquipos,
- 
+  internamiento:internamiento
 };

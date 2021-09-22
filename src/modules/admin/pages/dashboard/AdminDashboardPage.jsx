@@ -172,6 +172,22 @@ const AdminDashboardPage = () => {
                                 </div>
                             </div>
                         </div>
+                        <div className="col-lg-3 col-md-6">
+                            <div className="card text-center card-dash m-2">
+                                <div className="card-body p-4">
+                                    <img
+                                        src={icon.internamiento}
+                                        className="rounded img-thumbnail svg-img"
+                                        alt="insertar"
+                                    />
+
+                                    <h6 className="card-title text-center m-2">
+                                        Internamiento de un Bien
+                                    </h6>
+                                    
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
