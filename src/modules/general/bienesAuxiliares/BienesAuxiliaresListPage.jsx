@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import { deleteBienAuxiliarById, getBienAuxiliar} from '../../../services/bienesAuxiliaresService'
+import { deleteBienAuxiliarById, getBienAuxiliar } from '../../../services/bienesAuxiliaresService'
 
 
 import AdminSidebar from '../../admin/components/AdminSidebar';
@@ -67,12 +67,18 @@ const BienesAuxiliaresListPage = () => {
                                     <div className="col">
 
                                         {
-                                            cargando ? <div className="alert alert-info text-center">
-                                                <h4>Cargando ...</h4>
-                                                <div className="spinner-border text-info" role="status">
-                                                    <span className="visually-hidden">Loading...</span>
+                                            cargando ?
+                                                <div className="loader__father">
+                                                    <div className="loader">
+                                                        <div className="face">
+                                                            <div className="circle"></div>
+                                                        </div>
+                                                        <div className="face">
+                                                            <div className="circle"></div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div> :
+                                                :
                                                 <div className="table-responsive miTabla ">
                                                     <table className="table table-bordered">
                                                         <thead>

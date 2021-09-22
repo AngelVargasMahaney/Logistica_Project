@@ -161,146 +161,151 @@ const Formato1ListPage = () => {
 
                 <div className="row mt-2">
                   <div className="col">
-                    {cargando ? (
-                      <div className="alert alert-info text-center">
-                        <h4>Cargando ...</h4>
-                        <div className="spinner-border text-info" role="status">
-                          <span className="visually-hidden">Loading...</span>
+                    {cargando ?
+                      <div className="loader__father">
+                        <div className="loader">
+                          <div className="face">
+                            <div className="circle"></div>
+                          </div>
+                          <div className="face">
+                            <div className="circle"></div>
+                          </div>
                         </div>
                       </div>
-                    ) : (
-                      <div className="table-responsive miTabla ">
-                        <table className="table table-bordered">
-                          <thead>
-                            <tr>
-                              <th>Id</th>
-                              <th>Código</th>
-                              {/* <th>Documento_nombre_original</th> */}
-                              <th>Documento</th>
-                              <th>Descripcion</th>
-                              <th>Marca</th>
-                              <th>Modelo</th>
-                              <th>Serie</th>
-                              <th>Tipo</th>
-                              <th>Color</th>
-                              <th>Dimensiones</th>
-                              <th>Estado_bien</th>
-                              <th>Fecha_adquisicion</th>
-                              <th>Forma_adquisicion</th>
-                              <th>Observaciones</th>
-                              <th>Imagen_bien</th>
-                              <th>Deleted_at</th>
-                              <th>Created_at</th>
-                              <th>Updated_at</th>
 
-                              <th className="acciones">Acciones</th>
-                            </tr>
-                          </thead>
+                      : (
+                        <div className="table-responsive miTabla ">
+                          <table className="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Id</th>
+                                <th>Código</th>
+                                {/* <th>Documento_nombre_original</th> */}
+                                <th>Documento</th>
+                                <th>Descripcion</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Serie</th>
+                                <th>Tipo</th>
+                                <th>Color</th>
+                                <th>Dimensiones</th>
+                                <th>Estado_bien</th>
+                                <th>Fecha_adquisicion</th>
+                                <th>Forma_adquisicion</th>
+                                <th>Observaciones</th>
+                                <th>Imagen_bien</th>
+                                <th>Deleted_at</th>
+                                <th>Created_at</th>
+                                <th>Updated_at</th>
 
-                          <tbody>
-                            <Modal show={isOpen} onHide={hideModal} size="lg">
-                              <div>
-                                <Modal.Body>
-                                  <div className="ModalStyles">
-                                    <iframe
-                                      id="pdf-js-viewer"
-                                      src={pdfActual}
-                                      title="webviewer"
-                                      frameBorder="0"
-                                      width="100%"
-                                      height="100%"
-                                    ></iframe>
-                                  </div>
-                                </Modal.Body>
-                                <Modal.Footer>
-                                  <button onClick={hideModal}>Cancel</button>
-                                </Modal.Footer>
-                              </div>
-                            </Modal>
-                            {formatos.map((objFormato, i) => {
-                              return (
-                                <tr key={objFormato.id}>
-                                  <td>{objFormato.id}</td>
-                                  <td>{objFormato.codigo}</td>
-                                  {/* <td>
+                                <th className="acciones">Acciones</th>
+                              </tr>
+                            </thead>
+
+                            <tbody>
+                              <Modal show={isOpen} onHide={hideModal} size="lg">
+                                <div>
+                                  <Modal.Body>
+                                    <div className="ModalStyles">
+                                      <iframe
+                                        id="pdf-js-viewer"
+                                        src={pdfActual}
+                                        title="webviewer"
+                                        frameBorder="0"
+                                        width="100%"
+                                        height="100%"
+                                      ></iframe>
+                                    </div>
+                                  </Modal.Body>
+                                  <Modal.Footer>
+                                    <button onClick={hideModal}>Cancel</button>
+                                  </Modal.Footer>
+                                </div>
+                              </Modal>
+                              {formatos.map((objFormato, i) => {
+                                return (
+                                  <tr key={objFormato.id}>
+                                    <td>{objFormato.id}</td>
+                                    <td>{objFormato.codigo}</td>
+                                    {/* <td>
                                     {objFormato.documento_nombre_original}
                                   </td> */}
-                                  {/* <td>{objFormato.documento}</td> */}
+                                    {/* <td>{objFormato.documento}</td> */}
 
-                                  <td>
-                                    <img
-                                      className="tamaño-icono-pdf rounded mx-auto d-block"
-                                      alt="some value"
-                                      title={objFormato.documento_nombre_original}
-                                      src={objFormato.icon_file}
-                                      onClick={() =>
-                                        showModal(objFormato.documento)
-                                      }
-                                    />
-                                  </td>
+                                    <td>
+                                      <img
+                                        className="tamaño-icono-pdf rounded mx-auto d-block"
+                                        alt="some value"
+                                        title={objFormato.documento_nombre_original}
+                                        src={objFormato.icon_file}
+                                        onClick={() =>
+                                          showModal(objFormato.documento)
+                                        }
+                                      />
+                                    </td>
 
-                                  <td>{objFormato.descripcion}</td>
-                                  <td>{objFormato.marca}</td>
-                                  <td>{objFormato.modelo}</td>
-                                  <td>{objFormato.serie}</td>
-                                  <td>{objFormato.tipo}</td>
-                                  <td>{objFormato.color}</td>
-                                  <td>{objFormato.dimensiones}</td>
-                                  <td>{objFormato.estado_bien}</td>
-                                  <td>{objFormato.fecha_adquisicion}</td>
-                                  <td>{objFormato.forma_adquisicion}</td>
-                                  <td>{objFormato.observaciones}</td>
-                                  {/* <td>{objFormato.imagen_bien}</td> */}
-                                  <td>
-                                    <img
-                                      className="tamaño-icono-pdf rounded mx-auto d-block"
-                                      alt="some value"
-                                      title={objFormato.documento_nombre_original}
-                                      src={objFormato.icon_file}
-                                      onClick={() =>
-                                        showModal(objFormato.imagen_bien)
-                                      }
-                                    />
-                                  </td>
-                                  <td>{objFormato.deleted_at}</td>
-                                  <td>{objFormato.created_at}</td>
-                                  <td>{objFormato.updated_at}</td>
+                                    <td>{objFormato.descripcion}</td>
+                                    <td>{objFormato.marca}</td>
+                                    <td>{objFormato.modelo}</td>
+                                    <td>{objFormato.serie}</td>
+                                    <td>{objFormato.tipo}</td>
+                                    <td>{objFormato.color}</td>
+                                    <td>{objFormato.dimensiones}</td>
+                                    <td>{objFormato.estado_bien}</td>
+                                    <td>{objFormato.fecha_adquisicion}</td>
+                                    <td>{objFormato.forma_adquisicion}</td>
+                                    <td>{objFormato.observaciones}</td>
+                                    {/* <td>{objFormato.imagen_bien}</td> */}
+                                    <td>
+                                      <img
+                                        className="tamaño-icono-pdf rounded mx-auto d-block"
+                                        alt="some value"
+                                        title={objFormato.documento_nombre_original}
+                                        src={objFormato.icon_file}
+                                        onClick={() =>
+                                          showModal(objFormato.imagen_bien)
+                                        }
+                                      />
+                                    </td>
+                                    <td>{objFormato.deleted_at}</td>
+                                    <td>{objFormato.created_at}</td>
+                                    <td>{objFormato.updated_at}</td>
 
-                                  <td>
-                                    <button
-                                      data-toggle="tooltip"
-                                      data-placement="top"
-                                      title="Eliminar"
-                                      className="btn btn-danger mx-1"
-                                      onClick={() => {
-                                        eliminarFormato(objFormato.id);
-                                      }}
-                                    >
-                                      <i className="fa fa-trash"></i>
-                                    </button>
-                                    <Link
-                                      to={`formatos/editar/${objFormato.id}`}
-                                      className="btn btn-warning"
-                                    >
-                                      {" "}
-                                      <i className="fa fa-pencil"></i>
-                                    </Link>
+                                    <td>
+                                      <button
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Eliminar"
+                                        className="btn btn-danger mx-1"
+                                        onClick={() => {
+                                          eliminarFormato(objFormato.id);
+                                        }}
+                                      >
+                                        <i className="fa fa-trash"></i>
+                                      </button>
+                                      <Link
+                                        to={`formatos/editar/${objFormato.id}`}
+                                        className="btn btn-warning"
+                                      >
+                                        {" "}
+                                        <i className="fa fa-pencil"></i>
+                                      </Link>
 
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
-                      </div>
-                    )}
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
                   </div>
                 </div>
 
                 <button type="button" className="btn btn-primary btn-lg btn-block mt-5" onClick={handleShow}>Internar un Bien</button>
                 <Link to="/admin/bienes-internados/formato1" className="btn btn-warning btn-lg btn-block mt-5">Ver Lista de Bienes Internados</Link>
-              
-            
+
+
                 <Modal show={showModall} onHide={handleClose}>
                   <Modal.Header closeButton>
                     <Modal.Title>Internamiento de un bien del Formato 1</Modal.Title>
@@ -346,8 +351,8 @@ const Formato1ListPage = () => {
                       <div className="form-group">
                         <button className="btn btn-primary" type="submit">Internar</button>
                       </div>
-                  
-                     
+
+
                     </form>
                   </Modal.Body>
                   <Modal.Footer>

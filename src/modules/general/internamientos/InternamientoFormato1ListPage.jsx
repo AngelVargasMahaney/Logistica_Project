@@ -47,7 +47,7 @@ const InternamientoFormato1ListPage = () => {
                     'Bien Desinternado',
                     '',
                     'success'
-                  )
+                )
                 deleteDesinternarBienFormato1(id).then((rpta) => {
                     if (rpta.status === 200) {
                         //Se comprueba que se eliminó correctamente
@@ -81,12 +81,20 @@ const InternamientoFormato1ListPage = () => {
                                     <div className="col">
 
                                         {
-                                            cargando ? <div className="alert alert-info text-center">
-                                                <h4>Cargando ...</h4>
-                                                <div className="spinner-border text-info" role="status">
-                                                    <span className="visually-hidden">Loading...</span>
+                                            cargando ?
+
+                                                <div className="loader__father">
+                                                    <div className="loader">
+                                                        <div className="face">
+                                                            <div className="circle"></div>
+                                                        </div>
+                                                        <div className="face">
+                                                            <div className="circle"></div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div> :
+
+                                                :
                                                 <div className="table-responsive miTabla ">
                                                     <table className="table table-bordered">
                                                         <thead>

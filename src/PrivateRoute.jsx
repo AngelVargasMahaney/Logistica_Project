@@ -9,7 +9,7 @@ const PrivateRoute = (props) => {
     return (
 
         cargando ?
-            <h1>CARGANDO</h1> :
+        <div class="loader__main">CARGANDO</div>:
             autenticado ?
                 <Route path={props.path}>
                     {props.children}
