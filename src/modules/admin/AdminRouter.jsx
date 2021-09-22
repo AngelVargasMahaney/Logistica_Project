@@ -24,6 +24,7 @@ import SubUnidadesListPage from '../general/SubUnidades/SubUnidadesListPage'
 import EquipoPolicialHistory from '../general/historiales/EquipoPolicialHistory'
 import BienesAuxiliaresHistory from '../general/historiales/BienesAuxiliaresHistory'
 import Formato1History from '../general/historiales/Formato1History'
+import InternamientoFormato1ListPage from '../general/internamientos/InternamientoFormato1ListPage'
 
 const AdminRouter = () => {
     return (
@@ -46,6 +47,10 @@ const AdminRouter = () => {
                     <Formato1ListPage />
                 </Route>
 
+
+                <Route path="/admin/bienes-internados/formato1">
+                    <InternamientoFormato1ListPage/>
+                </Route>
 
 
 

@@ -9,12 +9,96 @@ import AdminSidebar from "../../admin/components/AdminSidebar";
 import GeneralNavBar from "../../layout/GeneralNavBar";
 import Swal from "sweetalert2";
 import Modal from "react-bootstrap/Modal";
+import { Button } from "react-bootstrap";
+import { postInternarBienFormato1 } from "../../../services/internamientoFormato1Service";
 
 const Formato1ListPage = () => {
   const urlFormatoCrear = "/admin/formatos/crear";
   const [formatos, setFormatos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [pdfActual, setpdfActual] = useState("");
+
+  // Metodos para el modal del internamiento
+  const [formulario, setFormulario] = useState({
+    estado_del_bien: "",
+    fecha: "",
+    observaciones: "",
+    documento_acta_entrega_recepcion: "",
+    documento_oficio_regularizacion: "",
+    bien_id: "",
+    tipo_bien: 1
+  })
+
+  let { estado_del_bien, fecha, observaciones, bien_id, tipo_bien } = formulario
+
+  const [showModall, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
+  const [documentoRecepcion, setDocumentoRecepcion] = useState(null)
+  const [documentoRegularizacion, setDocumentoRegularizacion] = useState(null)
+
+  const handleDocumentRecepcion = e => {
+    setDocumentoRecepcion(e.target.files[0])
+  }
+  const handleDocumentRegularizacion = e => {
+    setDocumentoRegularizacion(e.target.files[0])
+  }
+
+
+  const handleChange = (e) => {
+    setFormulario({
+      ...formulario,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+
+    const formData = new FormData();
+    formData.append('estado_del_bien', formulario.estado_del_bien)
+    formData.append('fecha:', formulario.fecha)
+    formData.append('observaciones', formulario.observaciones)
+    formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
+    formData.append('documento_oficio_regularizacion', documentoRegularizacion)
+    formData.append('bien_id', formulario.bien_id)
+    formData.append('tipo_bien', formulario.tipo_bien)
+    const token = localStorage.getItem('token')
+
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`
+      }
+    }
+    postInternarBienFormato1(formData, config).then((rpta) => {
+      if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
+        console.log("Datos subida correctamente")
+        Swal.fire(
+          'Internamiento Exitoso',
+          'El internamiento fue exitoso',
+          'success'
+        )
+        traerFormatos()
+      }
+
+      console.log(rpta)
+    }).catch((err) => {
+      Swal.fire(
+        'Internamiento Fallido',
+        'No se puede internar un bien dos veces',
+        'error'
+      )
+    })
+
+
+
+  }
+
+  // Aqui acaban los metodos para el modal de internamiento
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -26,13 +110,6 @@ const Formato1ListPage = () => {
   const hideModal = () => {
     setIsOpen(false);
   };
-
-
-  const [modalToInternate, setmodalToInternate] = useState(false);
-
-  const openModalToInternate = ()=>{
-    setmodalToInternate(true);
-  }
 
   const traerFormatos = () => {
     setCargando(true);
@@ -208,7 +285,7 @@ const Formato1ListPage = () => {
                                       {" "}
                                       <i className="fa fa-pencil"></i>
                                     </Link>
-                                    
+
                                   </td>
                                 </tr>
                               );
@@ -219,10 +296,67 @@ const Formato1ListPage = () => {
                     )}
                   </div>
                 </div>
-                <button type="button" className="btn btn-primary btn-lg btn-block mt-5" onClick={openModalToInternate}>Internar un Bien</button>
 
-               
+                <button type="button" className="btn btn-primary btn-lg btn-block mt-5" onClick={handleShow}>Internar un Bien</button>
+                <Link to="/admin/bienes-internados/formato1" className="btn btn-warning btn-lg btn-block mt-5">Ver Lista de Bienes Internados</Link>
+              
+            
+                <Modal show={showModall} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Internamiento de un bien del Formato 1</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <form onSubmit={handleSubmit}>
+                      <div className="form-group">
+                        <label htmlFor="">Estado del Bien:</label>
+                        <input type="text" className="form-control"
+                          value={estado_del_bien} name="estado_del_bien" onChange={handleChange} />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="">Fecha:</label>
+                        <input type="date" className="form-control"
+                          value={fecha} name="fecha" onChange={handleChange} />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="">Observaciones:</label>
+                        <input type="text" className="form-control"
+                          value={observaciones} name="observaciones" onChange={handleChange} />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="">Documento-Acta entrega y recepción:</label>
+                        <input type="file" className="form-control"
+                          name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="">Documento-Oficio regularización:</label>
+                        <input type="file" className="form-control"
+                          name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="">Id del Bien:</label>
+                        <input type="text" className="form-control"
+                          value={bien_id} name="bien_id" onChange={handleChange} />
+                      </div>
+                      {/* <div className="form-group">
+                        <label htmlFor="">Tipo bien</label>
+                        <input type="text" className="form-control"
+                          value={tipo_bien} name="tipo_bien" onChange={handleChange} />
+                      </div> */}
 
+                      <div className="form-group">
+                        <button className="btn btn-primary" type="submit">Internar</button>
+                      </div>
+                  
+                     
+                    </form>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Cerrar
+                    </Button>
+
+                  </Modal.Footer>
+                </Modal>
               </div>
             </div>
           </main>

@@ -96,6 +96,7 @@ const UserListPage = () => {
                                                                 usuarios.map((objUsuario, i) => {
                                                                     return (
                                                                         <tr key={objUsuario.id}>
+                                                                            
                                                                             <td>{objUsuario.id}</td>
                                                                             <td>{objUsuario.name}</td>
                                                                             <td>{objUsuario.apellido}</td>
