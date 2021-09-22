@@ -65,61 +65,66 @@ const SubUnidadesListPage = () => {
 
                 <div className="row mt-2">
                   <div className="col">
-                    {cargando ? (
-                      <div className="alert alert-info text-center">
-                        <h4>Cargando ...</h4>
-                        <div className="spinner-border text-info" role="status">
-                          <span className="visually-hidden">Loading...</span>
+                    {cargando ?
+                      <div className="loader__father">
+                        <div className="loader">
+                          <div className="face">
+                            <div className="circle"></div>
+                          </div>
+                          <div className="face">
+                            <div className="circle"></div>
+                          </div>
                         </div>
                       </div>
-                    ) : (
-                      <div className="table-responsive miTabla ">
-                        <table className="table table-bordered">
-                          <thead>
-                            <tr>
-                              <th>Id</th>
-                              <th>Nombre</th>
-                              <th>Fecha de Creación</th>
-                              <th>Última Actualización</th>
-                              <th className="acciones"></th>
-                            </tr>
-                          </thead>
 
-                          <tbody>
-                            {data.map((obj, i) => {
-                              return (
-                                <tr key={obj.id}>
-                                  <td>{obj.id}</td>
-                                  <td>{obj.nombre}</td>
-                                  <td>{obj.created_at}</td>
-                                  <td>{obj.updated_at}</td>
-                                  <td>
-                                    <button
-                                      data-toggle="tooltip"
-                                      data-placement="top"
-                                      title="Eliminar"
-                                      className="btn btn-danger mx-1"
-                                      onClick={() => {
-                                        eliminar(obj.id);
-                                      }}
-                                    >
-                                      <i className="fa fa-trash"></i>
-                                    </button>
-                                    <Link
-                                      to={`${URL_EDITAR}/${obj.id}`}
-                                      className="btn btn-warning"
-                                    >
-                                      {" "}
-                                      <i className="fa fa-pencil"></i>
-                                    </Link>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
-                      </div>
-                    )}
+                      : (
+                        <div className="table-responsive miTabla ">
+                          <table className="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Fecha de Creación</th>
+                                <th>Última Actualización</th>
+                                <th className="acciones"></th>
+                              </tr>
+                            </thead>
+
+                            <tbody>
+                              {data.map((obj, i) => {
+                                return (
+                                  <tr key={obj.id}>
+                                    <td>{obj.id}</td>
+                                    <td>{obj.nombre}</td>
+                                    <td>{obj.created_at}</td>
+                                    <td>{obj.updated_at}</td>
+                                    <td>
+                                      <button
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Eliminar"
+                                        className="btn btn-danger mx-1"
+                                        onClick={() => {
+                                          eliminar(obj.id);
+                                        }}
+                                      >
+                                        <i className="fa fa-trash"></i>
+                                      </button>
+                                      <Link
+                                        to={`${URL_EDITAR}/${obj.id}`}
+                                        className="btn btn-warning"
+                                      >
+                                        {" "}
+                                        <i className="fa fa-pencil"></i>
+                                      </Link>
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
                   </div>
                 </div>
               </div>
