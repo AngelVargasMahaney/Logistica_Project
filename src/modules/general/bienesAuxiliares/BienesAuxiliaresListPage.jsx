@@ -51,12 +51,7 @@ const BienesAuxiliaresListPage = () => {
             <AdminSidebar />
             <GeneralNavBar />
             <div className="home_content">
-
-
                 <div>
-
-
-
                     <main className="container-fluid mt-5">
 
                         <div className="card">

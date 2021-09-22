@@ -21,17 +21,29 @@ import BienesAuxiliaresListPage from '../general/bienesAuxiliares/BienesAuxiliar
 import SubUnidadesEditarPage from '../general/SubUnidades/SubUnidadesEditarPage'
 import SubUnidadesCrearPage from '../general/SubUnidades/SubUnidadesCrearPage'
 import SubUnidadesListPage from '../general/SubUnidades/SubUnidadesListPage'
+import EquipoPolicialHistory from '../general/historiales/EquipoPolicialHistory'
+import BienesAuxiliaresHistory from '../general/historiales/BienesAuxiliaresHistory'
+import Formato1History from '../general/historiales/Formato1History'
 
 const AdminRouter = () => {
     return (
         <>
             <Switch>
+                <Route path="/admin/equipo-policial/historial/:id">
+                    <EquipoPolicialHistory />
+                </Route>
+                <Route path="/admin/formato1/historial/:id">
+                    <Formato1History />
+                </Route>
+                <Route path="/admin/bienes-auxiliares/historial/:id">
+                    <BienesAuxiliaresHistory />
+                </Route>
 
                 <Route path="/admin/formatos/crear">
-                    <Formato1CrearPage/>
+                    <Formato1CrearPage />
                 </Route>
                 <Route path="/admin/formatos">
-                    <Formato1ListPage/>
+                    <Formato1ListPage />
                 </Route>
 
 
@@ -88,8 +100,8 @@ const AdminRouter = () => {
                 <Route path="/admin/bienes-auxiliares">
                     <BienesAuxiliaresListPage />
                 </Route>
-                
-                
+
+
                 <Route path="/admin/subunidades/editar/:id">
                     <SubUnidadesEditarPage />
                 </Route>

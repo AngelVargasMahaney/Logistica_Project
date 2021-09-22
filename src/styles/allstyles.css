@@ -22,3 +22,12 @@
     transition: all 0.5s ease;
     overflow-y: scroll;
 }
+.border { padding: 10px 10px; background: #f4f4f4;;}
+
+.icon-propios {
+width: 20px;
+cursor: pointer;
+}
+.pointer{
+    cursor: pointer;
+}

@@ -9,9 +9,12 @@ import './styles/sidebar.css';
 import './styles/dashboard.css';
 import './styles/allstyles.css';
 import './styles/authLoginPage.css';
+import './styles/pdfViewerStyle.css';
+
 import PrivateRoute from './PrivateRoute';
 import HomePage from './modules/layout/HomePage';
 import PublicRoute from './modules/general/vistasPublicasQR/PublicRoute';
+
 
 const App = () => {
   return (
@@ -35,11 +38,15 @@ const App = () => {
             <HomePage />
           </Route>
           <Route component={Error404Page} />
+          
         </Switch>
       </AuthState>
 
+  
+
     </Router>
 
+  
 
   )
 }

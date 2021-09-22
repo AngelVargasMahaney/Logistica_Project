@@ -1,0 +1,9 @@
+.ModalStyles {
+  text-align: center;
+  height: 75vh;
+}
+.tamaño-icono-pdf {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}

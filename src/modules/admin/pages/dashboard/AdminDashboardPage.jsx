@@ -27,7 +27,7 @@ const AdminDashboardPage = () => {
                                         alt="insertar"
                                     />
                                     <h6 className="card-title text-center m-2">Usuarios</h6>
-                                    <h5 className="text-primary">15</h5>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -41,7 +41,7 @@ const AdminDashboardPage = () => {
                                     />
 
                                     <h6 className="card-title text-center m-2">Personal</h6>
-                                    <h5 className="text-primary">15</h5>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -55,7 +55,7 @@ const AdminDashboardPage = () => {
                                     />
 
                                     <h6 className="card-title text-center m-2">Sub Unidades</h6>
-                                    <h5 className="text-primary">15</h5>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -71,7 +71,7 @@ const AdminDashboardPage = () => {
                                     <h6 className="card-title text-center m-2">
                                         Area Oficina Y seccion
                                     </h6>
-                                    <h5 className="text-primary">15</h5>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@ const AdminDashboardPage = () => {
                                     <h6 className="card-title text-center m-2">
                                         Historial de un Bien
                                     </h6>
-                                    <h5 className="text-primary">15</h5>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -104,7 +104,7 @@ const AdminDashboardPage = () => {
                                     <h6 className="card-title text-center m-2">
                                         Bienes Auxiliares
                                     </h6>
-                                    <h5 className="text-primary">15</h5>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -120,7 +120,7 @@ const AdminDashboardPage = () => {
                                     <h6 className="card-title text-center m-2">
                                         Equipo Policial
                                     </h6>
-                                    <h5 className="text-primary">15</h5>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -136,7 +136,7 @@ const AdminDashboardPage = () => {
                                     <h6 className="card-title text-center m-2">
                                         Unidades de Transporte
                                     </h6>
-                                    <h5 className="text-primary">15</h5>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -152,7 +152,7 @@ const AdminDashboardPage = () => {
                                     <h6 className="card-title text-center m-2">
                                         Bienes internados y destruidos
                                     </h6>
-                                    <h5 className="text-primary">15</h5>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -168,7 +168,23 @@ const AdminDashboardPage = () => {
                                     <h6 className="card-title text-center m-2">
                                         Maquinarias y Equipos
                                     </h6>
-                                    <h5 className="text-primary">15</h5>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-3 col-md-6">
+                            <div className="card text-center card-dash m-2">
+                                <div className="card-body p-4">
+                                    <img
+                                        src={icon.internamiento}
+                                        className="rounded img-thumbnail svg-img"
+                                        alt="insertar"
+                                    />
+
+                                    <h6 className="card-title text-center m-2">
+                                        Internamiento de un Bien
+                                    </h6>
+                                    
                                 </div>
                             </div>
                         </div>
