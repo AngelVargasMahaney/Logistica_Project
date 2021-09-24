@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import {  useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { getInfoBienAuxiliarById } from '../../../services/bienesPublicosService'
 
 
@@ -40,6 +40,13 @@ const PublicViewBienesAuxQr = () => {
                             <div className="col">
                                 <div className="">
                                     <h3>{data.descripcion}</h3>
+                                </div>
+                                <div className="mb-4">
+                                    {data.is_internado ? (<>
+                                        <div className="mt-1"> El bien se encuentra <span className="badge badge-pill badge-danger">INTERNADO</span></div>
+                                    </>) : (<>
+                                        <div className="mt-1"> El bien se encuentra <span className="badge badge-pill badge-success">OPERATIVO</span></div>
+                                    </>)}
                                 </div>
                                 <div className="row">
                                     <div className="col-md-6">

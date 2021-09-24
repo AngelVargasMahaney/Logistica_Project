@@ -93,7 +93,8 @@ const PersonalListPage = () => {
                                                             <tr>
                                                                 <th>Id</th>
                                                                 <th>Grado</th>
-                                                                <th>Nombres completos</th>
+                                                                <th>Nombres</th>
+                                                                <th>Apellidos</th>
                                                                 <th>CIP</th>
                                                                 <th>DNI</th>
                                                                 <th>Fecha de Creación</th>
@@ -109,7 +110,8 @@ const PersonalListPage = () => {
                                                                         <tr key={obj.id}>
                                                                             <td>{obj.id}</td>
                                                                             <td>{obj.grado}</td>
-                                                                            <td>{obj.nombre_completo}</td>
+                                                                            <td>{obj.nombre}</td>
+                                                                            <td>{obj.apellido}</td>
                                                                             <td>{obj.cip}</td>
                                                                             <td>{obj.dni}</td>
                                                                             <td>{obj.created_at}</td>

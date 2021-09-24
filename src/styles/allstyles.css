@@ -6,9 +6,6 @@
     font-size: 14px;
 }
 
-.home_content {
-    overflow-y: scroll;
-}
 
 .imagen_bien {
     width: 200px;
@@ -33,7 +30,7 @@ cursor: pointer;
 }
 
 .loader__father{
-    background-color: rgba(218, 250, 231, 0.7);
+    background-color: rgba(191, 201, 195, 0.1);
 }
 .loader {
     width: 20em;
@@ -166,4 +163,3 @@ cursor: pointer;
       opacity: 1;
     }
   }
-  

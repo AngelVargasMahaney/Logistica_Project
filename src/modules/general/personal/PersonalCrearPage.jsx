@@ -13,7 +13,8 @@ const PersonalCrearPage = () => {
     //Variable de estado que se encarga de manejar los campos de nuestro formulario que servirán para llenar la bd (tener en cuenta los campos que el back-end envió, ver documentación)
     const [formulario, setFormulario] = useState({
         grado: "",
-        nombre_completo: "",
+        nombre: "",
+        apellido:"",
         cip: "",
         dni: "",
     })
@@ -21,7 +22,7 @@ const PersonalCrearPage = () => {
 
 
     //Desestructuro los campos del formulario, con el objetivo de evitar poner formulario.valor en cada atributo del forumario (por limpieza de código)
-    let { grado, nombre_completo, cip, dni } = formulario
+    let { grado, nombre, apellido, cip, dni } = formulario
 
     // Cada vez que se dispara el evento onChange del formulario, se llama a esta funcion para manejar el envío de datos
     const handleChange = (e) => {
@@ -78,13 +79,24 @@ const PersonalCrearPage = () => {
                                             />
 
                                             <label htmlFor="" className="form-label">
-                                                Nombre Completo
+                                                Nombres
                                             </label>
                                             <input
                                                 type="text"
                                                 className="form-control my-2"
-                                                name="nombre_completo"
-                                                value={nombre_completo}
+                                                name="nombre"
+                                                value={nombre}
+                                                required
+                                                onChange={handleChange}
+                                            />
+                                               <label htmlFor="" className="form-label">
+                                                Apellidos
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className="form-control my-2"
+                                                name="apellido"
+                                                value={apellido}
                                                 required
                                                 onChange={handleChange}
                                             />
