@@ -352,7 +352,7 @@ console.log(dataHistorial)
                                         className="tamaño-icono-pdf rounded mx-auto d-block"
                                         alt="some value"
                                         title="Codigo Qr del B>ien"
-                                        src={objFormato.icon_file}
+                                        src={objFormato.codigo_qr}
                                         onClick={() =>
                                           showModal(objFormato.codigo_qr)
                                         }
@@ -366,7 +366,7 @@ console.log(dataHistorial)
                                         className="tamaño-icono-pdf rounded mx-auto d-block"
                                         alt="some value"
                                         title={objFormato.documento_nombre_original}
-                                        src={objFormato.icon_file}
+                                        src={objFormato.imagen_bien}
                                         onClick={() =>
                                           showModal(objFormato.imagen_bien)
                                         }
