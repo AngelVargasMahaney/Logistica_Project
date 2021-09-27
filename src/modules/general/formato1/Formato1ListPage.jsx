@@ -285,6 +285,7 @@ console.log(dataHistorial)
                                 <th>Estado_bien</th>
                                 <th>Fecha_adquisicion</th>
                                 <th>Forma_adquisicion</th>
+                                <th>Codigo Qr</th>
                                 <th>Observaciones</th>
                                 <th>Imagen_bien</th>
 
@@ -345,6 +346,19 @@ console.log(dataHistorial)
                                     <td>{objFormato.estado_bien}</td>
                                     <td>{objFormato.fecha_adquisicion}</td>
                                     <td>{objFormato.forma_adquisicion}</td>
+                                    
+                                    <td>
+                                      <img
+                                        className="tamaño-icono-pdf rounded mx-auto d-block"
+                                        alt="some value"
+                                        title="Codigo Qr del B>ien"
+                                        src={objFormato.icon_file}
+                                        onClick={() =>
+                                          showModal(objFormato.codigo_qr)
+                                        }
+                                      />
+                                    </td>
+                                    
                                     <td>{objFormato.observaciones}</td>
                                     {/* <td>{objFormato.imagen_bien}</td> */}
                                     <td>
