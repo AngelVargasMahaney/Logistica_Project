@@ -172,7 +172,7 @@ const BienesAuxiliaresHistory = () => {
 
                                                     </div></div>)
                                             })}
-                                            {historial?.length == 0 ? (<>El historial esta vacio, el bien no ha rotado</>) : (<></>)}
+                                            {historial?.length === 0 ? (<>El historial esta vacio, el bien no ha rotado</>) : (<></>)}
                                         </div>
                                     </div>
                                 </div></div>
