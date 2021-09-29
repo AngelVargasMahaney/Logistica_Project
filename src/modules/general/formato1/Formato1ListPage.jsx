@@ -15,12 +15,14 @@ import { getSubunidades } from "../../../services/subunidadesService";
 import { getPersonal } from "../../../services/personalService";
 import { useParams } from 'react-router-dom'
 import { getHistorialFormatoById } from "../../../services/historialBienesService";
+import imgNoDisponible from "../../../assets/23.png"
+import { getAreaOficinaSeccion } from "../../../services/areaOficinaSeccionService";
 const Formato1ListPage = () => {
   const urlFormatoCrear = "/admin/formatos/crear";
   const [formatos, setFormatos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [pdfActual, setpdfActual] = useState("");
-
+  const [idActualDelBien, setIdActualDelBien] = useState("")
   // Metodos para el modal del internamiento
   const [formulario, setFormulario] = useState({
     estado_del_bien: "",
@@ -28,13 +30,13 @@ const Formato1ListPage = () => {
     observaciones: "",
     documento_acta_entrega_recepcion: "",
     documento_oficio_regularizacion: "",
-    bien_id: "",
+    // bien_id: "",
     tipo_bien: 1,
     area_oficina_seccion_id: "",
     personal_id: ""
   })
 
-  let { estado_del_bien, fecha, observaciones, bien_id } = formulario
+  let { estado_del_bien, fecha, observaciones } = formulario
 
   const [showModall, setShow] = useState(false);
   const [showModalReasignar, setshowModalReasignar] = useState(false);
@@ -109,20 +111,23 @@ const Formato1ListPage = () => {
 
 
   const handleSubmitReasignacion = e => {
+
     e.preventDefault();
+    
     const formDataReasignacion = new FormData();
     formDataReasignacion.append('estado_del_bien', formulario.estado_del_bien)
     formDataReasignacion.append('fecha:', formulario.fecha)
     formDataReasignacion.append('observaciones', formulario.observaciones)
     formDataReasignacion.append('documento_acta_entrega_recepcion', documentoRecepcion)
     formDataReasignacion.append('documento_oficio_regularizacion', documentoRegularizacion)
-    formDataReasignacion.append('bien_id', formulario.bien_id)
+    formDataReasignacion.append('bien_id', idActualDelBien)
     formDataReasignacion.append('tipo_bien', formulario.tipo_bien)
     formDataReasignacion.append('area_oficina_seccion_id', formulario.area_oficina_seccion_id)
     formDataReasignacion.append('personal_id', formulario.personal_id)
 
 
     postReasignarBienFormato1(formDataReasignacion, config).then((rpta) => {
+
       if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
         console.log("Datos subida correctamente")
         Swal.fire(
@@ -151,6 +156,45 @@ const Formato1ListPage = () => {
     setpdfActual(pdfActual);
     setIsOpen(true);
   };
+  const [dataHistorial, setDataHistorial] = useState([])
+
+  const showModalReasignarBien = (idBien) => {
+    setIdActualDelBien(idBien);
+
+    setshowModalReasignar(true);
+    console.log("ENTRANDO AL LLAMADO DE DATA CON ID: " + idBien)
+    // setCargando(true);
+    // getHistorialFormatoById(idBien).then(rpta => {
+    //   console.log("adwdwaw" + rpta)
+    //   setDataHistorial(rpta.data);
+    //   console.log("PRUEBAA" + rpta);
+    //   setCargando(false);
+
+    // })
+  }
+  const prueba = () => {
+
+    if (idActualDelBien === "") {
+      setCargando(true);
+    } else {
+      getHistorialFormatoById(idActualDelBien).then(rpta => {
+        //console.log("adwdwaw" + rpta.data)
+        setDataHistorial(rpta.data);
+        //console.log("PRUEBAA" + rpta);
+        setCargando(false);
+
+      }).catch((err) => {
+        console.log("Data no cargada en getHistorialFOrmatoByID")
+      })
+    }
+
+  }
+  console.log(dataHistorial)
+  useEffect(() => {
+    prueba()
+  }, [idActualDelBien])
+  // Metodos para traer el historial
+
 
   const hideModal = () => {
     setIsOpen(false);
@@ -159,7 +203,7 @@ const Formato1ListPage = () => {
   const traerFormatos = () => {
     setCargando(true);
     getFormatos().then((rpta) => {
-      console.log(rpta);
+      //console.log(rpta);
       setFormatos(rpta.data);
       setCargando(false);
     });
@@ -188,47 +232,42 @@ const Formato1ListPage = () => {
   };
 
   //Aqui los metodos para traer las subunidades
-  const [subunidades, setSubunidades] = useState([]);
+  const [areaoficinaseccion, setAreaoficinaseccion] = useState([]);
   const traerSubunidades = () => {
-    getSubunidades().then((rpta) => {
-      console.log(rpta);
-      setSubunidades(rpta.data);
-    });
+    setCargando(true)
+    getAreaOficinaSeccion().then((rpta) => {
+
+      setAreaoficinaseccion(rpta.data);
+      setCargando(false)
+    }).catch((err) => {
+      console.log("Data no cargada en traerSubunidades")
+    })
+
   };
+
+
   useEffect(() => {
     traerSubunidades();
   }, []);
   //Aqui los metodos para traer las personales
   const [personal, setPersonal] = useState([]);
   const traerPersonal = () => {
+    setCargando(true)
     getPersonal().then((rpta) => {
-      console.log(rpta);
+      //console.log(rpta);
       setPersonal(rpta.data);
+      setCargando(false)
     });
   };
   useEffect(() => {
     traerPersonal();
   }, []);
 
-  // Metodos para traer el historial
-  const params = useParams()
-  const [dataHistorial, setDataHistorial] = useState([])
+  //Variable "historial" que permite entrar al arreglo "historial" dentro de mi arreglo dataHistorial
+  let { historial } = dataHistorial;
 
-  const traerDataHistorial = () => {
-    setCargando(true)
-    const idUrl = params.id;
-    getHistorialFormatoById(idUrl).then(rpta => {
-      setDataHistorial(rpta.data);
-      setCargando(false)
-      
-    })
-  }
-  useEffect(() => {
-    traerDataHistorial();
-    // eslint-disable-next-line
-}, [])
 
-console.log(dataHistorial)
+
   return (
     <>
       <AdminSidebar />
@@ -267,7 +306,7 @@ console.log(dataHistorial)
 
                       : (
                         <div className="table-responsive miTabla ">
-                          <table className="table table-bordered">
+                          <table className="table table-bordered text-center">
                             <thead>
                               <tr>
                                 <th>Id</th>
@@ -345,20 +384,20 @@ console.log(dataHistorial)
                                     <td>{objFormato.estado_bien}</td>
                                     <td>{objFormato.fecha_adquisicion}</td>
                                     <td>{objFormato.forma_adquisicion}</td>
-                                    
+
                                     <td>
                                       <img
                                         className="tamaño-icono-pdf rounded mx-auto d-block"
                                         alt="some value"
                                         title="Codigo Qr del B>ien"
-                                        
-                                        src={objFormato.codigo_qr}
+
+                                        src={objFormato.codigo_qr || imgNoDisponible}
                                         onClick={() =>
                                           showModal(objFormato.codigo_qr)
                                         }
                                       />
                                     </td>
-                                    
+
                                     <td>{objFormato.observaciones}</td>
                                     {/* <td>{objFormato.imagen_bien}</td> */}
                                     <td>
@@ -366,7 +405,7 @@ console.log(dataHistorial)
                                         className="tamaño-icono-pdf rounded mx-auto d-block"
                                         alt="some value"
                                         title={objFormato.documento_nombre_original}
-                                        src={objFormato.imagen_bien}
+                                        src={objFormato.imagen_bien || imgNoDisponible}
                                         onClick={() =>
                                           showModal(objFormato.imagen_bien)
                                         }
@@ -405,14 +444,18 @@ console.log(dataHistorial)
                                         <i className="fa fa-history"></i>
                                       </Link>
 
-                                      <Link
-                                        to={`/admin/formato1/historial/${objFormato.id}`}
+                                      <Button
+
+                                        onClick={() => {
+                                          showModalReasignarBien(objFormato.id)
+
+                                        }}
                                         className="btn btn-info mx-1"
-                                        title="Historial del bien"
+                                        title="Reasignar un Bien"
                                       >
                                         {" "}
                                         <i className="fas fa-clipboard-check"></i>
-                                      </Link>
+                                      </Button>
 
                                     </td>
                                   </tr>
@@ -428,63 +471,7 @@ console.log(dataHistorial)
                 <button type="button" className="btn btn-primary btn-lg btn-block mt-5 mb-5" onClick={handleShowModalInternarBien}>Internar un Bien</button>
                 <button type="button" className="btn btn-dark btn-lg btn-block mt-5 mb-5" onClick={handleShowModalReasignarBien}>Reasignar un Bien</button>
 
-                <Modal show={showModalReasignar} onHide={handleCloseReasignar}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>Internamiento de un bien del Formato 1</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <form onSubmit={handleSubmit}>
-                      <div className="form-group">
-                        <label htmlFor="">Estado del Bien:</label>
-                        <input type="text" className="form-control"
-                          value={estado_del_bien} name="estado_del_bien" onChange={handleChange} />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="">Fecha:</label>
-                        <input type="date" className="form-control"
-                          value={fecha} name="fecha" onChange={handleChange} />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="">Observaciones:</label>
-                        <input type="text" className="form-control"
-                          value={observaciones} name="observaciones" onChange={handleChange} />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="">Documento-Acta entrega y recepción:</label>
-                        <input type="file" className="form-control"
-                          name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="">Documento-Oficio regularización:</label>
-                        <input type="file" className="form-control"
-                          name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="">Id del Bien:</label>
-                        <input type="text" className="form-control"
-                          value={bien_id} name="bien_id" onChange={handleChange} />
-                      </div>
-                      {/* <div className="form-group">
-                        <label htmlFor="">Tipo bien</label>
-                        <input type="text" className="form-control"
-                          value={tipo_bien} name="tipo_bien" onChange={handleChange} />
-                      </div> */}
-
-                      <div className="form-group">
-                        <button className="btn btn-primary" type="submit">Internar</button>
-                      </div>
-
-
-                    </form>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseReasignar}>
-                      Cerrar
-                    </Button>
-
-                  </Modal.Footer>
-                </Modal>
-
+            
 
 
                 <Modal show={showModall} onHide={handleClose}>
@@ -521,7 +508,7 @@ console.log(dataHistorial)
                       <div className="form-group">
                         <label htmlFor="">Id del Bien:</label>
                         <input type="text" className="form-control"
-                          value={bien_id} name="bien_id" onChange={handleChange} />
+                          value={idActualDelBien} name="bien_id" onChange={handleChange} />
                       </div>
                       {/* <div className="form-group">
                         <label htmlFor="">Tipo bien</label>
@@ -548,63 +535,146 @@ console.log(dataHistorial)
                   <Modal.Header closeButton>
                     <Modal.Title>Reasignación de un bien del Formato 1</Modal.Title>
                   </Modal.Header>
-                 
+
                   <Modal.Body>
+                    {/* Header del Modal - Información del bien */}
+
+                    <div className="container">
+                      <div className="row">
+                        <div className="col">
+                          {/* <p>Código: <span>${idActualDelBien}</span></p> */}
+                          {cargando ?
+                            <div className="loader__father">
+                              <div className="loader">
+                                <div className="face">
+                                  <div className="circle"></div>
+                                </div>
+                                <div className="face">
+                                  <div className="circle"></div>
+                                </div>
+                              </div>
+                            </div>
+
+                            :
+                            (
+                              <>
+                                <h3>Datos Actuales del Bien</h3>
+                                <p>Código: {dataHistorial.codigo}</p>
+                                <p>Descripción: {dataHistorial.descripcion}</p>
+                              </>
+                            )}
+
+
+                        </div>
+                        <div className="col">
+                          {cargando ?
+                            <div className="loader__father">
+                              <div className="loader">
+                                <div className="face">
+                                  <div className="circle"></div>
+                                </div>
+                                <div className="face">
+                                  <div className="circle"></div>
+                                </div>
+                              </div>
+                            </div>
+                            :
+                            (
+                              <>
+                                {
+                                  historial?.map((item, i) => {
+                                    const lastItem = historial.length
+                                    console.log(lastItem + " <<dfawdf")
+                                    if (i === 0) {
+                                      return (
+                                        <>
+                                          <div key={item.id}>
+                                            <h3>Ubicación Actual</h3>
+                                            <p>Subunidad: {item.area_oficina_seccion.subunidad.nombre} </p>
+                                            <p>Area: {item.area_oficina_seccion.nombre}</p>
+                                            <p>Persona Encargada: {item.personal.grado + " " + item.personal.apellido + " " + item.personal.nombre}</p>
+                                          </div>
+                                        </>
+                                      )
+                                    } else {
+                                      // not last one
+                                    }
+
+                                  })
+                                }
+
+                              </>
+                            )}
+                        </div>
+                      </div>
+                    </div>
+                    {/* FIN DEL Header del Modal - Información del bien */}
+
+
+
+
                     <form onSubmit={handleSubmitReasignacion}>
                       <div className="form-group">
-                        <label htmlFor="">Estado del Bien:</label>
-                        <input type="text" className="form-control"
-                          value={estado_del_bien} name="estado_del_bien" onChange={handleChange} />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="">Fecha:</label>
-                        <input type="date" className="form-control"
-                          value={fecha} name="fecha" onChange={handleChange} />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="">Observaciones:</label>
-                        <input type="text" className="form-control"
-                          value={observaciones} name="observaciones" onChange={handleChange} />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="">Documento-Acta entrega y recepción:</label>
-                        <input type="file" className="form-control"
-                          name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="">Documento-Oficio regularización:</label>
-                        <input type="file" className="form-control"
-                          name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="">Id del Bien:</label>
-                        <input type="text" className="form-control"
-                          value={bien_id} name="bien_id" onChange={handleChange} />
+                        <label htmlFor="">Nueva persona encargada</label>
+                        <select defaultValue="DEFAULT" onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
+                          <option value="DEFAULT" disabled>--- Elegir Personal---</option>
+
+                          {personal.map((objPersonal, i) => {
+                            return (
+
+                              <option key={objPersonal.id} value={objPersonal.id} >{objPersonal.grado + " |-> " + objPersonal.apellido + " " + objPersonal.nombre}</option>
+
+                            );
+                          })}
+                        </select>
                       </div>
                       <div className="form-group">
                         <label htmlFor="">Area Oficina Sección</label>
                         <select defaultValue="DEFAULT" onChange={handleChange} name="area_oficina_seccion_id" required className="form-select custom-select mr-sm-2">
-                          <option value="DEFAULT" disabled>--- Elegir Subunidad ---</option>
-
-                          {subunidades.map((objTipoFormato, i) => {
+                          <option value="DEFAULT" disabled>--- Elegir Subunidad---</option>
+                          {areaoficinaseccion.map((objTipoFormato, i) => {
+                            let { subunidad } = objTipoFormato
                             return (
-                              <option key={objTipoFormato.id} value={objTipoFormato.id} >{objTipoFormato.nombre}</option>
+                              <option key={objTipoFormato.id} value={objTipoFormato.id}>{objTipoFormato.nombre + " |-> " + subunidad.nombre}</option>
+
                             );
                           })}
+
                         </select>
                       </div>
                       <div className="form-group">
-                        <label htmlFor="">Personal_id</label>
-                        <select defaultValue="DEFAULT" onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
-                          <option value="DEFAULT" disabled>--- Elegir Personal ---</option>
-
-                          {personal.map((objPersonal, i) => {
-                            return (
-                              <option key={objPersonal.id} value={objPersonal.id} >{objPersonal.apellido}</option>
-                            );
-                          })}
-                        </select>
+                        <label htmlFor="">Estado del Bien: </label>
+                        <input type="text" className="form-control"
+                          value={estado_del_bien} name="estado_del_bien" onChange={handleChange} />
                       </div>
+                      <div className="form-group">
+                        <label htmlFor="">Observaciones: </label>
+                        <textarea className="form-control" rows={4} cols={50}
+                          value={observaciones} name="observaciones" onChange={handleChange} />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="">Fecha: </label>
+                        <input type="date" className="form-control"
+                          value={fecha} name="fecha" onChange={handleChange} />
+                      </div>
+
+                      <div className="form-group">
+                        <label htmlFor="">Documento-Acta entrega y recepción: </label>
+                        <input type="file" className="form-control"
+                          name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="">Documento-Oficio regularización: </label>
+                        <input type="file" className="form-control"
+                          name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="">Id del Bien: </label>
+                        <input type="text" className="form-control"
+                          value={idActualDelBien} name="bien_id" onChange={handleChange} readOnly />
+                      </div>
+
+
                       {/* <div className="form-group">
                         <label htmlFor="">Tipo bien</label>
                         <input type="text" className="form-control"
@@ -619,7 +689,7 @@ console.log(dataHistorial)
                     </form>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="secondary" onClick={handleCloseReasignar}>
                       Cerrar
                     </Button>
 

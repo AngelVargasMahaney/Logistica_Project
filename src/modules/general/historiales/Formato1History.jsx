@@ -20,6 +20,7 @@ const Formato1History = () => {
         setCargando(true)
         const idUrl = params.id;
         getHistorialFormatoById(idUrl).then(rpta => {
+            console.log(rpta)
             setData(rpta.data);
             setCargando(false)
         })
