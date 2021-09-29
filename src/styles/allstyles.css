@@ -108,7 +108,7 @@ cursor: pointer;
 .loader__main {
     position: relative;
     display: flex;
-   
+    height: 100vh;
     left: 50%;
     transform: translateX(-50%);
     align-items: center;
@@ -116,8 +116,7 @@ cursor: pointer;
     width: 100%;
     color: white;
     max-width: 14.6rem;
-    margin-top: 7.3rem;
-    margin-bottom: 7.3rem;
+
   }
   .loader__main:before,
   .loader__main:after {

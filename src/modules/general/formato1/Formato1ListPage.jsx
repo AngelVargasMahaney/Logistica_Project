@@ -34,8 +34,7 @@ const Formato1ListPage = () => {
     personal_id: ""
   })
 
-  let { estado_del_bien, fecha, observaciones, bien_id, tipo_bien, area_oficina_seccion_id,
-    personal_id } = formulario
+  let { estado_del_bien, fecha, observaciones, bien_id } = formulario
 
   const [showModall, setShow] = useState(false);
   const [showModalReasignar, setshowModalReasignar] = useState(false);
@@ -352,6 +351,7 @@ console.log(dataHistorial)
                                         className="tamaño-icono-pdf rounded mx-auto d-block"
                                         alt="some value"
                                         title="Codigo Qr del B>ien"
+                                        
                                         src={objFormato.codigo_qr}
                                         onClick={() =>
                                           showModal(objFormato.codigo_qr)

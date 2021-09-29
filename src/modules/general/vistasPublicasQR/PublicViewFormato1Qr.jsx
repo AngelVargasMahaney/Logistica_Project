@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { getInfoFormatoById } from '../../../services/bienesPublicosService'
 
 
@@ -21,6 +21,7 @@ const PublicViewFormato1Qr = () => {
 
     useEffect(() => {
         traerData();
+        //eslint-disable-next-line
     }, [])
 
 
