@@ -5,7 +5,9 @@
 .miTabla {
     font-size: 12px;
 }
-
+.personalizado{
+  font-size: 10px !important;
+}
 
 .imagen_bien {
     width: 200px;

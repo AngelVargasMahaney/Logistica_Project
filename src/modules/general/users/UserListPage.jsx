@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import { deleteUsuarioById, getUsuarios } from '../../../services/usuarioService'
+import { deleteUsuarioById, getUsuarios, putActiveUsuarioById, putDesactiveUsuarioById } from '../../../services/usuarioService'
 
 
 import AdminSidebar from '../../admin/components/AdminSidebar';
 import GeneralNavBar from '../../layout/GeneralNavBar';
-
+import swal from 'sweetalert2';
 const UserListPage = () => {
 
     const urlUsuarioCrear = '/admin/usuario/crear'
@@ -26,7 +26,21 @@ const UserListPage = () => {
         traerUsuarios()
     }, [])
 
-
+    const cambiarEstado = (usuario) => {
+        if (usuario.is_active) {
+            putDesactiveUsuarioById(usuario.id).then((rpta) => {
+                if (rpta.status === 200) {
+                    traerUsuarios()
+                }
+            });
+        } else {
+            putActiveUsuarioById(usuario.id).then((rpta) => {
+                if (rpta.status === 200) {
+                    traerUsuarios()
+                }
+            });
+        }
+    };
     const eliminarUsuario = id => {
         Swal.fire({
             title: '¿Seguro que deseas eliminar?',
@@ -70,8 +84,8 @@ const UserListPage = () => {
                                     <div className="col">
 
                                         {
-                                            cargando ? 
-                                            <div className="loader__father">
+                                            cargando ?
+                                                <div className="loader__father">
                                                     <div className="loader">
                                                         <div className="face">
                                                             <div className="circle"></div>
@@ -81,7 +95,7 @@ const UserListPage = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            :
+                                                :
                                                 <div className="table-responsive miTabla ">
                                                     <table className="table table-bordered">
                                                         <thead>
@@ -91,8 +105,8 @@ const UserListPage = () => {
                                                                 <th>Apellido</th>
                                                                 <th>DNI</th>
                                                                 <th>Email</th>
-                                                                <th>Fecha de Creación</th>
-                                                                <th>Última Actualización</th>
+                                                                <th>Estado</th>
+                                                                <th></th>
                                                                 <th className="acciones"></th>
                                                             </tr>
                                                         </thead>
@@ -102,14 +116,16 @@ const UserListPage = () => {
                                                                 usuarios.map((objUsuario, i) => {
                                                                     return (
                                                                         <tr key={objUsuario.id}>
-                                                                            
+
                                                                             <td>{objUsuario.id}</td>
                                                                             <td>{objUsuario.name}</td>
                                                                             <td>{objUsuario.apellido}</td>
                                                                             <td>{objUsuario.dni}</td>
                                                                             <td>{objUsuario.email}</td>
-                                                                            <td>{objUsuario.created_at}</td>
-                                                                            <td>{objUsuario.updated_at}</td>
+                                                                            <td>{objUsuario.is_active ? (<>ACTIVO</>) : (<>DESACTIVO</>)}  </td>
+                                                                            <td><button type="button" className="btn btn-outline-dark btn-sm personalizado" onClick={() => {
+                                                                                cambiarEstado(objUsuario);
+                                                                            }} >{objUsuario.is_active ? (<>DESACTIVAR</>) : (<>ACTIVAR</>)} </button></td>
                                                                             <td>
 
 

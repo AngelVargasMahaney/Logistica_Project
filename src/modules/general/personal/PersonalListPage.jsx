@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import { getPersonal, deletePersonalById } from '../../../services/personalService'
+import { getPersonal, deletePersonalById, putActivePersonalById, putDesactivePersonalById } from '../../../services/personalService'
 
 
 import AdminSidebar from '../../admin/components/AdminSidebar';
@@ -27,6 +27,21 @@ const PersonalListPage = () => {
         traerData();
     }, [])
 
+    const cambiarEstado = (personal) => {
+        if (personal.is_active) {
+            putDesactivePersonalById(personal.id).then((rpta) => {
+                if (rpta.status === 200) {
+                    traerData()
+                }
+            });
+        } else {
+            putActivePersonalById(personal.id).then((rpta) => {
+                if (rpta.status === 200) {
+                    traerData()
+                }
+            });
+        }
+    };
 
     const eliminar = id => {
         Swal.fire({
@@ -97,8 +112,8 @@ const PersonalListPage = () => {
                                                                 <th>Apellidos</th>
                                                                 <th>CIP</th>
                                                                 <th>DNI</th>
-                                                                <th>Fecha de Creación</th>
-                                                                <th>Última Actualización</th>
+                                                                <th>Estado</th>
+                                                                <th></th>
                                                                 <th className="acciones"></th>
                                                             </tr>
                                                         </thead>
@@ -114,8 +129,10 @@ const PersonalListPage = () => {
                                                                             <td>{obj.apellido}</td>
                                                                             <td>{obj.cip}</td>
                                                                             <td>{obj.dni}</td>
-                                                                            <td>{obj.created_at}</td>
-                                                                            <td>{obj.updated_at}</td>
+                                                                            <td>{obj.is_active? (<>ACTIVO</>):(<>DESACTIVO</>)}  </td>
+                                                                            <td><button type="button" className="btn btn-outline-dark btn-sm personalizado" onClick={() => {
+                                                                                cambiarEstado(obj);
+                                                                            }} >{obj.is_active ? (<>DESACTIVAR</>) : (<>ACTIVAR</>)} </button></td>
                                                                             <td>
 
                                                                                 <button data-toggle="tooltip" data-placement="top" title="Eliminar"
