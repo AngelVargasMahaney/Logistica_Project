@@ -20,6 +20,7 @@ const Formato1History = () => {
         setCargando(true)
         const idUrl = params.id;
         getHistorialFormatoById(idUrl).then(rpta => {
+            console.log(rpta)
             setData(rpta.data);
             setCargando(false)
         })
@@ -173,7 +174,7 @@ const Formato1History = () => {
 
                                                     </div></div>)
                                             })}
-                                            {historial?.length == 0 ? (<>El historial esta vacio, el bien no ha rotado</>) : (<></>)}
+                                            {historial?.length === 0 ? (<>El historial esta vacio, el bien no ha rotado</>) : (<></>)}
                                         </div>
                                     </div>
                                 </div></div>

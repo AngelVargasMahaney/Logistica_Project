@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { getInfoEquipoPolicialById } from '../../../services/bienesPublicosService'
 
 const PublicViewEquipoPolicialQr = () => {
@@ -20,6 +20,7 @@ const PublicViewEquipoPolicialQr = () => {
 
     useEffect(() => {
         traerData();
+        //eslint-disable-next-line
     }, [])
 
     return (

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { deleteDesinternarBienFormato1, getBienesInternadosFormato1 } from '../../../services/internamientoFormato1Service'
 import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'

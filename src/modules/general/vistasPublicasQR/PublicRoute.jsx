@@ -1,6 +1,5 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import HistorialBienesAux from './HistorialBienesAux'
 import PublicGeneralView from './PublicGeneralView'
 
 import PublicViewBienesAuxQr from './PublicViewBienesAuxQr'
