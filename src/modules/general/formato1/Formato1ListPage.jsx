@@ -40,7 +40,9 @@ const Formato1ListPage = () => {
 
   const [showModall, setShow] = useState(false);
   const [showModalReasignar, setshowModalReasignar] = useState(false);
+  const [showModalInternar, setshowModalInternar] = useState(false);
   const handleClose = () => setShow(false);
+  const handleCloseInternar = () => setshowModalInternar(false);
   const handleCloseReasignar = () => setshowModalReasignar(false);
   const handleShowModalInternarBien = () => setShow(true);
   const handleShowModalReasignarBien = () => setshowModalReasignar(true);
@@ -81,7 +83,7 @@ const Formato1ListPage = () => {
     formData.append('observaciones', formulario.observaciones)
     formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
     formData.append('documento_oficio_regularizacion', documentoRegularizacion)
-    formData.append('bien_id', formulario.bien_id)
+    formData.append('bien_id', idActualDelBien)
     formData.append('tipo_bien', formulario.tipo_bien)
 
 
@@ -172,6 +174,23 @@ const Formato1ListPage = () => {
 
     // })
   }
+
+  const showModalInternarBien = (idBien) => {
+    setIdActualDelBien(idBien);
+
+    setshowModalInternar(true);
+    console.log("Internar:ENTRANDO AL LLAMADO DE DATA CON ID: " + idBien)
+    // setCargando(true);
+    // getHistorialFormatoById(idBien).then(rpta => {
+    //   console.log("adwdwaw" + rpta)
+    //   setDataHistorial(rpta.data);
+    //   console.log("PRUEBAA" + rpta);
+    //   setCargando(false);
+
+    // })
+  }
+
+
   const prueba = () => {
 
     if (idActualDelBien === "") {
@@ -404,7 +423,7 @@ const Formato1ListPage = () => {
                                       <img
                                         className="tamaño-icono-pdf rounded mx-auto d-block"
                                         alt="some value"
-                                        title={objFormato.documento_nombre_original}
+                                        title={objFormato.descripcion}
                                         src={objFormato.imagen_bien || imgNoDisponible}
                                         onClick={() =>
                                           showModal(objFormato.imagen_bien)
@@ -456,6 +475,19 @@ const Formato1ListPage = () => {
                                         {" "}
                                         <i className="fas fa-clipboard-check"></i>
                                       </Button>
+                                      <Button
+
+                                        onClick={() => {
+                                          showModalInternarBien(objFormato.id)
+
+                                        }}
+                                        className="btn btn-info"
+                                        title="Internar un Bien"
+                                      >
+                                        {" "}
+                                        <i className="fas fa-angle-double-down"></i>
+                                      </Button>
+
 
                                     </td>
                                   </tr>
@@ -468,13 +500,13 @@ const Formato1ListPage = () => {
                   </div>
                 </div>
 
-                <button type="button" className="btn btn-primary btn-lg btn-block mt-5 mb-5" onClick={handleShowModalInternarBien}>Internar un Bien</button>
-                <button type="button" className="btn btn-dark btn-lg btn-block mt-5 mb-5" onClick={handleShowModalReasignarBien}>Reasignar un Bien</button>
+                {/* <button type="button" className="btn btn-primary btn-lg btn-block mt-5 mb-5" onClick={handleShowModalInternarBien}>Internar un Bien</button> */}
+                {/* <button type="button" className="btn btn-dark btn-lg btn-block mt-5 mb-5" onClick={handleShowModalReasignarBien}>Reasignar un Bien</button> */}
 
             
 
 
-                <Modal show={showModall} onHide={handleClose}>
+                <Modal show={showModalInternar} onHide={handleCloseInternar}>
                   <Modal.Header closeButton>
                     <Modal.Title>Internamiento de un bien del Formato 1</Modal.Title>
                   </Modal.Header>
@@ -524,7 +556,7 @@ const Formato1ListPage = () => {
                     </form>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="secondary" onClick={handleCloseInternar}>
                       Cerrar
                     </Button>
 
