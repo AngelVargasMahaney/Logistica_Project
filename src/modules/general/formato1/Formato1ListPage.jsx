@@ -285,6 +285,7 @@ const Formato1ListPage = () => {
   //Variable "historial" que permite entrar al arreglo "historial" dentro de mi arreglo dataHistorial
   let { historial } = dataHistorial;
 
+  
 
 
   return (
