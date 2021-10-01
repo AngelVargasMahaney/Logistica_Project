@@ -537,7 +537,7 @@ const Formato1ListPage = () => {
                         <input type="file" className="form-control"
                           name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
                       </div>
-                      <div className="form-group">
+                      <div className="form-group" hidden>
                         <label htmlFor="">Id del Bien:</label>
                         <input type="text" className="form-control"
                           value={idActualDelBien} name="bien_id" onChange={handleChange} />
@@ -700,7 +700,7 @@ const Formato1ListPage = () => {
                         <input type="file" className="form-control"
                           name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
                       </div>
-                      <div className="form-group">
+                      <div className="form-group" hidden>
                         <label htmlFor="">Id del Bien: </label>
                         <input type="text" className="form-control"
                           value={idActualDelBien} name="bien_id" onChange={handleChange} readOnly />
