@@ -3,6 +3,11 @@ import { authAxios } from './axiosHelpers';
 
 
 
+export const getPersonalActivo = async () => {
+    const rpta = await authAxios.get(`${URL_BACKEND}/personal?active=1`)
+    return rpta
+}
+
 export const getPersonal = async() => {
 
     const rpta = await authAxios.get(`${URL_BACKEND}/personal`)
