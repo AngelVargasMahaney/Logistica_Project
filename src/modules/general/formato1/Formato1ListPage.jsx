@@ -12,7 +12,7 @@ import Modal from "react-bootstrap/Modal";
 import { Button } from "react-bootstrap";
 import { postInternarBienFormato1, postReasignarBienFormato1 } from "../../../services/internamientoFormato1Service";
 import { getSubunidades } from "../../../services/subunidadesService";
-import { getPersonal } from "../../../services/personalService";
+import { getPersonal, getPersonalActivo } from "../../../services/personalService";
 import { useParams } from 'react-router-dom'
 import { getHistorialFormatoById } from "../../../services/historialBienesService";
 import imgNoDisponible from "../../../assets/23.png"
@@ -285,6 +285,18 @@ const Formato1ListPage = () => {
   //Variable "historial" que permite entrar al arreglo "historial" dentro de mi arreglo dataHistorial
   let { historial } = dataHistorial;
 
+  const [personalActivo, setPersonalActivo] = useState([]);
+  const traerPersonalActivo = () => {
+    setCargando(true)
+    getPersonalActivo().then((rpta) => {
+      //console.log(rpta);
+      setPersonalActivo(rpta.data);
+      setCargando(false)
+    });
+  };
+  useEffect(() => {
+    traerPersonalActivo();
+  }, []);
 
 
   return (
@@ -537,7 +549,7 @@ const Formato1ListPage = () => {
                         <input type="file" className="form-control"
                           name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
                       </div>
-                      <div className="form-group">
+                      <div className="form-group" hidden>
                         <label htmlFor="">Id del Bien:</label>
                         <input type="text" className="form-control"
                           value={idActualDelBien} name="bien_id" onChange={handleChange} />
@@ -651,7 +663,7 @@ const Formato1ListPage = () => {
                         <select defaultValue="DEFAULT" onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
                           <option value="DEFAULT" disabled>--- Elegir Personal---</option>
 
-                          {personal.map((objPersonal, i) => {
+                          {personalActivo.map((objPersonal, i) => {
                             return (
 
                               <option key={objPersonal.id} value={objPersonal.id} >{objPersonal.grado + " |-> " + objPersonal.apellido + " " + objPersonal.nombre}</option>
@@ -700,7 +712,7 @@ const Formato1ListPage = () => {
                         <input type="file" className="form-control"
                           name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
                       </div>
-                      <div className="form-group">
+                      <div className="form-group" hidden>
                         <label htmlFor="">Id del Bien: </label>
                         <input type="text" className="form-control"
                           value={idActualDelBien} name="bien_id" onChange={handleChange} readOnly />
