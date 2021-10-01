@@ -12,7 +12,7 @@ import Modal from "react-bootstrap/Modal";
 import { Button } from "react-bootstrap";
 import { postInternarBienFormato1, postReasignarBienFormato1 } from "../../../services/internamientoFormato1Service";
 import { getSubunidades } from "../../../services/subunidadesService";
-import { getPersonal } from "../../../services/personalService";
+import { getPersonal, getPersonalActivo } from "../../../services/personalService";
 import { useParams } from 'react-router-dom'
 import { getHistorialFormatoById } from "../../../services/historialBienesService";
 import imgNoDisponible from "../../../assets/23.png"
@@ -285,7 +285,18 @@ const Formato1ListPage = () => {
   //Variable "historial" que permite entrar al arreglo "historial" dentro de mi arreglo dataHistorial
   let { historial } = dataHistorial;
 
-  
+  const [personalActivo, setPersonalActivo] = useState([]);
+  const traerPersonalActivo = () => {
+    setCargando(true)
+    getPersonalActivo().then((rpta) => {
+      //console.log(rpta);
+      setPersonalActivo(rpta.data);
+      setCargando(false)
+    });
+  };
+  useEffect(() => {
+    traerPersonalActivo();
+  }, []);
 
 
   return (
@@ -652,7 +663,7 @@ const Formato1ListPage = () => {
                         <select defaultValue="DEFAULT" onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
                           <option value="DEFAULT" disabled>--- Elegir Personal---</option>
 
-                          {personal.map((objPersonal, i) => {
+                          {personalActivo.map((objPersonal, i) => {
                             return (
 
                               <option key={objPersonal.id} value={objPersonal.id} >{objPersonal.grado + " |-> " + objPersonal.apellido + " " + objPersonal.nombre}</option>
