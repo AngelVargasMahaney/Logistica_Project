@@ -36,3 +36,22 @@ export const putPersonalById = async(objUsuario) => {
         JSON.stringify(objUsuario), { headers: { 'Content-Type': 'application/json' } })
     return rpta
 }
+
+export const putActivePersonalById = async (id) => {
+    const rpta = await authAxios.put(`${URL_BACKEND}/personal/changeState/${id}`, 
+    
+    JSON.stringify({
+        is_active: true
+    }),
+    { headers: { 'Content-Type': 'application/json'}})
+    return rpta
+}
+
+export const putDesactivePersonalById = async (id) => {
+    const rpta = await authAxios.put(`${URL_BACKEND}/personal/changeState/${id}`, 
+    JSON.stringify({
+        is_active: false
+    }),
+    { headers: { 'Content-Type': 'application/json'}})
+    return rpta
+}
