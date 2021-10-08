@@ -15,8 +15,13 @@ export const getBienesInternadosFormato1 = async () => {
     return rpta
 }
 
-export const deleteDesinternarBienFormato1 = async (id) => {
+export const deleteDesinternarBien = async (id) => {
     const rpta = await authAxios.post(`${URL_BACKEND}/bienes-internados/desinternar/${id}`)
+    return rpta
+}
+export const getBienesInternadosBienesAuxiliares = async () => {
+
+    const rpta = await authAxios.get(`${URL_BACKEND}/bienes-internados?tipo_bien=2`)
     return rpta
 }
 
