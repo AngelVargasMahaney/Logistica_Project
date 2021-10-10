@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { deleteDesinternarBienFormato1, getBienesInternadosFormato1 } from '../../../services/internamientoFormato1Service'
+import { deleteDesinternarBienFormato1, getBienesInternadosFormato1, postEditarInternamientoById } from '../../../services/internamientoFormato1Service'
 import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
 import Swal from 'sweetalert2'
 import Modal from "react-bootstrap/Modal";
+import { Link } from '@material-ui/core'
+import { Button } from 'react-bootstrap'
 const InternamientoFormato1ListPage = () => {
 
     const [listaInternamientoFormato1, setListaInternamientoFormato1] = useState([])
@@ -20,7 +22,7 @@ const InternamientoFormato1ListPage = () => {
     useEffect(() => {
         traerData()
     }, [])
-
+    
     const [pdfActual, setpdfActual] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const showModal = (pdfActual) => {
@@ -33,9 +35,9 @@ const InternamientoFormato1ListPage = () => {
     };
     const desinternarBien = id => {
         Swal.fire({
-            title: '¿Seguro que deseas internar el bien?',
+            title: '¿Seguro que deseas desinternar el bien?',
             icon: 'warning',
-            text: 'Los cambios serán irreversibles 😮',
+            text: 'El bien regresará a la lista de general',
             showCancelButton: true
         }).then((rpta) => {
             console.log("BIEN DESINTERNADO")
@@ -53,6 +55,65 @@ const InternamientoFormato1ListPage = () => {
                         traerData() //Se llama otra vez para setear la variable de estado y recargar la página automáticamente al borrar un usuario
                     }
                 })
+            }
+        })
+    }
+    const [showModalReasignar, setshowModalReasignar] = useState(false);
+    const [idActualDelBien, setIdActualDelBien] = useState("")
+    const handleCloseReasignar = () => setshowModalReasignar(false);
+
+    const showModalReasignarBien = (idBien) => {
+        setIdActualDelBien(idBien);
+
+        setshowModalReasignar(true);
+        console.log("ENTRANDO AL LLAMADO DE DATA CON ID: " + idBien)
+        // setCargando(true);
+        // getHistorialFormatoById(idBien).then(rpta => {
+        //   console.log("adwdwaw" + rpta)
+        //   setDataHistorial(rpta.data);
+        //   console.log("PRUEBAA" + rpta);
+        //   setCargando(false);
+
+        // })
+    }
+    const [formularioInternamiento, setFormularioInternamiento] = useState(({
+        codigo_bien: "",
+        descripcion: "",
+        marca: "",
+        estado_del_bien: "",
+        observaciones: "",
+        fecha: "",
+    }))
+    const handleChange = (e) => {
+        setFormularioInternamiento({
+            ...formularioInternamiento,
+            [e.target.name]: e.target.value
+        })
+    }
+    const token = localStorage.getItem('token')
+    const config = {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    const handleSubmit = e => {
+        e.preventDefault();
+        const formData = new FormData();
+       
+        formData.append('observaciones', formularioInternamiento.observaciones)
+        formData.append('estado_del_bien', formularioInternamiento.estado_del_bien)
+        postEditarInternamientoById(formData, config, idActualDelBien).then((rpta) => {
+            if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
+                console.log("Datos actualizados correctamente")
+                Swal.fire(
+                    'Internamiento Actualizado',
+                    'El internamiento se actualizó correctamente',
+                    'success'
+                )
+                traerData()
+            } else {
+                console.log("Error en postEditarInternamiento")
             }
         })
     }
@@ -137,7 +198,7 @@ const InternamientoFormato1ListPage = () => {
                                                                         <tr key={objLista.id}>
                                                                             <td>{i + 1}</td>
 
-                                                                            <td>{objLista.bien_id}</td>
+                                                                            <td>{objLista.formato.codigo}</td>
                                                                             <td>{objLista.formato.descripcion}</td>
                                                                             <td>{objLista.formato.marca}</td>
                                                                             <td>{objLista.estado_del_bien}</td>
@@ -179,6 +240,14 @@ const InternamientoFormato1ListPage = () => {
                                                                                     Desinternar Bien <i className="fa fa-trash"></i>
 
                                                                                 </button>
+                                                                                <Button
+                                                                                    onClick={() => { showModalReasignarBien(objLista.id) }}
+                                                                                    className="btn btn-warning"
+                                                                                    title="Editar"
+                                                                                >
+                                                                                    {" "}
+                                                                                    <i className="fa fa-pencil"></i>
+                                                                                </Button>
 
                                                                             </td>
                                                                         </tr>
@@ -196,6 +265,39 @@ const InternamientoFormato1ListPage = () => {
                     </main>
                 </div>
             </div>
+
+            <Modal show={showModalReasignar} onHide={handleCloseReasignar}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Internamiento de un bien del Formato 1</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <label htmlFor="">Estado del Bien:</label>
+                            <input type="text" className="form-control"
+                                name="estado_del_bien" onChange={handleChange} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="">Observaciones:</label>
+                            <input type="text" className="form-control"
+                                name="observaciones" onChange={handleChange} />
+                        </div>
+
+                        <div className="form-group">
+                            <button className="btn btn-primary" type="submit">Actualizar</button>
+                        </div>
+                    </form>
+                </Modal.Body>
+                <Modal.Footer>
+
+
+
+                    <Button variant="secondary" onClick={handleCloseReasignar}>
+                        Cerrar
+                    </Button>
+
+                </Modal.Footer>
+            </Modal>
         </>
 
     )

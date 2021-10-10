@@ -18,3 +18,12 @@ export const getHistorialEquipoPolicialById = async(id) => {
     return rpta
 }
 
+export const deleteHistorialById = async(id) => {
+    const rpta = await authAxios.delete(`${URL_BACKEND}/historial/${id}`)
+    return rpta
+}
+
+export const postEditarHistorialById = async(objFile, config, id)=>{
+    const rpta = await authAxios.post(`${URL_BACKEND}/historial/${id}`,objFile, config)
+    return rpta
+}

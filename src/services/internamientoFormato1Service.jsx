@@ -15,6 +15,7 @@ export const getBienesInternadosFormato1 = async () => {
     return rpta
 }
 
+
 export const deleteDesinternarBienFormato1 = async (id) => {
     const rpta = await authAxios.post(`${URL_BACKEND}/bienes-internados/desinternar/${id}`)
     return rpta
@@ -24,5 +25,10 @@ export const postReasignarBienFormato1 = async (objFile, config) => {
     const rpta = await authAxios.post(`${URL_BACKEND}/reasignar-bien`,
         objFile,
         config)
+    return rpta
+}
+
+export const postEditarInternamientoById = async(objFile, config, id)=>{
+    const rpta = await authAxios.post(`${URL_BACKEND}/bienes-internados/${id}`,objFile, config)
     return rpta
 }

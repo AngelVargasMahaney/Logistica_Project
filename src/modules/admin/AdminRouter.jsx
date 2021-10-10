@@ -52,6 +52,7 @@ const AdminRouter = () => {
                     <InternamientoFormato1ListPage/>
                 </Route>
 
+            
 
 
                 <Route path="/admin/usuario/editar/:id">
