@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react'
+<<<<<<< HEAD
 import { deleteDesinternarBienFormato1, getBienesInternadosFormato1, postEditarInternamientoById } from '../../../services/internamientoFormato1Service'
+=======
+import { deleteDesinternarBien, getBienesInternadosFormato1 } from '../../../services/internamientoFormato1Service'
+>>>>>>> b4bc1504ab7098f8f7689f2594efe7f227780a22
 import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
 import Swal from 'sweetalert2'
@@ -49,7 +53,7 @@ const InternamientoFormato1ListPage = () => {
                     '',
                     'success'
                 )
-                deleteDesinternarBienFormato1(id).then((rpta) => {
+                deleteDesinternarBien(id).then((rpta) => {
                     if (rpta.status === 200) {
                         //Se comprueba que se eliminó correctamente
                         traerData() //Se llama otra vez para setear la variable de estado y recargar la página automáticamente al borrar un usuario

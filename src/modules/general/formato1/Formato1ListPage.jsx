@@ -281,11 +281,10 @@ const Formato1ListPage = () => {
     })
 
   };
-
-
   useEffect(() => {
     traerSubunidades();
   }, []);
+  
   //Aqui los metodos para traer las personales
   const [personal, setPersonal] = useState([]);
   const traerPersonal = () => {

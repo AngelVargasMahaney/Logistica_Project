@@ -23,8 +23,7 @@ export const getBienAuxiliarById = async(id) => {
     return rpta
 }
 
-export const putBienAuxiliarById = async(objUsuario) => {
-    const rpta = await authAxios.put(`${URL_BACKEND}/bienes-auxiliares/${objUsuario.id}`,
-        JSON.stringify(objUsuario), { headers: { 'Content-Type': 'application/json' } })
+export const postBienAuxiliarById = async(objUsuario, config, id) => {
+    const rpta = await authAxios.post(`${URL_BACKEND}/bienes-auxiliares/${id}`, objUsuario, config)
     return rpta
 }
