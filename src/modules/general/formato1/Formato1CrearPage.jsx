@@ -237,7 +237,7 @@ const Formato1CrearPage = () => {
                                                     Fecha de Adquisición
                                                 </label>
                                                 <input
-                                                    type="text"
+                                                    type="date"
                                                     className="form-control my-2"
                                                     placeholder="17-07-2021"
                                                     name="fecha_adquisicion"

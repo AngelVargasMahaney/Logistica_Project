@@ -17,6 +17,7 @@ import { useParams } from 'react-router-dom'
 import { getHistorialFormatoById } from "../../../services/historialBienesService";
 import imgNoDisponible from "../../../assets/23.png"
 import { getAreaOficinaSeccion } from "../../../services/areaOficinaSeccionService";
+import { getReporteFormato1Excel } from "../../../services/reportesService";
 const Formato1ListPage = () => {
   const urlFormatoCrear = "/admin/formatos/crear";
   const [formatos, setFormatos] = useState([]);
@@ -79,7 +80,7 @@ const Formato1ListPage = () => {
 
     const formData = new FormData();
     formData.append('estado_del_bien', formulario.estado_del_bien)
-    formData.append('fecha:', formulario.fecha)
+    formData.append('fecha', formulario.fecha)
     formData.append('observaciones', formulario.observaciones)
     formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
     formData.append('documento_oficio_regularizacion', documentoRegularizacion)
@@ -91,6 +92,7 @@ const Formato1ListPage = () => {
 
     postInternarBienFormato1(formData, config).then((rpta) => {
       if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
+        setshowModalInternar(false)
         console.log("Datos subida correctamente")
         Swal.fire(
           'Internamiento Exitoso',
@@ -115,7 +117,7 @@ const Formato1ListPage = () => {
   const handleSubmitReasignacion = e => {
 
     e.preventDefault();
-    
+
     const formDataReasignacion = new FormData();
     formDataReasignacion.append('estado_del_bien', formulario.estado_del_bien)
     formDataReasignacion.append('fecha:', formulario.fecha)
@@ -130,14 +132,27 @@ const Formato1ListPage = () => {
 
     postReasignarBienFormato1(formDataReasignacion, config).then((rpta) => {
 
+
       if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
         console.log("Datos subida correctamente")
-        Swal.fire(
-          'Reasignación Exitosa',
-          'La reasignación fue exitoso',
-          'success'
-        )
-        traerFormatos()
+
+        setshowModalReasignar(false)
+        Swal.fire({
+          title: 'Reasignación Exitosa',
+          text: 'La reasignación fue exitosa',
+          icon: 'success',
+
+          confirmButtonColor: '#3085d6',
+
+          confirmButtonText: 'Continuar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            traerFormatos()
+
+          }
+        })
+
+
       }
 
       console.log(rpta)
@@ -190,7 +205,8 @@ const Formato1ListPage = () => {
     // })
   }
 
-
+  //Variable "historial" que permite entrar al arreglo "historial" dentro de mi arreglo dataHistorial
+  let { historial } = dataHistorial;
   const prueba = () => {
 
     if (idActualDelBien === "") {
@@ -211,8 +227,10 @@ const Formato1ListPage = () => {
   console.log(dataHistorial)
   useEffect(() => {
     prueba()
-  }, [idActualDelBien])
+  }, [idActualDelBien, historial, dataHistorial])
   // Metodos para traer el historial
+
+
 
 
   const hideModal = () => {
@@ -234,7 +252,7 @@ const Formato1ListPage = () => {
 
   const eliminarFormato = (id) => {
     Swal.fire({
-      title: "¿Seguro que deseas eliminar?",
+      title: "¿Seguro que deseas eliminar el bien ?",
       icon: "warning",
       text: "Los cambios serán irreversibles 😮",
       showCancelButton: true,
@@ -263,10 +281,11 @@ const Formato1ListPage = () => {
     })
 
   };
+
+
   useEffect(() => {
     traerSubunidades();
   }, []);
-  
   //Aqui los metodos para traer las personales
   const [personal, setPersonal] = useState([]);
   const traerPersonal = () => {
@@ -281,8 +300,7 @@ const Formato1ListPage = () => {
     traerPersonal();
   }, []);
 
-  //Variable "historial" que permite entrar al arreglo "historial" dentro de mi arreglo dataHistorial
-  let { historial } = dataHistorial;
+
 
   const [personalActivo, setPersonalActivo] = useState([]);
   const traerPersonalActivo = () => {
@@ -297,6 +315,12 @@ const Formato1ListPage = () => {
     traerPersonalActivo();
   }, []);
 
+  const [generarReporte, setGenerarReporte] = useState("")
+  const reportes = () => {
+    getReporteFormato1Excel().then(() => {
+
+    })
+  }
 
   return (
     <>
@@ -313,6 +337,11 @@ const Formato1ListPage = () => {
                     {" "}
                     <i className="fa fa-list"></i> Lista de Bienes Internados
                   </Link>
+                  <Link onClick={reportes} className="btn btn-success">
+                    {" "}
+                    <i className="fas fa-file-excel"></i> Generar Reporte
+                  </Link>
+
 
                   <Link to={urlFormatoCrear} className="btn btn-primary ">
                     {" "}
@@ -514,7 +543,7 @@ const Formato1ListPage = () => {
                 {/* <button type="button" className="btn btn-primary btn-lg btn-block mt-5 mb-5" onClick={handleShowModalInternarBien}>Internar un Bien</button> */}
                 {/* <button type="button" className="btn btn-dark btn-lg btn-block mt-5 mb-5" onClick={handleShowModalReasignarBien}>Reasignar un Bien</button> */}
 
-            
+
 
 
                 <Modal show={showModalInternar} onHide={handleCloseInternar}>
@@ -560,7 +589,7 @@ const Formato1ListPage = () => {
                       </div> */}
 
                       <div className="form-group">
-                        <button className="btn btn-primary" type="submit">Internar</button>
+                        <button className="btn btn-primary" type="submit">Internar<i className="ml-2 fa fa-check"></i></button>
                       </div>
 
 
@@ -633,9 +662,9 @@ const Formato1ListPage = () => {
                                         <>
                                           <div key={item.id}>
                                             <h3>Ubicación Actual</h3>
-                                            <p>Subunidad: {item.area_oficina_seccion.subunidad.nombre} </p>
-                                            <p>Area: {item.area_oficina_seccion.nombre}</p>
-                                            <p>Persona Encargada: {item.personal.grado + " " + item.personal.apellido + " " + item.personal.nombre}</p>
+                                            <p>Subunidad: {item.area_oficina_seccion?.subunidad?.nombre} </p>
+                                            <p>Area: {item.area_oficina_seccion?.nombre}</p>
+                                            <p>Persona Encargada: {item.personal?.grado + " " + item.personal?.apellido + " " + item.personal?.nombre}</p>
                                           </div>
                                         </>
                                       )
@@ -725,7 +754,7 @@ const Formato1ListPage = () => {
                       </div> */}
 
                       <div className="form-group">
-                        <button className="btn btn-primary" type="submit">ReasignarBien</button>
+                        <button className="btn btn-primary" type="submit">Reasignar Bien<i className="ml-2 fa fa-check"></i></button>
                       </div>
 
 

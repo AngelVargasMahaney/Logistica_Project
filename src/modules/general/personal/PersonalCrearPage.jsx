@@ -5,6 +5,7 @@ import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
 
 import { postPersonal } from "../../../services/personalService";
+import Swal from 'sweetalert2';
 
 
 const PersonalCrearPage = () => {
@@ -43,7 +44,20 @@ const PersonalCrearPage = () => {
             console.log(rpta)
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
                 history.push(HISTORY)
+            }else{
+                Swal.fire(
+                    'Internamiento Fallido',
+                    'No se puede internar un bien dos veces',
+                    'error'
+                  )
             }
+        }).catch(err => {
+            console.log(err.response)
+            Swal.fire(
+                'Internamiento Fallido',
+                `${err.response.data.dni}`,
+                'error'
+              )
         })
     }
 
