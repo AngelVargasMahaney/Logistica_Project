@@ -31,3 +31,8 @@ export const postReasignarBienFormato1 = async (objFile, config) => {
         config)
     return rpta
 }
+
+export const postEditarInternamientoById = async(objFile, config, id)=>{
+    const rpta = await authAxios.post(`${URL_BACKEND}/bienes-internados/${id}`,objFile, config)
+    return rpta
+}
