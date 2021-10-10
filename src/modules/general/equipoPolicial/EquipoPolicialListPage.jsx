@@ -16,6 +16,7 @@ import { useParams } from 'react-router-dom'
 import { getHistorialFormatoById, getHistorialEquipoPolicialById } from "../../../services/historialBienesService";
 import imgNoDisponible from "../../../assets/23.png"
 import { getAreaOficinaSeccion } from "../../../services/areaOficinaSeccionService";
+import { getReporteFormato1Excel } from "../../../services/reportesService";
 
 
 const EquipoPolicialListPage = () => {
@@ -67,7 +68,13 @@ const EquipoPolicialListPage = () => {
         personal_id: ""
     })
 
+    //  
+    const [generarReporte, setGenerarReporte] = useState("")
+    const reportes = () => {
+        getReporteFormato1Excel().then(() => {
 
+        })
+    }
     //
     const showModalInternarBien = (idBien) => {
         setIdActualDelBien(idBien);
@@ -320,7 +327,8 @@ const EquipoPolicialListPage = () => {
                                         {" "}
                                         <i className="fa fa-list"></i> Lista de Bienes Internados
                                     </Link>
-                                    <Link to={URL_CREAR} className="btn btn-primary "> <i className="fa fa-plus"></i> Crear </Link>
+                                    
+
                                 </div>
 
                                 <div className="row mt-2">
