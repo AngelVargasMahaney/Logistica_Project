@@ -24,6 +24,11 @@ export const getBienesInternadosBienesAuxiliares = async () => {
     const rpta = await authAxios.get(`${URL_BACKEND}/bienes-internados?tipo_bien=2`)
     return rpta
 }
+export const getBienesInternadosEquipoPolicial = async () => {
+
+    const rpta = await authAxios.get(`${URL_BACKEND}/bienes-internados?tipo_bien=3`)
+    return rpta
+}
 
 export const postReasignarBienFormato1 = async (objFile, config) => {
     const rpta = await authAxios.post(`${URL_BACKEND}/reasignar-bien`,
