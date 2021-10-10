@@ -52,15 +52,12 @@ const AdminRouter = () => {
                 <Route path="/admin/bienes-internados/formato1">
                     <InternamientoFormato1ListPage/>
                 </Route>
-<<<<<<< HEAD
 
             
 
-=======
                 <Route path="/admin/bienes-internados/bienes-auxiliares">
                     <InternamientoBienesAuxiliaresListPage/>
                 </Route>
->>>>>>> b4bc1504ab7098f8f7689f2594efe7f227780a22
 
                 <Route path="/admin/usuario/editar/:id">
                     <UserEditarPage />

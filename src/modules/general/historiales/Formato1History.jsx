@@ -120,7 +120,7 @@ const Formato1History = () => {
         if(documentoEntregaRecepcion!==null){
             formData.append('documento_acta_entrega_recepcion', documentoEntregaRecepcion)
         }else{
-            formData.append('documento_acta_entrega_recepcion', documentoEntregaRecepcion).removeItem()
+            formData.delete('documento_acta_entrega_recepcion', documentoEntregaRecepcion)
         }
         
 

@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react'
-<<<<<<< HEAD
-import { deleteDesinternarBienFormato1, getBienesInternadosFormato1, postEditarInternamientoById } from '../../../services/internamientoFormato1Service'
-=======
-import { deleteDesinternarBien, getBienesInternadosFormato1 } from '../../../services/internamientoFormato1Service'
->>>>>>> b4bc1504ab7098f8f7689f2594efe7f227780a22
+import { deleteDesinternarBien, getBienesInternadosFormato1, postEditarInternamientoById } from '../../../services/internamientoFormato1Service'
 import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
 import Swal from 'sweetalert2'
@@ -17,7 +13,9 @@ const InternamientoFormato1ListPage = () => {
     const traerData = () => {
         setCargando(true)
         getBienesInternadosFormato1().then(rpta => {
+            console.log("Lista de bienes internados")
             console.log(rpta)
+            
             setListaInternamientoFormato1(rpta.data)
             setCargando(false)
         })
@@ -91,7 +89,7 @@ const InternamientoFormato1ListPage = () => {
     const handleChange = (e) => {
         setFormularioInternamiento({
             ...formularioInternamiento,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
         })
     }
     const token = localStorage.getItem('token')
@@ -101,12 +99,19 @@ const InternamientoFormato1ListPage = () => {
             'Authorization': `Bearer ${token}`
         }
     }
+//    for(let i = 0; i<listaInternamientoFormato1.length;i++){
+//        console.log(listaInternamientoFormato1[i])
+//    }
     const handleSubmit = e => {
         e.preventDefault();
         const formData = new FormData();
        
         formData.append('observaciones', formularioInternamiento.observaciones)
         formData.append('estado_del_bien', formularioInternamiento.estado_del_bien)
+        for(let i = 0; i<listaInternamientoFormato1.length;i++){
+            formData.append('codigo',listaInternamientoFormato1[i])
+        }
+        formData.append('', formularioInternamiento.codigo_bien)
         postEditarInternamientoById(formData, config, idActualDelBien).then((rpta) => {
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
                 console.log("Datos actualizados correctamente")
@@ -121,6 +126,8 @@ const InternamientoFormato1ListPage = () => {
             }
         })
     }
+
+   
 
     return (
 
@@ -198,6 +205,7 @@ const InternamientoFormato1ListPage = () => {
                                                             </Modal>
                                                             {
                                                                 listaInternamientoFormato1.map((objLista, i) => {
+                                                                 
                                                                     return (
                                                                         <tr key={objLista.id}>
                                                                             <td>{i + 1}</td>
@@ -285,6 +293,11 @@ const InternamientoFormato1ListPage = () => {
                             <label htmlFor="">Observaciones:</label>
                             <input type="text" className="form-control"
                                 name="observaciones" onChange={handleChange} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="">Código:</label>
+                            <input type="text" className="form-control"
+                                name="codigo" onChange={handleChange} />
                         </div>
 
                         <div className="form-group">

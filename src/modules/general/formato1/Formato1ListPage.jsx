@@ -281,10 +281,11 @@ const Formato1ListPage = () => {
     })
 
   };
+
+
   useEffect(() => {
     traerSubunidades();
   }, []);
-  
   //Aqui los metodos para traer las personales
   const [personal, setPersonal] = useState([]);
   const traerPersonal = () => {
@@ -661,9 +662,9 @@ const Formato1ListPage = () => {
                                         <>
                                           <div key={item.id}>
                                             <h3>Ubicación Actual</h3>
-                                            <p>Subunidad: {item.area_oficina_seccion.subunidad.nombre} </p>
-                                            <p>Area: {item.area_oficina_seccion.nombre}</p>
-                                            <p>Persona Encargada: {item.personal.grado + " " + item.personal.apellido + " " + item.personal.nombre}</p>
+                                            <p>Subunidad: {item.area_oficina_seccion?.subunidad?.nombre} </p>
+                                            <p>Area: {item.area_oficina_seccion?.nombre}</p>
+                                            <p>Persona Encargada: {item.personal?.grado + " " + item.personal?.apellido + " " + item.personal?.nombre}</p>
                                           </div>
                                         </>
                                       )
