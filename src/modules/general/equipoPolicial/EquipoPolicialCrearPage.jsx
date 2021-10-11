@@ -21,6 +21,7 @@ const EquipoPolicialCrearPage = () => {
         pais_frabricacion: "",
         estado_bien: "",
         fecha_adquisicion: "",
+        forma_adquisicion:"",
         tasacion: "",
         observaciones: "",
         imagen_bien: ""
@@ -38,6 +39,7 @@ const EquipoPolicialCrearPage = () => {
         pais_frabricacion,
         estado_bien,
         fecha_adquisicion,
+        forma_adquisicion,
         tasacion,
         observaciones,
         } = formulario
@@ -149,7 +151,7 @@ const EquipoPolicialCrearPage = () => {
                                             <input
                                                 type="text"
                                                 className="form-control my-2"
-                                                name="pais_frabricacion"
+                                                name="pais_fabricacion"
                                                 value={pais_frabricacion}
                                                
                                                 onChange={handleChange}
@@ -166,12 +168,23 @@ const EquipoPolicialCrearPage = () => {
                                                 onChange={handleChange}
                                             />
                                             <label htmlFor="" className="form-label">
+                                               Forma de Adquisición
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className="form-control my-2"
+                                                name="forma_adquisicion"
+                                                value={forma_adquisicion}
+                                               
+                                                onChange={handleChange}
+                                            />
+                                            <label htmlFor="" className="form-label">
                                                 Fecha de Adquisicion
                                             </label>
                                             <input
                                                 type="date"
                                                 className="form-control my-2"
-                                                name="fecha_adquisicion"
+                                                name="anio_adquisicion"
                                                 value={fecha_adquisicion}
                                                
                                                 onChange={handleChange}
