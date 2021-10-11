@@ -15,7 +15,7 @@ const InternamientoFormato1ListPage = () => {
         getBienesInternadosFormato1().then(rpta => {
             console.log("Lista de bienes internados")
             console.log(rpta)
-            
+
             setListaInternamientoFormato1(rpta.data)
             setCargando(false)
         })
@@ -24,7 +24,7 @@ const InternamientoFormato1ListPage = () => {
     useEffect(() => {
         traerData()
     }, [])
-    
+
     const [pdfActual, setpdfActual] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const showModal = (pdfActual) => {
@@ -99,19 +99,21 @@ const InternamientoFormato1ListPage = () => {
             'Authorization': `Bearer ${token}`
         }
     }
-//    for(let i = 0; i<listaInternamientoFormato1.length;i++){
-//        console.log(listaInternamientoFormato1[i])
-//    }
+    //    for(let i = 0; i<listaInternamientoFormato1.length;i++){
+    //        console.log(listaInternamientoFormato1[i])
+    //    }
     const handleSubmit = e => {
         e.preventDefault();
         const formData = new FormData();
-       
-        formData.append('observaciones', formularioInternamiento.observaciones)
-        formData.append('estado_del_bien', formularioInternamiento.estado_del_bien)
-        for(let i = 0; i<listaInternamientoFormato1.length;i++){
-            formData.append('codigo',listaInternamientoFormato1[i])
+        for (let i = 0; i < listaInternamientoFormato1.length; i++) {
+            console.log("S")
+
+            console.log(listaInternamientoFormato1[i])
+            formData.append('observaciones', listaInternamientoFormato1[i].observaciones)
         }
-        formData.append('', formularioInternamiento.codigo_bien)
+      
+        formData.append('estado_del_bien', formularioInternamiento.estado_del_bien)
+
         postEditarInternamientoById(formData, config, idActualDelBien).then((rpta) => {
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
                 console.log("Datos actualizados correctamente")
@@ -127,7 +129,7 @@ const InternamientoFormato1ListPage = () => {
         })
     }
 
-   
+
 
     return (
 
@@ -205,7 +207,7 @@ const InternamientoFormato1ListPage = () => {
                                                             </Modal>
                                                             {
                                                                 listaInternamientoFormato1.map((objLista, i) => {
-                                                                 
+
                                                                     return (
                                                                         <tr key={objLista.id}>
                                                                             <td>{i + 1}</td>
@@ -294,11 +296,7 @@ const InternamientoFormato1ListPage = () => {
                             <input type="text" className="form-control"
                                 name="observaciones" onChange={handleChange} />
                         </div>
-                        <div className="form-group">
-                            <label htmlFor="">Código:</label>
-                            <input type="text" className="form-control"
-                                name="codigo" onChange={handleChange} />
-                        </div>
+
 
                         <div className="form-group">
                             <button className="btn btn-primary" type="submit">Actualizar</button>

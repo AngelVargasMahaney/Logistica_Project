@@ -412,6 +412,7 @@ const Formato1ListPage = () => {
                                 </div>
                               </Modal>
                               {formatos.map((objFormato, i) => {
+                                console.log(objFormato)
                                 return (
                                   <tr key={objFormato.id}>
                                     <td>{objFormato.id}</td>
@@ -448,7 +449,7 @@ const Formato1ListPage = () => {
                                       <img
                                         className="tamaño-icono-pdf rounded mx-auto d-block"
                                         alt="some value"
-                                        title="Codigo Qr del B>ien"
+                                        title="Codigo Qr del Bien"
 
                                         src={objFormato.codigo_qr || imgNoDisponible}
                                         onClick={() =>
@@ -456,7 +457,7 @@ const Formato1ListPage = () => {
                                         }
                                       />
                                     </td>
-
+                                      
                                     <td>{objFormato.observaciones}</td>
                                     {/* <td>{objFormato.imagen_bien}</td> */}
                                     <td>
