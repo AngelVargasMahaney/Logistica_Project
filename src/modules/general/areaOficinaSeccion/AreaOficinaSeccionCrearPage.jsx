@@ -8,7 +8,7 @@ import { postAreaOficinaSeccion } from "../../../services/areaOficinaSeccionServ
 import { getSubunidades } from "../../../services/subunidadesService";
 
 const AreaOficinaSeccionCrearPage = () => {
-    const TITULO = "Formulario de Creación de un AreaOficinaSeccion";
+    const TITULO = "Formulario de Creación de un Área Oficina Sección";
     const HISTORY = "/admin/area-oficina-seccion";
     //Variable de estado que se encarga de manejar los campos de nuestro formulario que servirán para llenar la bd (tener en cuenta los campos que el back-end envió, ver documentación)
     const [formulario, setFormulario] = useState({

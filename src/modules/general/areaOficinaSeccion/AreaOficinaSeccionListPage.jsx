@@ -11,7 +11,7 @@ const AreaOficinaSeccionListPage = () => {
 
     const URL_CREAR = '/admin/area-oficina-seccion/crear'
     const URL_EDITAR = "/admin/area-oficina-seccion/editar";
-    const TITULO = "Area Oficina Seccion";
+    const TITULO = "Área Oficina Sección";
     const [data, setData] = useState([])
     const [cargando, setCargando] = useState(true)
 
