@@ -5,7 +5,7 @@ import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
 
 import { postPersonal } from "../../../services/personalService";
-import Swal from 'sweetalert2';
+import swal from 'sweetalert2';
 
 
 const PersonalCrearPage = () => {
@@ -32,7 +32,23 @@ const PersonalCrearPage = () => {
             [e.target.name]: e.target.value //Darle valor del name según el formulario
         })
     }
+    const errorResponse = (({response}) => {
+        let mensaje = ""
+        if (response.status == 400) {
+            for (const [key, value] of Object.entries(response.data)) {
+                mensaje += key + ": " + value + "<br>";
+                console.log(key, value);
 
+            }
+        }
+        swal.fire({
+            icon: 'error',
+            title: 'Ocurrio un Error',
+            html: mensaje,
+            footer: 'SISTEMA DE CONTROL DE BIENES'
+        })
+    } );
+    
     const handleSubmit = (e) => {
         e.preventDefault() //Evito que se refresque la página
         // postUsuario({ ...formulario }).then((rpta) => { //Copia del formulario
@@ -44,21 +60,8 @@ const PersonalCrearPage = () => {
             console.log(rpta)
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
                 history.push(HISTORY)
-            }else{
-                Swal.fire(
-                    'Internamiento Fallido',
-                    'No se puede internar un bien dos veces',
-                    'error'
-                  )
             }
-        }).catch(err => {
-            console.log(err.response)
-            Swal.fire(
-                'Internamiento Fallido',
-                `${err.response.data.dni}`,
-                'error'
-              )
-        })
+        }).catch(errorResponse);
     }
 
 
@@ -126,7 +129,7 @@ const PersonalCrearPage = () => {
                                                 required
                                                 onChange={handleChange}
                                                 pattern="[0-9]{4,10}"
-                                                title="4 - 10"
+                                                title="4 - 10 numeros"
                                             />
 
                                             <label htmlFor="" className="form-label">
