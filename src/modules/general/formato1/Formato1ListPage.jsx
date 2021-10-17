@@ -333,6 +333,7 @@ const Formato1ListPage = () => {
     setImagenBien(imagen)
     setmodalImagenes(true)
   }
+  //Aqui termina el estate del modal de Visualizador de Imagenes
 
   return (
     <>

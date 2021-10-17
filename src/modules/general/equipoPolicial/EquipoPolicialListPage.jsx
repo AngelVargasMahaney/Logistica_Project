@@ -17,6 +17,7 @@ import { getHistorialFormatoById, getHistorialEquipoPolicialById } from "../../.
 import imgNoDisponible from "../../../assets/23.png"
 import { getAreaOficinaSeccion } from "../../../services/areaOficinaSeccionService";
 import { getReporteFormato1Excel, getReportes } from "../../../services/reportesService";
+import VisualizadorImagenes from '../../modales/VisualizadorImagenes';
 
 
 const EquipoPolicialListPage = () => {
@@ -305,6 +306,17 @@ const EquipoPolicialListPage = () => {
         })
     }
 
+    //Este STATE activa el modal de Visualizador de Imagenes
+    const [modalImagenes, setmodalImagenes] = useState(false)
+    const [imagenBien, setImagenBien] = useState("")
+    const [imagenDescripcion, setImagenDescripcion] = useState("")
+    const activarModalVIsualizardorImagen = (imagen, imagenDescripcion) => {
+        setImagenDescripcion(imagenDescripcion)
+        setImagenBien(imagen)
+        setmodalImagenes(true)
+    }
+    //Aqui termina el estate del modal de Visualizador de Imagenes
+
     return (
         <>
             <AdminSidebar />
@@ -434,7 +446,7 @@ const EquipoPolicialListPage = () => {
 
                                                                                     src={obj.codigo_qr || imgNoDisponible}
                                                                                     onClick={() =>
-                                                                                        showModal(obj.codigo_qr)
+                                                                                        activarModalVIsualizardorImagen(obj.codigo_qr|| imgNoDisponible, `Código QR de: ${obj.descripcion} `)
                                                                                     }
                                                                                 />
                                                                             </td>
@@ -448,7 +460,7 @@ const EquipoPolicialListPage = () => {
                                                                                     title={obj.descripcion}
                                                                                     src={obj.imagen_bien || imgNoDisponible}
                                                                                     onClick={() =>
-                                                                                        showModal(obj.imagen_bien)
+                                                                                        activarModalVIsualizardorImagen(obj.imagen_bien|| imgNoDisponible,obj.descripcion + " ")
                                                                                     }
                                                                                 />
                                                                             </td>
@@ -747,6 +759,9 @@ const EquipoPolicialListPage = () => {
                             </div>
                         </div>
                     </main>
+                    {/* Aqui llamo a mi componente que permite hacer uso del visualizadorImagenes */}
+                    <VisualizadorImagenes visible={modalImagenes} onClose={() => setmodalImagenes(false)} imagen={imagenBien} imagenDescripcion={imagenDescripcion} />
+
                 </div>
             </div>
         </>

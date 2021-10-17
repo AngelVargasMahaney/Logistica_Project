@@ -12,6 +12,7 @@ import { postInternarBienFormato1, postReasignarBienFormato1 } from '../../../se
 import { getAreaOficinaSeccion } from "../../../services/areaOficinaSeccionService";
 import { getHistorialBienAuxiliarById, getHistorialFormatoById } from '../../../services/historialBienesService'
 import { getReportes } from '../../../services/reportesService'
+import VisualizadorImagenes from '../../modales/VisualizadorImagenes'
 
 const BienesAuxiliaresListPage = () => {
 
@@ -264,433 +265,446 @@ const BienesAuxiliaresListPage = () => {
 
         })
     }
-        return (
-            <>
-                <AdminSidebar />
-                <GeneralNavBar />
-                <div className="home_content">
-                    <div>
-                        <main className="container-fluid mt-5">
+    //Este STATE activa el modal de Visualizador de Imagenes
+    const [modalImagenes, setmodalImagenes] = useState(false)
+    const [imagenBien, setImagenBien] = useState("")
+    const [imagenDescripcion, setImagenDescripcion] = useState("")
+    const activarModalVIsualizardorImagen = (imagen, imagenDescripcion) => {
+        setImagenDescripcion(imagenDescripcion)
+        setImagenBien(imagen)
+        setmodalImagenes(true)
+    }
+    //Aqui termina el estate del modal de Visualizador de Imagenes
+    return (
+        <>
+            <AdminSidebar />
+            <GeneralNavBar />
+            <div className="home_content">
+                <div>
+                    <main className="container-fluid mt-5">
 
-                            <div className="card">
-                                <div className="card-body">
+                        <div className="card">
+                            <div className="card-body">
 
-                                    <div className="d-flex justify-content-between mb-3">
-                                        <h5>{TITULO}</h5>
-                                        <Link to="/admin/bienes-internados/bienes-auxiliares" className="btn btn-warning">
-                                            {" "}
-                                            <i className="fa fa-list"></i> Lista de Bienes Internados
-                                        </Link>
-                                        <Link onClick={reportes} className="btn btn-success">
-                                            {" "}
-                                            <i className="fas fa-file-excel"></i> Generar Reporte
-                                        </Link>
-                                        <Link to={URL_CREAR} className="btn btn-primary "> <i className="fa fa-plus"></i> Crear </Link>
-                                    </div>
+                                <div className="d-flex justify-content-between mb-3">
+                                    <h5>{TITULO}</h5>
+                                    <Link to="/admin/bienes-internados/bienes-auxiliares" className="btn btn-warning">
+                                        {" "}
+                                        <i className="fa fa-list"></i> Lista de Bienes Internados
+                                    </Link>
+                                    <Link onClick={reportes} className="btn btn-success">
+                                        {" "}
+                                        <i className="fas fa-file-excel"></i> Generar Reporte
+                                    </Link>
+                                    <Link to={URL_CREAR} className="btn btn-primary "> <i className="fa fa-plus"></i> Crear </Link>
+                                </div>
 
-                                    <div className="row mt-2">
+                                <div className="row mt-2">
 
-                                        <div className="col">
+                                    <div className="col">
 
-                                            {
-                                                cargando ?
-                                                    <div className="loader__father">
-                                                        <div className="loader">
-                                                            <div className="face">
-                                                                <div className="circle"></div>
-                                                            </div>
-                                                            <div className="face">
-                                                                <div className="circle"></div>
-                                                            </div>
+                                        {
+                                            cargando ?
+                                                <div className="loader__father">
+                                                    <div className="loader">
+                                                        <div className="face">
+                                                            <div className="circle"></div>
+                                                        </div>
+                                                        <div className="face">
+                                                            <div className="circle"></div>
                                                         </div>
                                                     </div>
-                                                    :
-                                                    <div className="table-responsive miTabla ">
-                                                        <table className="table table-bordered">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>id</th>
-                                                                    <th>descripcion</th>
-                                                                    <th>Documento</th>
-                                                                    <th>marca</th>
-                                                                    <th>modelo</th>
-                                                                    <th>serie</th>
-                                                                    <th>tipo_material</th>
-                                                                    <th>color</th>
-                                                                    <th>dimensiones</th>
-                                                                    <th>estado_bien</th>
-                                                                    <th>fecha_adquisicion</th>
-                                                                    <th>observaciones</th>
-                                                                    <th>Código_QR</th>
-                                                                    <th>Imagen</th>
-                                                                    <th className="acciones"></th>
-                                                                </tr>
-                                                            </thead>
+                                                </div>
+                                                :
+                                                <div className="table-responsive miTabla ">
+                                                    <table className="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>id</th>
+                                                                <th>descripcion</th>
+                                                                <th>Documento</th>
+                                                                <th>marca</th>
+                                                                <th>modelo</th>
+                                                                <th>serie</th>
+                                                                <th>tipo_material</th>
+                                                                <th>color</th>
+                                                                <th>dimensiones</th>
+                                                                <th>estado_bien</th>
+                                                                <th>fecha_adquisicion</th>
+                                                                <th>observaciones</th>
+                                                                <th>Código_QR</th>
+                                                                <th>Imagen</th>
+                                                                <th className="acciones"></th>
+                                                            </tr>
+                                                        </thead>
 
-                                                            <tbody>
-                                                                <Modal show={isOpen} onHide={hideModal} size="lg">
-                                                                    <div>
-                                                                        <Modal.Body>
-                                                                            <div className="ModalStyles">
-                                                                                <iframe
-                                                                                    id="pdf-js-viewer"
-                                                                                    src={pdfActual}
-                                                                                    title="webviewer"
-                                                                                    frameBorder="0"
-                                                                                    width="100%"
-                                                                                    height="100%"
-                                                                                ></iframe>
-                                                                            </div>
-                                                                        </Modal.Body>
-                                                                        <Modal.Footer>
-                                                                            <button onClick={hideModal}>Cancel</button>
-                                                                        </Modal.Footer>
-                                                                    </div>
-                                                                </Modal>
+                                                        <tbody>
+                                                            <Modal show={isOpen} onHide={hideModal} size="lg">
+                                                                <div>
+                                                                    <Modal.Body>
+                                                                        <div className="ModalStyles">
+                                                                            <iframe
+                                                                                id="pdf-js-viewer"
+                                                                                src={pdfActual}
+                                                                                title="webviewer"
+                                                                                frameBorder="0"
+                                                                                width="100%"
+                                                                                height="100%"
+                                                                            ></iframe>
+                                                                        </div>
+                                                                    </Modal.Body>
+                                                                    <Modal.Footer>
+                                                                        <button onClick={hideModal}>Cancel</button>
+                                                                    </Modal.Footer>
+                                                                </div>
+                                                            </Modal>
+                                                            {
+                                                                data.map((obj, i) => {
+                                                                    return (
+                                                                        <tr key={obj.id}>
+                                                                            <td>{obj.id}</td>
+                                                                            <td>{obj.descripcion}</td>
+                                                                            <td>
+                                                                                <img
+                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
+                                                                                    alt="some value"
+                                                                                    title={obj.documento_nombre_original}
+                                                                                    src={obj.icon_file}
+                                                                                    onClick={() =>
+                                                                                        showModal(obj.documento)
+                                                                                    }
+                                                                                />
+                                                                            </td>
+                                                                            <td>{obj.marca}</td>
+                                                                            <td>{obj.modelo}</td>
+                                                                            <td>{obj.serie}</td>
+                                                                            <td>{obj.tipo_material}</td>
+                                                                            <td>{obj.color}</td>
+                                                                            <td>{obj.dimensiones}</td>
+                                                                            <td>{obj.estado_bien}</td>
+                                                                            <td>{obj.fecha_adquisicion}</td>
+                                                                            <td>{obj.observaciones}</td>
+                                                                            <td>
+                                                                                <img
+                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
+                                                                                    alt="some value"
+                                                                                    title="Codigo Qr del B>ien"
+
+                                                                                    src={obj.codigo_qr || imgNoDisponible}
+                                                                                    onClick={() =>
+                                                                                        activarModalVIsualizardorImagen(obj.codigo_qr || imgNoDisponible, `Código QR de ${obj.descripcion}`)
+                                                                                    }
+                                                                                />
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <img
+                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
+                                                                                    alt="some value"
+                                                                                    title={obj.descripcion}
+                                                                                    src={obj.imagen_bien}
+                                                                                    onClick={() =>
+                                                                                        activarModalVIsualizardorImagen(obj.imagen_bien || imgNoDisponible, obj.descripcion + " ")
+                                                                                    }
+                                                                                />
+                                                                            </td>
+                                                                            <td>
+
+                                                                                <button data-toggle="tooltip" data-placement="top" title="Eliminar"
+                                                                                    className="btn btn-danger mx-1"
+                                                                                    onClick={() => {
+                                                                                        eliminar(obj.id);
+                                                                                    }}
+                                                                                >
+                                                                                    <i className="fa fa-trash"></i>
+
+                                                                                </button>
+                                                                                <Link to={`${URL_EDITAR}/${obj.id}`}
+                                                                                    className="btn btn-warning"
+                                                                                > <i className="fa fa-pencil"></i>
+                                                                                </Link>
+                                                                                <Button
+
+                                                                                    onClick={() => {
+                                                                                        showModalReasignarBien(obj.id)
+
+                                                                                    }}
+                                                                                    className="btn btn-info mx-1"
+                                                                                    title="Reasignar un Bien"
+                                                                                >
+                                                                                    {" "}
+                                                                                    <i className="fas fa-clipboard-check"></i>
+                                                                                </Button>
+                                                                                <Button
+
+                                                                                    onClick={() => {
+                                                                                        showModalInternarBien(obj.id)
+
+                                                                                    }}
+                                                                                    className="btn btn-info"
+                                                                                    title="Internar un Bien"
+                                                                                >
+                                                                                    {" "}
+                                                                                    <i className="fas fa-angle-double-down"></i>
+                                                                                </Button>
+                                                                                <Link
+                                                                                    // to={`formatos/editar/${objFormato.id}`}
+                                                                                    to={`/admin/bienes-auxiliares/historial/${obj.id}`}
+                                                                                    className="btn btn-info ml-1"
+                                                                                    title="Historial del bien"
+                                                                                >
+                                                                                    {" "}
+                                                                                    <i className="fa fa-history"></i>
+                                                                                </Link>
+                                                                            </td>
+
+
+                                                                        </tr>
+
+                                                                    )
+                                                                })
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                        }
+                                    </div>
+                                </div>
+                                <Modal show={showModalInternar} onHide={handleCloseInternar}>
+                                    <Modal.Header closeButton>
+                                        <Modal.Title>Internamiento de un bien del Formato 1</Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                        <form onSubmit={handleSubmit}>
+                                            <div className="form-group">
+                                                <label htmlFor="">Estado del Bien:</label>
+                                                <input type="text" className="form-control"
+                                                    value={estado_del_bien} name="estado_del_bien" onChange={handleChange} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="">Fecha:</label>
+                                                <input type="date" className="form-control"
+                                                    value={fecha} name="fecha" onChange={handleChange} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="">Observaciones:</label>
+                                                <input type="text" className="form-control"
+                                                    value={observaciones} name="observaciones" onChange={handleChange} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="">Documento-Acta entrega y recepción:</label>
+                                                <input type="file" className="form-control"
+                                                    name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="">Documento-Oficio regularización:</label>
+                                                <input type="file" className="form-control"
+                                                    name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
+                                            </div>
+                                            <div className="form-group" hidden>
+                                                <label htmlFor="">Id del Bien:</label>
+                                                <input type="text" className="form-control"
+                                                    value={idActualDelBien} name="bien_id" onChange={handleChange} />
+                                            </div>
+                                            {/* <div className="form-group">
+                                        <label htmlFor="">Tipo bien</label>
+                                        <input type="text" className="form-control"
+                                        value={tipo_bien} name="tipo_bien" onChange={handleChange} />
+                                    </div> */}
+
+                                            <div className="form-group">
+                                                <button className="btn btn-primary" type="submit">Internar</button>
+                                            </div>
+
+
+                                        </form>
+                                    </Modal.Body>
+                                    <Modal.Footer>
+                                        <Button variant="secondary" onClick={handleCloseInternar}>
+                                            Cerrar
+                                        </Button>
+
+                                    </Modal.Footer>
+                                </Modal>
+
+
+                                <Modal show={showModalReasignar} onHide={handleCloseReasignar}>
+                                    <Modal.Header closeButton>
+                                        <Modal.Title>Reasignación de un bien del Formato 1</Modal.Title>
+                                    </Modal.Header>
+
+                                    <Modal.Body>
+                                        {/* Header del Modal - Información del bien */}
+
+                                        <div className="container">
+                                            <div className="row">
+                                                <div className="col">
+                                                    {/* <p>Código: <span>${idActualDelBien}</span></p> */}
+                                                    {cargando ?
+                                                        <div className="loader__father">
+                                                            <div className="loader">
+                                                                <div className="face">
+                                                                    <div className="circle"></div>
+                                                                </div>
+                                                                <div className="face">
+                                                                    <div className="circle"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        :
+                                                        (
+                                                            <>
+                                                                <h3>Datos Actuales del Bien</h3>
+                                                                <p>Código: {dataHistorial.codigo}</p>
+                                                                <p>Descripción: {dataHistorial.descripcion}</p>
+                                                            </>
+                                                        )}
+
+
+                                                </div>
+                                                <div className="col">
+                                                    {cargando ?
+                                                        <div className="loader__father">
+                                                            <div className="loader">
+                                                                <div className="face">
+                                                                    <div className="circle"></div>
+                                                                </div>
+                                                                <div className="face">
+                                                                    <div className="circle"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        :
+                                                        (
+                                                            <>
                                                                 {
-                                                                    data.map((obj, i) => {
-                                                                        return (
-                                                                            <tr key={obj.id}>
-                                                                                <td>{obj.id}</td>
-                                                                                <td>{obj.descripcion}</td>
-                                                                                <td>
-                                                                                    <img
-                                                                                        className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                        alt="some value"
-                                                                                        title={obj.documento_nombre_original}
-                                                                                        src={obj.icon_file}
-                                                                                        onClick={() =>
-                                                                                            showModal(obj.documento)
-                                                                                        }
-                                                                                    />
-                                                                                </td>
-                                                                                <td>{obj.marca}</td>
-                                                                                <td>{obj.modelo}</td>
-                                                                                <td>{obj.serie}</td>
-                                                                                <td>{obj.tipo_material}</td>
-                                                                                <td>{obj.color}</td>
-                                                                                <td>{obj.dimensiones}</td>
-                                                                                <td>{obj.estado_bien}</td>
-                                                                                <td>{obj.fecha_adquisicion}</td>
-                                                                                <td>{obj.observaciones}</td>
-                                                                                <td>
-                                                                                    <img
-                                                                                        className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                        alt="some value"
-                                                                                        title="Codigo Qr del B>ien"
+                                                                    historial?.map((item, i) => {
+                                                                        const lastItem = historial.length
+                                                                        console.log(lastItem + " <<dfawdf")
+                                                                        if (i === 0) {
+                                                                            return (
+                                                                                <>
+                                                                                    <div key={item.id}>
+                                                                                        <h3>Ubicación Actual</h3>
+                                                                                        <p>Subunidad: {item.area_oficina_seccion.subunidad.nombre} </p>
+                                                                                        <p>Area: {item.area_oficina_seccion.nombre}</p>
+                                                                                        <p>Persona Encargada: {item.personal.grado + " " + item.personal.apellido + " " + item.personal.nombre}</p>
+                                                                                    </div>
+                                                                                </>
+                                                                            )
+                                                                        } else {
+                                                                            // not last one
+                                                                        }
 
-                                                                                        src={obj.codigo_qr || imgNoDisponible}
-                                                                                        onClick={() =>
-                                                                                            showModal(obj.codigo_qr)
-                                                                                        }
-                                                                                    />
-                                                                                </td>
-
-                                                                                <td>
-                                                                                    <img
-                                                                                        className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                        alt="some value"
-                                                                                        title={obj.descripcion}
-                                                                                        src={obj.imagen_bien}
-                                                                                        onClick={() =>
-                                                                                            showModal(obj.imagen_bien)
-                                                                                        }
-                                                                                    />
-                                                                                </td>
-                                                                                <td>
-
-                                                                                    <button data-toggle="tooltip" data-placement="top" title="Eliminar"
-                                                                                        className="btn btn-danger mx-1"
-                                                                                        onClick={() => {
-                                                                                            eliminar(obj.id);
-                                                                                        }}
-                                                                                    >
-                                                                                        <i className="fa fa-trash"></i>
-
-                                                                                    </button>
-                                                                                    <Link to={`${URL_EDITAR}/${obj.id}`}
-                                                                                        className="btn btn-warning"
-                                                                                    > <i className="fa fa-pencil"></i>
-                                                                                    </Link>
-                                                                                    <Button
-
-                                                                                        onClick={() => {
-                                                                                            showModalReasignarBien(obj.id)
-
-                                                                                        }}
-                                                                                        className="btn btn-info mx-1"
-                                                                                        title="Reasignar un Bien"
-                                                                                    >
-                                                                                        {" "}
-                                                                                        <i className="fas fa-clipboard-check"></i>
-                                                                                    </Button>
-                                                                                    <Button
-
-                                                                                        onClick={() => {
-                                                                                            showModalInternarBien(obj.id)
-
-                                                                                        }}
-                                                                                        className="btn btn-info"
-                                                                                        title="Internar un Bien"
-                                                                                    >
-                                                                                        {" "}
-                                                                                        <i className="fas fa-angle-double-down"></i>
-                                                                                    </Button>
-                                                                                    <Link
-                                                                                        // to={`formatos/editar/${objFormato.id}`}
-                                                                                        to={`/admin/bienes-auxiliares/historial/${obj.id}`}
-                                                                                        className="btn btn-info ml-1"
-                                                                                        title="Historial del bien"
-                                                                                    >
-                                                                                        {" "}
-                                                                                        <i className="fa fa-history"></i>
-                                                                                    </Link>
-                                                                                </td>
-
-
-                                                                            </tr>
-
-                                                                        )
                                                                     })
                                                                 }
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                            }
-                                        </div>
-                                    </div>
-                                    <Modal show={showModalInternar} onHide={handleCloseInternar}>
-                                        <Modal.Header closeButton>
-                                            <Modal.Title>Internamiento de un bien del Formato 1</Modal.Title>
-                                        </Modal.Header>
-                                        <Modal.Body>
-                                            <form onSubmit={handleSubmit}>
-                                                <div className="form-group">
-                                                    <label htmlFor="">Estado del Bien:</label>
-                                                    <input type="text" className="form-control"
-                                                        value={estado_del_bien} name="estado_del_bien" onChange={handleChange} />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="">Fecha:</label>
-                                                    <input type="date" className="form-control"
-                                                        value={fecha} name="fecha" onChange={handleChange} />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="">Observaciones:</label>
-                                                    <input type="text" className="form-control"
-                                                        value={observaciones} name="observaciones" onChange={handleChange} />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="">Documento-Acta entrega y recepción:</label>
-                                                    <input type="file" className="form-control"
-                                                        name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="">Documento-Oficio regularización:</label>
-                                                    <input type="file" className="form-control"
-                                                        name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
-                                                </div>
-                                                <div className="form-group" hidden>
-                                                    <label htmlFor="">Id del Bien:</label>
-                                                    <input type="text" className="form-control"
-                                                        value={idActualDelBien} name="bien_id" onChange={handleChange} />
-                                                </div>
-                                                {/* <div className="form-group">
-                                        <label htmlFor="">Tipo bien</label>
-                                        <input type="text" className="form-control"
-                                        value={tipo_bien} name="tipo_bien" onChange={handleChange} />
-                                    </div> */}
 
-                                                <div className="form-group">
-                                                    <button className="btn btn-primary" type="submit">Internar</button>
-                                                </div>
-
-
-                                            </form>
-                                        </Modal.Body>
-                                        <Modal.Footer>
-                                            <Button variant="secondary" onClick={handleCloseInternar}>
-                                                Cerrar
-                                            </Button>
-
-                                        </Modal.Footer>
-                                    </Modal>
-
-
-                                    <Modal show={showModalReasignar} onHide={handleCloseReasignar}>
-                                        <Modal.Header closeButton>
-                                            <Modal.Title>Reasignación de un bien del Formato 1</Modal.Title>
-                                        </Modal.Header>
-
-                                        <Modal.Body>
-                                            {/* Header del Modal - Información del bien */}
-
-                                            <div className="container">
-                                                <div className="row">
-                                                    <div className="col">
-                                                        {/* <p>Código: <span>${idActualDelBien}</span></p> */}
-                                                        {cargando ?
-                                                            <div className="loader__father">
-                                                                <div className="loader">
-                                                                    <div className="face">
-                                                                        <div className="circle"></div>
-                                                                    </div>
-                                                                    <div className="face">
-                                                                        <div className="circle"></div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            :
-                                                            (
-                                                                <>
-                                                                    <h3>Datos Actuales del Bien</h3>
-                                                                    <p>Código: {dataHistorial.codigo}</p>
-                                                                    <p>Descripción: {dataHistorial.descripcion}</p>
-                                                                </>
-                                                            )}
-
-
-                                                    </div>
-                                                    <div className="col">
-                                                        {cargando ?
-                                                            <div className="loader__father">
-                                                                <div className="loader">
-                                                                    <div className="face">
-                                                                        <div className="circle"></div>
-                                                                    </div>
-                                                                    <div className="face">
-                                                                        <div className="circle"></div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            :
-                                                            (
-                                                                <>
-                                                                    {
-                                                                        historial?.map((item, i) => {
-                                                                            const lastItem = historial.length
-                                                                            console.log(lastItem + " <<dfawdf")
-                                                                            if (i === 0) {
-                                                                                return (
-                                                                                    <>
-                                                                                        <div key={item.id}>
-                                                                                            <h3>Ubicación Actual</h3>
-                                                                                            <p>Subunidad: {item.area_oficina_seccion.subunidad.nombre} </p>
-                                                                                            <p>Area: {item.area_oficina_seccion.nombre}</p>
-                                                                                            <p>Persona Encargada: {item.personal.grado + " " + item.personal.apellido + " " + item.personal.nombre}</p>
-                                                                                        </div>
-                                                                                    </>
-                                                                                )
-                                                                            } else {
-                                                                                // not last one
-                                                                            }
-
-                                                                        })
-                                                                    }
-
-                                                                </>
-                                                            )}
-                                                    </div>
+                                                            </>
+                                                        )}
                                                 </div>
                                             </div>
-                                            {/* FIN DEL Header del Modal - Información del bien */}
+                                        </div>
+                                        {/* FIN DEL Header del Modal - Información del bien */}
 
 
 
 
-                                            <form onSubmit={handleSubmitReasignacion}>
-                                                <div className="form-group">
-                                                    <label htmlFor="">Nueva persona encargada</label>
-                                                    <select defaultValue="DEFAULT" onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
-                                                        <option value="DEFAULT" disabled>--- Elegir Personal---</option>
+                                        <form onSubmit={handleSubmitReasignacion}>
+                                            <div className="form-group">
+                                                <label htmlFor="">Nueva persona encargada</label>
+                                                <select defaultValue="DEFAULT" onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
+                                                    <option value="DEFAULT" disabled>--- Elegir Personal---</option>
 
-                                                        {personalActivo.map((objPersonal, i) => {
-                                                            return (
+                                                    {personalActivo.map((objPersonal, i) => {
+                                                        return (
 
-                                                                <option key={objPersonal.id} value={objPersonal.id} >{objPersonal.grado + " |-> " + objPersonal.apellido + " " + objPersonal.nombre}</option>
+                                                            <option key={objPersonal.id} value={objPersonal.id} >{objPersonal.grado + " |-> " + objPersonal.apellido + " " + objPersonal.nombre}</option>
 
-                                                            );
-                                                        })}
-                                                    </select>
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="">Area Oficina Sección</label>
-                                                    <select defaultValue="DEFAULT" onChange={handleChange} name="area_oficina_seccion_id" required className="form-select custom-select mr-sm-2">
-                                                        <option value="DEFAULT" disabled>--- Elegir Subunidad---</option>
-                                                        {areaoficinaseccion.map((objTipoFormato, i) => {
-                                                            let { subunidad } = objTipoFormato
-                                                            return (
-                                                                <option key={objTipoFormato.id} value={objTipoFormato.id}>{objTipoFormato.nombre + " |-> " + subunidad.nombre}</option>
+                                                        );
+                                                    })}
+                                                </select>
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="">Area Oficina Sección</label>
+                                                <select defaultValue="DEFAULT" onChange={handleChange} name="area_oficina_seccion_id" required className="form-select custom-select mr-sm-2">
+                                                    <option value="DEFAULT" disabled>--- Elegir Subunidad---</option>
+                                                    {areaoficinaseccion.map((objTipoFormato, i) => {
+                                                        let { subunidad } = objTipoFormato
+                                                        return (
+                                                            <option key={objTipoFormato.id} value={objTipoFormato.id}>{objTipoFormato.nombre + " |-> " + subunidad.nombre}</option>
 
-                                                            );
-                                                        })}
+                                                        );
+                                                    })}
 
-                                                    </select>
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="">Estado del Bien: </label>
-                                                    <input type="text" className="form-control"
-                                                        value={estado_del_bien} name="estado_del_bien" onChange={handleChange} />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="">Observaciones: </label>
-                                                    <textarea className="form-control" rows={4} cols={50}
-                                                        value={observaciones} name="observaciones" onChange={handleChange} />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="">Fecha: </label>
-                                                    <input type="date" className="form-control"
-                                                        value={fecha} name="fecha" onChange={handleChange} />
-                                                </div>
+                                                </select>
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="">Estado del Bien: </label>
+                                                <input type="text" className="form-control"
+                                                    value={estado_del_bien} name="estado_del_bien" onChange={handleChange} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="">Observaciones: </label>
+                                                <textarea className="form-control" rows={4} cols={50}
+                                                    value={observaciones} name="observaciones" onChange={handleChange} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="">Fecha: </label>
+                                                <input type="date" className="form-control"
+                                                    value={fecha} name="fecha" onChange={handleChange} />
+                                            </div>
 
-                                                <div className="form-group">
-                                                    <label htmlFor="">Documento-Acta entrega y recepción: </label>
-                                                    <input type="file" className="form-control"
-                                                        name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="">Documento-Oficio regularización: </label>
-                                                    <input type="file" className="form-control"
-                                                        name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
-                                                </div>
-                                                <div className="form-group" hidden>
-                                                    <label htmlFor="">Id del Bien: </label>
-                                                    <input type="text" className="form-control"
-                                                        value={idActualDelBien} name="bien_id" onChange={handleChange} readOnly />
-                                                </div>
+                                            <div className="form-group">
+                                                <label htmlFor="">Documento-Acta entrega y recepción: </label>
+                                                <input type="file" className="form-control"
+                                                    name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="">Documento-Oficio regularización: </label>
+                                                <input type="file" className="form-control"
+                                                    name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
+                                            </div>
+                                            <div className="form-group" hidden>
+                                                <label htmlFor="">Id del Bien: </label>
+                                                <input type="text" className="form-control"
+                                                    value={idActualDelBien} name="bien_id" onChange={handleChange} readOnly />
+                                            </div>
 
 
-                                                {/* <div className="form-group">
+                                            {/* <div className="form-group">
                                         <label htmlFor="">Tipo bien</label>
                                         <input type="text" className="form-control"
                                         value={tipo_bien} name="tipo_bien" onChange={handleChange} />
                                     </div> */}
 
-                                                <div className="form-group">
-                                                    <button className="btn btn-primary" type="submit">ReasignarBien</button>
-                                                </div>
+                                            <div className="form-group">
+                                                <button className="btn btn-primary" type="submit">ReasignarBien</button>
+                                            </div>
 
 
-                                            </form>
-                                        </Modal.Body>
-                                        <Modal.Footer>
-                                            <Button variant="secondary" onClick={handleCloseReasignar}>
-                                                Cerrar
-                                            </Button>
+                                        </form>
+                                    </Modal.Body>
+                                    <Modal.Footer>
+                                        <Button variant="secondary" onClick={handleCloseReasignar}>
+                                            Cerrar
+                                        </Button>
 
-                                        </Modal.Footer>
-                                    </Modal>
+                                    </Modal.Footer>
+                                </Modal>
 
-                                </div>
                             </div>
-                        </main>
-                    </div>
+                        </div>
+                    </main>
+                    {/* Aqui llamo a mi componente que permite hacer uso del visualizadorImagenes */}
+                    <VisualizadorImagenes visible={modalImagenes} onClose={() => setmodalImagenes(false)} imagen={imagenBien} imagenDescripcion={imagenDescripcion} />
+
                 </div>
-            </>
+            </div>
+        </>
 
 
-        )
-    }
+    )
+}
 
-    export default BienesAuxiliaresListPage
+export default BienesAuxiliaresListPage
