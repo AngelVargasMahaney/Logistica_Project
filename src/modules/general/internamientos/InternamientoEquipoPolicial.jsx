@@ -4,6 +4,8 @@ import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
 import Swal from 'sweetalert2'
 import Modal from "react-bootstrap/Modal";
+import { getReportes } from '../../../services/reportesService'
+import { Link } from '@material-ui/core'
 const InternamientoEquipoPolicial = () => {
 
     const [listaInternamientoFormato1, setListaInternamientoFormato1] = useState([])
@@ -56,7 +58,12 @@ const InternamientoEquipoPolicial = () => {
             }
         })
     }
+    const tipoReporte = "equipoPolicialInternados"
+    const reportes = () => {
+        getReportes(tipoReporte).then(() => {
 
+        })
+    }
     return (
 
         <>
@@ -70,7 +77,10 @@ const InternamientoEquipoPolicial = () => {
 
                         <div className="card">
                             <div className="card-body">
-
+                                <Link onClick={reportes} className="btn btn-success pull-right text-white">
+                                    {" "}
+                                    <i className="fas fa-file-excel"></i> Generar Reporte
+                                </Link>
                                 <div className="d-flex justify-content-between mb-3">
                                     <h5>Bienes Internados de Equipo Policial</h5>
                                 </div>
@@ -135,53 +145,53 @@ const InternamientoEquipoPolicial = () => {
                                                                 listaInternamientoFormato1.map((objLista, i) => {
                                                                     return (
                                                                         <tr key={objLista.id}>
-                                                                                <td>{i + 1}</td>
+                                                                            <td>{i + 1}</td>
 
-                                                                                {/* <td>{objLista.bien_auxiliar.id}</td> */}
-                                                                                <td>{objLista.equipo_policial.descripcion}</td>
-                                                                                {/* <td>{objLista.bien_auxiliar.marca}</td> */}
-                                                                                <td>{objLista.estado_del_bien}</td>
-                                                                                <td>{objLista.observaciones}</td>
-                                                                                <td>{objLista.equipo_policial.anio_adquisicion}</td>
-                                                                                <td>
-                                                                                    <img
-                                                                                        className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                        alt="some value"
-                                                                                        title={objLista.nombre_original_acta_entrega_recepcion}
-                                                                                        src={objLista.icon_file_entrega_recepcion}
-                                                                                        onClick={() =>
-                                                                                            showModal(objLista.documento_acta_entrega_recepcion)
-                                                                                        }
-                                                                                    />
-                                                                                </td>
-                                                                                <td>
-                                                                                    <img
-                                                                                        className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                        alt="some value"
-                                                                                        title={objLista.nombre_original_oficio_regularizacion}
-                                                                                        src={objLista.icon_file_oficio_regularizacion}
-                                                                                        onClick={() =>
-                                                                                            showModal(objLista.documento_oficio_regularizacion)
-                                                                                        }
-                                                                                    />
-                                                                                </td>
-                                                                                
-                                                                                <td>
+                                                                            {/* <td>{objLista.bien_auxiliar.id}</td> */}
+                                                                            <td>{objLista.equipo_policial.descripcion}</td>
+                                                                            {/* <td>{objLista.bien_auxiliar.marca}</td> */}
+                                                                            <td>{objLista.estado_del_bien}</td>
+                                                                            <td>{objLista.observaciones}</td>
+                                                                            <td>{objLista.equipo_policial.anio_adquisicion}</td>
+                                                                            <td>
+                                                                                <img
+                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
+                                                                                    alt="some value"
+                                                                                    title={objLista.nombre_original_acta_entrega_recepcion}
+                                                                                    src={objLista.icon_file_entrega_recepcion}
+                                                                                    onClick={() =>
+                                                                                        showModal(objLista.documento_acta_entrega_recepcion)
+                                                                                    }
+                                                                                />
+                                                                            </td>
+                                                                            <td>
+                                                                                <img
+                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
+                                                                                    alt="some value"
+                                                                                    title={objLista.nombre_original_oficio_regularizacion}
+                                                                                    src={objLista.icon_file_oficio_regularizacion}
+                                                                                    onClick={() =>
+                                                                                        showModal(objLista.documento_oficio_regularizacion)
+                                                                                    }
+                                                                                />
+                                                                            </td>
+
+                                                                            <td>
 
 
-                                                                                    <button data-toggle="tooltip" data-placement="top" title="Eliminar"
-                                                                                        className="btn btn-danger mx-1"
-                                                                                        onClick={() => {
-                                                                                            desinternarBien(objLista.id);
-                                                                                        }}
-                                                                                    >
-                                                                                        Desinternar Bien <i className="fa fa-trash"></i>
+                                                                                <button data-toggle="tooltip" data-placement="top" title="Eliminar"
+                                                                                    className="btn btn-danger mx-1"
+                                                                                    onClick={() => {
+                                                                                        desinternarBien(objLista.id);
+                                                                                    }}
+                                                                                >
+                                                                                    Desinternar Bien <i className="fa fa-trash"></i>
 
-                                                                                    </button>
+                                                                                </button>
 
-                                                                                </td>
-                                                                                
-                                                                            </tr> 
+                                                                            </td>
+
+                                                                        </tr>
 
                                                                     )
                                                                 })

@@ -16,7 +16,7 @@ import { useParams } from 'react-router-dom'
 import { getHistorialFormatoById, getHistorialEquipoPolicialById } from "../../../services/historialBienesService";
 import imgNoDisponible from "../../../assets/23.png"
 import { getAreaOficinaSeccion } from "../../../services/areaOficinaSeccionService";
-import { getReporteFormato1Excel } from "../../../services/reportesService";
+import { getReporteFormato1Excel, getReportes } from "../../../services/reportesService";
 
 
 const EquipoPolicialListPage = () => {
@@ -69,12 +69,7 @@ const EquipoPolicialListPage = () => {
     })
 
     //  
-    const [generarReporte, setGenerarReporte] = useState("")
-    const reportes = () => {
-        getReporteFormato1Excel().then(() => {
 
-        })
-    }
     //
     const showModalInternarBien = (idBien) => {
         setIdActualDelBien(idBien);
@@ -303,7 +298,12 @@ const EquipoPolicialListPage = () => {
             }
         })
     }
+    const tipoReporte = "equipoPolicial"
+    const reportes = () => {
+        getReportes(tipoReporte).then(() => {
 
+        })
+    }
 
     return (
         <>
@@ -323,11 +323,18 @@ const EquipoPolicialListPage = () => {
 
                                 <div className="d-flex justify-content-between mb-3">
                                     <h5>{TITULO}</h5>
+                                    <Link onClick={reportes} className="btn btn-success">
+                                        {" "}
+                                        <i className="fas fa-file-excel"></i> Generar Reporte
+                                    </Link>
                                     <Link to="/admin/bienes-internados/equipo-policial" className="btn btn-warning">
                                         {" "}
                                         <i className="fa fa-list"></i> Lista de Bienes Internados
                                     </Link>
-                                    
+                                    <Link to={"/admin/equipo-policial/crear"} className="btn btn-primary ">
+                                        {" "}
+                                        <i className="fa fa-plus"></i> Crear un Bien
+                                    </Link>
 
                                 </div>
 

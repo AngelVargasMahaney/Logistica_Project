@@ -18,6 +18,7 @@ import { getHistorialFormatoById } from "../../../services/historialBienesServic
 import imgNoDisponible from "../../../assets/23.png"
 import { getAreaOficinaSeccion } from "../../../services/areaOficinaSeccionService";
 import { getReporteFormato1Excel } from "../../../services/reportesService";
+import VisualizadorImagenes from "../../modales/VisualizadorImagenes";
 const Formato1ListPage = () => {
   const urlFormatoCrear = "/admin/formatos/crear";
   const [formatos, setFormatos] = useState([]);
@@ -322,6 +323,17 @@ const Formato1ListPage = () => {
     })
   }
 
+
+  //Este STATE activa el modal de Visualizador de Imagenes
+  const [modalImagenes, setmodalImagenes] = useState(false)
+  const [imagenBien, setImagenBien] = useState("")
+  const [imagenDescripcion, setImagenDescripcion] = useState("")
+  const activarModalVIsualizardorImagen = (imagen, imagenDescripcion) => {
+    setImagenDescripcion(imagenDescripcion)
+    setImagenBien(imagen)
+    setmodalImagenes(true)
+  }
+
   return (
     <>
       <AdminSidebar />
@@ -453,7 +465,7 @@ const Formato1ListPage = () => {
 
                                         src={objFormato.codigo_qr || imgNoDisponible}
                                         onClick={() =>
-                                          showModal(objFormato.codigo_qr)
+                                          activarModalVIsualizardorImagen(objFormato.codigo_qr || imgNoDisponible, `Código QR de: ${objFormato.descripcion} `)
                                         }
                                       />
                                     </td>
@@ -467,7 +479,7 @@ const Formato1ListPage = () => {
                                         title={objFormato.descripcion}
                                         src={objFormato.imagen_bien || imgNoDisponible}
                                         onClick={() =>
-                                          showModal(objFormato.imagen_bien)
+                                          activarModalVIsualizardorImagen(objFormato.imagen_bien || imgNoDisponible, objFormato.descripcion + " ")
                                         }
                                       />
                                     </td>
@@ -754,10 +766,10 @@ const Formato1ListPage = () => {
                         <input type="text" className="form-control"
                           value={tipo_bien} name="tipo_bien" onChange={handleChange} />
                       </div> */}
-                     
-                        <div className="form-group">
-                          <button className="btn btn-primary" type="submit">Reasignar Bien<i className="ml-2 fa fa-check"></i></button>
-                        </div>
+
+                      <div className="form-group">
+                        <button className="btn btn-primary" type="submit">Reasignar Bien<i className="ml-2 fa fa-check"></i></button>
+                      </div>
 
 
                     </form>
@@ -776,6 +788,9 @@ const Formato1ListPage = () => {
               </div>
             </div>
           </main>
+        {/* Aqui llamo a mi componente que permite hacer uso del visualizadorImagenes */}
+          <VisualizadorImagenes visible={modalImagenes} onClose={() => setmodalImagenes(false)} imagen={imagenBien} imagenDescripcion={imagenDescripcion} />
+
         </div>
       </div>
     </>

@@ -6,6 +6,7 @@ import Swal from 'sweetalert2'
 import Modal from "react-bootstrap/Modal";
 import { Link } from '@material-ui/core'
 import { Button } from 'react-bootstrap'
+import { getReportes } from '../../../services/reportesService'
 const InternamientoFormato1ListPage = () => {
 
     const [listaInternamientoFormato1, setListaInternamientoFormato1] = useState([])
@@ -111,7 +112,7 @@ const InternamientoFormato1ListPage = () => {
             console.log(listaInternamientoFormato1[i])
             formData.append('observaciones', listaInternamientoFormato1[i].observaciones)
         }
-      
+
         formData.append('estado_del_bien', formularioInternamiento.estado_del_bien)
 
         postEditarInternamientoById(formData, config, idActualDelBien).then((rpta) => {
@@ -129,7 +130,12 @@ const InternamientoFormato1ListPage = () => {
         })
     }
 
+    const tipoReporte = "bienesInternados"
+    const reportes = () => {
+        getReportes(tipoReporte).then(() => {
 
+        })
+    }
 
     return (
 
@@ -143,8 +149,12 @@ const InternamientoFormato1ListPage = () => {
                     <main className="container-fluid mt-5">
 
                         <div className="card">
-                            <div className="card-body">
 
+                            <div className="card-body">
+                                <Link onClick={reportes} className="btn btn-success pull-right text-white">
+                                    {" "}
+                                    <i className="fas fa-file-excel"></i> Generar Reporte
+                                </Link>
                                 <div className="d-flex justify-content-between mb-3">
                                     <h5>Bienes Internados del Formato 1</h5>
                                 </div>
@@ -273,10 +283,14 @@ const InternamientoFormato1ListPage = () => {
                                                     </table>
                                                 </div>
                                         }
-                                    </div></div>
+                                    </div>
+
+                                </div>
+
                             </div>
                         </div>
                     </main>
+
                 </div>
             </div>
 

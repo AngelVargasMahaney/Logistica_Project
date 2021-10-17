@@ -4,6 +4,8 @@ import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
 import Swal from 'sweetalert2'
 import Modal from "react-bootstrap/Modal";
+import { getReportes } from '../../../services/reportesService'
+import { Link } from '@material-ui/core'
 const InternamientoBienesAuxiliaresListPage = () => {
 
     const [listaInternamientoFormato1, setListaInternamientoFormato1] = useState([])
@@ -56,7 +58,12 @@ const InternamientoBienesAuxiliaresListPage = () => {
             }
         })
     }
+    const tipoReporte = "bienesAuxiliaresInternados"
+    const reportes = () => {
+        getReportes(tipoReporte).then(() => {
 
+        })
+    }
     return (
 
         <>
@@ -70,9 +77,12 @@ const InternamientoBienesAuxiliaresListPage = () => {
 
                         <div className="card">
                             <div className="card-body">
-
+                                <Link onClick={reportes} className="btn btn-success pull-right text-white">
+                                    {" "}
+                                    <i className="fas fa-file-excel"></i> Generar Reporte
+                                </Link>
                                 <div className="d-flex justify-content-between mb-3">
-                                    <h5>Bienes Internados del Formato 1</h5>
+                                    <h5>Bienes Internados del formato Bienes Auxiliares</h5>
                                 </div>
 
                                 <div className="row mt-2">
@@ -135,53 +145,53 @@ const InternamientoBienesAuxiliaresListPage = () => {
                                                                 listaInternamientoFormato1.map((objLista, i) => {
                                                                     return (
                                                                         <tr key={objLista.id}>
-                                                                                <td>{i + 1}</td>
+                                                                            <td>{i + 1}</td>
 
-                                                                                {/* <td>{objLista.bien_auxiliar.id}</td> */}
-                                                                                <td>{objLista.bien_auxiliar.descripcion}</td>
-                                                                                {/* <td>{objLista.bien_auxiliar.marca}</td> */}
-                                                                                <td>{objLista.bien_auxiliar.estado_bien}</td>
-                                                                                <td>{objLista.bien_auxiliar.observaciones}</td>
-                                                                                <td>{objLista.bien_auxiliar.fecha_adquisicion}</td>
-                                                                                <td>
-                                                                                    <img
-                                                                                        className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                        alt="some value"
-                                                                                        title={objLista.nombre_original_acta_entrega_recepcion}
-                                                                                        src={objLista.bien_auxiliar.icon_file}
-                                                                                        onClick={() =>
-                                                                                            showModal(objLista.documento_acta_entrega_recepcion)
-                                                                                        }
-                                                                                    />
-                                                                                </td>
-                                                                                <td>
-                                                                                    <img
-                                                                                        className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                        alt="some value"
-                                                                                        title={objLista.nombre_original_oficio_regularizacion}
-                                                                                        src={objLista.icon_file_oficio_regularizacion}
-                                                                                        onClick={() =>
-                                                                                            showModal(objLista.documento_oficio_regularizacion)
-                                                                                        }
-                                                                                    />
-                                                                                </td>
-                                                                                
-                                                                                <td>
+                                                                            {/* <td>{objLista.bien_auxiliar.id}</td> */}
+                                                                            <td>{objLista.bien_auxiliar.descripcion}</td>
+                                                                            {/* <td>{objLista.bien_auxiliar.marca}</td> */}
+                                                                            <td>{objLista.bien_auxiliar.estado_bien}</td>
+                                                                            <td>{objLista.bien_auxiliar.observaciones}</td>
+                                                                            <td>{objLista.bien_auxiliar.fecha_adquisicion}</td>
+                                                                            <td>
+                                                                                <img
+                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
+                                                                                    alt="some value"
+                                                                                    title={objLista.nombre_original_acta_entrega_recepcion}
+                                                                                    src={objLista.bien_auxiliar.icon_file}
+                                                                                    onClick={() =>
+                                                                                        showModal(objLista.documento_acta_entrega_recepcion)
+                                                                                    }
+                                                                                />
+                                                                            </td>
+                                                                            <td>
+                                                                                <img
+                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
+                                                                                    alt="some value"
+                                                                                    title={objLista.nombre_original_oficio_regularizacion}
+                                                                                    src={objLista.icon_file_oficio_regularizacion}
+                                                                                    onClick={() =>
+                                                                                        showModal(objLista.documento_oficio_regularizacion)
+                                                                                    }
+                                                                                />
+                                                                            </td>
+
+                                                                            <td>
 
 
-                                                                                    <button data-toggle="tooltip" data-placement="top" title="Eliminar"
-                                                                                        className="btn btn-danger mx-1"
-                                                                                        onClick={() => {
-                                                                                            desinternarBien(objLista.id);
-                                                                                        }}
-                                                                                    >
-                                                                                        Desinternar Bien <i className="fa fa-trash"></i>
+                                                                                <button data-toggle="tooltip" data-placement="top" title="Eliminar"
+                                                                                    className="btn btn-danger mx-1"
+                                                                                    onClick={() => {
+                                                                                        desinternarBien(objLista.id);
+                                                                                    }}
+                                                                                >
+                                                                                    Desinternar Bien <i className="fa fa-trash"></i>
 
-                                                                                    </button>
+                                                                                </button>
 
-                                                                                </td>
-                                                                                
-                                                                            </tr> 
+                                                                            </td>
+
+                                                                        </tr>
 
                                                                     )
                                                                 })

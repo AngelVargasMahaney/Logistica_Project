@@ -7,7 +7,6 @@ import GeneralNavBar from '../../layout/GeneralNavBar'
 import { postPersonal } from "../../../services/personalService";
 import Swal from 'sweetalert2';
 
-
 const PersonalCrearPage = () => {
     const TITULO = "Formulario de Creación de Personal";
     const HISTORY = "/admin/personal";
@@ -32,7 +31,8 @@ const PersonalCrearPage = () => {
             [e.target.name]: e.target.value //Darle valor del name según el formulario
         })
     }
-
+  
+    
     const handleSubmit = (e) => {
         e.preventDefault() //Evito que se refresque la página
         // postUsuario({ ...formulario }).then((rpta) => { //Copia del formulario
@@ -135,7 +135,7 @@ const PersonalCrearPage = () => {
                                                 required
                                                 onChange={handleChange}
                                                 pattern="[0-9]{4,10}"
-                                                title="4 - 10"
+                                                title="4 - 10 numeros"
                                             />
 
                                             <label htmlFor="" className="form-label">
