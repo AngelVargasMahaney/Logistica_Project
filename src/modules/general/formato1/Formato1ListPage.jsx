@@ -457,7 +457,7 @@ const Formato1ListPage = () => {
                                         }
                                       />
                                     </td>
-                                      
+
                                     <td>{objFormato.observaciones}</td>
                                     {/* <td>{objFormato.imagen_bien}</td> */}
                                     <td>
@@ -687,6 +687,7 @@ const Formato1ListPage = () => {
 
 
                     <form onSubmit={handleSubmitReasignacion}>
+
                       <div className="form-group">
                         <label htmlFor="">Nueva persona encargada</label>
                         <select defaultValue="DEFAULT" onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
@@ -753,13 +754,14 @@ const Formato1ListPage = () => {
                         <input type="text" className="form-control"
                           value={tipo_bien} name="tipo_bien" onChange={handleChange} />
                       </div> */}
-
-                      <div className="form-group">
-                        <button className="btn btn-primary" type="submit">Reasignar Bien<i className="ml-2 fa fa-check"></i></button>
-                      </div>
+                     
+                        <div className="form-group">
+                          <button className="btn btn-primary" type="submit">Reasignar Bien<i className="ml-2 fa fa-check"></i></button>
+                        </div>
 
 
                     </form>
+
                   </Modal.Body>
                   <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseReasignar}>
