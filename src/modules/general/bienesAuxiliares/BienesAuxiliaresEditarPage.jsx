@@ -83,6 +83,7 @@ const BienesAuxiliaresEditarPage = () => {
         formData.append('tipo_material', formulario.tipo_material)
         formData.append('color', formulario.color)
         formData.append('dimensiones', formulario.dimensiones)
+        formData.append('fecha_adquisicion', formulario.fecha_adquisicion)
         formData.append('estado_bien', formulario.estado_bien)
         formData.append('descripcion', formulario.descripcion)
         formData.append('observaciones', formulario.observaciones)
@@ -250,6 +251,19 @@ const BienesAuxiliaresEditarPage = () => {
                                                 required
                                                 name="observaciones"
                                                 value={observaciones}
+                                                onChange={handleChange}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="" className="form-label my-2">
+                                                Fecha Adquisición
+                                            </label>
+                                            <input
+                                                type="date"
+                                                className="form-control mt-2"
+                                                required
+                                                name="fecha_adquisicion"
+                                                value={formulario.fecha_adquisicion}
                                                 onChange={handleChange}
                                             />
                                         </div>
