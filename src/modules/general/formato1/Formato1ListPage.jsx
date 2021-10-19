@@ -83,23 +83,23 @@ const Formato1ListPage = () => {
     formData.append('estado_del_bien', formulario.estado_del_bien)
     formData.append('fecha', formulario.fecha)
     formData.append('observaciones', formulario.observaciones)
-    formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
-    formData.append('documento_oficio_regularizacion', documentoRegularizacion)
+    // formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
+    // formData.append('documento_oficio_regularizacion', documentoRegularizacion)
     formData.append('bien_id', idActualDelBien)
     formData.append('tipo_bien', formulario.tipo_bien)
-    if(documentoRecepcion!==null){
-      formDataReasignacion.append('documento_acta_entrega_recepcion', documentoRecepcion)
+
+
+    if(documentoRecepcion!=null){
+      formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
     }else{
-      formDataReasignacion.delete('documento_acta_entrega_recepcion', documentoRecepcion)      
+      formData.delete('documento_acta_entrega_recepcion', documentoRecepcion)      
     }
 
     if(documentoRegularizacion!==null){
-      formDataReasignacion.append('documento_oficio_regularizacion', documentoRegularizacion)
+      formData.append('documento_oficio_regularizacion', documentoRegularizacion)
     }else{
-      formDataReasignacion.delete('documento_oficio_regularizacion', documentoRegularizacion)
+      formData.delete('documento_oficio_regularizacion', documentoRegularizacion)
     }
-
-
 
     postInternarBienFormato1(formData, config).then((rpta) => {
       if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
