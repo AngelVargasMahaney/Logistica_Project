@@ -255,13 +255,13 @@ const InternamientoFormato1ListPage = () => {
                                                                             <td>
 
 
-                                                                                <button data-toggle="tooltip" data-placement="top" title="Eliminar"
+                                                                                <button data-toggle="tooltip" data-placement="top" title="Desinternar"
                                                                                     className="btn btn-danger mx-1"
                                                                                     onClick={() => {
                                                                                         desinternarBien(objLista.id);
                                                                                     }}
                                                                                 >
-                                                                                    Desinternar Bien <i className="fa fa-trash"></i>
+                                                                                   <i className="fa fa-trash"></i>
 
                                                                                 </button>
                                                                                 <Button
