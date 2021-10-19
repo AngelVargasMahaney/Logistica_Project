@@ -223,7 +223,7 @@ const Formato1EditarPage = () => {
                                                 Fecha de Adquisición
                                             </label>
                                             <input
-                                                type="text"
+                                                type="date"
                                                 className="form-control mt-2"
                                                 required
                                                 name="fecha_adquisicion"
