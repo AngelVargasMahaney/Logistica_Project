@@ -1,118 +1,72 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
-import {
-    getBienAuxiliarById,
-    postBienAuxiliarById,
-} from "../../../services/bienesAuxiliaresService";
+import { useHistory, useParams } from 'react-router'
+import { getEquipoPolicial, getEquipoPolicialById, postEditarEquipoPolicialById } from '../../../services/equipoPolicialService'
 import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
 
-const BienesAuxiliaresEditarPage = () => {
-
-    const TITULO = 'Formulario de Edición de un Bien Auxiliar'
-    const HISTORY = "/admin/bienes-auxiliares";
-    const [documentoBienAuxiliar, setDocumentoBienAuxiliar] = useState(null)
-    const [ImagenBienAuxiliar, setImagenBienAuxiliar] = useState(null)
-
-    const handleDocumentoBienAuxiliar = e => { setDocumentoBienAuxiliar(e.target.files[0]) }
-    const handleImagenBienAuxiliar = e => { setImagenBienAuxiliar(e.target.files[0]) }
-
-    const config = { headers: { 'Content-Type': 'multipart/form-data' } }
-
-    //Variable de estado que se encarga de manejar los campos de nuestro formulario que servirán para llenar la bd (tener en cuenta los campos que el back-end envió, ver documentación)
+const EquipoPolicialEditarPage = () => {
+    const [documentoEquipoPolicial, setDocumentoEquipoPolicial] = useState(null)
+    const [imagenBienEquipoPolicial, setImagenBienEquipoPolicial] = useState(null)
+    const handleDocumentoEquipoPolicial = e => (setDocumentoEquipoPolicial(e.target.files[0]))
+    const handleImagenEquipoPolicial = e => (setImagenBienEquipoPolicial(e.target.files[0]))
     const [formulario, setFormulario] = useState({
-        documento: "",
         descripcion: "",
         marca: "",
         modelo: "",
         serie: "",
-        tipo_material: "",
-        color: "",
-        dimensiones: "",
+        pais_fabricacion: "",
         estado_bien: "",
-        fecha_adquisicion: "",
+        forma_adquisicion: "",
+        anio_adquisicion: "",
+        tasacion: "",
+        tipo_afectacion: "",
         observaciones: "",
-        imagen_bien: "",
     })
-
-    let {
-        documento,
-        descripcion,
-        marca,
-        modelo,
-        serie,
-        tipo_material,
-        color,
-        dimensiones,
-        estado_bien,
-        imagen_bien,
-        fecha_adquisicion,
-        observaciones } = formulario
-
-
-
-    //Recupero los parámetros de la URL
-    const params = useParams()
-
-    const history = useHistory()
-
-    //Desestructuro los campos del formulario, con el objetivo de evitar poner formulario.valor en cada atributo del forumario (por limpieza de código)
-
-
-    // Cada vez que se dispara el evento onChange del formulario, se llama a esta funcion para manejar el envío de datos
-    const handleChange = (e) => {
+    const handleChange = e => {
         setFormulario({
             ...formulario,
-            [e.target.name]: e.target.value //Darle valor del name según el formulario
+            [e.target.name]: e.target.value
         })
     }
+    const params = useParams()
+    const history = useHistory()
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } }
 
-    const handleSubmit = (e) => {
-        e.preventDefault() //Evito que se refresque la página
-        // postUsuario({ ...formulario }).then((rpta) => { //Copia del formulario
-        //     console.log(rpta)
-        // })
-        //console.log(formulario)
+    const handleSubmit = e => {
+        e.preventDefault()
+        const formData = new FormData()
+        formData.append(`descripcion`, formulario.descripcion)
+        formData.append(`marca`, formulario.marca)
+        formData.append(`modelo`, formulario.modelo)
+        formData.append(`serie`, formulario.serie)
+        formData.append(`pais_fabricacion`, formulario.pais_fabricacion)
+        formData.append(`estado_bien`, formulario.estado_bien)
+        formData.append(`forma_adquisicion`, formulario.forma_adquisicion)
+        formData.append(`anio_adquisicion`, formulario.anio_adquisicion)
+        formData.append(`tasacion`, formulario.tasacion)
+        formData.append(`tipo_afectacion`, formulario.tipo_afectacion)
+        formData.append(`observaciones`, formulario.observaciones)
 
-        //Validación genérica, se puede mejorar
-        const formData = new FormData();
-        formData.append('descripcion', formulario.descripcion)
-        formData.append('marca', formulario.marca)
-        formData.append('modelo', formulario.modelo)
-        formData.append('serie', formulario.serie)
-        formData.append('tipo_material', formulario.tipo_material)
-        formData.append('color', formulario.color)
-        formData.append('dimensiones', formulario.dimensiones)
-        formData.append('estado_bien', formulario.estado_bien)
-        formData.append('descripcion', formulario.descripcion)
-        formData.append('observaciones', formulario.observaciones)
-
-        if (documentoBienAuxiliar !== null) {
-            formData.append('documento', documentoBienAuxiliar)
+        if (documentoEquipoPolicial !== null) {
+            formData.append(`documento`, documentoEquipoPolicial)
         } else {
-            formData.delete('documento', documentoBienAuxiliar)    
+            formData.delete(`documento`, documentoEquipoPolicial)
         }
-        if(ImagenBienAuxiliar !==null) {
-            formData.append('imagen_bien', ImagenBienAuxiliar)
-        }else{
-            formData.delete('imagen_bien', ImagenBienAuxiliar)
+        if (imagenBienEquipoPolicial !== null) {
+            formData.append(`imagen_bien`, imagenBienEquipoPolicial)
+        } else {
+            formData.delete(`imagen_bien`, imagenBienEquipoPolicial)
         }
-
-        postBienAuxiliarById(formData, config, params.id).then((rpta) => {
-            //console.log(rpta)
+        postEditarEquipoPolicialById(formData, config, params.id).then((rpta) => {
             if (rpta.status === 200) {
-                history.push(HISTORY)
+                history.push(`admin/equipo-policial`)
             }
         })
-
     }
-
     useEffect(() => {
-        getBienAuxiliarById(params.id).then((rpta) => {
-            console.log(rpta)
+        getEquipoPolicialById(params.id).then((rpta) => {
             setFormulario({ ...rpta.data })
         })
-        // eslint-disable-next-line
     }, [])
 
     return (
@@ -126,7 +80,7 @@ const BienesAuxiliaresEditarPage = () => {
                             <div className="card">
                                 <div className="card-header">
                                     <h4 className="card-title">
-                                        {TITULO}
+                                        {"Formulario de Edición de un Bien del Formato 1"}
                                     </h4>
                                 </div>
                                 <div className="card-body">
@@ -145,7 +99,7 @@ const BienesAuxiliaresEditarPage = () => {
                                                 className="form-control mt-2"
                                                 required
                                                 name="descripcion"
-                                                value={descripcion}
+                                                value={formulario.descripcion}
                                                 onChange={handleChange}
                                             />
                                         </div>
@@ -158,7 +112,7 @@ const BienesAuxiliaresEditarPage = () => {
                                                 className="form-control mt-2"
                                                 required
                                                 name="marca"
-                                                value={marca}
+                                                value={formulario.marca}
                                                 onChange={handleChange}
                                             />
                                         </div>
@@ -171,7 +125,7 @@ const BienesAuxiliaresEditarPage = () => {
                                                 className="form-control mt-2"
                                                 required
                                                 name="modelo"
-                                                value={modelo}
+                                                value={formulario.modelo}
                                                 onChange={handleChange}
                                             />
                                         </div>
@@ -184,46 +138,20 @@ const BienesAuxiliaresEditarPage = () => {
                                                 className="form-control mt-2"
                                                 required
                                                 name="serie"
-                                                value={serie}
+                                                value={formulario.serie}
                                                 onChange={handleChange}
                                             />
                                         </div>
                                         <div>
                                             <label htmlFor="" className="form-label my-2">
-                                                Tipo de Material
+                                                Pais de Fabricación
                                             </label>
                                             <input
                                                 type="text"
                                                 className="form-control mt-2"
                                                 required
-                                                name="tipo_material"
-                                                value={tipo_material}
-                                                onChange={handleChange}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="" className="form-label my-2">
-                                                Color
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control mt-2"
-                                                required
-                                                name="color"
-                                                value={color}
-                                                onChange={handleChange}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="" className="form-label my-2">
-                                                Dimensiones
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control mt-2"
-                                                required
-                                                name="dimensiones"
-                                                value={dimensiones}
+                                                name="pais_fabricacion"
+                                                value={formulario.pais_fabricacion}
                                                 onChange={handleChange}
                                             />
                                         </div>
@@ -236,20 +164,72 @@ const BienesAuxiliaresEditarPage = () => {
                                                 className="form-control mt-2"
                                                 required
                                                 name="estado_bien"
-                                                value={estado_bien}
+                                                value={formulario.estado_bien}
                                                 onChange={handleChange}
                                             />
                                         </div>
                                         <div>
                                             <label htmlFor="" className="form-label my-2">
-                                                Observaciones
+                                                Forma de Adquisición
                                             </label>
                                             <input
                                                 type="text"
                                                 className="form-control mt-2"
                                                 required
-                                                name="observaciones"
-                                                value={observaciones}
+                                                name="forma_adquisicion"
+                                                value={formulario.forma_adquisicion}
+                                                onChange={handleChange}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="" className="form-label my-2">
+                                                Fecha de Adquisición
+                                            </label>
+                                            <input
+                                                type="date"
+                                                className="form-control mt-2"
+                                                required
+                                                name="anio_adquisicion"
+                                                value={formulario.anio_adquisicion}
+                                                onChange={handleChange}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="" className="form-label my-2">
+                                                Tasación
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className="form-control mt-2"
+                                                required
+                                                name="tasacion"
+                                                value={formulario.tasacion}
+                                                onChange={handleChange}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="" className="form-label my-2">
+                                                Tipo de Afectación
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className="form-control mt-2"
+                                                required
+                                                name="tipo_afectacion"
+                                                value={formulario.tipo_afectacion}
+                                                onChange={handleChange}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="" className="form-label my-2">
+                                                Forma de Adquisición
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className="form-control mt-2"
+                                                required
+                                                name="Observaciones"
+                                                value={formulario.observaciones}
                                                 onChange={handleChange}
                                             />
                                         </div>
@@ -264,7 +244,7 @@ const BienesAuxiliaresEditarPage = () => {
 
                                                 name="documento"
 
-                                                onChange={handleDocumentoBienAuxiliar}
+                                                onChange={handleDocumentoEquipoPolicial}
                                             />
                                         </div>
 
@@ -278,7 +258,7 @@ const BienesAuxiliaresEditarPage = () => {
 
                                                 name="imagen_bien"
 
-                                                onChange={handleImagenBienAuxiliar}
+                                                onChange={handleImagenEquipoPolicial}
                                             />
                                         </div>
 
@@ -290,7 +270,7 @@ const BienesAuxiliaresEditarPage = () => {
                                                 className="btn btn-danger my-3 mx-3"
                                                 type="button"
                                                 onClick={() => {
-                                                    history.push(HISTORY);
+                                                    history.push(`/admin/equipo-policial`);
                                                 }}
                                             >
                                                 <span className="mx-1"><i class="fa fa-ban" aria-hidden="true"></i></span> Cancelar
@@ -307,4 +287,4 @@ const BienesAuxiliaresEditarPage = () => {
     )
 }
 
-export default BienesAuxiliaresEditarPage
+export default EquipoPolicialEditarPage

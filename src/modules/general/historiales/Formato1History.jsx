@@ -13,21 +13,30 @@ import { getAreaOficinaSeccion } from '../../../services/areaOficinaSeccionServi
 
 const Formato1History = () => {
 
-    const TITULO = "Formato";
+    const TITULO = "Historial de Bienes del Formato 1";
     const [data, setData] = useState([])
     const [cargando, setCargando] = useState(true)
     const [pdfActual, setpdfActual] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const params = useParams()
+    const [formulario, setFormulario] = useState({
+        personalEncargado:"",
+        areaOficinaSeccion:"",
+        estado_bien:"",
+        observaciones:"",
+    })
+
     const traerData = () => {
         setCargando(true)
         const idUrl = params.id;
         getHistorialFormatoById(idUrl).then(rpta => {
-            console.log(rpta)
+            // console.log(rpta)
             setData(rpta.data);
             setCargando(false)
         })
     }
+
+    
     const hideModal = () => {
         setIsOpen(false);
     };
@@ -285,7 +294,7 @@ const Formato1History = () => {
 
                                                         </button>
                                                         <div className="mt-1">Fecha: {item?.fecha} </div>
-
+                                                     
                                                         <div className="mt-1">Personal encargado: {personal?.grado} {personal?.nombre} {personal?.apellido} </div>
                                                         <div className="mt-1">Subunidad: {area_oficina_seccion?.subunidad?.nombre}</div>
                                                         <div className="mt-1">Area: {area_oficina_seccion?.nombre}</div>
@@ -367,7 +376,7 @@ const Formato1History = () => {
                                 <option value="DEFAULT" disabled>--- Elegir Personal---</option>
                                 {personalActivo.map((objPersonal, i) => {
                                     return (
-                                        <option key={objPersonal.id} value={objPersonal.id} >{objPersonal.grado + " |-> " + objPersonal.apellido + " " + objPersonal.nombre}</option>
+                                        <option key={objPersonal.id} value={objPersonal.id} >{objPersonal.grado + " |-> " + objPersonal.apellido + " " + objPersonal.nombre} {formulario.personalEncargado = objPersonal.apellido}</option>
                                     );
                                 })}
                             </select>

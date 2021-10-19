@@ -350,10 +350,10 @@ const Formato1ListPage = () => {
                     {" "}
                     <i className="fa fa-list"></i> Lista de Bienes Internados
                   </Link>
-                  <Link onClick={reportes} className="btn btn-success">
+                  <Button onClick={reportes} className="btn btn-success">
                     {" "}
                     <i className="fas fa-file-excel"></i> Generar Reporte
-                  </Link>
+                  </Button>
 
 
                   <Link to={urlFormatoCrear} className="btn btn-primary ">
@@ -499,7 +499,7 @@ const Formato1ListPage = () => {
                                         <i className="fa fa-trash"></i>
                                       </button>
                                       <Link
-                                        to={`formatos/editar/${objFormato.id}`}
+                                        to={`/admin/formatos/editar/${objFormato.id}`}
                                         className="btn btn-warning"
                                         title="Modificar"
                                       >

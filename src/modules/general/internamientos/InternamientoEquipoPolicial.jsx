@@ -6,6 +6,7 @@ import Swal from 'sweetalert2'
 import Modal from "react-bootstrap/Modal";
 import { getReportes } from '../../../services/reportesService'
 import { Link } from '@material-ui/core'
+import Button from '@restart/ui/esm/Button'
 const InternamientoEquipoPolicial = () => {
 
     const [listaInternamientoFormato1, setListaInternamientoFormato1] = useState([])
@@ -77,10 +78,10 @@ const InternamientoEquipoPolicial = () => {
 
                         <div className="card">
                             <div className="card-body">
-                                <Link onClick={reportes} className="btn btn-success pull-right text-white">
+                                <Button onClick={reportes} className="btn btn-success pull-right text-white">
                                     {" "}
                                     <i className="fas fa-file-excel"></i> Generar Reporte
-                                </Link>
+                                </Button>
                                 <div className="d-flex justify-content-between mb-3">
                                     <h5>Bienes Internados de Equipo Policial</h5>
                                 </div>

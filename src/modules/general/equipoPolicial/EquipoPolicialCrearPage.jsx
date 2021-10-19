@@ -21,7 +21,7 @@ const EquipoPolicialCrearPage = () => {
         pais_frabricacion: "",
         estado_bien: "",
         fecha_adquisicion: "",
-        forma_adquisicion:"",
+        forma_adquisicion: "",
         tasacion: "",
         observaciones: "",
         imagen_bien: ""
@@ -30,7 +30,7 @@ const EquipoPolicialCrearPage = () => {
 
 
     //Desestructuro los campos del formulario, con el objetivo de evitar poner formulario.valor en cada atributo del forumario (por limpieza de código)
-    let { 
+    let {
         codigo,
         descripcion,
         marca,
@@ -42,7 +42,7 @@ const EquipoPolicialCrearPage = () => {
         forma_adquisicion,
         tasacion,
         observaciones,
-        } = formulario
+    } = formulario
 
     // Cada vez que se dispara el evento onChange del formulario, se llama a esta funcion para manejar el envío de datos
     const handleChange = (e) => {
@@ -94,11 +94,11 @@ const EquipoPolicialCrearPage = () => {
                                                 className="form-control my-2"
                                                 name="codigo"
                                                 value={codigo}
-                                           
+
                                                 onChange={handleChange}
                                             />
 
-                                            
+
 
                                             <label htmlFor="" className="form-label">
                                                 Descripción
@@ -119,7 +119,7 @@ const EquipoPolicialCrearPage = () => {
                                                 className="form-control my-2"
                                                 name="marca"
                                                 value={marca}
-                                               
+
                                                 onChange={handleChange}
                                             />
 
@@ -131,7 +131,7 @@ const EquipoPolicialCrearPage = () => {
                                                 className="form-control my-2"
                                                 name="modelo"
                                                 value={modelo}
-                                               
+
                                                 onChange={handleChange}
                                             />
                                             <label htmlFor="" className="form-label">
@@ -142,18 +142,18 @@ const EquipoPolicialCrearPage = () => {
                                                 className="form-control my-2"
                                                 name="serie"
                                                 value={serie}
-                                               
+
                                                 onChange={handleChange}
                                             />
                                             <label htmlFor="" className="form-label">
-                                                Pais Fabricacion
+                                                Pais de Fabricación
                                             </label>
                                             <input
                                                 type="text"
                                                 className="form-control my-2"
-                                                name="pais_fabricacion"
+                                                name="pais_frabricacion"
                                                 value={pais_frabricacion}
-                                               
+
                                                 onChange={handleChange}
                                             />
                                             <label htmlFor="" className="form-label">
@@ -164,18 +164,18 @@ const EquipoPolicialCrearPage = () => {
                                                 className="form-control my-2"
                                                 name="estado_bien"
                                                 value={estado_bien}
-                                               
+
                                                 onChange={handleChange}
                                             />
                                             <label htmlFor="" className="form-label">
-                                               Forma de Adquisición
+                                                Forma de Adquisición
                                             </label>
                                             <input
                                                 type="text"
                                                 className="form-control my-2"
                                                 name="forma_adquisicion"
                                                 value={forma_adquisicion}
-                                               
+
                                                 onChange={handleChange}
                                             />
                                             <label htmlFor="" className="form-label">
@@ -186,10 +186,10 @@ const EquipoPolicialCrearPage = () => {
                                                 className="form-control my-2"
                                                 name="anio_adquisicion"
                                                 value={fecha_adquisicion}
-                                               
+
                                                 onChange={handleChange}
                                             />
-                                             <label htmlFor="" className="form-label">
+                                            <label htmlFor="" className="form-label">
                                                 Tasacion
                                             </label>
                                             <input
@@ -197,22 +197,22 @@ const EquipoPolicialCrearPage = () => {
                                                 className="form-control my-2"
                                                 name="tasacion"
                                                 value={tasacion}
-                                               
+
                                                 onChange={handleChange}
                                             />
-                                            
-                                              <label htmlFor="" className="form-label">
-                                               Observaciones
+
+                                            <label htmlFor="" className="form-label">
+                                                Observaciones
                                             </label>
                                             <input
                                                 type="text"
                                                 className="form-control my-2"
                                                 name="observaciones"
                                                 value={observaciones}
-                                               
+
                                                 onChange={handleChange}
                                             />
-                                             
+
 
                                         </div>
                                         <div>

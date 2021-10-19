@@ -335,10 +335,10 @@ const EquipoPolicialListPage = () => {
 
                                 <div className="d-flex justify-content-between mb-3">
                                     <h5>{TITULO}</h5>
-                                    <Link onClick={reportes} className="btn btn-success">
+                                    <Button onClick={reportes} className="btn btn-success">
                                         {" "}
                                         <i className="fas fa-file-excel"></i> Generar Reporte
-                                    </Link>
+                                    </Button>
                                     <Link to="/admin/bienes-internados/equipo-policial" className="btn btn-warning">
                                         {" "}
                                         <i className="fa fa-list"></i> Lista de Bienes Internados
@@ -373,8 +373,8 @@ const EquipoPolicialListPage = () => {
                                                             <tr>
                                                                 <th>id</th>
                                                                 <th>codigo</th>
-                                                                <th>descripcion</th>
                                                                 <th>Documento</th>
+                                                                <th>Descripción</th>
                                                                 <th>marca</th>
                                                                 <th>modelo</th>
                                                                 <th>serie</th>
@@ -478,7 +478,7 @@ const EquipoPolicialListPage = () => {
                                                                                 </button>
 
                                                                                 <Link
-                                                                                    to={`equipo-policial/${obj.id}`}
+                                                                                    to={`/admin/equipo-policial/editar/${obj.id}`}
                                                                                     className="btn btn-warning"
                                                                                     title="Modificar"
                                                                                 >

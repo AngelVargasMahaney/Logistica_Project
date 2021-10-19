@@ -292,10 +292,10 @@ const BienesAuxiliaresListPage = () => {
                                         {" "}
                                         <i className="fa fa-list"></i> Lista de Bienes Internados
                                     </Link>
-                                    <Link onClick={reportes} className="btn btn-success">
+                                    <Button onClick={reportes} className="btn btn-success">
                                         {" "}
                                         <i className="fas fa-file-excel"></i> Generar Reporte
-                                    </Link>
+                                    </Button>
                                     <Link to={URL_CREAR} className="btn btn-primary "> <i className="fa fa-plus"></i> Crear </Link>
                                 </div>
 

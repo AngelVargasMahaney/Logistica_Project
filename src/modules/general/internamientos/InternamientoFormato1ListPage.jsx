@@ -151,10 +151,10 @@ const InternamientoFormato1ListPage = () => {
                         <div className="card">
 
                             <div className="card-body">
-                                <Link onClick={reportes} className="btn btn-success pull-right text-white">
+                                <Button onClick={reportes} className="btn btn-success pull-right text-white">
                                     {" "}
                                     <i className="fas fa-file-excel"></i> Generar Reporte
-                                </Link>
+                                </Button>
                                 <div className="d-flex justify-content-between mb-3">
                                     <h5>Bienes Internados del Formato 1</h5>
                                 </div>
