@@ -119,6 +119,12 @@ const Formato1History = () => {
     const handleDocumentoEntregaRecepcion = e => {
         setDocumentoEntregaRecepcion(e.target.files[0])
     }
+
+    const [documentoMemorandum, setDocumentoMemorandum] = useState(null)
+    const handleDocumentoMemorandum = e =>{
+        setDocumentoMemorandum(e.target.files[0])
+    }
+
     const handleSubmit = e => {
         e.preventDefault();
         const formData = new FormData();
@@ -130,6 +136,11 @@ const Formato1History = () => {
             formData.append('documento_acta_entrega_recepcion', documentoEntregaRecepcion)
         }else{
             formData.delete('documento_acta_entrega_recepcion', documentoEntregaRecepcion)
+        }
+        if(documentoMemorandum!==null){
+            formData.append('documento_memorandum',documentoMemorandum)
+        }else{
+            formData.delete('documento_memorandum',documentoMemorandum)
         }
         
 
@@ -406,9 +417,14 @@ const Formato1History = () => {
                                 name="observaciones" onChange={handleChange} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="">Documento: </label>
+                            <label htmlFor="">Documento Acta Entrega Recepción: </label>
                             <input type="file" className="form-control"
                                 name="documento_acta_entrega_recepcion" onChange={handleDocumentoEntregaRecepcion} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="">Documento Memorandum: </label>
+                            <input type="file" className="form-control"
+                                name="documento_memorandum" onChange={handleDocumentoMemorandum} />
                         </div>
                         {/* <div className="form-group">
                             <label htmlFor="">SubUnidad:</label>
