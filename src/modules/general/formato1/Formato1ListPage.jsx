@@ -87,7 +87,17 @@ const Formato1ListPage = () => {
     formData.append('documento_oficio_regularizacion', documentoRegularizacion)
     formData.append('bien_id', idActualDelBien)
     formData.append('tipo_bien', formulario.tipo_bien)
+    if(documentoRecepcion!==null){
+      formDataReasignacion.append('documento_acta_entrega_recepcion', documentoRecepcion)
+    }else{
+      formDataReasignacion.delete('documento_acta_entrega_recepcion', documentoRecepcion)      
+    }
 
+    if(documentoRegularizacion!==null){
+      formDataReasignacion.append('documento_oficio_regularizacion', documentoRegularizacion)
+    }else{
+      formDataReasignacion.delete('documento_oficio_regularizacion', documentoRegularizacion)
+    }
 
 
 
