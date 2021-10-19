@@ -153,6 +153,7 @@ const Formato1History = () => {
                     'success'
                 )
                 traerData()
+                setShowModalHistorial(false)
             }
         })
     }
