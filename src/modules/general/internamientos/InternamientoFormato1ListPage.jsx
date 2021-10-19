@@ -329,9 +329,6 @@ const InternamientoFormato1ListPage = () => {
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-
-
-
                     <Button variant="secondary" onClick={handleCloseReasignar}>
                         Cerrar
                     </Button>
