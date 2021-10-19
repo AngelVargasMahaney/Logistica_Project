@@ -51,12 +51,16 @@ const Formato1ListPage = () => {
 
   const [documentoRecepcion, setDocumentoRecepcion] = useState(null)
   const [documentoRegularizacion, setDocumentoRegularizacion] = useState(null)
+  const [documentoMemorandum, setDocumentoMemorandum] = useState(null)
 
   const handleDocumentRecepcion = e => {
     setDocumentoRecepcion(e.target.files[0])
   }
   const handleDocumentRegularizacion = e => {
     setDocumentoRegularizacion(e.target.files[0])
+  }
+  const handleDocumentMemorandum = e => {
+    setDocumentoMemorandum(e.target.files[0])
   }
 
 
@@ -96,9 +100,9 @@ const Formato1ListPage = () => {
     }
 
     if(documentoRegularizacion!==null){
-      formData.append('documento_memorandum', documentoRegularizacion)
+      formData.append('documento_oficio_regularizacion', documentoRegularizacion)
     }else{
-      formData.delete('documento_memorandum', documentoRegularizacion)
+      formData.delete('documento_oficio_regularizacion', documentoRegularizacion)
     }
 
     postInternarBienFormato1(formData, config).then((rpta) => {
@@ -139,10 +143,10 @@ const Formato1ListPage = () => {
       formDataReasignacion.delete('documento_acta_entrega_recepcion', documentoRecepcion)      
     }
 
-    if(documentoRegularizacion!==null){
-      formDataReasignacion.append('documento_oficio_regularizacion', documentoRegularizacion)
+    if(documentoMemorandum!==null){
+      formDataReasignacion.append('documento_memorandum', documentoMemorandum)
     }else{
-      formDataReasignacion.delete('documento_oficio_regularizacion', documentoRegularizacion)
+      formDataReasignacion.delete('documento_memorandum', documentoMemorandum)
     }
 
     formDataReasignacion.append('bien_id', idActualDelBien)
@@ -771,9 +775,9 @@ const Formato1ListPage = () => {
                           name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="">Documento-Oficio regularización: </label>
+                        <label htmlFor="">Documento Memorandum: </label>
                         <input type="file" className="form-control"
-                          name="documento_memorandum" onChange={handleDocumentRegularizacion} />
+                          name="documento_memorandum" onChange={handleDocumentMemorandum} />
                       </div>
                       <div className="form-group" hidden>
                         <label htmlFor="">Id del Bien: </label>
