@@ -335,14 +335,15 @@ const EquipoPolicialListPage = () => {
 
                                 <div className="d-flex justify-content-between mb-3">
                                     <h5>{TITULO}</h5>
-                                    <Button onClick={reportes} className="btn btn-success">
-                                        {" "}
-                                        <i className="fas fa-file-excel"></i> Generar Reporte
-                                    </Button>
+                                   
                                     <Link to="/admin/bienes-internados/equipo-policial" className="btn btn-warning">
                                         {" "}
                                         <i className="fa fa-list"></i> Lista de Bienes Internados
                                     </Link>
+                                    <Button onClick={reportes} className="btn btn-success">
+                                        {" "}
+                                        <i className="fas fa-file-excel"></i> Generar Reporte
+                                    </Button>
                                     <Link to={"/admin/equipo-policial/crear"} className="btn btn-primary ">
                                         {" "}
                                         <i className="fa fa-plus"></i> Crear un Bien
