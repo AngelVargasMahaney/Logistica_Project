@@ -96,9 +96,9 @@ const Formato1ListPage = () => {
     }
 
     if(documentoRegularizacion!==null){
-      formData.append('documento_oficio_regularizacion', documentoRegularizacion)
+      formData.append('documento_memorandum', documentoRegularizacion)
     }else{
-      formData.delete('documento_oficio_regularizacion', documentoRegularizacion)
+      formData.delete('documento_memorandum', documentoRegularizacion)
     }
 
     postInternarBienFormato1(formData, config).then((rpta) => {
@@ -773,7 +773,7 @@ const Formato1ListPage = () => {
                       <div className="form-group">
                         <label htmlFor="">Documento-Oficio regularización: </label>
                         <input type="file" className="form-control"
-                          name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
+                          name="documento_memorandum" onChange={handleDocumentRegularizacion} />
                       </div>
                       <div className="form-group" hidden>
                         <label htmlFor="">Id del Bien: </label>
