@@ -276,7 +276,7 @@ const InternamientoFormato1ListPage = () => {
                                                                                 </Button>
                                                                                 <Link
                                                                                     // to={`formatos/editar/${objFormato.id}`}
-                                                                                    to={`/admin/formato1/historial/${objLista.id}`}
+                                                                                    to={`/admin/formato1/historial/${objLista.bien_id}`}
                                                                                     className="btn btn-info ml-1"
                                                                                     title="Historial del bien"
                                                                                 >
