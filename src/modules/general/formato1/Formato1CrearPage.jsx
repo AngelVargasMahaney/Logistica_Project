@@ -79,8 +79,17 @@ const Formato1CrearPage = () => {
         formData.append('fecha_adquisicion', fecha_adquisicion)
         formData.append('forma_adquisicion', forma_adquisicion)
         formData.append('observaciones', observaciones)
-        formData.append('imagen_bien', imagen_bien)
-        formData.append('documento', documento)
+        if(documento!==null){
+            formData.append('documento', documento)
+        }else{
+            formData.delete('documento', documento)
+        }
+        if(imagen_bien!==null){
+            formData.append('imagen_bien', imagen_bien)
+        }else{
+            formData.delete('imagen_bien', imagen_bien)
+        }
+        
 
         const config = {
             headers: {

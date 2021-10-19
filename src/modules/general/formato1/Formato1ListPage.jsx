@@ -18,6 +18,7 @@ import { getHistorialFormatoById } from "../../../services/historialBienesServic
 import imgNoDisponible from "../../../assets/23.png"
 import { getAreaOficinaSeccion } from "../../../services/areaOficinaSeccionService";
 import { getReporteFormato1Excel } from "../../../services/reportesService";
+import VisualizadorImagenes from "../../modales/VisualizadorImagenes";
 const Formato1ListPage = () => {
   const urlFormatoCrear = "/admin/formatos/crear";
   const [formatos, setFormatos] = useState([]);
@@ -50,12 +51,16 @@ const Formato1ListPage = () => {
 
   const [documentoRecepcion, setDocumentoRecepcion] = useState(null)
   const [documentoRegularizacion, setDocumentoRegularizacion] = useState(null)
+  const [documentoMemorandum, setDocumentoMemorandum] = useState(null)
 
   const handleDocumentRecepcion = e => {
     setDocumentoRecepcion(e.target.files[0])
   }
   const handleDocumentRegularizacion = e => {
     setDocumentoRegularizacion(e.target.files[0])
+  }
+  const handleDocumentMemorandum = e => {
+    setDocumentoMemorandum(e.target.files[0])
   }
 
 
@@ -82,13 +87,23 @@ const Formato1ListPage = () => {
     formData.append('estado_del_bien', formulario.estado_del_bien)
     formData.append('fecha', formulario.fecha)
     formData.append('observaciones', formulario.observaciones)
-    formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
-    formData.append('documento_oficio_regularizacion', documentoRegularizacion)
+    // formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
+    // formData.append('documento_oficio_regularizacion', documentoRegularizacion)
     formData.append('bien_id', idActualDelBien)
     formData.append('tipo_bien', formulario.tipo_bien)
 
 
+    if(documentoRecepcion!=null){
+      formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
+    }else{
+      formData.delete('documento_acta_entrega_recepcion', documentoRecepcion)      
+    }
 
+    if(documentoRegularizacion!==null){
+      formData.append('documento_oficio_regularizacion', documentoRegularizacion)
+    }else{
+      formData.delete('documento_oficio_regularizacion', documentoRegularizacion)
+    }
 
     postInternarBienFormato1(formData, config).then((rpta) => {
       if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
@@ -122,8 +137,18 @@ const Formato1ListPage = () => {
     formDataReasignacion.append('estado_del_bien', formulario.estado_del_bien)
     formDataReasignacion.append('fecha:', formulario.fecha)
     formDataReasignacion.append('observaciones', formulario.observaciones)
-    formDataReasignacion.append('documento_acta_entrega_recepcion', documentoRecepcion)
-    formDataReasignacion.append('documento_oficio_regularizacion', documentoRegularizacion)
+    if(documentoRecepcion!=null){
+      formDataReasignacion.append('documento_acta_entrega_recepcion', documentoRecepcion)
+    }else{
+      formDataReasignacion.delete('documento_acta_entrega_recepcion', documentoRecepcion)      
+    }
+
+    if(documentoMemorandum!==null){
+      formDataReasignacion.append('documento_memorandum', documentoMemorandum)
+    }else{
+      formDataReasignacion.delete('documento_memorandum', documentoMemorandum)
+    }
+
     formDataReasignacion.append('bien_id', idActualDelBien)
     formDataReasignacion.append('tipo_bien', formulario.tipo_bien)
     formDataReasignacion.append('area_oficina_seccion_id', formulario.area_oficina_seccion_id)
@@ -322,6 +347,18 @@ const Formato1ListPage = () => {
     })
   }
 
+
+  //Este STATE activa el modal de Visualizador de Imagenes
+  const [modalImagenes, setmodalImagenes] = useState(false)
+  const [imagenBien, setImagenBien] = useState("")
+  const [imagenDescripcion, setImagenDescripcion] = useState("")
+  const activarModalVIsualizardorImagen = (imagen, imagenDescripcion) => {
+    setImagenDescripcion(imagenDescripcion)
+    setImagenBien(imagen)
+    setmodalImagenes(true)
+  }
+  //Aqui termina el estate del modal de Visualizador de Imagenes
+
   return (
     <>
       <AdminSidebar />
@@ -337,10 +374,10 @@ const Formato1ListPage = () => {
                     {" "}
                     <i className="fa fa-list"></i> Lista de Bienes Internados
                   </Link>
-                  <Link onClick={reportes} className="btn btn-success">
+                  <Button onClick={reportes} className="btn btn-success">
                     {" "}
                     <i className="fas fa-file-excel"></i> Generar Reporte
-                  </Link>
+                  </Button>
 
 
                   <Link to={urlFormatoCrear} className="btn btn-primary ">
@@ -412,6 +449,7 @@ const Formato1ListPage = () => {
                                 </div>
                               </Modal>
                               {formatos.map((objFormato, i) => {
+                                console.log(objFormato)
                                 return (
                                   <tr key={objFormato.id}>
                                     <td>{objFormato.id}</td>
@@ -448,11 +486,11 @@ const Formato1ListPage = () => {
                                       <img
                                         className="tamaño-icono-pdf rounded mx-auto d-block"
                                         alt="some value"
-                                        title="Codigo Qr del B>ien"
+                                        title="Codigo Qr del Bien"
 
                                         src={objFormato.codigo_qr || imgNoDisponible}
                                         onClick={() =>
-                                          showModal(objFormato.codigo_qr)
+                                          activarModalVIsualizardorImagen(objFormato.codigo_qr || imgNoDisponible, `Código QR de: ${objFormato.descripcion} `)
                                         }
                                       />
                                     </td>
@@ -466,7 +504,7 @@ const Formato1ListPage = () => {
                                         title={objFormato.descripcion}
                                         src={objFormato.imagen_bien || imgNoDisponible}
                                         onClick={() =>
-                                          showModal(objFormato.imagen_bien)
+                                          activarModalVIsualizardorImagen(objFormato.imagen_bien || imgNoDisponible, objFormato.descripcion + " ")
                                         }
                                       />
                                     </td>
@@ -485,7 +523,7 @@ const Formato1ListPage = () => {
                                         <i className="fa fa-trash"></i>
                                       </button>
                                       <Link
-                                        to={`formatos/editar/${objFormato.id}`}
+                                        to={`/admin/formatos/editar/${objFormato.id}`}
                                         className="btn btn-warning"
                                         title="Modificar"
                                       >
@@ -493,15 +531,7 @@ const Formato1ListPage = () => {
                                         <i className="fa fa-pencil"></i>
                                       </Link>
 
-                                      <Link
-                                        // to={`formatos/editar/${objFormato.id}`}
-                                        to={`/admin/formato1/historial/${objFormato.id}`}
-                                        className="btn btn-info ml-1"
-                                        title="Historial del bien"
-                                      >
-                                        {" "}
-                                        <i className="fa fa-history"></i>
-                                      </Link>
+                                     
 
                                       <Button
 
@@ -527,7 +557,15 @@ const Formato1ListPage = () => {
                                         {" "}
                                         <i className="fas fa-angle-double-down"></i>
                                       </Button>
-
+                                      <Link
+                                        // to={`formatos/editar/${objFormato.id}`}
+                                        to={`/admin/formato1/historial/${objFormato.id}`}
+                                        className="btn btn-info ml-1"
+                                        title="Historial del bien"
+                                      >
+                                        {" "}
+                                        <i className="fa fa-history"></i>
+                                      </Link>
 
                                     </td>
                                   </tr>
@@ -686,6 +724,7 @@ const Formato1ListPage = () => {
 
 
                     <form onSubmit={handleSubmitReasignacion}>
+
                       <div className="form-group">
                         <label htmlFor="">Nueva persona encargada</label>
                         <select defaultValue="DEFAULT" onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
@@ -736,9 +775,9 @@ const Formato1ListPage = () => {
                           name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="">Documento-Oficio regularización: </label>
+                        <label htmlFor="">Documento Memorandum: </label>
                         <input type="file" className="form-control"
-                          name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
+                          name="documento_memorandum" onChange={handleDocumentMemorandum} />
                       </div>
                       <div className="form-group" hidden>
                         <label htmlFor="">Id del Bien: </label>
@@ -759,6 +798,7 @@ const Formato1ListPage = () => {
 
 
                     </form>
+
                   </Modal.Body>
                   <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseReasignar}>
@@ -773,6 +813,9 @@ const Formato1ListPage = () => {
               </div>
             </div>
           </main>
+        {/* Aqui llamo a mi componente que permite hacer uso del visualizadorImagenes */}
+          <VisualizadorImagenes visible={modalImagenes} onClose={() => setmodalImagenes(false)} imagen={imagenBien} imagenDescripcion={imagenDescripcion} />
+
         </div>
       </div>
     </>

@@ -17,3 +17,18 @@ export const getReporteFormato1Excel = async () => {
       link.download = `ReporteFormato1${new Date().toLocaleString() + ''}.xlsx`;
       link.click();
 }
+export const getReportes = async (nombreReporte) => {
+    
+    const req = await authAxios({
+        method: "get",
+        url: `${URL_BACKEND}/reporte/${nombreReporte}?ssa=${Math.random()}`,
+        responseType: "blob",
+      });
+      var blob = new Blob([req.data], {
+        type: req.headers["content-type"],
+      });
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = `${nombreReporte}${new Date().toLocaleString() + ''}.xlsx`;
+      link.click();
+}

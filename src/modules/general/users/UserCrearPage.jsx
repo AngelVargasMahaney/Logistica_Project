@@ -3,6 +3,7 @@ import { postUsuario } from '../../../services/usuarioService'
 import { useHistory } from 'react-router-dom'
 import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
+import swal from 'sweetalert2'
 const UserCrearPage = () => {
     const tituloOperacion = 'Formulario de Creación de un Usuario'
     //Variable de estado que se encarga de manejar los campos de nuestro formulario que servirán para llenar la bd (tener en cuenta los campos que el back-end envió, ver documentación)
@@ -41,12 +42,28 @@ const UserCrearPage = () => {
             return
         }
 
+        const errorResponse = (({response}) => {
+            let mensaje = ""
+            if (response.status == 400) {
+                for (const [key, value] of Object.entries(response.data)) {
+                    mensaje += key + ": " + value + "<br>";
+                    console.log(key, value);
+
+                }
+            }
+            swal.fire({
+                icon: 'error',
+                title: 'Ocurrio un Error',
+                html: mensaje,
+                footer: 'SISTEMA DE CONTROL DE BIENES'
+            })
+        } );
         postUsuario(formulario).then((rpta) => {
             console.log(rpta)
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
                 history.push("/admin/usuario")
             }
-        })
+        }).catch(errorResponse);
     }
 
 
@@ -103,6 +120,8 @@ const UserCrearPage = () => {
                                                 placeholder="74521589"
                                                 name="dni"
                                                 value={dni}
+                                                pattern="[0-9]{8}"
+                                                title="Debe poner 8 números"
                                                 onChange={handleChange}
                                             />
                                             <label htmlFor="" className="form-label">

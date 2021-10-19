@@ -16,7 +16,8 @@ import { useParams } from 'react-router-dom'
 import { getHistorialFormatoById, getHistorialEquipoPolicialById } from "../../../services/historialBienesService";
 import imgNoDisponible from "../../../assets/23.png"
 import { getAreaOficinaSeccion } from "../../../services/areaOficinaSeccionService";
-import { getReporteFormato1Excel } from "../../../services/reportesService";
+import { getReporteFormato1Excel, getReportes } from "../../../services/reportesService";
+import VisualizadorImagenes from '../../modales/VisualizadorImagenes';
 
 
 const EquipoPolicialListPage = () => {
@@ -69,12 +70,7 @@ const EquipoPolicialListPage = () => {
     })
 
     //  
-    const [generarReporte, setGenerarReporte] = useState("")
-    const reportes = () => {
-        getReporteFormato1Excel().then(() => {
 
-        })
-    }
     //
     const showModalInternarBien = (idBien) => {
         setIdActualDelBien(idBien);
@@ -303,7 +299,23 @@ const EquipoPolicialListPage = () => {
             }
         })
     }
+    const tipoReporte = "equipoPolicial"
+    const reportes = () => {
+        getReportes(tipoReporte).then(() => {
 
+        })
+    }
+
+    //Este STATE activa el modal de Visualizador de Imagenes
+    const [modalImagenes, setmodalImagenes] = useState(false)
+    const [imagenBien, setImagenBien] = useState("")
+    const [imagenDescripcion, setImagenDescripcion] = useState("")
+    const activarModalVIsualizardorImagen = (imagen, imagenDescripcion) => {
+        setImagenDescripcion(imagenDescripcion)
+        setImagenBien(imagen)
+        setmodalImagenes(true)
+    }
+    //Aqui termina el estate del modal de Visualizador de Imagenes
 
     return (
         <>
@@ -323,11 +335,19 @@ const EquipoPolicialListPage = () => {
 
                                 <div className="d-flex justify-content-between mb-3">
                                     <h5>{TITULO}</h5>
+                                   
                                     <Link to="/admin/bienes-internados/equipo-policial" className="btn btn-warning">
                                         {" "}
                                         <i className="fa fa-list"></i> Lista de Bienes Internados
                                     </Link>
-                                    
+                                    <Button onClick={reportes} className="btn btn-success">
+                                        {" "}
+                                        <i className="fas fa-file-excel"></i> Generar Reporte
+                                    </Button>
+                                    <Link to={"/admin/equipo-policial/crear"} className="btn btn-primary ">
+                                        {" "}
+                                        <i className="fa fa-plus"></i> Crear un Bien
+                                    </Link>
 
                                 </div>
 
@@ -354,8 +374,8 @@ const EquipoPolicialListPage = () => {
                                                             <tr>
                                                                 <th>id</th>
                                                                 <th>codigo</th>
-                                                                <th>descripcion</th>
                                                                 <th>Documento</th>
+                                                                <th>Descripción</th>
                                                                 <th>marca</th>
                                                                 <th>modelo</th>
                                                                 <th>serie</th>
@@ -427,7 +447,7 @@ const EquipoPolicialListPage = () => {
 
                                                                                     src={obj.codigo_qr || imgNoDisponible}
                                                                                     onClick={() =>
-                                                                                        showModal(obj.codigo_qr)
+                                                                                        activarModalVIsualizardorImagen(obj.codigo_qr|| imgNoDisponible, `Código QR de: ${obj.descripcion} `)
                                                                                     }
                                                                                 />
                                                                             </td>
@@ -441,7 +461,7 @@ const EquipoPolicialListPage = () => {
                                                                                     title={obj.descripcion}
                                                                                     src={obj.imagen_bien || imgNoDisponible}
                                                                                     onClick={() =>
-                                                                                        showModal(obj.imagen_bien)
+                                                                                        activarModalVIsualizardorImagen(obj.imagen_bien|| imgNoDisponible,obj.descripcion + " ")
                                                                                     }
                                                                                 />
                                                                             </td>
@@ -459,7 +479,7 @@ const EquipoPolicialListPage = () => {
                                                                                 </button>
 
                                                                                 <Link
-                                                                                    to={`equipo-policial/${obj.id}`}
+                                                                                    to={`/admin/equipo-policial/editar/${obj.id}`}
                                                                                     className="btn btn-warning"
                                                                                     title="Modificar"
                                                                                 >
@@ -467,15 +487,7 @@ const EquipoPolicialListPage = () => {
                                                                                     <i className="fa fa-pencil"></i>
                                                                                 </Link>
 
-                                                                                <Link
-                                                                                    // to={`formatos/editar/${objFormato.id}`}
-                                                                                    to={`/admin/equipo-policial/historial/${obj.id}`}
-                                                                                    className="btn btn-info ml-1"
-                                                                                    title="Historial del bien"
-                                                                                >
-                                                                                    {" "}
-                                                                                    <i className="fa fa-history"></i>
-                                                                                </Link>
+                                                                              
 
                                                                                 <Button
 
@@ -502,6 +514,15 @@ const EquipoPolicialListPage = () => {
                                                                                     {" "}
                                                                                     <i className="fas fa-angle-double-down"></i>
                                                                                 </Button>
+                                                                                <Link
+                                                                                    // to={`formatos/editar/${objFormato.id}`}
+                                                                                    to={`/admin/equipo-policial/historial/${obj.id}`}
+                                                                                    className="btn btn-info ml-1"
+                                                                                    title="Historial del bien"
+                                                                                >
+                                                                                    {" "}
+                                                                                    <i className="fa fa-history"></i>
+                                                                                </Link>
 
                                                                             </td>
                                                                         </tr>
@@ -740,6 +761,9 @@ const EquipoPolicialListPage = () => {
                             </div>
                         </div>
                     </main>
+                    {/* Aqui llamo a mi componente que permite hacer uso del visualizadorImagenes */}
+                    <VisualizadorImagenes visible={modalImagenes} onClose={() => setmodalImagenes(false)} imagen={imagenBien} imagenDescripcion={imagenDescripcion} />
+
                 </div>
             </div>
         </>

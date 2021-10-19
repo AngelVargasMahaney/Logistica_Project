@@ -7,7 +7,6 @@ import GeneralNavBar from '../../layout/GeneralNavBar'
 import { postPersonal } from "../../../services/personalService";
 import Swal from 'sweetalert2';
 
-
 const PersonalCrearPage = () => {
     const TITULO = "Formulario de Creación de Personal";
     const HISTORY = "/admin/personal";
@@ -15,7 +14,7 @@ const PersonalCrearPage = () => {
     const [formulario, setFormulario] = useState({
         grado: "",
         nombre: "",
-        apellido:"",
+        apellido: "",
         cip: "",
         dni: "",
     })
@@ -32,7 +31,8 @@ const PersonalCrearPage = () => {
             [e.target.name]: e.target.value //Darle valor del name según el formulario
         })
     }
-
+  
+    
     const handleSubmit = (e) => {
         e.preventDefault() //Evito que se refresque la página
         // postUsuario({ ...formulario }).then((rpta) => { //Copia del formulario
@@ -44,20 +44,29 @@ const PersonalCrearPage = () => {
             console.log(rpta)
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
                 history.push(HISTORY)
-            }else{
+            } else {
                 Swal.fire(
                     'Internamiento Fallido',
                     'No se puede internar un bien dos veces',
                     'error'
-                  )
+                )
             }
         }).catch(err => {
-            console.log(err.response)
+            // console.log(err.response.data)
+            let strong = "  "
+            // console.log(err.response.data)
+            for (var key in err.response.data) {
+                // console.log(err.response.data[key])
+                // console.log(key)
+                strong = strong + key + ": " + err.response.data[key] + "<br/>"
+            }
+            // console.log(`Strong es: ${strong}\n`)
+
             Swal.fire(
                 'Internamiento Fallido',
-                `${err.response.data.dni}`,
+                `${strong}`,
                 'error'
-              )
+            )
         })
     }
 
@@ -103,7 +112,7 @@ const PersonalCrearPage = () => {
                                                 required
                                                 onChange={handleChange}
                                             />
-                                               <label htmlFor="" className="form-label">
+                                            <label htmlFor="" className="form-label">
                                                 Apellidos
                                             </label>
                                             <input
@@ -126,7 +135,7 @@ const PersonalCrearPage = () => {
                                                 required
                                                 onChange={handleChange}
                                                 pattern="[0-9]{4,10}"
-                                                title="4 - 10"
+                                                title="4 - 10 numeros"
                                             />
 
                                             <label htmlFor="" className="form-label">

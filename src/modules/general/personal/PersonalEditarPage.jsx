@@ -6,7 +6,7 @@ import {
   } from "../../../services/personalService";
 import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
-
+import swal from 'sweetalert2'
 const PersonalEditarPage = () => {
     
     const TITULO = 'Formulario de Edición de un Personal'
@@ -38,6 +38,22 @@ const PersonalEditarPage = () => {
         })
     }
 
+    const errorResponse = (({response}) => {
+        let mensaje = ""
+        if (response.status == 400) {
+            for (const [key, value] of Object.entries(response.data)) {
+                mensaje += key + ": " + value + "<br>";
+                console.log(key, value);
+
+            }
+        }
+        swal.fire({
+            icon: 'error',
+            title: 'Ocurrio un Error',
+            html: mensaje,
+            footer: 'SISTEMA DE CONTROL DE BIENES'
+        })
+    } );
     const handleSubmit = (e) => {
         e.preventDefault(); //Evito que se refresque la página
         // postUsuario({ ...formulario }).then((rpta) => { //Copia del formulario
@@ -52,7 +68,7 @@ const PersonalEditarPage = () => {
             if (rpta.status === 200) {
                 history.push(HISTORY)
             }
-        })
+        }).catch(errorResponse);
 
     }
 

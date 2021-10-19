@@ -4,8 +4,9 @@ import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
 import Swal from 'sweetalert2'
 import Modal from "react-bootstrap/Modal";
-import { Link } from '@material-ui/core'
+import { Link } from "react-router-dom";
 import { Button } from 'react-bootstrap'
+import { getReportes } from '../../../services/reportesService'
 const InternamientoFormato1ListPage = () => {
 
     const [listaInternamientoFormato1, setListaInternamientoFormato1] = useState([])
@@ -15,7 +16,7 @@ const InternamientoFormato1ListPage = () => {
         getBienesInternadosFormato1().then(rpta => {
             console.log("Lista de bienes internados")
             console.log(rpta)
-            
+
             setListaInternamientoFormato1(rpta.data)
             setCargando(false)
         })
@@ -24,7 +25,7 @@ const InternamientoFormato1ListPage = () => {
     useEffect(() => {
         traerData()
     }, [])
-    
+
     const [pdfActual, setpdfActual] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const showModal = (pdfActual) => {
@@ -99,19 +100,21 @@ const InternamientoFormato1ListPage = () => {
             'Authorization': `Bearer ${token}`
         }
     }
-//    for(let i = 0; i<listaInternamientoFormato1.length;i++){
-//        console.log(listaInternamientoFormato1[i])
-//    }
+    //    for(let i = 0; i<listaInternamientoFormato1.length;i++){
+    //        console.log(listaInternamientoFormato1[i])
+    //    }
     const handleSubmit = e => {
         e.preventDefault();
         const formData = new FormData();
-       
-        formData.append('observaciones', formularioInternamiento.observaciones)
-        formData.append('estado_del_bien', formularioInternamiento.estado_del_bien)
-        for(let i = 0; i<listaInternamientoFormato1.length;i++){
-            formData.append('codigo',listaInternamientoFormato1[i])
+        for (let i = 0; i < listaInternamientoFormato1.length; i++) {
+            console.log("S")
+
+            console.log(listaInternamientoFormato1[i])
+            formData.append('observaciones', listaInternamientoFormato1[i].observaciones)
         }
-        formData.append('', formularioInternamiento.codigo_bien)
+
+        formData.append('estado_del_bien', formularioInternamiento.estado_del_bien)
+
         postEditarInternamientoById(formData, config, idActualDelBien).then((rpta) => {
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
                 console.log("Datos actualizados correctamente")
@@ -127,7 +130,12 @@ const InternamientoFormato1ListPage = () => {
         })
     }
 
-   
+    const tipoReporte = "bienesInternados"
+    const reportes = () => {
+        getReportes(tipoReporte).then(() => {
+
+        })
+    }
 
     return (
 
@@ -141,8 +149,12 @@ const InternamientoFormato1ListPage = () => {
                     <main className="container-fluid mt-5">
 
                         <div className="card">
-                            <div className="card-body">
 
+                            <div className="card-body">
+                                <Button onClick={reportes} className="btn btn-success pull-right text-white">
+                                    {" "}
+                                    <i className="fas fa-file-excel"></i> Generar Reporte
+                                </Button>
                                 <div className="d-flex justify-content-between mb-3">
                                     <h5>Bienes Internados del Formato 1</h5>
                                 </div>
@@ -205,7 +217,7 @@ const InternamientoFormato1ListPage = () => {
                                                             </Modal>
                                                             {
                                                                 listaInternamientoFormato1.map((objLista, i) => {
-                                                                 
+
                                                                     return (
                                                                         <tr key={objLista.id}>
                                                                             <td>{i + 1}</td>
@@ -217,7 +229,7 @@ const InternamientoFormato1ListPage = () => {
                                                                             <td>{objLista.observaciones}</td>
                                                                             <td>{objLista.fecha}</td>
                                                                             <td>
-                                                                                <img
+                                                                                {objLista.documento_acta_entrega_recepcion ? (<img
                                                                                     className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                     alt="some value"
                                                                                     title={objLista.nombre_original_acta_entrega_recepcion}
@@ -225,10 +237,11 @@ const InternamientoFormato1ListPage = () => {
                                                                                     onClick={() =>
                                                                                         showModal(objLista.documento_acta_entrega_recepcion)
                                                                                     }
-                                                                                />
+                                                                                />) : " "}
+
                                                                             </td>
                                                                             <td>
-                                                                                <img
+                                                                                {objLista.documento_oficio_regularizacion ? (<img
                                                                                     className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                     alt="some value"
                                                                                     title={objLista.nombre_original_oficio_regularizacion}
@@ -236,20 +249,21 @@ const InternamientoFormato1ListPage = () => {
                                                                                     onClick={() =>
                                                                                         showModal(objLista.documento_oficio_regularizacion)
                                                                                     }
-                                                                                />
+                                                                                />) : " "}
+
                                                                             </td>
                                                                             {/* <td>{objLista.nombre_original_acta_entrega_recepcion}</td>
                                                                         <td>{objLista.nombre_original_oficio_regularizacion}</td> */}
                                                                             <td>
 
 
-                                                                                <button data-toggle="tooltip" data-placement="top" title="Eliminar"
+                                                                                <button data-toggle="tooltip" data-placement="top" title="Desinternar"
                                                                                     className="btn btn-danger mx-1"
                                                                                     onClick={() => {
                                                                                         desinternarBien(objLista.id);
                                                                                     }}
                                                                                 >
-                                                                                    Desinternar Bien <i className="fa fa-trash"></i>
+                                                                                    <i className="fa fa-trash"></i>
 
                                                                                 </button>
                                                                                 <Button
@@ -260,6 +274,15 @@ const InternamientoFormato1ListPage = () => {
                                                                                     {" "}
                                                                                     <i className="fa fa-pencil"></i>
                                                                                 </Button>
+                                                                                <Link
+                                                                                    // to={`formatos/editar/${objFormato.id}`}
+                                                                                    to={`/admin/formato1/historial/${objLista.bien_id}`}
+                                                                                    className="btn btn-info ml-1"
+                                                                                    title="Historial del bien"
+                                                                                >
+                                                                                    {" "}
+                                                                                    <i className="fa fa-history"></i>
+                                                                                </Link>
 
                                                                             </td>
                                                                         </tr>
@@ -271,10 +294,14 @@ const InternamientoFormato1ListPage = () => {
                                                     </table>
                                                 </div>
                                         }
-                                    </div></div>
+                                    </div>
+
+                                </div>
+
                             </div>
                         </div>
                     </main>
+
                 </div>
             </div>
 
@@ -294,11 +321,7 @@ const InternamientoFormato1ListPage = () => {
                             <input type="text" className="form-control"
                                 name="observaciones" onChange={handleChange} />
                         </div>
-                        <div className="form-group">
-                            <label htmlFor="">Código:</label>
-                            <input type="text" className="form-control"
-                                name="codigo" onChange={handleChange} />
-                        </div>
+
 
                         <div className="form-group">
                             <button className="btn btn-primary" type="submit">Actualizar</button>
@@ -306,9 +329,6 @@ const InternamientoFormato1ListPage = () => {
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-
-
-
                     <Button variant="secondary" onClick={handleCloseReasignar}>
                         Cerrar
                     </Button>

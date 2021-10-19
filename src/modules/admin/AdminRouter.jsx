@@ -28,6 +28,8 @@ import InternamientoFormato1ListPage from '../general/internamientos/Internamien
 import BienesAuxiliaresEditarPage from '../general/bienesAuxiliares/BienesAuxiliaresEditarPage'
 import InternamientoBienesAuxiliaresListPage from '../general/internamientos/InternamientoBienesAuxiliaresListPage'
 import InternamientoEquipoPolicial from '../general/internamientos/InternamientoEquipoPolicial'
+import Formato1EditarPage from '../general/formato1/Formato1EditarPage'
+import EquipoPolicialEditarPage from '../general/equipoPolicial/EquipoPolicialEditarPage'
 
 const AdminRouter = () => {
     return (
@@ -43,24 +45,19 @@ const AdminRouter = () => {
                     <BienesAuxiliaresHistory />
                 </Route>
 
-                <Route path="/admin/formatos/crear">
-                    <Formato1CrearPage />
-                </Route>
-                <Route path="/admin/formatos">
-                    <Formato1ListPage />
-                </Route>
+
 
                 <Route path="/admin/bienes-internados/formato1">
-                    <InternamientoFormato1ListPage/>
+                    <InternamientoFormato1ListPage />
                 </Route>
 
-            
+
 
                 <Route path="/admin/bienes-internados/bienes-auxiliares">
-                    <InternamientoBienesAuxiliaresListPage/>
+                    <InternamientoBienesAuxiliaresListPage />
                 </Route>
                 <Route path="/admin/bienes-internados/equipo-policial">
-                    <InternamientoEquipoPolicial/>
+                    <InternamientoEquipoPolicial />
                 </Route>
 
 
@@ -97,8 +94,20 @@ const AdminRouter = () => {
                 <Route path="/admin/personal">
                     <PersonalListPage />
                 </Route>
+                
+                <Route path="/admin/formatos/editar/:id">
+                    <Formato1EditarPage />
+                </Route>
+                <Route path="/admin/formatos/crear">
+                    <Formato1CrearPage />
+                </Route>
+                <Route path="/admin/formatos">
+                    <Formato1ListPage />
+                </Route>
 
-
+                <Route path="/admin/equipo-policial/editar/:id">
+                    <EquipoPolicialEditarPage />
+                </Route>
 
                 <Route path="/admin/equipo-policial/crear">
                     <EquipoPolicialCrearPage />
