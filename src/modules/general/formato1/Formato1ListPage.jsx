@@ -123,8 +123,18 @@ const Formato1ListPage = () => {
     formDataReasignacion.append('estado_del_bien', formulario.estado_del_bien)
     formDataReasignacion.append('fecha:', formulario.fecha)
     formDataReasignacion.append('observaciones', formulario.observaciones)
-    formDataReasignacion.append('documento_acta_entrega_recepcion', documentoRecepcion)
-    formDataReasignacion.append('documento_oficio_regularizacion', documentoRegularizacion)
+    if(documentoRecepcion!=null){
+      formDataReasignacion.append('documento_acta_entrega_recepcion', documentoRecepcion)
+    }else{
+      formDataReasignacion.delete('documento_acta_entrega_recepcion', documentoRecepcion)      
+    }
+
+    if(documentoRegularizacion!==null){
+      formDataReasignacion.append('documento_oficio_regularizacion', documentoRegularizacion)
+    }else{
+      formDataReasignacion.delete('documento_oficio_regularizacion', documentoRegularizacion)
+    }
+
     formDataReasignacion.append('bien_id', idActualDelBien)
     formDataReasignacion.append('tipo_bien', formulario.tipo_bien)
     formDataReasignacion.append('area_oficina_seccion_id', formulario.area_oficina_seccion_id)
