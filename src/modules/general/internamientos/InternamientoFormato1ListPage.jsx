@@ -4,7 +4,7 @@ import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
 import Swal from 'sweetalert2'
 import Modal from "react-bootstrap/Modal";
-import { Link } from '@material-ui/core'
+import { Link } from "react-router-dom";
 import { Button } from 'react-bootstrap'
 import { getReportes } from '../../../services/reportesService'
 const InternamientoFormato1ListPage = () => {
@@ -229,7 +229,7 @@ const InternamientoFormato1ListPage = () => {
                                                                             <td>{objLista.observaciones}</td>
                                                                             <td>{objLista.fecha}</td>
                                                                             <td>
-                                                                                <img
+                                                                                {objLista.documento_acta_entrega_recepcion ? (<img
                                                                                     className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                     alt="some value"
                                                                                     title={objLista.nombre_original_acta_entrega_recepcion}
@@ -237,10 +237,11 @@ const InternamientoFormato1ListPage = () => {
                                                                                     onClick={() =>
                                                                                         showModal(objLista.documento_acta_entrega_recepcion)
                                                                                     }
-                                                                                />
+                                                                                />) : " "}
+
                                                                             </td>
                                                                             <td>
-                                                                                <img
+                                                                                {objLista.documento_oficio_regularizacion ? (<img
                                                                                     className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                     alt="some value"
                                                                                     title={objLista.nombre_original_oficio_regularizacion}
@@ -248,7 +249,8 @@ const InternamientoFormato1ListPage = () => {
                                                                                     onClick={() =>
                                                                                         showModal(objLista.documento_oficio_regularizacion)
                                                                                     }
-                                                                                />
+                                                                                />) : " "}
+
                                                                             </td>
                                                                             {/* <td>{objLista.nombre_original_acta_entrega_recepcion}</td>
                                                                         <td>{objLista.nombre_original_oficio_regularizacion}</td> */}
@@ -261,7 +263,7 @@ const InternamientoFormato1ListPage = () => {
                                                                                         desinternarBien(objLista.id);
                                                                                     }}
                                                                                 >
-                                                                                   <i className="fa fa-trash"></i>
+                                                                                    <i className="fa fa-trash"></i>
 
                                                                                 </button>
                                                                                 <Button
@@ -272,6 +274,15 @@ const InternamientoFormato1ListPage = () => {
                                                                                     {" "}
                                                                                     <i className="fa fa-pencil"></i>
                                                                                 </Button>
+                                                                                <Link
+                                                                                    // to={`formatos/editar/${objFormato.id}`}
+                                                                                    to={`/admin/formato1/historial/${objLista.id}`}
+                                                                                    className="btn btn-info ml-1"
+                                                                                    title="Historial del bien"
+                                                                                >
+                                                                                    {" "}
+                                                                                    <i className="fa fa-history"></i>
+                                                                                </Link>
 
                                                                             </td>
                                                                         </tr>
