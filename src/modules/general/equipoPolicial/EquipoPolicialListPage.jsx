@@ -487,15 +487,7 @@ const EquipoPolicialListPage = () => {
                                                                                     <i className="fa fa-pencil"></i>
                                                                                 </Link>
 
-                                                                                <Link
-                                                                                    // to={`formatos/editar/${objFormato.id}`}
-                                                                                    to={`/admin/equipo-policial/historial/${obj.id}`}
-                                                                                    className="btn btn-info ml-1"
-                                                                                    title="Historial del bien"
-                                                                                >
-                                                                                    {" "}
-                                                                                    <i className="fa fa-history"></i>
-                                                                                </Link>
+                                                                              
 
                                                                                 <Button
 
@@ -522,6 +514,15 @@ const EquipoPolicialListPage = () => {
                                                                                     {" "}
                                                                                     <i className="fas fa-angle-double-down"></i>
                                                                                 </Button>
+                                                                                <Link
+                                                                                    // to={`formatos/editar/${objFormato.id}`}
+                                                                                    to={`/admin/equipo-policial/historial/${obj.id}`}
+                                                                                    className="btn btn-info ml-1"
+                                                                                    title="Historial del bien"
+                                                                                >
+                                                                                    {" "}
+                                                                                    <i className="fa fa-history"></i>
+                                                                                </Link>
 
                                                                             </td>
                                                                         </tr>
