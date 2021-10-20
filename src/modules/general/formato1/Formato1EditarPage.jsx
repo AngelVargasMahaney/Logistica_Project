@@ -121,7 +121,6 @@ const Formato1EditarPage = () => {
                                             <input
                                                 type="text"
                                                 className="form-control mt-2"
-                                                required
                                                 name="marca"
                                                 value={formulario.marca}
                                                 onChange={handleChange}
@@ -134,7 +133,6 @@ const Formato1EditarPage = () => {
                                             <input
                                                 type="text"
                                                 className="form-control mt-2"
-                                                required
                                                 name="modelo"
                                                 value={formulario.modelo}
                                                 onChange={handleChange}
@@ -147,7 +145,6 @@ const Formato1EditarPage = () => {
                                             <input
                                                 type="text"
                                                 className="form-control mt-2"
-                                                required
                                                 name="serie"
                                                 value={formulario.serie}
                                                 onChange={handleChange}
@@ -160,7 +157,6 @@ const Formato1EditarPage = () => {
                                             <input
                                                 type="text"
                                                 className="form-control mt-2"
-                                                required
                                                 name="tipo"
                                                 value={formulario.tipo}
                                                 onChange={handleChange}
@@ -173,7 +169,6 @@ const Formato1EditarPage = () => {
                                             <input
                                                 type="text"
                                                 className="form-control mt-2"
-                                                required
                                                 name="color"
                                                 value={formulario.color}
                                                 onChange={handleChange}
@@ -186,7 +181,6 @@ const Formato1EditarPage = () => {
                                             <input
                                                 type="text"
                                                 className="form-control mt-2"
-                                                required
                                                 name="dimensiones"
                                                 value={formulario.dimensiones}
                                                 onChange={handleChange}
@@ -212,7 +206,6 @@ const Formato1EditarPage = () => {
                                             <input
                                                 type="text"
                                                 className="form-control mt-2"
-                                                required
                                                 name="observaciones"
                                                 value={formulario.observaciones}
                                                 onChange={handleChange}
@@ -225,7 +218,6 @@ const Formato1EditarPage = () => {
                                             <input
                                                 type="date"
                                                 className="form-control mt-2"
-                                                required
                                                 name="fecha_adquisicion"
                                                 value={formulario.fecha_adquisicion}
                                                 onChange={handleChange}
@@ -238,7 +230,6 @@ const Formato1EditarPage = () => {
                                             <input
                                                 type="text"
                                                 className="form-control mt-2"
-                                                required
                                                 name="forma_adquisicion"
                                                 value={formulario.forma_adquisicion}
                                                 onChange={handleChange}

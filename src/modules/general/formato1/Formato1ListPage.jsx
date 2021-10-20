@@ -460,7 +460,7 @@ const Formato1ListPage = () => {
                                     {/* <td>{objFormato.documento}</td> */}
 
                                     <td>
-                                      <img
+                                      {objFormato.icon_file ?(<img
                                         className="tamaño-icono-pdf rounded mx-auto d-block"
                                         alt="some value"
                                         title={objFormato.documento_nombre_original}
@@ -468,10 +468,11 @@ const Formato1ListPage = () => {
                                         onClick={() =>
                                           showModal(objFormato.documento)
                                         }
-                                      />
+                                      />):" "}
+                                      
                                     </td>
 
-                                    <td>{objFormato.descripcion}</td>
+                                    <td>{objFormato.descripcion || " "}</td>
                                     <td>{objFormato.marca}</td>
                                     <td>{objFormato.modelo}</td>
                                     <td>{objFormato.serie}</td>
