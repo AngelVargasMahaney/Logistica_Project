@@ -85,7 +85,7 @@ const SubUnidadesEditarPage = () => {
                     </div>
                     <div>
                       <label htmlFor="" className="form-label my-2">
-                        Nombre de la sub unidad
+                        Nombre
                       </label>
                       <input
                         type="text"

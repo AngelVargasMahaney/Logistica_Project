@@ -90,8 +90,8 @@ const AreaOficinaSeccionCrearPage = () => {
                                                 Subunidad
                                             </label>
 
-                                            <select defaultValue="DEFAULT" onChange={handleChange} name="subunidad_id" required className="form-select custom-select mr-sm-2">
-                                                <option value="DEFAULT" disabled>--- Elegir Subunidad ---</option>
+                                            <select onChange={handleChange} name="subunidad_id" required className="form-select custom-select mr-sm-2">
+                                                <option value="" >--- Elegir Subunidad ---</option>
 
                                                 {subunidades.map((objTipoFormato, i) => {
                                                     return (
