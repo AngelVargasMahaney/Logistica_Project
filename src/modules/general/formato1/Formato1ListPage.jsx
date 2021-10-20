@@ -135,7 +135,7 @@ const Formato1ListPage = () => {
 
     const formDataReasignacion = new FormData();
     formDataReasignacion.append('estado_del_bien', formulario.estado_del_bien)
-    formDataReasignacion.append('fecha:', formulario.fecha)
+    formDataReasignacion.append('fecha', formulario.fecha)
     formDataReasignacion.append('observaciones', formulario.observaciones)
     if (documentoRecepcion != null) {
       formDataReasignacion.append('documento_acta_entrega_recepcion', documentoRecepcion)
