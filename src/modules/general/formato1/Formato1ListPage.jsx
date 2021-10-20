@@ -594,12 +594,12 @@ const Formato1ListPage = () => {
                       <div className="form-group">
                         <label htmlFor="">Estado del Bien:</label>
                         <input type="text" className="form-control"
-                          value={estado_del_bien} name="estado_del_bien" onChange={handleChange} />
+                          value={estado_del_bien} name="estado_del_bien" required onChange={handleChange} />
                       </div>
                       <div className="form-group">
                         <label htmlFor="">Fecha:</label>
                         <input type="date" className="form-control"
-                          value={fecha} name="fecha" onChange={handleChange} />
+                          value={fecha} name="fecha" required onChange={handleChange} />
                       </div>
                       <div className="form-group">
                         <label htmlFor="">Observaciones:</label>
@@ -767,7 +767,7 @@ const Formato1ListPage = () => {
                       <div className="form-group">
                         <label htmlFor="">Fecha: </label>
                         <input type="date" className="form-control"
-                          value={fecha} name="fecha" onChange={handleChange} />
+                          value={fecha} name="fecha" required onChange={handleChange} />
                       </div>
 
                       <div className="form-group">
