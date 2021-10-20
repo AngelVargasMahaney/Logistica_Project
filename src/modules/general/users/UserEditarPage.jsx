@@ -129,8 +129,9 @@ const UserEditarPage = () => {
                                             <input
                                                 type="text"
                                                 className="form-control mt-2"
-                                                required placeholder="74521589"
+                                                placeholder="74521589"
                                                 name="dni"
+                                                required
                                                 value={dni}
                                                 pattern="[0-9]{8}"
                                                 title="Debe poner 8 números"
@@ -140,7 +141,7 @@ const UserEditarPage = () => {
                                                 Email
                                             </label>
                                             <input
-                                                type="text"
+                                                type="email"
                                                 className="form-control mt-2"
                                                 required placeholder="Ejm: Pmario@pnp.gob.pe"
                                                 name="email"
@@ -155,6 +156,8 @@ const UserEditarPage = () => {
                                                 className="form-control mt-2"
                                                 name="password"
                                                 value={password}
+                                                minLength="4"
+                                                maxLength="32"
                                                 onChange={handleChange}
                                             />
                                         </div>
