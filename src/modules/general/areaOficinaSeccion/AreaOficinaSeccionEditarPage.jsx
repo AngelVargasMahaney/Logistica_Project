@@ -92,8 +92,8 @@ const AreaOficinaSeccionEditarPage = () => {
                                             Subunidad
                                         </label>
 
-                                        <select defaultValue="DEFAULT" onChange={handleChange} value={subunidad_id} name="subunidad_id" required className="form-select custom-select mr-sm-2">
-                                            <option value="DEFAULT" disabled>--- Elegir Subunidad ---</option>
+                                        <select onChange={handleChange} value={subunidad_id} name="subunidad_id" required className="form-select custom-select mr-sm-2">
+                                            <option value="">--- Elegir Subunidad ---</option>
 
                                             {subunidades.map((objTipoFormato, i) => {
                                                 return (
@@ -103,7 +103,7 @@ const AreaOficinaSeccionEditarPage = () => {
                                         </select>
                                         <div>
                                             <label htmlFor="" className="form-label my-2">
-                                                Nombre del Area Oficina Sección
+                                                Nombre
                                             </label>
                                             <input
                                                 type="text"

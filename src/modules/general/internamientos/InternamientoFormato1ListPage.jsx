@@ -9,6 +9,8 @@ import { Button } from 'react-bootstrap'
 import { getReportes } from '../../../services/reportesService'
 const InternamientoFormato1ListPage = () => {
 
+
+
     const [listaInternamientoFormato1, setListaInternamientoFormato1] = useState([])
     const [cargando, setCargando] = useState(true)
     const traerData = () => {

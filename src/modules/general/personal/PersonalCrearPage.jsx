@@ -5,7 +5,7 @@ import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
 
 import { postPersonal } from "../../../services/personalService";
-import Swal from 'sweetalert2';
+import swal from 'sweetalert2';
 
 const PersonalCrearPage = () => {
     const TITULO = "Formulario de Creación de Personal";
@@ -32,7 +32,22 @@ const PersonalCrearPage = () => {
         })
     }
   
-    
+    const errorResponse = (({response}) => {
+        let mensaje = ""
+        if (response.status == 400) {
+            for (const [key, value] of Object.entries(response.data)) {
+                mensaje += key + ": " + value + "<br>";
+                console.log(key, value);
+
+            }
+        }
+        swal.fire({
+            icon: 'error',
+            title: 'Ocurrio un Error',
+            html: mensaje,
+            footer: 'SISTEMA DE CONTROL DE BIENES'
+        })
+    } );
     const handleSubmit = (e) => {
         e.preventDefault() //Evito que se refresque la página
         // postUsuario({ ...formulario }).then((rpta) => { //Copia del formulario
@@ -44,30 +59,8 @@ const PersonalCrearPage = () => {
             console.log(rpta)
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
                 history.push(HISTORY)
-            } else {
-                Swal.fire(
-                    'Internamiento Fallido',
-                    'No se puede internar un bien dos veces',
-                    'error'
-                )
             }
-        }).catch(err => {
-            // console.log(err.response.data)
-            let strong = "  "
-            // console.log(err.response.data)
-            for (var key in err.response.data) {
-                // console.log(err.response.data[key])
-                // console.log(key)
-                strong = strong + key + ": " + err.response.data[key] + "<br/>"
-            }
-            // console.log(`Strong es: ${strong}\n`)
-
-            Swal.fire(
-                'Internamiento Fallido',
-                `${strong}`,
-                'error'
-            )
-        })
+        }).catch(errorResponse)
     }
 
 

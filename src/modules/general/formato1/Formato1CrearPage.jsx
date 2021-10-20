@@ -160,6 +160,7 @@ const Formato1CrearPage = () => {
                                                     placeholder="Laptop de Sobremesa"
                                                     name="descripcion"
                                                     value={descripcion}
+                                                    required
                                                     onChange={handleChange}
                                                 />
                                                 <label htmlFor="" className="form-label">
@@ -239,6 +240,7 @@ const Formato1CrearPage = () => {
                                                     className="form-control my-2"
                                                     placeholder="Usado"
                                                     name="estado_bien"
+                                                    required
                                                     value={estado_bien}
                                                     onChange={handleChange}
                                                 />

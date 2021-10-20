@@ -86,11 +86,12 @@ return (
 
                             <div className="d-flex justify-content-between mb-3">
                                 <h5>{TITULO}</h5>
-                                <Link to={URL_CREAR} className="btn btn-primary "> <i className="fa fa-plus"></i> Crear </Link>
                                 <Link onClick={reportes} className="btn btn-success">
                                     {" "}
                                     <i className="fas fa-file-excel"></i> Generar Reporte
                                 </Link>
+                                <Link to={URL_CREAR} className="btn btn-primary "> <i className="fa fa-plus"></i> Crear Personal</Link>
+                               
                             </div>
 
                             <div className="row mt-2">
