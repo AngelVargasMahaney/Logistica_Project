@@ -93,15 +93,15 @@ const Formato1ListPage = () => {
     formData.append('tipo_bien', formulario.tipo_bien)
 
 
-    if(documentoRecepcion!=null){
+    if (documentoRecepcion != null) {
       formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
-    }else{
-      formData.delete('documento_acta_entrega_recepcion', documentoRecepcion)      
+    } else {
+      formData.delete('documento_acta_entrega_recepcion', documentoRecepcion)
     }
 
-    if(documentoRegularizacion!==null){
+    if (documentoRegularizacion !== null) {
       formData.append('documento_oficio_regularizacion', documentoRegularizacion)
-    }else{
+    } else {
       formData.delete('documento_oficio_regularizacion', documentoRegularizacion)
     }
 
@@ -137,15 +137,15 @@ const Formato1ListPage = () => {
     formDataReasignacion.append('estado_del_bien', formulario.estado_del_bien)
     formDataReasignacion.append('fecha:', formulario.fecha)
     formDataReasignacion.append('observaciones', formulario.observaciones)
-    if(documentoRecepcion!=null){
+    if (documentoRecepcion != null) {
       formDataReasignacion.append('documento_acta_entrega_recepcion', documentoRecepcion)
-    }else{
-      formDataReasignacion.delete('documento_acta_entrega_recepcion', documentoRecepcion)      
+    } else {
+      formDataReasignacion.delete('documento_acta_entrega_recepcion', documentoRecepcion)
     }
 
-    if(documentoMemorandum!==null){
+    if (documentoMemorandum !== null) {
       formDataReasignacion.append('documento_memorandum', documentoMemorandum)
-    }else{
+    } else {
       formDataReasignacion.delete('documento_memorandum', documentoMemorandum)
     }
 
@@ -460,7 +460,7 @@ const Formato1ListPage = () => {
                                     {/* <td>{objFormato.documento}</td> */}
 
                                     <td>
-                                      {objFormato.icon_file ?(<img
+                                      {objFormato.icon_file ? (<img
                                         className="tamaño-icono-pdf rounded mx-auto d-block"
                                         alt="some value"
                                         title={objFormato.documento_nombre_original}
@@ -468,8 +468,8 @@ const Formato1ListPage = () => {
                                         onClick={() =>
                                           showModal(objFormato.documento)
                                         }
-                                      />):" "}
-                                      
+                                      />) : " "}
+
                                     </td>
 
                                     <td>{objFormato.descripcion || " "}</td>
@@ -532,7 +532,7 @@ const Formato1ListPage = () => {
                                         <i className="fa fa-pencil"></i>
                                       </Link>
 
-                                     
+
 
                                       <Button
 
@@ -728,8 +728,8 @@ const Formato1ListPage = () => {
 
                       <div className="form-group">
                         <label htmlFor="">Nueva persona encargada</label>
-                        <select defaultValue="DEFAULT" onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
-                          <option value="DEFAULT" disabled>--- Elegir Personal---</option>
+                        <select onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
+                          <option value="" >--- Elegir Personal---</option>
 
                           {personalActivo.map((objPersonal, i) => {
                             return (
@@ -742,8 +742,8 @@ const Formato1ListPage = () => {
                       </div>
                       <div className="form-group">
                         <label htmlFor="">Area Oficina Sección</label>
-                        <select defaultValue="DEFAULT" onChange={handleChange} name="area_oficina_seccion_id" required className="form-select custom-select mr-sm-2">
-                          <option value="DEFAULT" disabled>--- Elegir Subunidad---</option>
+                        <select onChange={handleChange} name="area_oficina_seccion_id" required className="form-select custom-select mr-sm-2">
+                          <option value="">--- Elegir Subunidad---</option>
                           {areaoficinaseccion.map((objTipoFormato, i) => {
                             let { subunidad } = objTipoFormato
                             return (
@@ -757,7 +757,7 @@ const Formato1ListPage = () => {
                       <div className="form-group">
                         <label htmlFor="">Estado del Bien: </label>
                         <input type="text" className="form-control"
-                          value={estado_del_bien} name="estado_del_bien" onChange={handleChange} />
+                          value={estado_del_bien} name="estado_del_bien" required onChange={handleChange} />
                       </div>
                       <div className="form-group">
                         <label htmlFor="">Observaciones: </label>
@@ -814,7 +814,7 @@ const Formato1ListPage = () => {
               </div>
             </div>
           </main>
-        {/* Aqui llamo a mi componente que permite hacer uso del visualizadorImagenes */}
+          {/* Aqui llamo a mi componente que permite hacer uso del visualizadorImagenes */}
           <VisualizadorImagenes visible={modalImagenes} onClose={() => setmodalImagenes(false)} imagen={imagenBien} imagenDescripcion={imagenDescripcion} />
 
         </div>
