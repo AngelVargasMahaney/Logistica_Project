@@ -176,8 +176,6 @@ const Formato1ListPage = () => {
 
           }
         })
-
-
       }
 
       console.log(rpta)
@@ -187,6 +185,7 @@ const Formato1ListPage = () => {
         'No se puede internar un bien dos veces',
         'error'
       )
+    
     })
   }
 
@@ -252,7 +251,8 @@ const Formato1ListPage = () => {
   console.log(dataHistorial)
   useEffect(() => {
     prueba()
-  }, [idActualDelBien, historial, dataHistorial])
+    // }, [idActualDelBien, historial, dataHistorial])
+  }, [idActualDelBien, showModalReasignar, showModalInternar])
   // Metodos para traer el historial
 
 
