@@ -12,6 +12,7 @@ const Formato1EditarPage = () => {
     const handleImagenFormato1 = e => { setImagenBienFormato1(e.target.files[0]) }
     //
     const [formulario, setFormulario] = useState({
+        codigo:"",
         descripcion: "",
         marca: "",
         modelo: "",
@@ -39,17 +40,18 @@ const Formato1EditarPage = () => {
     const handleSubmit = e => {
         e.preventDefault()
         const formData = new FormData()
-        formData.append(`descripcion`, formulario.descripcion)
-        formData.append(`marca`, formulario.marca)
-        formData.append(`modelo`, formulario.modelo)
-        formData.append(`serie`, formulario.serie)
-        formData.append(`tipo`, formulario.tipo)
-        formData.append(`color`, formulario.color)
-        formData.append(`dimensiones`, formulario.dimensiones)
-        formData.append(`estado_bien`, formulario.estado_bien)
-        formData.append(`fecha_adquisicion`, formulario.fecha_adquisicion)
-        formData.append(`forma_adquisicion`, formulario.forma_adquisicion)
-        formData.append(`observaciones`, formulario.observaciones)
+        formData.append(`codigo`, formulario.codigo ? formulario.codigo : " ")
+        formData.append(`descripcion`, formulario.descripcion ? formulario.descripcion : " ")
+        formData.append(`marca`, formulario.marca ? formulario.marca : " ")
+        formData.append(`modelo`, formulario.modelo ? formulario.modelo : " ")
+        formData.append(`serie`, formulario.serie ? formulario.serie : " ")
+        formData.append(`tipo`, formulario.tipo ? formulario.tipo : " ")
+        formData.append(`color`, formulario.color ? formulario.color : " ")
+        formData.append(`dimensiones`, formulario.dimensiones ? formulario.dimensiones : " ")
+        formData.append(`estado_bien`, formulario.estado_bien ? formulario.estado_bien : " ")
+        formData.append(`fecha_adquisicion`, formulario.fecha_adquisicion ? formulario.fecha_adquisicion : " ")
+        formData.append(`forma_adquisicion`, formulario.forma_adquisicion ? formulario.forma_adquisicion : " ")
+        formData.append(`observaciones`, formulario.observaciones ? formulario.observaciones : " ")
 
         if (documentoFormato1 !== null) {
             formData.append(`documento`, documentoFormato1)
@@ -100,6 +102,19 @@ const Formato1EditarPage = () => {
                                         <div>
                                             <label htmlFor="" className="form-label my-2">Id</label>
                                             <input type="text" className="form-control mt-2" required disabled value={formulario.id} />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="" className="form-label my-2">
+                                                Código
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className="form-control mt-2"
+                                                required
+                                                name="codigo"
+                                                value={formulario.codigo}
+                                                onChange={handleChange}
+                                            />
                                         </div>
                                         <div>
                                             <label htmlFor="" className="form-label my-2">
