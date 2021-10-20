@@ -55,13 +55,7 @@ const PersonalEditarPage = () => {
         })
     } );
     const handleSubmit = (e) => {
-        e.preventDefault(); //Evito que se refresque la página
-        // postUsuario({ ...formulario }).then((rpta) => { //Copia del formulario
-        //     console.log(rpta)
-        // })
-        //console.log(formulario)
-
-        //Validación genérica, se puede mejorar
+        e.preventDefault(); 
 
         putPersonalById(formulario).then((rpta) => {
             //console.log(rpta)
