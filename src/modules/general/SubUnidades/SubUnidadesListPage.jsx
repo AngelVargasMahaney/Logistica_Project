@@ -59,7 +59,7 @@ const SubUnidadesListPage = () => {
                   <h5>{TITULO}</h5>
                   <Link to={URL_CREAR} className="btn btn-primary ">
                     {" "}
-                    <i className="fa fa-plus"></i> Crear{" "}
+                    <i className="fa fa-plus"></i> Crear Subunidad{" "}
                   </Link>
                 </div>
 

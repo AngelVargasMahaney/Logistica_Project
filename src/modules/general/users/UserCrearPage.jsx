@@ -15,7 +15,7 @@ const UserCrearPage = () => {
         password: ""
     })
 
-    const [error, setError] = useState(false)
+
     const history = useHistory()
 
     //Desestructuro los campos del formulario, con el objetivo de evitar poner formulario.valor en cada atributo del forumario (por limpieza de código)
@@ -31,16 +31,6 @@ const UserCrearPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault() //Evito que se refresque la página
-        // postUsuario({ ...formulario }).then((rpta) => { //Copia del formulario
-        //     console.log(rpta)
-        // })
-        //console.log(formulario)
-
-        //Validación genérica, se puede mejorar
-        if (name.trim() === "" || apellido.trim === "" || dni.trim() === "" || email.trim() === "" || password.trim() === "") {
-            setError(true);
-            return
-        }
 
         const errorResponse = (({response}) => {
             let mensaje = ""
@@ -82,11 +72,7 @@ const UserCrearPage = () => {
                                     </h4>
                                 </div>
                                 <div className="card-body">
-                                    {
-                                        error ? <div className="alert alert-danger">
-                                            Todos los campos deben ser llenados
-                                        </div> : null
-                                    }
+                                  
                                     <form onSubmit={handleSubmit}>
                                         <div>
                                             <label htmlFor="" className="form-label">
@@ -99,6 +85,7 @@ const UserCrearPage = () => {
                                                 name="name"
                                                 value={name}
                                                 onChange={handleChange}
+                                                required
                                             />
                                             <label htmlFor="" className="form-label">
                                                 Apellido
@@ -109,6 +96,7 @@ const UserCrearPage = () => {
                                                 placeholder="Ejm: Pérez Sánchez"
                                                 name="apellido"
                                                 value={apellido}
+                                                required
                                                 onChange={handleChange}
                                             />
                                             <label htmlFor="" className="form-label">
@@ -128,12 +116,13 @@ const UserCrearPage = () => {
                                                 Email
                                             </label>
                                             <input
-                                                type="text"
+                                                type="email"
                                                 className="form-control my-2"
                                                 placeholder="Ejm: Pmario@pnp.gob.pe"
                                                 name="email"
                                                 value={email}
                                                 onChange={handleChange}
+                                                required
                                             />
                                             <label htmlFor="" className="form-label">
                                                 Password
@@ -144,7 +133,10 @@ const UserCrearPage = () => {
                                                 placeholder="Ejm: Pmario@pnp.gob.pe"
                                                 name="password"
                                                 value={password}
+                                                minLength="4"
+                                                maxLength="32"
                                                 onChange={handleChange}
+                                                required
                                             />
                                         </div>
                                         <div>
