@@ -20,10 +20,10 @@ const Formato1History = () => {
     const [isOpen, setIsOpen] = useState(false);
     const params = useParams()
     const [formulario, setFormulario] = useState({
-        personalEncargado:"",
-        areaOficinaSeccion:"",
-        estado_bien:"",
-        observaciones:"",
+        personalEncargado: "",
+        areaOficinaSeccion: "",
+        estado_bien: "",
+        observaciones: "",
     })
 
     const traerData = () => {
@@ -36,7 +36,7 @@ const Formato1History = () => {
         })
     }
 
-    
+
     const hideModal = () => {
         setIsOpen(false);
     };
@@ -82,8 +82,9 @@ const Formato1History = () => {
 
     const [idActualHistorialItem, setIdActualHistorialItem] = useState(null)
     const [showModalHistorial, setShowModalHistorial] = useState(false)
-    const showModalEditarHistorial = (idBien) => {
+    const showModalEditarHistorial = (idBien, obj) => {
         setIdActualHistorialItem(idBien);
+        setFormularioHistorial({ ...obj })
         setShowModalHistorial(true);
         console.log("ENTRANDO AL LLAMADO DE DATA CON ID: " + idBien)
         // setCargando(true);
@@ -108,6 +109,11 @@ const Formato1History = () => {
             [e.target.name]: e.target.value
         })
     }
+    console.log("formularioHistorial")
+    console.log(formularioHistorial)
+
+
+
     const token = localStorage.getItem('token')
     const config = {
         headers: {
@@ -121,7 +127,7 @@ const Formato1History = () => {
     }
 
     const [documentoMemorandum, setDocumentoMemorandum] = useState(null)
-    const handleDocumentoMemorandum = e =>{
+    const handleDocumentoMemorandum = e => {
         setDocumentoMemorandum(e.target.files[0])
     }
 
@@ -132,17 +138,17 @@ const Formato1History = () => {
         formData.append('area_oficina_seccion_id', formularioHistorial.area_oficina_seccion_id)
         formData.append('estado_del_bien', formularioHistorial.estado_del_bien)
         formData.append('observaciones', formularioHistorial.observaciones)
-        if(documentoEntregaRecepcion!==null){
+        if (documentoEntregaRecepcion !== null) {
             formData.append('documento_acta_entrega_recepcion', documentoEntregaRecepcion)
-        }else{
+        } else {
             formData.delete('documento_acta_entrega_recepcion', documentoEntregaRecepcion)
         }
-        if(documentoMemorandum!==null){
-            formData.append('documento_memorandum',documentoMemorandum)
-        }else{
-            formData.delete('documento_memorandum',documentoMemorandum)
+        if (documentoMemorandum !== null) {
+            formData.append('documento_memorandum', documentoMemorandum)
+        } else {
+            formData.delete('documento_memorandum', documentoMemorandum)
         }
-        
+
 
         postEditarHistorialById(formData, config, idActualHistorialItem).then((rpta) => {
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
@@ -186,7 +192,8 @@ const Formato1History = () => {
     useEffect(() => {
         traerSubunidades();
     }, []);
-
+    let { personal,area_oficina_seccion } = formularioHistorial
+   
     return (
         <>
 
@@ -300,13 +307,13 @@ const Formato1History = () => {
                                                             type="button"
                                                             class="btn pull-right mx-3 btn-outline-info"
                                                             onClick={() => {
-                                                                showModalEditarHistorial(item.id);
+                                                                showModalEditarHistorial(item.id, item);
                                                             }}
                                                         >Editar Historial
 
                                                         </button>
                                                         <div className="mt-1">Fecha: {item?.fecha} </div>
-                                                     
+
                                                         <div className="mt-1">Personal encargado: {personal?.grado} {personal?.nombre} {personal?.apellido} </div>
                                                         <div className="mt-1">Subunidad: {area_oficina_seccion?.subunidad?.nombre}</div>
                                                         <div className="mt-1">Area: {area_oficina_seccion?.nombre}</div>
@@ -385,7 +392,8 @@ const Formato1History = () => {
                         <div className="form-group">
                             <label htmlFor="">Nueva persona encargada</label>
                             <select defaultValue="DEFAULT" onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
-                                <option value="DEFAULT" disabled>--- Elegir Personal---</option>
+                                <option value="DEFAULT" disabled>{personal?.grado +  " |-> " + personal?.apellido + " " + personal?.nombre}</option>
+
                                 {personalActivo.map((objPersonal, i) => {
                                     return (
                                         <option key={objPersonal.id} value={objPersonal.id} >{objPersonal.grado + " |-> " + objPersonal.apellido + " " + objPersonal.nombre} {formulario.personalEncargado = objPersonal.apellido}</option>
@@ -396,7 +404,8 @@ const Formato1History = () => {
                         <div className="form-group">
                             <label htmlFor="">Area Oficina Sección</label>
                             <select defaultValue="DEFAULT" onChange={handleChange} name="area_oficina_seccion_id" required className="form-select custom-select mr-sm-2">
-                                <option value="DEFAULT" disabled>--- Elegir Subunidad---</option>
+                                
+                                <option value="DEFAULT" disabled>{area_oficina_seccion?.nombre + " |-> " + area_oficina_seccion?.subunidad?.nombre }</option>
                                 {areaoficinaseccion.map((objTipoFormato, i) => {
                                     let { subunidad } = objTipoFormato
                                     return (
@@ -410,11 +419,13 @@ const Formato1History = () => {
                         <div className="form-group">
                             <label htmlFor="">Estado del bien: </label>
                             <input type="text" className="form-control"
+                                value={formularioHistorial.estado_del_bien}
                                 name="estado_del_bien" onChange={handleChange} />
                         </div>
                         <div className="form-group">
                             <label htmlFor="">Observaciones: </label>
                             <input type="text" className="form-control"
+                                value={formularioHistorial.observaciones}
                                 name="observaciones" onChange={handleChange} />
                         </div>
                         <div className="form-group">
