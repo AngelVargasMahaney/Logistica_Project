@@ -20,7 +20,7 @@ const BienesAuxiliaresListPage = () => {
 
     const URL_CREAR = '/admin/bienes-auxiliares/crear'
     const URL_EDITAR = "/admin/bienes-auxiliares/editar";
-    const TITULO = "Bienes Auxiliar";
+    const TITULO = "Bienes Auxiliares";
     const [data, setData] = useState([])
     const [cargando, setCargando] = useState(true)
     const [pdfActual, setpdfActual] = useState("");
@@ -83,7 +83,7 @@ const BienesAuxiliaresListPage = () => {
     console.log(dataHistorial)
     useEffect(() => {
         prueba()
-    }, [idActualDelBien])
+    }, [idActualDelBien, showModalReasignar, showModalInternar])
     // Metodos para traer el historial
 
     const handleDocumentRecepcion = e => {
@@ -320,19 +320,19 @@ const BienesAuxiliaresListPage = () => {
                                                     <table className="table table-bordered">
                                                         <thead>
                                                             <tr>
-                                                                <th>id</th>
-                                                                <th>descripcion</th>
+                                                                <th>ID</th>
+                                                                <th>Descripción</th>
                                                                 <th>Documento</th>
-                                                                <th>marca</th>
-                                                                <th>modelo</th>
-                                                                <th>serie</th>
-                                                                <th>tipo_material</th>
-                                                                <th>color</th>
-                                                                <th>dimensiones</th>
-                                                                <th>estado_bien</th>
-                                                                <th>fecha_adquisicion</th>
-                                                                <th>observaciones</th>
-                                                                <th>Código_QR</th>
+                                                                <th>Marca</th>
+                                                                <th>Modelo</th>
+                                                                <th>Serie</th>
+                                                                <th>Tipo Material</th>
+                                                                <th>Color</th>
+                                                                <th>Dimensiones</th>
+                                                                <th>Estado del Bien</th>
+                                                                <th>Fecha Adquisición</th>
+                                                                <th>Observaciones</th>
+                                                                <th>Código QR</th>
                                                                 <th>Imagen</th>
                                                                 <th className="acciones"></th>
                                                             </tr>
@@ -365,7 +365,7 @@ const BienesAuxiliaresListPage = () => {
                                                                             <td>{obj.id}</td>
                                                                             <td>{obj.descripcion}</td>
                                                                             <td>
-                                                                                <img
+                                                                                {obj.icon_file ? (<img
                                                                                     className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                     alt="some value"
                                                                                     title={obj.documento_nombre_original}
@@ -373,7 +373,8 @@ const BienesAuxiliaresListPage = () => {
                                                                                     onClick={() =>
                                                                                         showModal(obj.documento)
                                                                                     }
-                                                                                />
+                                                                                />) : " "}
+
                                                                             </td>
                                                                             <td>{obj.marca}</td>
                                                                             <td>{obj.modelo}</td>
@@ -402,7 +403,7 @@ const BienesAuxiliaresListPage = () => {
                                                                                     className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                     alt="some value"
                                                                                     title={obj.descripcion}
-                                                                                    src={obj.imagen_bien}
+                                                                                    src={obj.imagen_bien || imgNoDisponible}
                                                                                     onClick={() =>
                                                                                         activarModalVIsualizardorImagen(obj.imagen_bien || imgNoDisponible, obj.descripcion + " ")
                                                                                     }

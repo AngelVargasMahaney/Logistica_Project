@@ -18,6 +18,14 @@ export const postBienAuxiliar = async(objUsuario) => {
     return rpta
 }
 
+
+export const postBienAuxiliarFiles = async (objFile, config) => {
+    const rpta = await authAxios.post(`${URL_BACKEND}/bienes-auxiliares`,
+        objFile,
+        config)
+    return rpta
+}
+
 export const getBienAuxiliarById = async(id) => {
     const rpta = await authAxios.get(`${URL_BACKEND}/bienes-auxiliares/${id}`)
     return rpta
