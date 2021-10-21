@@ -179,7 +179,7 @@ const BienesAuxiliaresListPage = () => {
 
         const formData = new FormData();
         formData.append('estado_del_bien', formulario.estado_del_bien)
-        formData.append('fecha:', formulario.fecha)
+        formData.append('fecha', formulario.fecha)
         formData.append('observaciones', formulario.observaciones)
         formData.append('bien_id', idActualDelBien)
         formData.append('tipo_bien', formulario.tipo_bien)
@@ -218,7 +218,7 @@ const BienesAuxiliaresListPage = () => {
 
         const formDataReasignacion = new FormData();
         formDataReasignacion.append('estado_del_bien', formulario.estado_del_bien)
-        formDataReasignacion.append('fecha:', formulario.fecha)
+        formDataReasignacion.append('fecha', formulario.fecha)
         formDataReasignacion.append('observaciones', formulario.observaciones)
         formDataReasignacion.append('documento_acta_entrega_recepcion', documentoRecepcion)
         formDataReasignacion.append('documento_oficio_regularizacion', documentoRegularizacion)

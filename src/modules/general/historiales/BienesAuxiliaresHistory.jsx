@@ -96,7 +96,7 @@ const BienesAuxiliaresHistory = () => {
         area_oficina_seccion_id: "",
         estado_del_bien: "",
         observaciones: "",
-
+        fecha: ""
     }))
     const handleCloseModalHistorial = () => setShowModalHistorial(false);
     const handleChange = (e) => {
@@ -106,7 +106,7 @@ const BienesAuxiliaresHistory = () => {
         })
     }
 
-    
+
     const token = localStorage.getItem('token')
     const config = {
         headers: {
@@ -127,10 +127,11 @@ const BienesAuxiliaresHistory = () => {
     const handleSubmit = e => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('personal_id', formularioHistorial.personal_id)
-        formData.append('area_oficina_seccion_id', formularioHistorial.area_oficina_seccion_id)
-        formData.append('estado_del_bien', formularioHistorial.estado_del_bien)
-        formData.append('observaciones', formularioHistorial.observaciones)
+        formData.append('personal_id', formularioHistorial.personal_id ? formularioHistorial.personal_id : "")
+        formData.append('area_oficina_seccion_id', formularioHistorial.area_oficina_seccion_id ? formularioHistorial.area_oficina_seccion_id : "")
+        formData.append('estado_del_bien', formularioHistorial.estado_del_bien ? formularioHistorial.estado_del_bien : "")
+        formData.append('observaciones', formularioHistorial.observaciones ? formularioHistorial.observaciones : "")
+        formData.append('fecha', formularioHistorial.fecha ? formularioHistorial.fecha : "")
         if (documentoEntregaRecepcion !== null) {
             formData.append('documento_acta_entrega_recepcion', documentoEntregaRecepcion)
         } else {
@@ -185,8 +186,8 @@ const BienesAuxiliaresHistory = () => {
     useEffect(() => {
         traerSubunidades();
     }, []);
-    let { personal,area_oficina_seccion } = formularioHistorial
-   
+    let { personal, area_oficina_seccion } = formularioHistorial
+
 
     return (
         <>
@@ -383,7 +384,7 @@ const BienesAuxiliaresHistory = () => {
                         <div className="form-group">
                             <label htmlFor="">Nueva persona encargada</label>
                             <select defaultValue="DEFAULT" onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
-                                <option value="DEFAULT" disabled>{personal?.grado +  " |-> " + personal?.apellido + " " + personal?.nombre}</option>
+                                <option value="DEFAULT" disabled>{personal?.grado + " |-> " + personal?.apellido + " " + personal?.nombre}</option>
 
                                 {personalActivo.map((objPersonal, i) => {
                                     return (
@@ -395,8 +396,8 @@ const BienesAuxiliaresHistory = () => {
                         <div className="form-group">
                             <label htmlFor="">Area Oficina Sección</label>
                             <select defaultValue="DEFAULT" onChange={handleChange} name="area_oficina_seccion_id" required className="form-select custom-select mr-sm-2">
-                                
-                                <option value="DEFAULT" disabled>{area_oficina_seccion?.nombre + " |-> " + area_oficina_seccion?.subunidad?.nombre }</option>
+
+                                <option value="DEFAULT" disabled>{area_oficina_seccion?.nombre + " |-> " + area_oficina_seccion?.subunidad?.nombre}</option>
                                 {areaoficinaseccion.map((objTipoFormato, i) => {
                                     let { subunidad } = objTipoFormato
                                     return (
@@ -418,6 +419,11 @@ const BienesAuxiliaresHistory = () => {
                             <input type="text" className="form-control"
                                 value={formularioHistorial.observaciones}
                                 name="observaciones" onChange={handleChange} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="">Fecha: </label>
+                            <input type="date" className="form-control" required
+                                value={formularioHistorial.fecha} name="fecha" onChange={handleChange} />
                         </div>
                         <div className="form-group">
                             <label htmlFor="">Documento Acta Entrega Recepción: </label>
