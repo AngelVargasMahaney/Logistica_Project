@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import { deleteBienAuxiliarById, getBienAuxiliar } from '../../../services/bienesAuxiliaresService'
+import { deleteBienAuxiliarById, getBienAuxiliar, postReasignarBienAuxiliar } from '../../../services/bienesAuxiliaresService'
 import imgNoDisponible from "../../../assets/23.png"
 import Modal from "react-bootstrap/Modal";
 import { Button } from "react-bootstrap";
@@ -29,6 +29,7 @@ const BienesAuxiliaresListPage = () => {
     const handleCloseInternar = () => setshowModalInternar(false);
     const [documentoRecepcion, setDocumentoRecepcion] = useState(null)
     const [documentoRegularizacion, setDocumentoRegularizacion] = useState(null)
+    const [documentoMemorandum, setDocumentoMemorandum] = useState(null)
     const [showModalReasignar, setshowModalReasignar] = useState(false);
     const handleCloseReasignar = () => setshowModalReasignar(false);
     const [dataHistorial, setDataHistorial] = useState([])
@@ -64,7 +65,6 @@ const BienesAuxiliaresListPage = () => {
     }, []);
 
     const prueba = () => {
-
         if (idActualDelBien === "") {
             setCargando(true);
         } else {
@@ -92,6 +92,11 @@ const BienesAuxiliaresListPage = () => {
     const handleDocumentRegularizacion = e => {
         setDocumentoRegularizacion(e.target.files[0])
     }
+
+    const handleDocumentMemorandum = e => {
+        setDocumentoMemorandum(e.target.files[0])
+    }
+
     const traerData = () => {
         setCargando(true)
         getBienAuxiliar().then(rpta => {
@@ -182,9 +187,6 @@ const BienesAuxiliaresListPage = () => {
         formData.append('bien_id', idActualDelBien)
         formData.append('tipo_bien', formulario.tipo_bien)
 
-
-
-
         postInternarBienFormato1(formData, config).then((rpta) => {
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
                 console.log("Datos subida correctamente")
@@ -195,15 +197,7 @@ const BienesAuxiliaresListPage = () => {
                 )
                 traerData()
             }
-
-            console.log(rpta)
-        }).catch((err) => {
-            Swal.fire(
-                'Internamiento Fallido',
-                'No se puede internar un bien dos veces',
-                'error'
-            )
-        })
+        });
 
     }
     let { historial } = dataHistorial;
@@ -223,9 +217,20 @@ const BienesAuxiliaresListPage = () => {
         formDataReasignacion.append('area_oficina_seccion_id', formulario.area_oficina_seccion_id)
         formDataReasignacion.append('personal_id', formulario.personal_id)
 
+        if (documentoRecepcion != null) {
+            formDataReasignacion.append('documento_acta_entrega_recepcion', documentoRecepcion)
+        } else {
+            formDataReasignacion.delete('documento_acta_entrega_recepcion', documentoRecepcion)
+        }
+        if (documentoMemorandum !== null) {
+            formDataReasignacion.append('documento_memorandum', documentoMemorandum)
+        } else {
+            formDataReasignacion.delete('documento_memorandum', documentoMemorandum)
+        }
+        console.log(formulario);
 
-        postReasignarBienFormato1(formDataReasignacion, config).then((rpta) => {
-
+        postReasignarBienAuxiliar(formDataReasignacion, config).then((rpta) => {
+            setshowModalReasignar(false);
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
                 console.log("Datos subida correctamente")
                 Swal.fire(
@@ -237,13 +242,8 @@ const BienesAuxiliaresListPage = () => {
             }
 
             console.log(rpta)
-        }).catch((err) => {
-            Swal.fire(
-                'Reasignaciòn Fallida',
-                'No se puede internar un bien dos veces',
-                'error'
-            )
-        })
+        });
+
     }
     const showModalReasignarBien = (idBien) => {
         setIdActualDelBien(idBien);
@@ -531,7 +531,7 @@ const BienesAuxiliaresListPage = () => {
 
                                 <Modal show={showModalReasignar} onHide={handleCloseReasignar}>
                                     <Modal.Header closeButton>
-                                        <Modal.Title>Reasignación de un bien del Formato 1</Modal.Title>
+                                        <Modal.Title>Reasignación de un Bien Auxiliar</Modal.Title>
                                     </Modal.Header>
 
                                     <Modal.Body>
@@ -557,7 +557,6 @@ const BienesAuxiliaresListPage = () => {
                                                         (
                                                             <>
                                                                 <h3>Datos Actuales del Bien</h3>
-                                                                <p>Código: {dataHistorial.codigo}</p>
                                                                 <p>Descripción: {dataHistorial.descripcion}</p>
                                                             </>
                                                         )}
@@ -614,8 +613,8 @@ const BienesAuxiliaresListPage = () => {
                                         <form onSubmit={handleSubmitReasignacion}>
                                             <div className="form-group">
                                                 <label htmlFor="">Nueva persona encargada</label>
-                                                <select defaultValue="DEFAULT" onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
-                                                    <option value="DEFAULT" disabled>--- Elegir Personal---</option>
+                                                <select onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
+                                                    <option value="">--- Elegir Personal---</option>
 
                                                     {personalActivo.map((objPersonal, i) => {
                                                         return (
@@ -628,8 +627,8 @@ const BienesAuxiliaresListPage = () => {
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Area Oficina Sección</label>
-                                                <select defaultValue="DEFAULT" onChange={handleChange} name="area_oficina_seccion_id" required className="form-select custom-select mr-sm-2">
-                                                    <option value="DEFAULT" disabled>--- Elegir Subunidad---</option>
+                                                <select onChange={handleChange} name="area_oficina_seccion_id" required className="form-select custom-select mr-sm-2">
+                                                    <option value="">--- Elegir Subunidad---</option>
                                                     {areaoficinaseccion.map((objTipoFormato, i) => {
                                                         let { subunidad } = objTipoFormato
                                                         return (
@@ -642,7 +641,7 @@ const BienesAuxiliaresListPage = () => {
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Estado del Bien: </label>
-                                                <input type="text" className="form-control"
+                                                <input type="text" className="form-control" required
                                                     value={estado_del_bien} name="estado_del_bien" onChange={handleChange} />
                                             </div>
                                             <div className="form-group">
@@ -652,7 +651,7 @@ const BienesAuxiliaresListPage = () => {
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Fecha: </label>
-                                                <input type="date" className="form-control"
+                                                <input type="date" className="form-control" required
                                                     value={fecha} name="fecha" onChange={handleChange} />
                                             </div>
 
@@ -662,9 +661,9 @@ const BienesAuxiliaresListPage = () => {
                                                     name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="">Documento-Oficio regularización: </label>
+                                                <label htmlFor="">Documento Memorandum: </label>
                                                 <input type="file" className="form-control"
-                                                    name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
+                                                    name="documento_memorandum" onChange={handleDocumentMemorandum} />
                                             </div>
                                             <div className="form-group" hidden>
                                                 <label htmlFor="">Id del Bien: </label>
