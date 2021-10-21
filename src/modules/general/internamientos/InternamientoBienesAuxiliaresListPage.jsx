@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { deleteDesinternarBien, getBienesInternadosBienesAuxiliares } from '../../../services/internamientoFormato1Service'
+import { deleteDesinternarBien, getBienesInternadosBienesAuxiliares, postEditarInternamientoById } from '../../../services/internamientoFormato1Service'
 import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
 import Swal from 'sweetalert2'
 import Modal from "react-bootstrap/Modal";
 import { getReportes } from '../../../services/reportesService'
-import { Link } from '@material-ui/core'
+import { Link } from "react-router-dom";
 import Button from '@restart/ui/esm/Button'
 const InternamientoBienesAuxiliaresListPage = () => {
 
@@ -64,6 +64,93 @@ const InternamientoBienesAuxiliaresListPage = () => {
         getReportes(tipoReporte).then(() => {
 
         })
+    }
+
+
+    const [showModalReasignar, setshowModalReasignar] = useState(false);
+    const [idActualDelBien, setIdActualDelBien] = useState("")
+    const handleCloseReasignar = () => setshowModalReasignar(false);
+
+    const showModalReasignarBien = (idBien, obj) => {
+        setIdActualDelBien(idBien);
+        setFormularioInternamiento({ ...obj });
+        setshowModalReasignar(true);
+        console.log("ENTRANDO AL LLAMADO DE DATA CON ID: " + idBien)
+        // setCargando(true);
+        // getHistorialFormatoById(idBien).then(rpta => {
+        //   console.log("adwdwaw" + rpta)
+        //   setDataHistorial(rpta.data);
+        //   console.log("PRUEBAA" + rpta);
+        //   setCargando(false);
+
+        // })
+    }
+    const [formularioInternamiento, setFormularioInternamiento] = useState([]);
+    const handleChange = (e) => {
+        setFormularioInternamiento({
+            ...formularioInternamiento,
+            [e.target.name]: e.target.value,
+        })
+    }
+    const token = localStorage.getItem('token')
+    const config = {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    //    for(let i = 0; i<listaInternamientoFormato1.length;i++){
+    //        console.log(listaInternamientoFormato1[i])
+    //    }
+
+    const [documentoRecepcion, setDocumentoRecepcion] = useState(null)
+    const [documentoRegularizacion, setDocumentoRegularizacion] = useState(null)
+
+    const handleDocumentRecepcion = e => {
+        setDocumentoRecepcion(e.target.files[0])
+    }
+    const handleDocumentRegularizacion = e => {
+        setDocumentoRegularizacion(e.target.files[0])
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        const formData = new FormData();
+
+        formData.append('estado_del_bien', formularioInternamiento.estado_del_bien ? formularioInternamiento.estado_del_bien : "");
+        formData.append('fecha', formularioInternamiento.fecha ? formularioInternamiento.fecha : "")
+        formData.append('observaciones', formularioInternamiento.observaciones ? formularioInternamiento.observaciones : "")
+        formData.append('estado_del_bien', formularioInternamiento.estado_del_bien ? formularioInternamiento.estado_del_bien : "")
+
+
+        if (documentoRecepcion != null) {
+            formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
+        } else {
+            formData.delete('documento_acta_entrega_recepcion', documentoRecepcion)
+        }
+
+        if (documentoRegularizacion !== null) {
+            formData.append('documento_oficio_regularizacion', documentoRegularizacion)
+        } else {
+            formData.delete('documento_oficio_regularizacion', documentoRegularizacion)
+        }
+
+        postEditarInternamientoById(formData, config, idActualDelBien).then((rpta) => {
+            if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
+                console.log("Datos actualizados correctamente")
+                Swal.fire(
+                    'Internamiento Actualizado',
+                    'El internamiento se actualizó correctamente',
+                    'success'
+                )
+                traerData();
+
+            } else {
+                console.log("Error en postEditarInternamiento")
+            }
+            setshowModalReasignar(false);
+        })
+
     }
     return (
 
@@ -151,22 +238,22 @@ const InternamientoBienesAuxiliaresListPage = () => {
                                                                             {/* <td>{objLista.bien_auxiliar.id}</td> */}
                                                                             <td>{objLista.bien_auxiliar.descripcion}</td>
                                                                             {/* <td>{objLista.bien_auxiliar.marca}</td> */}
-                                                                            <td>{objLista.bien_auxiliar.estado_bien}</td>
-                                                                            <td>{objLista.bien_auxiliar.observaciones}</td>
-                                                                            <td>{objLista.bien_auxiliar.fecha_adquisicion}</td>
+                                                                            <td>{objLista.estado_del_bien}</td>
+                                                                            <td>{objLista.observaciones}</td>
+                                                                            <td>{objLista.fecha}</td>
                                                                             <td>
-                                                                                <img
+                                                                                {objLista.documento_acta_entrega_recepcion ? (<img
                                                                                     className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                     alt="some value"
                                                                                     title={objLista.nombre_original_acta_entrega_recepcion}
-                                                                                    src={objLista.bien_auxiliar.icon_file}
+                                                                                    src={objLista.icon_file_entrega_recepcion}
                                                                                     onClick={() =>
                                                                                         showModal(objLista.documento_acta_entrega_recepcion)
                                                                                     }
-                                                                                />
+                                                                                />) : " "}
                                                                             </td>
                                                                             <td>
-                                                                                <img
+                                                                                {objLista.documento_oficio_regularizacion ? (<img
                                                                                     className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                     alt="some value"
                                                                                     title={objLista.nombre_original_oficio_regularizacion}
@@ -174,21 +261,39 @@ const InternamientoBienesAuxiliaresListPage = () => {
                                                                                     onClick={() =>
                                                                                         showModal(objLista.documento_oficio_regularizacion)
                                                                                     }
-                                                                                />
+                                                                                />) : " "}
+
                                                                             </td>
 
                                                                             <td>
 
 
-                                                                                <button data-toggle="tooltip" data-placement="top" title="Eliminar"
+                                                                                <button data-toggle="tooltip" data-placement="top" title="Desinternar"
                                                                                     className="btn btn-danger mx-1"
                                                                                     onClick={() => {
                                                                                         desinternarBien(objLista.id);
                                                                                     }}
                                                                                 >
-                                                                                    Desinternar Bien <i className="fa fa-trash"></i>
+                                                                                    <i className="fa fa-trash"></i>
 
                                                                                 </button>
+                                                                                <Button
+                                                                                    onClick={() => { showModalReasignarBien(objLista.id, objLista) }}
+                                                                                    className="btn btn-warning"
+                                                                                    title="Editar"
+                                                                                >
+                                                                                    {" "}
+                                                                                    <i className="fa fa-pencil"></i>
+                                                                                </Button>
+                                                                                <Link
+                                                                                    // to={`formatos/editar/${objFormato.id}`}
+                                                                                    to={`/admin/bienes-auxiliares/historial/${objLista.bien_id}`}
+                                                                                    className="btn btn-info ml-1"
+                                                                                    title="Historial del bien"
+                                                                                >
+                                                                                    {" "}
+                                                                                    <i className="fa fa-history"></i>
+                                                                                </Link>
 
                                                                             </td>
 
@@ -207,6 +312,51 @@ const InternamientoBienesAuxiliaresListPage = () => {
                     </main>
                 </div>
             </div>
+
+            <Modal show={showModalReasignar} onHide={handleCloseReasignar}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Internamiento de un bien del Formato 1</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <label htmlFor="">Estado del Bien:</label>
+                            <input type="text" className="form-control"
+                                value={formularioInternamiento.estado_del_bien} name="estado_del_bien" required onChange={handleChange} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="">Fecha:</label>
+                            <input type="date" className="form-control"
+                                value={formularioInternamiento.fecha} name="fecha" required onChange={handleChange} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="">Observaciones:</label>
+                            <input type="text" className="form-control"
+                                value={formularioInternamiento.observaciones} name="observaciones" onChange={handleChange} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="">Documento-Acta entrega y recepción:</label>
+                            <input type="file" className="form-control"
+                                name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="">Documento-Oficio regularización:</label>
+                            <input type="file" className="form-control"
+                                name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
+                        </div>
+
+                        <div className="form-group">
+                            <button className="btn btn-primary" type="submit">Actualizar</button>
+                        </div>
+                    </form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseReasignar}>
+                        Cerrar
+                    </Button>
+
+                </Modal.Footer>
+            </Modal>
         </>
 
     )
