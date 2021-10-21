@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import { deleteBienAuxiliarById, getBienAuxiliar } from '../../../services/bienesAuxiliaresService'
+import { deleteBienAuxiliarById, getBienAuxiliar, postReasignarBienAuxiliar } from '../../../services/bienesAuxiliaresService'
 import imgNoDisponible from "../../../assets/23.png"
 import Modal from "react-bootstrap/Modal";
 import { Button } from "react-bootstrap";
 import { getPersonal, getPersonalActivo } from "../../../services/personalService";
 import AdminSidebar from '../../admin/components/AdminSidebar';
 import GeneralNavBar from '../../layout/GeneralNavBar';
-import { postInternarBienFormato1, postReasignarBienFormato1 } from '../../../services/internamientoFormato1Service'
+import { postInternarBienAuxliar, postInternarBienFormato1, postReasignarBienFormato1 } from '../../../services/internamientoFormato1Service'
 import { getAreaOficinaSeccion } from "../../../services/areaOficinaSeccionService";
 import { getHistorialBienAuxiliarById, getHistorialFormatoById } from '../../../services/historialBienesService'
 import { getReportes } from '../../../services/reportesService'
@@ -20,7 +20,7 @@ const BienesAuxiliaresListPage = () => {
 
     const URL_CREAR = '/admin/bienes-auxiliares/crear'
     const URL_EDITAR = "/admin/bienes-auxiliares/editar";
-    const TITULO = "Bienes Auxiliar";
+    const TITULO = "Bienes Auxiliares";
     const [data, setData] = useState([])
     const [cargando, setCargando] = useState(true)
     const [pdfActual, setpdfActual] = useState("");
@@ -29,6 +29,7 @@ const BienesAuxiliaresListPage = () => {
     const handleCloseInternar = () => setshowModalInternar(false);
     const [documentoRecepcion, setDocumentoRecepcion] = useState(null)
     const [documentoRegularizacion, setDocumentoRegularizacion] = useState(null)
+    const [documentoMemorandum, setDocumentoMemorandum] = useState(null)
     const [showModalReasignar, setshowModalReasignar] = useState(false);
     const handleCloseReasignar = () => setshowModalReasignar(false);
     const [dataHistorial, setDataHistorial] = useState([])
@@ -64,7 +65,6 @@ const BienesAuxiliaresListPage = () => {
     }, []);
 
     const prueba = () => {
-
         if (idActualDelBien === "") {
             setCargando(true);
         } else {
@@ -83,7 +83,7 @@ const BienesAuxiliaresListPage = () => {
     console.log(dataHistorial)
     useEffect(() => {
         prueba()
-    }, [idActualDelBien])
+    }, [idActualDelBien, showModalReasignar, showModalInternar])
     // Metodos para traer el historial
 
     const handleDocumentRecepcion = e => {
@@ -92,6 +92,11 @@ const BienesAuxiliaresListPage = () => {
     const handleDocumentRegularizacion = e => {
         setDocumentoRegularizacion(e.target.files[0])
     }
+
+    const handleDocumentMemorandum = e => {
+        setDocumentoMemorandum(e.target.files[0])
+    }
+
     const traerData = () => {
         setCargando(true)
         getBienAuxiliar().then(rpta => {
@@ -172,21 +177,28 @@ const BienesAuxiliaresListPage = () => {
     const handleSubmit = e => {
         e.preventDefault();
 
-
         const formData = new FormData();
         formData.append('estado_del_bien', formulario.estado_del_bien)
-        formData.append('fecha:', formulario.fecha)
+        formData.append('fecha', formulario.fecha)
         formData.append('observaciones', formulario.observaciones)
-        formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
-        formData.append('documento_oficio_regularizacion', documentoRegularizacion)
         formData.append('bien_id', idActualDelBien)
         formData.append('tipo_bien', formulario.tipo_bien)
 
 
+        if (documentoRecepcion != null) {
+            formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
+        } else {
+            formData.delete('documento_acta_entrega_recepcion', documentoRecepcion)
+        }
 
-
-        postInternarBienFormato1(formData, config).then((rpta) => {
+        if (documentoRegularizacion !== null) {
+            formData.append('documento_oficio_regularizacion', documentoRegularizacion)
+        } else {
+            formData.delete('documento_oficio_regularizacion', documentoRegularizacion)
+        }
+        postInternarBienAuxliar(formData, config).then((rpta) => {
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
+                setshowModalInternar(false)
                 console.log("Datos subida correctamente")
                 Swal.fire(
                     'Internamiento Exitoso',
@@ -195,15 +207,7 @@ const BienesAuxiliaresListPage = () => {
                 )
                 traerData()
             }
-
-            console.log(rpta)
-        }).catch((err) => {
-            Swal.fire(
-                'Internamiento Fallido',
-                'No se puede internar un bien dos veces',
-                'error'
-            )
-        })
+        });
 
     }
     let { historial } = dataHistorial;
@@ -214,7 +218,7 @@ const BienesAuxiliaresListPage = () => {
 
         const formDataReasignacion = new FormData();
         formDataReasignacion.append('estado_del_bien', formulario.estado_del_bien)
-        formDataReasignacion.append('fecha:', formulario.fecha)
+        formDataReasignacion.append('fecha', formulario.fecha)
         formDataReasignacion.append('observaciones', formulario.observaciones)
         formDataReasignacion.append('documento_acta_entrega_recepcion', documentoRecepcion)
         formDataReasignacion.append('documento_oficio_regularizacion', documentoRegularizacion)
@@ -223,9 +227,20 @@ const BienesAuxiliaresListPage = () => {
         formDataReasignacion.append('area_oficina_seccion_id', formulario.area_oficina_seccion_id)
         formDataReasignacion.append('personal_id', formulario.personal_id)
 
+        if (documentoRecepcion != null) {
+            formDataReasignacion.append('documento_acta_entrega_recepcion', documentoRecepcion)
+        } else {
+            formDataReasignacion.delete('documento_acta_entrega_recepcion', documentoRecepcion)
+        }
+        if (documentoMemorandum !== null) {
+            formDataReasignacion.append('documento_memorandum', documentoMemorandum)
+        } else {
+            formDataReasignacion.delete('documento_memorandum', documentoMemorandum)
+        }
+        console.log(formulario);
 
-        postReasignarBienFormato1(formDataReasignacion, config).then((rpta) => {
-
+        postReasignarBienAuxiliar(formDataReasignacion, config).then((rpta) => {
+            setshowModalReasignar(false);
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
                 console.log("Datos subida correctamente")
                 Swal.fire(
@@ -237,13 +252,8 @@ const BienesAuxiliaresListPage = () => {
             }
 
             console.log(rpta)
-        }).catch((err) => {
-            Swal.fire(
-                'Reasignaciòn Fallida',
-                'No se puede internar un bien dos veces',
-                'error'
-            )
-        })
+        });
+
     }
     const showModalReasignarBien = (idBien) => {
         setIdActualDelBien(idBien);
@@ -320,19 +330,19 @@ const BienesAuxiliaresListPage = () => {
                                                     <table className="table table-bordered">
                                                         <thead>
                                                             <tr>
-                                                                <th>id</th>
-                                                                <th>descripcion</th>
+                                                                <th>ID</th>
+                                                                <th>Descripción</th>
                                                                 <th>Documento</th>
-                                                                <th>marca</th>
-                                                                <th>modelo</th>
-                                                                <th>serie</th>
-                                                                <th>tipo_material</th>
-                                                                <th>color</th>
-                                                                <th>dimensiones</th>
-                                                                <th>estado_bien</th>
-                                                                <th>fecha_adquisicion</th>
-                                                                <th>observaciones</th>
-                                                                <th>Código_QR</th>
+                                                                <th>Marca</th>
+                                                                <th>Modelo</th>
+                                                                <th>Serie</th>
+                                                                <th>Tipo Material</th>
+                                                                <th>Color</th>
+                                                                <th>Dimensiones</th>
+                                                                <th>Estado del Bien</th>
+                                                                <th>Fecha Adquisición</th>
+                                                                <th>Observaciones</th>
+                                                                <th>Código QR</th>
                                                                 <th>Imagen</th>
                                                                 <th className="acciones"></th>
                                                             </tr>
@@ -365,7 +375,7 @@ const BienesAuxiliaresListPage = () => {
                                                                             <td>{obj.id}</td>
                                                                             <td>{obj.descripcion}</td>
                                                                             <td>
-                                                                                <img
+                                                                                {obj.icon_file ? (<img
                                                                                     className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                     alt="some value"
                                                                                     title={obj.documento_nombre_original}
@@ -373,7 +383,8 @@ const BienesAuxiliaresListPage = () => {
                                                                                     onClick={() =>
                                                                                         showModal(obj.documento)
                                                                                     }
-                                                                                />
+                                                                                />) : " "}
+
                                                                             </td>
                                                                             <td>{obj.marca}</td>
                                                                             <td>{obj.modelo}</td>
@@ -402,7 +413,7 @@ const BienesAuxiliaresListPage = () => {
                                                                                     className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                     alt="some value"
                                                                                     title={obj.descripcion}
-                                                                                    src={obj.imagen_bien}
+                                                                                    src={obj.imagen_bien || imgNoDisponible}
                                                                                     onClick={() =>
                                                                                         activarModalVIsualizardorImagen(obj.imagen_bien || imgNoDisponible, obj.descripcion + " ")
                                                                                     }
@@ -472,18 +483,18 @@ const BienesAuxiliaresListPage = () => {
                                 </div>
                                 <Modal show={showModalInternar} onHide={handleCloseInternar}>
                                     <Modal.Header closeButton>
-                                        <Modal.Title>Internamiento de un bien del Formato 1</Modal.Title>
+                                        <Modal.Title>Internamiento de un Bien Auxiliar</Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
                                         <form onSubmit={handleSubmit}>
                                             <div className="form-group">
                                                 <label htmlFor="">Estado del Bien:</label>
-                                                <input type="text" className="form-control"
+                                                <input type="text" className="form-control" required
                                                     value={estado_del_bien} name="estado_del_bien" onChange={handleChange} />
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Fecha:</label>
-                                                <input type="date" className="form-control"
+                                                <input type="date" className="form-control" required
                                                     value={fecha} name="fecha" onChange={handleChange} />
                                             </div>
                                             <div className="form-group">
@@ -506,11 +517,7 @@ const BienesAuxiliaresListPage = () => {
                                                 <input type="text" className="form-control"
                                                     value={idActualDelBien} name="bien_id" onChange={handleChange} />
                                             </div>
-                                            {/* <div className="form-group">
-                                        <label htmlFor="">Tipo bien</label>
-                                        <input type="text" className="form-control"
-                                        value={tipo_bien} name="tipo_bien" onChange={handleChange} />
-                                    </div> */}
+
 
                                             <div className="form-group">
                                                 <button className="btn btn-primary" type="submit">Internar</button>
@@ -530,7 +537,7 @@ const BienesAuxiliaresListPage = () => {
 
                                 <Modal show={showModalReasignar} onHide={handleCloseReasignar}>
                                     <Modal.Header closeButton>
-                                        <Modal.Title>Reasignación de un bien del Formato 1</Modal.Title>
+                                        <Modal.Title>Reasignación de un Bien Auxiliar</Modal.Title>
                                     </Modal.Header>
 
                                     <Modal.Body>
@@ -556,7 +563,6 @@ const BienesAuxiliaresListPage = () => {
                                                         (
                                                             <>
                                                                 <h3>Datos Actuales del Bien</h3>
-                                                                <p>Código: {dataHistorial.codigo}</p>
                                                                 <p>Descripción: {dataHistorial.descripcion}</p>
                                                             </>
                                                         )}
@@ -613,8 +619,8 @@ const BienesAuxiliaresListPage = () => {
                                         <form onSubmit={handleSubmitReasignacion}>
                                             <div className="form-group">
                                                 <label htmlFor="">Nueva persona encargada</label>
-                                                <select defaultValue="DEFAULT" onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
-                                                    <option value="DEFAULT" disabled>--- Elegir Personal---</option>
+                                                <select onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
+                                                    <option value="">--- Elegir Personal---</option>
 
                                                     {personalActivo.map((objPersonal, i) => {
                                                         return (
@@ -627,8 +633,8 @@ const BienesAuxiliaresListPage = () => {
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Area Oficina Sección</label>
-                                                <select defaultValue="DEFAULT" onChange={handleChange} name="area_oficina_seccion_id" required className="form-select custom-select mr-sm-2">
-                                                    <option value="DEFAULT" disabled>--- Elegir Subunidad---</option>
+                                                <select onChange={handleChange} name="area_oficina_seccion_id" required className="form-select custom-select mr-sm-2">
+                                                    <option value="">--- Elegir Subunidad---</option>
                                                     {areaoficinaseccion.map((objTipoFormato, i) => {
                                                         let { subunidad } = objTipoFormato
                                                         return (
@@ -641,7 +647,7 @@ const BienesAuxiliaresListPage = () => {
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Estado del Bien: </label>
-                                                <input type="text" className="form-control"
+                                                <input type="text" className="form-control" required
                                                     value={estado_del_bien} name="estado_del_bien" onChange={handleChange} />
                                             </div>
                                             <div className="form-group">
@@ -651,7 +657,7 @@ const BienesAuxiliaresListPage = () => {
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Fecha: </label>
-                                                <input type="date" className="form-control"
+                                                <input type="date" className="form-control" required
                                                     value={fecha} name="fecha" onChange={handleChange} />
                                             </div>
 
@@ -661,9 +667,9 @@ const BienesAuxiliaresListPage = () => {
                                                     name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="">Documento-Oficio regularización: </label>
+                                                <label htmlFor="">Documento Memorandum: </label>
                                                 <input type="file" className="form-control"
-                                                    name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
+                                                    name="documento_memorandum" onChange={handleDocumentMemorandum} />
                                             </div>
                                             <div className="form-group" hidden>
                                                 <label htmlFor="">Id del Bien: </label>

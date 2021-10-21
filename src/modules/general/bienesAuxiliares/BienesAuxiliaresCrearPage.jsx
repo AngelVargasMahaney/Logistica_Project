@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
 
-import { postBienAuxiliar } from '../../../services/bienesAuxiliaresService';
+import { postBienAuxiliar, postBienAuxiliarFiles } from '../../../services/bienesAuxiliaresService';
 
 
 const BienesAuxiliaresCrearPage = () => {
@@ -25,6 +25,14 @@ const BienesAuxiliaresCrearPage = () => {
     })
     const history = useHistory()
 
+    const [documento, setDocumento] = useState(null)
+    const [imagen_bien, setImagen_bien] = useState(null)
+    const handleChangeDocs = e => {
+        setDocumento(e.target.files[0])
+    }
+    const handleChangeImages = e => {
+        setImagen_bien(e.target.files[0])
+    }
 
     //Desestructuro los campos del formulario, con el objetivo de evitar poner formulario.valor en cada atributo del forumario (por limpieza de código)
     let {
@@ -48,12 +56,38 @@ const BienesAuxiliaresCrearPage = () => {
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault() //Evito que se refresque la página
-        // postUsuario({ ...formulario }).then((rpta) => { //Copia del formulario
-        //     console.log(rpta)
-        // })
-        //console.log(formulario)
-        postBienAuxiliar(formulario).then((rpta) => {
+        e.preventDefault() 
+
+
+        const formData = new FormData()
+        formData.append('descripcion', descripcion)
+        formData.append('marca', marca)
+        formData.append('modelo', modelo)
+        formData.append('serie', serie)
+        formData.append('tipo_material', tipo_material)
+        formData.append('color', color)
+        formData.append('dimensiones', dimensiones)
+        formData.append('estado_bien', estado_bien)
+        formData.append('fecha_adquisicion', fecha_adquisicion)
+        formData.append('observaciones', observaciones)
+        if(documento!==null){
+            formData.append('documento', documento)
+        }else{
+            formData.delete('documento', documento)
+        }
+        if(imagen_bien!==null){
+            formData.append('imagen_bien', imagen_bien)
+        }else{
+            formData.delete('imagen_bien', imagen_bien)
+        }
+       
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+
+        postBienAuxiliarFiles(formData, config).then((rpta) => {
             console.log(rpta)
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
                 history.push(HISTORY)
@@ -79,124 +113,148 @@ const BienesAuxiliaresCrearPage = () => {
                                 <div className="card-body">
 
                                     <form onSubmit={handleSubmit}>
-                                        <div>
-                                            
+                                        <div className="row">
+                                            <div className="col-6">
+
+                                                <label htmlFor="" className="form-label">
+                                                    Descripción
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control my-2"
+                                                    name="descripcion"
+                                                    value={descripcion}
+                                                    required
+                                                    onChange={handleChange}
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Documento
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    className="form-control my-2"
+                                                    placeholder="Archivo.pdf"
+                                                    name="documento"
+
+                                                    onChange={handleChangeDocs}
+
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Marca
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control my-2"
+                                                    name="marca"
+                                                    value={marca}
+
+                                                    onChange={handleChange}
+                                                />
 
 
-                                            <label htmlFor="" className="form-label">
-                                                Descripción
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control my-2"
-                                                name="descripcion"
-                                                value={descripcion}
-                                                required
-                                                onChange={handleChange}
-                                            />
-                                            <label htmlFor="" className="form-label">
-                                                Marca
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control my-2"
-                                                name="marca"
-                                                value={marca}
+                                                <label htmlFor="" className="form-label">
+                                                    Modelo
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control my-2"
+                                                    name="modelo"
+                                                    value={modelo}
 
-                                                onChange={handleChange}
-                                            />
+                                                    onChange={handleChange}
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Serie
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control my-2"
+                                                    name="serie"
+                                                    value={serie}
 
+                                                    onChange={handleChange}
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Tipo Material
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control my-2"
+                                                    name="tipo_material"
+                                                    value={tipo_material}
 
-                                            <label htmlFor="" className="form-label">
-                                                Modelo
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control my-2"
-                                                name="modelo"
-                                                value={modelo}
+                                                    onChange={handleChange}
+                                                />   </div>
+                                            <div className="col-6">
+                                                <label htmlFor="" className="form-label">
+                                                    Color
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control my-2"
+                                                    name="color"
+                                                    value={color}
 
-                                                onChange={handleChange}
-                                            />
-                                            <label htmlFor="" className="form-label">
-                                                Serie
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control my-2"
-                                                name="serie"
-                                                value={serie}
+                                                    onChange={handleChange}
+                                                />
 
-                                                onChange={handleChange}
-                                            />
-                                            <label htmlFor="" className="form-label">
-                                               Tipo Material
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control my-2"
-                                                name="tipo_material"
-                                                value={tipo_material}
+                                                <label htmlFor="" className="form-label">
+                                                    Dimensiones
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control my-2"
+                                                    name="dimensiones"
+                                                    value={dimensiones}
 
-                                                onChange={handleChange}
-                                            />
-                                            <label htmlFor="" className="form-label">
-                                               Color
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control my-2"
-                                                name="color"
-                                                value={color}
+                                                    onChange={handleChange}
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Estado del Bien
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control my-2"
+                                                    name="estado_bien"
+                                                    value={estado_bien}
+                                                    required
+                                                    onChange={handleChange}
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Fecha de Adquisicion
+                                                </label>
+                                                <input
+                                                    type="date"
+                                                    className="form-control my-2"
+                                                    name="fecha_adquisicion"
+                                                    value={fecha_adquisicion}
 
-                                                onChange={handleChange}
-                                            />
-                                             <label htmlFor="" className="form-label">
-                                              Dimensiones
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control my-2"
-                                                name="dimensiones"
-                                                value={dimensiones}
+                                                    onChange={handleChange}
+                                                />
 
-                                                onChange={handleChange}
-                                            />
-                                            <label htmlFor="" className="form-label">
-                                                Estado del Bien
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control my-2"
-                                                name="estado_bien"
-                                                value={estado_bien}
+                                                <label htmlFor="" className="form-label">
+                                                    Observaciones
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control my-2"
+                                                    name="observaciones"
+                                                    value={observaciones}
 
-                                                onChange={handleChange}
-                                            />
-                                            <label htmlFor="" className="form-label">
-                                                Fecha de Adquisicion
-                                            </label>
-                                            <input
-                                                type="date"
-                                                className="form-control my-2"
-                                                name="fecha_adquisicion"
-                                                value={fecha_adquisicion}
+                                                    onChange={handleChange}
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Imagen del Bien
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    className="form-control my-2"
+                                                    placeholder="laptop.png"
+                                                    name="imagen_bien"
 
-                                                onChange={handleChange}
-                                            />
-                                          
-                                            <label htmlFor="" className="form-label">
-                                                Observaciones
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control my-2"
-                                                name="observaciones"
-                                                value={observaciones}
-
-                                                onChange={handleChange}
-                                            />
-
+                                                    onChange={handleChangeImages}
+                                                />
+                                            </div>
 
                                         </div>
                                         <div>

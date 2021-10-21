@@ -8,6 +8,13 @@ export const postInternarBienFormato1 = async (objFile, config) => {
         config)
     return rpta
 }
+export const postInternarBienAuxliar = async (objFile, config) => {
+    const rpta = await authAxios.post(`${URL_BACKEND}/bienes-internados`,
+        objFile,
+        config)
+    return rpta
+}
+
 
 export const getBienesInternadosFormato1 = async () => {
 
