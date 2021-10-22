@@ -420,7 +420,7 @@ const EquipoPolicialListPage = () => {
                                                                             <td>{obj.id}</td>
                                                                             <td>{obj.codigo}</td>
                                                                             <td>
-                                                                                <img
+                                                                            {obj.icon_file ? (<img
                                                                                     className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                     alt="some value"
                                                                                     title={obj.documento_nombre_original}
@@ -428,7 +428,7 @@ const EquipoPolicialListPage = () => {
                                                                                     onClick={() =>
                                                                                         showModal(obj.documento)
                                                                                     }
-                                                                                /></td>
+                                                                                />) : " "}</td>
                                                                             <td>{obj.descripcion}</td>
                                                                             <td>{obj.marca}</td>
                                                                             <td>{obj.modelo}</td>

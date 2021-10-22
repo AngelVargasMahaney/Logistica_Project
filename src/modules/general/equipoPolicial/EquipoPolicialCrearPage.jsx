@@ -23,6 +23,7 @@ const EquipoPolicialCrearPage = () => {
         fecha_adquisicion: "",
         forma_adquisicion: "",
         tasacion: "",
+        tipo_afectacion:"",
         observaciones: "",
         imagen_bien: ""
     })
@@ -50,6 +51,7 @@ const EquipoPolicialCrearPage = () => {
         fecha_adquisicion,
         forma_adquisicion,
         tasacion,
+        tipo_afectacion,
         observaciones,
     } = formulario
 
@@ -76,6 +78,7 @@ const EquipoPolicialCrearPage = () => {
         formData.append('anio_adquisicion', fecha_adquisicion)
         formData.append('forma_adquisicion', forma_adquisicion)
         formData.append('tasacion', tasacion)
+        formData.append('tipo_afectacion', tipo_afectacion)
         formData.append('observaciones', observaciones)
         if (documento !== null) {
             formData.append('documento', documento)
@@ -243,7 +246,17 @@ const EquipoPolicialCrearPage = () => {
 
                                                     onChange={handleChange}
                                                 />
-
+ <label htmlFor="" className="form-label my-2">
+                                                        Tipo de Afectación
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control mt-2"
+                                                        required
+                                                        name="tipo_afectacion"
+                                                        value={formulario.tipo_afectacion}
+                                                        onChange={handleChange}
+                                                    />
                                                 <label htmlFor="" className="form-label">
                                                     Observaciones
                                                 </label>

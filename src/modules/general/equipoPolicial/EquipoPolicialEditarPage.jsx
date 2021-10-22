@@ -10,6 +10,7 @@ const EquipoPolicialEditarPage = () => {
     const handleDocumentoEquipoPolicial = e => (setDocumentoEquipoPolicial(e.target.files[0]))
     const handleImagenEquipoPolicial = e => (setImagenBienEquipoPolicial(e.target.files[0]))
     const [formulario, setFormulario] = useState({
+        codigo: "",
         descripcion: "",
         marca: "",
         modelo: "",
@@ -35,17 +36,18 @@ const EquipoPolicialEditarPage = () => {
     const handleSubmit = e => {
         e.preventDefault()
         const formData = new FormData()
-        formData.append(`descripcion`, formulario.descripcion)
-        formData.append(`marca`, formulario.marca)
-        formData.append(`modelo`, formulario.modelo)
-        formData.append(`serie`, formulario.serie)
-        formData.append(`pais_fabricacion`, formulario.pais_fabricacion)
-        formData.append(`estado_bien`, formulario.estado_bien)
-        formData.append(`forma_adquisicion`, formulario.forma_adquisicion)
-        formData.append(`anio_adquisicion`, formulario.anio_adquisicion)
-        formData.append(`tasacion`, formulario.tasacion)
-        formData.append(`tipo_afectacion`, formulario.tipo_afectacion)
-        formData.append(`observaciones`, formulario.observaciones)
+        formData.append(`codigo`, formulario.codigo ? formulario.codigo : "")
+        formData.append(`descripcion`, formulario.descripcion ? formulario.descripcion : "")
+        formData.append(`marca`, formulario.marca ? formulario.marca : "")
+        formData.append(`modelo`, formulario.modelo ? formulario.modelo : "")
+        formData.append(`serie`, formulario.serie ? formulario.serie : "")
+        formData.append(`pais_fabricacion`, formulario.pais_fabricacion ? formulario.pais_fabricacion : "")
+        formData.append(`estado_bien`, formulario.estado_bien ? formulario.estado_bien : "")
+        formData.append(`forma_adquisicion`, formulario.forma_adquisicion ? formulario.forma_adquisicion : "")
+        formData.append(`anio_adquisicion`, formulario.anio_adquisicion ? formulario.anio_adquisicion : "")
+        formData.append(`tasacion`, formulario.tasacion ? formulario.tasacion : "")
+        formData.append(`tipo_afectacion`, formulario.tipo_afectacion ? formulario.tipo_afectacion : "")
+        formData.append(`observaciones`, formulario.observaciones ? formulario.observaciones : "")
 
         if (documentoEquipoPolicial !== null) {
             formData.append(`documento`, documentoEquipoPolicial)
@@ -59,7 +61,7 @@ const EquipoPolicialEditarPage = () => {
         }
         postEditarEquipoPolicialById(formData, config, params.id).then((rpta) => {
             if (rpta.status === 200) {
-                history.push(`admin/equipo-policial`)
+                history.push(`/admin/equipo-policial`)
             }
         })
     }
@@ -86,182 +88,199 @@ const EquipoPolicialEditarPage = () => {
                                 <div className="card-body">
 
                                     <form onSubmit={handleSubmit}>
-                                        <div>
-                                            <label htmlFor="" className="form-label my-2">Id</label>
-                                            <input type="text" className="form-control mt-2" required disabled value={formulario.id} />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="" className="form-label my-2">
-                                                Descripción
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control mt-2"
-                                                required
-                                                name="descripcion"
-                                                value={formulario.descripcion}
-                                                onChange={handleChange}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="" className="form-label my-2">
-                                                Marca
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control mt-2"
-                                                required
-                                                name="marca"
-                                                value={formulario.marca}
-                                                onChange={handleChange}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="" className="form-label my-2">
-                                                Modelo
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control mt-2"
-                                                required
-                                                name="modelo"
-                                                value={formulario.modelo}
-                                                onChange={handleChange}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="" className="form-label my-2">
-                                                Serie
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control mt-2"
-                                                required
-                                                name="serie"
-                                                value={formulario.serie}
-                                                onChange={handleChange}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="" className="form-label my-2">
-                                                Pais de Fabricación
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control mt-2"
-                                                required
-                                                name="pais_fabricacion"
-                                                value={formulario.pais_fabricacion}
-                                                onChange={handleChange}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="" className="form-label my-2">
-                                                Estado del Bien
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control mt-2"
-                                                required
-                                                name="estado_bien"
-                                                value={formulario.estado_bien}
-                                                onChange={handleChange}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="" className="form-label my-2">
-                                                Forma de Adquisición
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control mt-2"
-                                                required
-                                                name="forma_adquisicion"
-                                                value={formulario.forma_adquisicion}
-                                                onChange={handleChange}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="" className="form-label my-2">
-                                                Fecha de Adquisición
-                                            </label>
-                                            <input
-                                                type="date"
-                                                className="form-control mt-2"
-                                                required
-                                                name="anio_adquisicion"
-                                                value={formulario.anio_adquisicion}
-                                                onChange={handleChange}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="" className="form-label my-2">
-                                                Tasación
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control mt-2"
-                                                required
-                                                name="tasacion"
-                                                value={formulario.tasacion}
-                                                onChange={handleChange}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="" className="form-label my-2">
-                                                Tipo de Afectación
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control mt-2"
-                                                required
-                                                name="tipo_afectacion"
-                                                value={formulario.tipo_afectacion}
-                                                onChange={handleChange}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="" className="form-label my-2">
-                                                Forma de Adquisición
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control mt-2"
-                                                required
-                                                name="Observaciones"
-                                                value={formulario.observaciones}
-                                                onChange={handleChange}
-                                            />
-                                        </div>
+                                        <div className="row">
+                                            <div class="col-6">
+                                                <div>
+                                                    <label htmlFor="" className="form-label my-2">Id</label>
+                                                    <input type="text" className="form-control mt-2" required disabled value={formulario.id} />
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="" className="form-label my-2">
+                                                        Código
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control mt-2"
+                                                        name="codigo"
+                                                        value={formulario.codigo}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="" className="form-label my-2">
+                                                        Descripción
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control mt-2"
+                                                        required
+                                                        name="descripcion"
+                                                        value={formulario.descripcion}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="" className="form-label my-2">
+                                                        Marca
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control mt-2"
 
-                                        <div>
-                                            <label htmlFor="" className="form-label my-2">
-                                                Documento
-                                            </label>
-                                            <input
-                                                type="file"
-                                                className="form-control mt-2"
+                                                        name="marca"
+                                                        value={formulario.marca}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="" className="form-label my-2">
+                                                        Modelo
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control mt-2"
 
-                                                name="documento"
+                                                        name="modelo"
+                                                        value={formulario.modelo}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="" className="form-label my-2">
+                                                        Serie
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control mt-2"
 
-                                                onChange={handleDocumentoEquipoPolicial}
-                                            />
+                                                        name="serie"
+                                                        value={formulario.serie}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="" className="form-label my-2">
+                                                        Pais de Fabricación
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control mt-2"
+
+                                                        name="pais_fabricacion"
+                                                        value={formulario.pais_fabricacion}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+
+                                                <div>
+                                                    <label htmlFor="" className="form-label my-2">
+                                                        Estado del Bien
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control mt-2"
+                                                        required
+                                                        name="estado_bien"
+                                                        value={formulario.estado_bien}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-6">
+                                                <div>
+                                                    <label htmlFor="" className="form-label my-2">
+                                                        Forma de Adquisición
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control mt-2"
+
+                                                        name="forma_adquisicion"
+                                                        value={formulario.forma_adquisicion}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="" className="form-label my-2">
+                                                        Fecha de Adquisición
+                                                    </label>
+                                                    <input
+                                                        type="date"
+                                                        className="form-control mt-2"
+
+                                                        name="anio_adquisicion"
+                                                        value={formulario.anio_adquisicion}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="" className="form-label my-2">
+                                                        Tasación
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control mt-2"
+
+                                                        name="tasacion"
+                                                        value={formulario.tasacion}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="" className="form-label my-2">
+                                                        Tipo de Afectación
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control mt-2"
+
+                                                        name="tipo_afectacion"
+                                                        value={formulario.tipo_afectacion}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="" className="form-label my-2">
+                                                        Observaciones
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control mt-2"
+                                                        name="observaciones"
+                                                        value={formulario.observaciones}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+
+                                                <div>
+                                                    <label htmlFor="" className="form-label my-2">
+                                                        Documento
+                                                    </label>
+                                                    <input
+                                                        type="file"
+                                                        className="form-control mt-2"
+
+                                                        name="documento"
+
+                                                        onChange={handleDocumentoEquipoPolicial}
+                                                    />
+                                                </div>
+
+                                                <div>
+                                                    <label htmlFor="" className="form-label my-2">
+                                                        Imagen
+                                                    </label>
+                                                    <input
+                                                        type="file"
+                                                        className="form-control mt-2"
+
+                                                        name="imagen_bien"
+
+                                                        onChange={handleImagenEquipoPolicial}
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
-
-                                        <div>
-                                            <label htmlFor="" className="form-label my-2">
-                                                Imagen
-                                            </label>
-                                            <input
-                                                type="file"
-                                                className="form-control mt-2"
-
-                                                name="imagen_bien"
-
-                                                onChange={handleImagenEquipoPolicial}
-                                            />
-                                        </div>
-
                                         <div>
                                             <button className="btn btn-primary" type="submit">
                                                 <span className="mx-1"><i class="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
