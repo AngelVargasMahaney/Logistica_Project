@@ -43,6 +43,7 @@ const EquipoPolicialListPage = () => {
     const [idActualDelBien, setIdActualDelBien] = useState("")
     const [documentoRecepcion, setDocumentoRecepcion] = useState(null)
     const [documentoRegularizacion, setDocumentoRegularizacion] = useState(null)
+    const [documentoMemorandum, setDocumentoMemorandum] = useState(null)
     const [showModalReasignar, setshowModalReasignar] = useState(false);
     const handleCloseReasignar = () => setshowModalReasignar(false);
 
@@ -54,7 +55,9 @@ const EquipoPolicialListPage = () => {
     const handleDocumentRegularizacion = e => {
         setDocumentoRegularizacion(e.target.files[0])
     }
-
+    const handleDocumentMemorandum = e => {
+        setDocumentoMemorandum(e.target.files[0])
+    }
 
     // Metodos para el modal del internamiento
     const [formulario, setFormulario] = useState({
@@ -108,7 +111,7 @@ const EquipoPolicialListPage = () => {
 
         const formData = new FormData();
         formData.append('estado_del_bien', formulario.estado_del_bien)
-        formData.append('fecha:', formulario.fecha)
+        formData.append('fecha', formulario.fecha)
         formData.append('observaciones', formulario.observaciones)
         formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
         formData.append('documento_oficio_regularizacion', documentoRegularizacion)
@@ -147,18 +150,25 @@ const EquipoPolicialListPage = () => {
 
         const formDataReasignacion = new FormData();
         formDataReasignacion.append('estado_del_bien', formulario.estado_del_bien)
-        formDataReasignacion.append('fecha:', formulario.fecha)
+        formDataReasignacion.append('fecha', formulario.fecha)
         formDataReasignacion.append('observaciones', formulario.observaciones)
-        formDataReasignacion.append('documento_acta_entrega_recepcion', documentoRecepcion)
-        formDataReasignacion.append('documento_oficio_regularizacion', documentoRegularizacion)
         formDataReasignacion.append('bien_id', idActualDelBien)
         formDataReasignacion.append('tipo_bien', formulario.tipo_bien)
         formDataReasignacion.append('area_oficina_seccion_id', formulario.area_oficina_seccion_id)
         formDataReasignacion.append('personal_id', formulario.personal_id)
 
-
+        if (documentoRecepcion != null) {
+            formDataReasignacion.append('documento_acta_entrega_recepcion', documentoRecepcion)
+        } else {
+            formDataReasignacion.delete('documento_acta_entrega_recepcion', documentoRecepcion)
+        }
+        if (documentoMemorandum !== null) {
+            formDataReasignacion.append('documento_memorandum', documentoMemorandum)
+        } else {
+            formDataReasignacion.delete('documento_memorandum', documentoMemorandum)
+        }
         postReasignarBienFormato1(formDataReasignacion, config).then((rpta) => {
-
+            setshowModalReasignar(false);
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
                 console.log("Datos subida correctamente")
                 Swal.fire(
@@ -227,10 +237,8 @@ const EquipoPolicialListPage = () => {
     console.log(dataHistorial)
     useEffect(() => {
         prueba()
-    }, [idActualDelBien])
+    }, [idActualDelBien, showModalReasignar, showModalInternar])
     // Metodos para traer el historial
-
-
 
     useEffect(() => {
         traerSubunidades();
@@ -335,7 +343,7 @@ const EquipoPolicialListPage = () => {
 
                                 <div className="d-flex justify-content-between mb-3">
                                     <h5>{TITULO}</h5>
-                                   
+
                                     <Link to="/admin/bienes-internados/equipo-policial" className="btn btn-warning">
                                         {" "}
                                         <i className="fa fa-list"></i> Lista de Bienes Internados
@@ -420,7 +428,7 @@ const EquipoPolicialListPage = () => {
                                                                             <td>{obj.id}</td>
                                                                             <td>{obj.codigo}</td>
                                                                             <td>
-                                                                            {obj.icon_file ? (<img
+                                                                                {obj.icon_file ? (<img
                                                                                     className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                     alt="some value"
                                                                                     title={obj.documento_nombre_original}
@@ -447,7 +455,7 @@ const EquipoPolicialListPage = () => {
 
                                                                                     src={obj.codigo_qr || imgNoDisponible}
                                                                                     onClick={() =>
-                                                                                        activarModalVIsualizardorImagen(obj.codigo_qr|| imgNoDisponible, `Código QR de: ${obj.descripcion} `)
+                                                                                        activarModalVIsualizardorImagen(obj.codigo_qr || imgNoDisponible, `Código QR de: ${obj.descripcion} `)
                                                                                     }
                                                                                 />
                                                                             </td>
@@ -461,7 +469,7 @@ const EquipoPolicialListPage = () => {
                                                                                     title={obj.descripcion}
                                                                                     src={obj.imagen_bien || imgNoDisponible}
                                                                                     onClick={() =>
-                                                                                        activarModalVIsualizardorImagen(obj.imagen_bien|| imgNoDisponible,obj.descripcion + " ")
+                                                                                        activarModalVIsualizardorImagen(obj.imagen_bien || imgNoDisponible, obj.descripcion + " ")
                                                                                     }
                                                                                 />
                                                                             </td>
@@ -487,7 +495,7 @@ const EquipoPolicialListPage = () => {
                                                                                     <i className="fa fa-pencil"></i>
                                                                                 </Link>
 
-                                                                              
+
 
                                                                                 <Button
 
@@ -678,8 +686,8 @@ const EquipoPolicialListPage = () => {
                                         <form onSubmit={handleSubmitReasignacion}>
                                             <div className="form-group">
                                                 <label htmlFor="">Nueva persona encargada</label>
-                                                <select defaultValue="DEFAULT" onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
-                                                    <option value="DEFAULT" disabled>--- Elegir Personal---</option>
+                                                <select  onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
+                                                    <option value="">--- Elegir Personal---</option>
 
                                                     {personalActivo.map((objPersonal, i) => {
                                                         return (
@@ -692,8 +700,8 @@ const EquipoPolicialListPage = () => {
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Area Oficina Sección</label>
-                                                <select defaultValue="DEFAULT" onChange={handleChange} name="area_oficina_seccion_id" required className="form-select custom-select mr-sm-2">
-                                                    <option value="DEFAULT" disabled>--- Elegir Subunidad---</option>
+                                                <select onChange={handleChange} name="area_oficina_seccion_id" required className="form-select custom-select mr-sm-2">
+                                                    <option value="" >--- Elegir Subunidad---</option>
                                                     {areaoficinaseccion.map((objTipoFormato, i) => {
                                                         let { subunidad } = objTipoFormato
                                                         return (
@@ -707,7 +715,7 @@ const EquipoPolicialListPage = () => {
                                             <div className="form-group">
                                                 <label htmlFor="">Estado del Bien: </label>
                                                 <input type="text" className="form-control"
-                                                    value={formulario.estado_del_bien} name="estado_del_bien" onChange={handleChange} />
+                                                    value={formulario.estado_del_bien} name="estado_del_bien" required onChange={handleChange} />
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Observaciones: </label>
@@ -716,19 +724,20 @@ const EquipoPolicialListPage = () => {
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Fecha: </label>
-                                                <input type="date" className="form-control"
+                                                <input type="date" className="form-control" required
                                                     value={formulario.fecha} name="fecha" onChange={handleChange} />
                                             </div>
 
+                                         
                                             <div className="form-group">
                                                 <label htmlFor="">Documento-Acta entrega y recepción: </label>
                                                 <input type="file" className="form-control"
                                                     name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="">Documento-Oficio regularización: </label>
+                                                <label htmlFor="">Documento Memorandum: </label>
                                                 <input type="file" className="form-control"
-                                                    name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
+                                                    name="documento_memorandum" onChange={handleDocumentMemorandum} />
                                             </div>
                                             <div className="form-group" hidden>
                                                 <label htmlFor="">Id del Bien: </label>
