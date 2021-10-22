@@ -19,6 +19,12 @@ export const postEquipoPolicial = async (objUsuario) => {
         JSON.stringify(objUsuario), { headers: { 'Content-Type': 'application/json' } })
     return rpta
 }
+export const postEquipoPolicialFiles = async (objFile, config) => {
+    const rpta = await authAxios.post(`${URL_BACKEND}/equipo-policial`,
+        objFile,
+        config)
+    return rpta
+}
 
 export const getEquipoPolicialById = async (id) => {
     const rpta = await authAxios.get(`${URL_BACKEND}/equipo-policial/${id}`)
