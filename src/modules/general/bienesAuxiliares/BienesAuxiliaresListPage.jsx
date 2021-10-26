@@ -490,17 +490,17 @@ const BienesAuxiliaresListPage = () => {
                                             <div className="form-group">
                                                 <label htmlFor="">Estado del Bien:</label>
                                                 <input type="text" className="form-control" required
-                                                    value={estado_del_bien} name="estado_del_bien" onChange={handleChange} />
+                                                     name="estado_del_bien" onChange={handleChange} />
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Fecha:</label>
                                                 <input type="date" className="form-control" required
-                                                    value={fecha} name="fecha" onChange={handleChange} />
+                                                    name="fecha" onChange={handleChange} />
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Observaciones:</label>
                                                 <input type="text" className="form-control"
-                                                    value={observaciones} name="observaciones" onChange={handleChange} />
+                                                    name="observaciones" onChange={handleChange} />
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Documento-Acta entrega y recepción:</label>
@@ -648,17 +648,17 @@ const BienesAuxiliaresListPage = () => {
                                             <div className="form-group">
                                                 <label htmlFor="">Estado del Bien: </label>
                                                 <input type="text" className="form-control" required
-                                                    value={estado_del_bien} name="estado_del_bien" onChange={handleChange} />
+                                                     name="estado_del_bien" onChange={handleChange} />
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Observaciones: </label>
                                                 <textarea className="form-control" rows={4} cols={50}
-                                                    value={observaciones} name="observaciones" onChange={handleChange} />
+                                                    name="observaciones" onChange={handleChange} />
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Fecha: </label>
                                                 <input type="date" className="form-control" required
-                                                    value={fecha} name="fecha" onChange={handleChange} />
+                                                     name="fecha" onChange={handleChange} />
                                             </div>
 
                                             <div className="form-group">
