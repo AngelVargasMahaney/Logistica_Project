@@ -117,7 +117,7 @@ const EquipoPolicialListPage = () => {
         formData.append('tipo_bien', formulario.tipo_bien)
 
 
-        
+
         if (documentoRecepcion != null) {
             formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
         } else {
@@ -178,12 +178,14 @@ const EquipoPolicialListPage = () => {
             formDataReasignacion.delete('documento_memorandum', documentoMemorandum)
         }
         postReasignarBienFormato1(formDataReasignacion, config).then((rpta) => {
+
             setshowModalReasignar(false);
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
+
                 console.log("Datos subida correctamente")
                 Swal.fire(
                     'Reasignación Exitosa',
-                    'La reasignación fue exitoso',
+                    'La reasignación fue exitosa',
                     'success'
                 )
                 traerData()
@@ -561,18 +563,18 @@ const EquipoPolicialListPage = () => {
                                         <form onSubmit={handleSubmit}>
                                             <div className="form-group">
                                                 <label htmlFor="">Estado del Bien:</label>
-                                                <input type="text" className="form-control" required
-                                                    value={formulario.estado_del_bien} name="estado_del_bien" onChange={handleChange} />
+                                                <input type="text" className="form-control"
+                                                    name="estado_del_bien" onChange={handleChange} />
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Fecha:</label>
-                                                <input type="date" className="form-control" required
-                                                    value={formulario.fecha} name="fecha" onChange={handleChange} />
+                                                <input type="date" className="form-control"
+                                                    name="fecha" onChange={handleChange} />
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Observaciones:</label>
                                                 <input type="text" className="form-control"
-                                                    value={formulario.observaciones} name="observaciones" onChange={handleChange} />
+                                                    name="observaciones" onChange={handleChange} />
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Documento-Acta entrega y recepción:</label>
@@ -696,7 +698,7 @@ const EquipoPolicialListPage = () => {
                                         <form onSubmit={handleSubmitReasignacion}>
                                             <div className="form-group">
                                                 <label htmlFor="">Nueva persona encargada</label>
-                                                <select  onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
+                                                <select onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
                                                     <option value="">--- Elegir Personal---</option>
 
                                                     {personalActivo.map((objPersonal, i) => {
@@ -726,19 +728,20 @@ const EquipoPolicialListPage = () => {
                                                 <label htmlFor="">Estado del Bien: </label>
                                                 <input type="text" className="form-control"
                                                     value={formulario.estado_del_bien} name="estado_del_bien" required onChange={handleChange} />
+
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Observaciones: </label>
                                                 <textarea className="form-control" rows={4} cols={50}
-                                                    value={formulario.observaciones} name="observaciones" onChange={handleChange} />
+                                                    name="observaciones" onChange={handleChange} />
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Fecha: </label>
-                                                <input type="date" className="form-control" required
-                                                    value={formulario.fecha} name="fecha" onChange={handleChange} />
+                                                <input type="date" className="form-control"
+                                                    name="fecha" onChange={handleChange} />
                                             </div>
 
-                                         
+
                                             <div className="form-group">
                                                 <label htmlFor="">Documento-Acta entrega y recepción: </label>
                                                 <input type="file" className="form-control"

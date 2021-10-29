@@ -39,7 +39,7 @@ const Formato1ListPage = () => {
   })
 
   let { estado_del_bien, fecha, observaciones } = formulario
-
+  
   const [showModall, setShow] = useState(false);
   const [showModalReasignar, setshowModalReasignar] = useState(false);
   const [showModalInternar, setshowModalInternar] = useState(false);
@@ -128,6 +128,17 @@ const Formato1ListPage = () => {
 
   }
 
+  const [dataInicialModalReasignacuon, setDataInicialModalReasignacuon] = useState({
+    estado_del_bien: "",
+    fecha: "",
+    observaciones: "",
+    documento_acta_entrega_recepcion: "",
+    documento_oficio_regularizacion: "",
+    // bien_id: "",
+    tipo_bien: 1,
+    area_oficina_seccion_id: "",
+    personal_id: ""
+  })
 
   const handleSubmitReasignacion = e => {
 
@@ -162,6 +173,7 @@ const Formato1ListPage = () => {
         console.log("Datos subida correctamente")
 
         setshowModalReasignar(false)
+       
         Swal.fire({
           title: 'Reasignación Exitosa',
           text: 'La reasignación fue exitosa',
@@ -594,17 +606,17 @@ const Formato1ListPage = () => {
                       <div className="form-group">
                         <label htmlFor="">Estado del Bien:</label>
                         <input type="text" className="form-control"
-                          value={estado_del_bien} name="estado_del_bien" required onChange={handleChange} />
+                           name="estado_del_bien" required onChange={handleChange} />
                       </div>
                       <div className="form-group">
                         <label htmlFor="">Fecha:</label>
                         <input type="date" className="form-control"
-                          value={fecha} name="fecha" required onChange={handleChange} />
+                          name="fecha" required onChange={handleChange} />
                       </div>
                       <div className="form-group">
                         <label htmlFor="">Observaciones:</label>
                         <input type="text" className="form-control"
-                          value={observaciones} name="observaciones" onChange={handleChange} />
+                           name="observaciones" onChange={handleChange} />
                       </div>
                       <div className="form-group">
                         <label htmlFor="">Documento-Acta entrega y recepción:</label>
@@ -757,17 +769,17 @@ const Formato1ListPage = () => {
                       <div className="form-group">
                         <label htmlFor="">Estado del Bien: </label>
                         <input type="text" className="form-control"
-                          value={estado_del_bien} name="estado_del_bien" required onChange={handleChange} />
+                           name="estado_del_bien" required onChange={handleChange} />
                       </div>
                       <div className="form-group">
                         <label htmlFor="">Observaciones: </label>
                         <textarea className="form-control" rows={4} cols={50}
-                          value={observaciones} name="observaciones" onChange={handleChange} />
+                           name="observaciones" onChange={handleChange} />
                       </div>
                       <div className="form-group">
                         <label htmlFor="">Fecha: </label>
                         <input type="date" className="form-control"
-                          value={fecha} name="fecha" required onChange={handleChange} />
+                           name="fecha" required onChange={handleChange} />
                       </div>
 
                       <div className="form-group">
