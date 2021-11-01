@@ -30,11 +30,25 @@ import InternamientoBienesAuxiliaresListPage from '../general/internamientos/Int
 import InternamientoEquipoPolicial from '../general/internamientos/InternamientoEquipoPolicial'
 import Formato1EditarPage from '../general/formato1/Formato1EditarPage'
 import EquipoPolicialEditarPage from '../general/equipoPolicial/EquipoPolicialEditarPage'
+import UnidadesTransporteListPage from '../general/unidadesDeTransporte/UnidadesTransporteListPage'
+import UnidadesTransporteEditarPage from '../general/unidadesDeTransporte/UnidadesTransporteEditarPage'
+import UnidadesTransporteCrearPage from '../general/unidadesDeTransporte/UnidadesTransporteCrearPage'
 
 const AdminRouter = () => {
     return (
         <>
             <Switch>
+
+                <Route path="/admin/unidades-transporte/editar/:id">
+                    <UnidadesTransporteEditarPage/>
+                </Route>
+                <Route path="/admin/unidades-transporte/crear">
+                    <UnidadesTransporteCrearPage/>
+                </Route>
+                <Route path="/admin/unidades-transporte">
+                    <UnidadesTransporteListPage />
+                </Route>
+
                 <Route path="/admin/equipo-policial/historial/:id">
                     <EquipoPolicialHistory />
                 </Route>
@@ -94,7 +108,7 @@ const AdminRouter = () => {
                 <Route path="/admin/personal">
                     <PersonalListPage />
                 </Route>
-                
+
                 <Route path="/admin/formatos/editar/:id">
                     <Formato1EditarPage />
                 </Route>
