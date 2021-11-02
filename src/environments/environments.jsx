@@ -46,7 +46,7 @@ export const NAVEGACION_URL = [
         iconDashboard: icon.equipoPolicial
     },
     {
-        url: "/admin",
+        url: "/admin/unidades-transporte",
         nombre: "Unidades de Transporte",
         icon: "bx bxs-car-mechanic",
         iconDashboard: icon.unidadTransporte
