@@ -1,15 +1,10 @@
-import React, {useRef } from 'react'
+import React from 'react'
 import Viewer from 'react-viewer';
-import Swal from 'sweetalert2';
-import {useReactToPrint} from 'react-to-print'
-import ReactToPrint from 'react-to-print';
+
 
 const VisualizadorImagenes = (props) => {
     console.log(props)
-    const componentRef = useRef()
-    const handlePrint = useReactToPrint({
-        content:()=>componentRef.current
-    }) 
+ 
     
     return (
         <div>
