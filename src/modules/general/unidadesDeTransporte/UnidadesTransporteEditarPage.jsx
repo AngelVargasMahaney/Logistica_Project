@@ -1,0 +1,410 @@
+// import React, { useState } from 'react'
+// import { putEditarUsuarioById } from '../../../services/unidadesTransporteService';
+// import AdminSidebar from '../../admin/components/AdminSidebar';
+// import CargandoComponente from '../../layout/CargandoComponente';
+// import GeneralNavBar from '../../layout/GeneralNavBar';
+
+// const UnidadesTransporteEditarPage = () => {
+
+//     const [formulario, setFormulario] = useState({
+//         codigo: "",
+//         placa_interna: "",
+//         placa_de_rodaje: "",
+//         tipo_de_vehiculo: "",
+//         marca: "",
+//         modelo: "",
+//         anio_de_fabricacion: "",
+//         combustible: "",
+//         nro_de_chasis: "",
+//         nro_de_motor: "",
+//         nro_de_cilindros: "",
+//         traccion: "",
+//         procedencia: "",
+//         estado_vehiculo: "",
+//         soat_vigencia: "",
+//         seguro_particular: "",
+//         valor_adquisicion: "",
+//         llanta_repuesto: "",
+//         llave_ruedas: "",
+//         gata: "",
+//         tablet: "",
+//         camaras: "",
+//         ubicacion: "",
+//         observaciones: "",
+//     })
+
+//     const handleChange = (e) => {
+//         setFormulario({
+//             ...formulario,
+//             [e.target.name]: e.target.value //Darle valor del name según el formulario
+//         })
+//     }
+//     const params = useParams()
+//     const handleSubmit = (e) => {
+//         e.preventDefault()
+//         putEditarUsuarioById(formData, config, params.id).then((rpta) => {
+//             if (rpta.status === 200) {
+//                 history.push(`/admin/unidades-transporte`)
+//             }
+//         })
+//     }
+
+//     return (
+//         <>
+//             <AdminSidebar />
+//             <GeneralNavBar />
+
+//             <div className="home_content">
+//                 <main className="container">
+//                     <div className="row mt-4">
+//                         <div className="col">
+//                             <div className="card">
+//                                 <div className="card-header">
+//                                     <h4 className="card-title">
+//                                         {"Formulario de Creación de Unidades de Transporte"}
+//                                     </h4>
+//                                 </div>
+//                                 <div className="card-body">
+//                                     <form onSubmit={handleSubmit}>
+//                                         <div className="row">
+//                                             <div className="col-6">
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Código
+//                                                 </label>
+//                                                 <input
+//                                                     type="text"
+//                                                     className="form-control my-2"
+//                                                     placeholder="VHA-827"
+//                                                     name="codigo"
+//                                                     required
+//                                                     value={formulario.codigo}
+//                                                     onChange={handleChange}
+//                                                 />
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Placa Interna
+//                                                 </label>
+//                                                 <input
+//                                                     type="text"
+//                                                     className="form-control my-2"
+//                                                     placeholder="VHA-827"
+//                                                     name="placa_interna"
+//                                                     required
+//                                                     value={formulario.placa_interna}
+//                                                     onChange={handleChange}
+//                                                 />
+
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Placa de Rodaje
+//                                                 </label>
+//                                                 <input
+//                                                     type="text"
+//                                                     className="form-control my-2"
+//                                                     placeholder="AXK-221"
+//                                                     name="placa_de_rodaje"
+//                                                     value={formulario.placa_de_rodaje}
+//                                                     required
+//                                                     onChange={handleChange}
+//                                                 />
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Tipo de Vehículo
+//                                                 </label>
+//                                                 <input
+//                                                     type="text"
+//                                                     className="form-control my-2"
+//                                                     placeholder="Camioneta"
+//                                                     name="tipo_de_vehiculo"
+//                                                     value={formulario.tipo_de_vehiculo}
+//                                                     onChange={handleChange}
+//                                                 />
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Marca
+//                                                 </label>
+//                                                 <input
+//                                                     type="text"
+//                                                     className="form-control my-2"
+//                                                     placeholder="Hyundai"
+//                                                     name="marca"
+//                                                     value={formulario.marca}
+//                                                     onChange={handleChange}
+//                                                 />
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Modelo
+//                                                 </label>
+//                                                 <input
+//                                                     type="text"
+//                                                     className="form-control my-2"
+//                                                     placeholder="Elantra"
+//                                                     name="modelo"
+//                                                     value={formulario.modelo}
+//                                                     onChange={handleChange}
+//                                                 />
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Año de fabricación
+//                                                 </label>
+//                                                 <input
+//                                                     type="date"
+//                                                     className="form-control my-2"
+//                                                     placeholder="2011"
+//                                                     name="anio_de_fabricacion"
+//                                                     value={formulario.anio_de_fabricacion}
+//                                                     onChange={handleChange}
+//                                                 />
+
+//                                             </div>
+//                                             <div className="col-6">
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Combustible
+//                                                 </label>
+//                                                 <input
+//                                                     type="text"
+//                                                     className="form-control my-2"
+//                                                     placeholder="Petróleo"
+//                                                     name="combustible"
+//                                                     value={formulario.combustible}
+//                                                     onChange={handleChange}
+//                                                 />
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Documento Alta
+//                                                 </label>
+//                                                 <input
+//                                                     type="file"
+//                                                     className="form-control my-2"
+//                                                     placeholder="Archivo.pdf"
+//                                                     name="documento_alta"
+
+//                                                     onChange={handleChangeDocs}
+
+//                                                 />
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Número de Chasis
+//                                                 </label>
+//                                                 <input
+//                                                     type="text"
+//                                                     className="form-control my-2"
+//                                                     placeholder="AW-289"
+//                                                     name="nro_de_chasis"
+//                                                     value={formulario.nro_de_chasis}
+//                                                     onChange={handleChange}
+//                                                 />
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Número de Motor
+//                                                 </label>
+//                                                 <input
+//                                                     type="text"
+//                                                     className="form-control my-2"
+//                                                     placeholder="V2200"
+//                                                     name="nro_de_motor"
+//                                                     value={formulario.nro_de_motor}
+//                                                     onChange={handleChange}
+//                                                 />
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Número de Cilindros
+//                                                 </label>
+//                                                 <input
+//                                                     type="text"
+//                                                     className="form-control my-2"
+//                                                     placeholder="V6"
+//                                                     name="nro_de_cilindros"
+//                                                     value={formulario.nro_de_cilindros}
+//                                                     onChange={handleChange}
+//                                                 />
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Traccion
+//                                                 </label>
+//                                                 <input
+//                                                     type="text"
+//                                                     className="form-control my-2"
+//                                                     placeholder="Delantera"
+//                                                     name="traccion"
+//                                                     value={formulario.traccion}
+//                                                     onChange={handleChange}
+//                                                 />
+//                                             </div>
+//                                         </div>
+//                                         <div className="row">
+//                                             <div className="col-6">
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Procedencia
+//                                                 </label>
+//                                                 <input
+//                                                     type="text"
+//                                                     className="form-control my-2"
+//                                                     placeholder="Contrainteligencia"
+//                                                     name="procedencia"
+//                                                     value={formulario.procedencia}
+//                                                     onChange={handleChange}
+//                                                 />
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Estado del Vehículo
+//                                                 </label>
+//                                                 <input
+//                                                     type="text"
+//                                                     className="form-control my-2"
+//                                                     placeholder="Operativo"
+//                                                     name="estado_vehiculo"
+//                                                     value={formulario.estado_vehiculo}
+//                                                     onChange={handleChange}
+//                                                 />
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Vigencia del Soat
+//                                                 </label>
+//                                                 <input
+//                                                     type="text"
+//                                                     className="form-control my-2"
+//                                                     placeholder="Activo"
+//                                                     name="soat_vigencia"
+//                                                     value={formulario.soat_vigencia}
+//                                                     onChange={handleChange}
+//                                                 />
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Seguro Particular
+//                                                 </label>
+//                                                 <input
+//                                                     type="text"
+//                                                     className="form-control my-2"
+//                                                     placeholder="Si presenta"
+//                                                     name="seguro_particular"
+//                                                     value={formulario.seguro_particular}
+//                                                     onChange={handleChange}
+//                                                 />
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Valor de Adquisición
+//                                                 </label>
+//                                                 <input
+//                                                     type="text"
+//                                                     className="form-control my-2"
+//                                                     placeholder="S/. 25000"
+//                                                     name="valor_adquisicion"
+//                                                     value={formulario.valor_adquisicion}
+//                                                     onChange={handleChange}
+//                                                 />
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Llanta de Repuesto
+//                                                 </label>
+//                                                 <select
+//                                                     required className="form-select custom-select mr-sm-2 my-2"
+//                                                     name="llanta_repuesto"
+//                                                     onChange={handleChange}
+//                                                 >
+//                                                     <option value="Si" >Si</option>
+//                                                     <option value="No" >No</option>
+//                                                 </select>
+//                                             </div>
+//                                             <div className="col-6">
+
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Llave de Ruedas
+//                                                 </label>
+//                                                 <select
+//                                                     required className="form-select custom-select mr-sm-2 my-2"
+//                                                     name="llave_ruedas"
+//                                                     onChange={handleChange}
+//                                                 >
+//                                                     <option value="Si" >Si</option>
+//                                                     <option value="No" >No</option>
+//                                                 </select>
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Gata
+//                                                 </label>
+//                                                 <select
+//                                                     required className="form-select custom-select mr-sm-2 my-2"
+//                                                     name="gata"
+//                                                     onChange={handleChange}
+//                                                 >
+//                                                     <option value="Si" >Si</option>
+//                                                     <option value="No" >No</option>
+//                                                 </select>
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Tablet
+//                                                 </label>
+//                                                 <select
+//                                                     required className="form-select custom-select mr-sm-2 my-2"
+//                                                     name="tablet"
+//                                                     onChange={handleChange}
+//                                                 >
+//                                                     <option value="Si" >Si</option>
+//                                                     <option value="No" >No</option>
+//                                                 </select>
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Camaras
+//                                                 </label>
+//                                                 <select
+//                                                     required className="form-select custom-select mr-sm-2 my-2"
+//                                                     name="camaras"
+//                                                     onChange={handleChange}
+//                                                 >
+//                                                     <option value="Si" >Si</option>
+//                                                     <option value="No" >No</option>
+//                                                 </select>
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Ubicación
+//                                                 </label>
+//                                                 <input
+//                                                     type="text"
+//                                                     className="form-control my-2"
+//                                                     placeholder="Contrainteligencia"
+//                                                     name="ubicacion"
+//                                                     value={formulario.ubicacion}
+//                                                     onChange={handleChange}
+//                                                 />
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Observaciones
+//                                                 </label>
+//                                                 <input
+//                                                     type="text"
+//                                                     className="form-control my-2"
+//                                                     placeholder="Presenta una ruptura en la puerta delantera"
+//                                                     name="observaciones"
+//                                                     value={formulario.observaciones}
+//                                                     onChange={handleChange}
+//                                                 />
+//                                                 <label htmlFor="" className="form-label">
+//                                                     Imagen del Bien
+//                                                 </label>
+//                                                 <input
+//                                                     type="file"
+//                                                     className="form-control my-2"
+//                                                     placeholder="VHX-514.png"
+//                                                     name="imagen_bien"
+//                                                     onChange={handleChangeImages}
+//                                                 />
+//                                             </div>
+//                                         </div>
+//                                         <div>
+//                                             <div>
+//                                                 {!cargando && <button className="btn btn-primary" type="submit">
+//                                                     <span className="mx-1"><i className="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
+//                                                 </button>}
+//                                                 {cargando && <button className="btn btn-primary" type="submit" disabled={cargando}>
+//                                                     <span className="mx-1"><i className="fa fa-floppy-o" aria-hidden="true"></i></span>  Esperando respuesta del Servidor
+//                                                 </button>}
+//                                                 <button
+//                                                     className="btn btn-danger my-3 mx-3"
+//                                                     type="button"
+//                                                     onClick={() => {
+//                                                         history.push("/admin/unidades-transporte");
+//                                                     }}
+//                                                 >
+//                                                     <span className="mx-1"><i className="fa fa-ban" aria-hidden="true"></i></span> Cancelar
+//                                                 </button>
+//                                             </div>
+
+//                                         </div>
+
+//                                     </form>
+
+//                                 </div>
+//                             </div>
+//                         </div>
+
+//                     </div>
+
+//                 </main>
+//                 {cargando && <CargandoComponente />}
+//             </div>
+
+//         </>
+//     )
+// }
+
+// export default UnidadesTransporteEditarPage
