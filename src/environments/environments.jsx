@@ -45,7 +45,6 @@ export const NAVEGACION_URL = [
         icon: "bx bx-briefcase-alt-2",
         iconDashboard: icon.equipoPolicial
 
-    
     },
     {
         url: "/admin/unidades-transporte",
@@ -53,6 +52,5 @@ export const NAVEGACION_URL = [
         icon: "bx bxs-car-mechanic",
         iconDashboard: icon.unidadTransporte
     },
-
 
 ];
