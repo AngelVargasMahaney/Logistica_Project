@@ -20,7 +20,17 @@ export const postUnidadesTransporte = async (objFile, config) => {
     return rpta
 }
 
-export const putEditarUsuarioById = async (objFormato1, config, id) => {
+export const putEditarUnidadTransporteById = async (objFormato1, config, id) => {
     const rpta = await authAxios.post(`${URL_BACKEND}/unidades-transporte/${id}`, objFormato1, config)
+    return rpta
+}
+
+export const getUnidadTransportById = async (id)=>{
+    const rpta = await authAxios.get(`${URL_BACKEND}/unidades-transporte/${id}`)
+    return rpta
+}
+export const getBienesInternadoUnidadesTransporte = async () => {
+
+    const rpta = await authAxios.get(`${URL_BACKEND}/bienes-internados?tipo_bien=4`)
     return rpta
 }

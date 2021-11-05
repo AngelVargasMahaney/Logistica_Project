@@ -33,11 +33,47 @@ import EquipoPolicialEditarPage from '../general/equipoPolicial/EquipoPolicialEd
 import UnidadesTransporteListPage from '../general/unidadesDeTransporte/UnidadesTransporteListPage'
 import UnidadesTransporteEditarPage from '../general/unidadesDeTransporte/UnidadesTransporteEditarPage'
 import UnidadesTransporteCrearPage from '../general/unidadesDeTransporte/UnidadesTransporteCrearPage'
+import InternamientoUnidadesTransporte from '../general/internamientos/InternamientoUnidadesTransporte'
+import UnidadesTransporteHistory from '../general/historiales/UnidadesTransporteHistory'
 
 const AdminRouter = () => {
     return (
         <>
             <Switch>
+
+               
+
+                {/* HISTORIALES  */}
+                <Route path="/admin/unidades-transporte/historial/:id">
+                    <UnidadesTransporteHistory />
+                </Route>
+                <Route path="/admin/equipo-policial/historial/:id">
+                    <EquipoPolicialHistory />
+                </Route>
+                <Route path="/admin/formato1/historial/:id">
+                    <Formato1History />
+                </Route>
+                <Route path="/admin/bienes-auxiliares/historial/:id">
+                    <BienesAuxiliaresHistory />
+                </Route>
+               
+
+
+                {/* LISTADO DE INTERNAMIENTOS */}
+                <Route path="/admin/bienes-internados/formato1">
+                    <InternamientoFormato1ListPage />
+                </Route>
+
+                <Route path="/admin/bienes-internados/bienes-auxiliares">
+                    <InternamientoBienesAuxiliaresListPage />
+                </Route>
+                <Route path="/admin/bienes-internados/equipo-policial">
+                    <InternamientoEquipoPolicial />
+                </Route>
+                <Route path="/admin/bienes-internados/unidades-transporte">
+                    <InternamientoUnidadesTransporte />
+                </Route>
+
 
                 <Route path="/admin/unidades-transporte/editar/:id">
                     <UnidadesTransporteEditarPage/>
@@ -48,33 +84,7 @@ const AdminRouter = () => {
                 <Route path="/admin/unidades-transporte">
                     <UnidadesTransporteListPage />
                 </Route>
-
-                <Route path="/admin/equipo-policial/historial/:id">
-                    <EquipoPolicialHistory />
-                </Route>
-                <Route path="/admin/formato1/historial/:id">
-                    <Formato1History />
-                </Route>
-                <Route path="/admin/bienes-auxiliares/historial/:id">
-                    <BienesAuxiliaresHistory />
-                </Route>
-
-
-
-                <Route path="/admin/bienes-internados/formato1">
-                    <InternamientoFormato1ListPage />
-                </Route>
-
-
-
-                <Route path="/admin/bienes-internados/bienes-auxiliares">
-                    <InternamientoBienesAuxiliaresListPage />
-                </Route>
-                <Route path="/admin/bienes-internados/equipo-policial">
-                    <InternamientoEquipoPolicial />
-                </Route>
-
-
+                
                 <Route path="/admin/usuario/editar/:id">
                     <UserEditarPage />
                 </Route>

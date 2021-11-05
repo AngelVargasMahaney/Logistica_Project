@@ -1,4 +1,3 @@
-import Button from '@restart/ui/esm/Button'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { deleteUnidadesTransporteById, getUnidadesTransporte } from '../../../services/unidadesTransporteService'
@@ -8,6 +7,11 @@ import VisualizadorImagenes from '../../modales/VisualizadorImagenes'
 import imgNoDisponible from "../../../assets/23.png"
 import Swal from 'sweetalert2'
 import { Modal } from 'react-bootstrap'
+import { getAreaOficinaSeccion } from '../../../services/areaOficinaSeccionService'
+import { getPersonalActivo } from '../../../services/personalService'
+import { Button } from 'react-bootstrap'
+import { getHistorialUnidadTransporte } from '../../../services/historialBienesService'
+import { postInternarBienFormato1, postReasignarBienFormato1 } from '../../../services/internamientoFormato1Service'
 
 const UnidadesTransporteListPage = () => {
 
@@ -55,15 +59,219 @@ const UnidadesTransporteListPage = () => {
         setIsOpen(true);
     };
     // fin documentos
-
+    const handleCloseInternar = () => setshowModalInternar(false);
+    const [idActualDelBien, setIdActualDelBien] = useState("")
     const [modalImagenes, setmodalImagenes] = useState(false)
     const [imagenBien, setImagenBien] = useState("")
     const [imagenDescripcion, setImagenDescripcion] = useState("")
+    const [showModalReasignar, setshowModalReasignar] = useState(false);
+    const [showModalInternar, setshowModalInternar] = useState(false);
     const activarModalVIsualizardorImagen = (imagen, imagenDescripcion) => {
         setImagenDescripcion(imagenDescripcion)
         setImagenBien(imagen)
         setmodalImagenes(true)
     }
+    const [documentoAlta, setDocumentoAlta] = useState(null)
+
+    const handleDocumentoAlta = e => {
+        setDocumentoAlta(e.target.files[0])
+    }
+    const showModalReasignarBien = (idBien) => {
+        setIdActualDelBien(idBien);
+
+        setshowModalReasignar(true);
+        console.log("ENTRANDO AL LLAMADO DE DATA CON ID: " + idBien)
+        // setCargando(true);
+        // getHistorialFormatoById(idBien).then(rpta => {
+        //   console.log("adwdwaw" + rpta)
+        //   setDataHistorial(rpta.data);
+        //   console.log("PRUEBAA" + rpta);
+        //   setCargando(false);
+
+        // })
+    }
+    const showModalInternarBien = (idBien) => {
+        setIdActualDelBien(idBien);
+
+        setshowModalInternar(true);
+        console.log("Internar:ENTRANDO AL LLAMADO DE DATA CON ID: " + idBien)
+        // setCargando(true);
+        // getHistorialFormatoById(idBien).then(rpta => {
+        //   console.log("adwdwaw" + rpta)
+        //   setDataHistorial(rpta.data);
+        //   console.log("PRUEBAA" + rpta);
+        //   setCargando(false);
+
+        // })
+    }
+    const [formulario, setFormulario] = useState({
+        estado_del_bien: "",
+        fecha: "",
+        observaciones: "",
+        documento_alta: "",
+        // bien_id: "",
+        tipo_bien: 4,
+        area_oficina_seccion_id: "",
+        personal_id: ""
+    })
+    const handleChange = (e) => {
+        setFormulario({
+            ...formulario,
+            [e.target.name]: e.target.value
+        })
+    }
+    const token = localStorage.getItem('token')
+
+    const config = {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('estado_del_bien', formulario.estado_del_bien)
+        formData.append('fecha', formulario.fecha)
+        formData.append('observaciones', formulario.observaciones)
+        // formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
+        // formData.append('documento_oficio_regularizacion', documentoRegularizacion)
+        formData.append('bien_id', idActualDelBien)
+        formData.append('tipo_bien', formulario.tipo_bien)
+
+
+        if (documentoAlta != null) {
+            formData.append('documento_acta_entrega_recepcion', documentoAlta)
+        } else {
+            formData.delete('documento_acta_entrega_recepcion', documentoAlta)
+        }
+        postInternarBienFormato1(formData, config).then((rpta) => {
+            if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
+                console.log("Datos subida correctamente")
+                setshowModalInternar(false)
+                Swal.fire(
+                    'Internamiento Exitoso',
+                    'El internamiento fue exitoso',
+                    'success'
+                )
+                traerUnidadesTransporte()
+            }
+            console.log(rpta)
+        }).catch((err) => {
+            Swal.fire(
+                'Internamiento Fallido',
+                'No se puede internar un bien dos veces',
+                'error'
+            )
+        })
+    }
+
+
+    const handleCloseReasignar = () => setshowModalReasignar(false);
+    const [dataHistorial, setDataHistorial] = useState([])
+    let { historial } = dataHistorial;
+    const handleSubmitReasignacion = e => {
+
+        e.preventDefault();
+        const formDataReasignacion = new FormData();
+        formDataReasignacion.append('estado_del_bien', formulario.estado_del_bien)
+        formDataReasignacion.append('fecha', formulario.fecha)
+        formDataReasignacion.append('observaciones', formulario.observaciones)
+        if (documentoAlta != null) {
+            formDataReasignacion.append('documento_alta', documentoAlta)
+        } else {
+            formDataReasignacion.delete('documento_alta', documentoAlta)
+        }
+        formDataReasignacion.append('bien_id', idActualDelBien)
+        formDataReasignacion.append('tipo_bien', formulario.tipo_bien)
+        formDataReasignacion.append('area_oficina_seccion_id', formulario.area_oficina_seccion_id)
+        formDataReasignacion.append('personal_id', formulario.personal_id)
+
+        postReasignarBienFormato1(formDataReasignacion, config).then((rpta) => {
+            if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
+                console.log("Datos subida correctamente")
+
+                setshowModalReasignar(false)
+
+                Swal.fire({
+                    title: 'Reasignación Exitosa',
+                    text: 'La reasignación fue exitosa',
+                    icon: 'success',
+
+                    confirmButtonColor: '#3085d6',
+
+                    confirmButtonText: 'Continuar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        traerUnidadesTransporte()
+
+                    }
+                })
+            }
+            console.log(rpta)
+        }).catch((err) => {
+            Swal.fire(
+                'Reasignaciòn Fallida',
+                'No se puede internar un bien dos veces',
+                'error'
+            )
+        })
+
+    }
+    const [personalActivo, setPersonalActivo] = useState([]);
+
+    const traerPersonalActivo = () => {
+        setCargando(true)
+        getPersonalActivo().then((rpta) => {
+            //console.log(rpta);
+            setPersonalActivo(rpta.data);
+            setCargando(false)
+        });
+    };
+    useEffect(() => {
+        traerPersonalActivo();
+    }, []);
+    //Aqui los metodos para traer las subunidades
+    const [areaoficinaseccion, setAreaoficinaseccion] = useState([]);
+    const traerAreaOficina = () => {
+        setCargando(true)
+        getAreaOficinaSeccion().then((rpta) => {
+
+            setAreaoficinaseccion(rpta.data);
+            setCargando(false)
+        }).catch((err) => {
+            console.log("Data no cargada en traerSubunidades")
+        })
+
+    }
+
+    useEffect(() => {
+        traerAreaOficina();
+    }, []);
+
+
+    const traerHistorialById = () => {
+
+        if (idActualDelBien === "") {
+            setCargando(true);
+        } else {
+            getHistorialUnidadTransporte(idActualDelBien).then(rpta => {
+                //console.log("adwdwaw" + rpta.data)
+                setDataHistorial(rpta.data);
+                //console.log("PRUEBAA" + rpta);
+                setCargando(false);
+
+            }).catch((err) => {
+                console.log("Data no cargada en getHistorialFOrmatoByID")
+            })
+        }
+    }
+    console.log(dataHistorial)
+    useEffect(() => {
+        traerHistorialById()
+        // }, [idActualDelBien, historial, dataHistorial])
+    }, [idActualDelBien, showModalReasignar, showModalInternar])
+
     return (
         <>
             <AdminSidebar />
@@ -76,11 +284,11 @@ const UnidadesTransporteListPage = () => {
 
                             <div className="d-flex justify-content-between mb-3">
                                 <h5>Lista de bienes de Unidades de Transporte</h5>
-                                <Link to="/admin/bienes-internados/equipo-policial" className="btn btn-warning">
+                                <Link to="/admin/bienes-internados/unidades-transporte" className="btn btn-warning">
                                     {" "}
                                     <i className="fa fa-list"></i> Lista de Bienes Internados
                                 </Link>
-                                <Button onClick={"reportes"} className="btn btn-success">
+                                <Button onClick={"reportes"} className="btn btn-success" disabled>
                                     {" "}
                                     <i className="fas fa-file-excel"></i> Generar Reporte
                                 </Button>
@@ -185,6 +393,39 @@ const UnidadesTransporteListPage = () => {
                                                                                 {" "}
                                                                                 <i className="fa fa-pencil"></i>
                                                                             </Link>
+                                                                            <Button
+
+                                                                                onClick={() => {
+                                                                                    showModalReasignarBien(obj.id)
+
+                                                                                }}
+                                                                                className="btn btn-info mx-1"
+                                                                                title="Reasignar un Bien"
+                                                                            >
+                                                                                {" "}
+                                                                                <i className="fas fa-clipboard-check"></i>
+                                                                            </Button>
+                                                                            <Button
+
+                                                                                onClick={() => {
+                                                                                    showModalInternarBien(obj.id)
+
+                                                                                }}
+                                                                                className="btn btn-info"
+                                                                                title="Internar un Bien"
+                                                                            >
+                                                                                {" "}
+                                                                                <i className="fas fa-angle-double-down"></i>
+                                                                            </Button>
+                                                                            <Link
+                                                                                // to={`formatos/editar/${objFormato.id}`}
+                                                                                to={`/admin/unidades-transporte/historial/${obj.id}`}
+                                                                                className="btn btn-info ml-1"
+                                                                                title="Historial del bien"
+                                                                            >
+                                                                                {" "}
+                                                                                <i className="fa fa-history"></i>
+                                                                            </Link>
                                                                         </td>
                                                                     </tr>
                                                                 )
@@ -220,6 +461,230 @@ const UnidadesTransporteListPage = () => {
                         </Modal.Footer>
                     </div>
                 </Modal>
+
+                {/* Modal Internar una Unidad de Transporte */}
+                <Modal show={showModalInternar} onHide={handleCloseInternar}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Internamiento de una Unidad de Transporte</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <form onSubmit={handleSubmit}>
+                            <div className="form-group">
+                                <label htmlFor="">Estado del Vehículo:</label>
+                                <input type="text" className="form-control"
+                                    name="estado_del_bien" required onChange={handleChange} />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="">Fecha:</label>
+                                <input type="date" className="form-control"
+                                    name="fecha" required onChange={handleChange} />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="">Observaciones:</label>
+                                <input type="text" className="form-control"
+                                    name="observaciones" onChange={handleChange} />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="">Documento Alta:</label>
+                                <input type="file" className="form-control"
+                                    name="documento_alta" onChange={handleDocumentoAlta} />
+                            </div>
+
+                            <div className="form-group" hidden>
+                                <label htmlFor="">Id del Bien:</label>
+                                <input type="text" className="form-control"
+                                    value={idActualDelBien} name="bien_id" onChange={handleChange} />
+                            </div>
+                            {/* <div className="form-group">
+                        <label htmlFor="">Tipo bien</label>
+                        <input type="text" className="form-control"
+                          value={tipo_bien} name="tipo_bien" onChange={handleChange} />
+                      </div> */}
+
+                            <div className="form-group">
+                                <button className="btn btn-primary" type="submit">Internar<i className="ml-2 fa fa-check"></i></button>
+                            </div>
+
+
+                        </form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseInternar}>
+                            Cerrar
+                        </Button>
+
+                    </Modal.Footer>
+                </Modal>
+
+                {/* Modal de Reasignación */}
+
+                <Modal show={showModalReasignar} onHide={handleCloseReasignar}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Reasignación de una Unidad de Transporte</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        {/* Header del Modal - Información del bien */}
+
+                        <div className="container">
+                            <div className="row">
+                                <div className="col">
+                                    {/* <p>Código: <span>${idActualDelBien}</span></p> */}
+                                    {cargando ?
+                                        <div className="loader__father">
+                                            <div className="loader">
+                                                <div className="face">
+                                                    <div className="circle"></div>
+                                                </div>
+                                                <div className="face">
+                                                    <div className="circle"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        :
+                                        (
+                                            <>
+                                                <h3>Datos Actuales del Bien</h3>
+                                                <p>Código: {dataHistorial.codigo}</p>
+                                                <p>Descripción: {dataHistorial.descripcion}</p>
+                                            </>
+                                        )}
+
+
+                                </div>
+                                <div className="col">
+                                    {cargando ?
+                                        <div className="loader__father">
+                                            <div className="loader">
+                                                <div className="face">
+                                                    <div className="circle"></div>
+                                                </div>
+                                                <div className="face">
+                                                    <div className="circle"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        :
+                                        (
+                                            <>
+                                                {
+                                                    historial?.map((item, i) => {
+                                                        const lastItem = historial.length
+                                                        console.log(lastItem + " <<dfawdf")
+                                                        if (i === 0) {
+                                                            return (
+                                                                <>
+                                                                    <div key={item.id}>
+                                                                        <h3>Ubicación Actual</h3>
+                                                                        <p>Subunidad: {item.area_oficina_seccion?.subunidad?.nombre} </p>
+                                                                        <p>Area: {item.area_oficina_seccion?.nombre}</p>
+                                                                        <p>Persona Encargada: {item.personal?.grado + " " + item.personal?.apellido + " " + item.personal?.nombre}</p>
+                                                                    </div>
+                                                                </>
+                                                            )
+                                                        } else {
+                                                            // not last one
+                                                        }
+
+                                                    })
+                                                }
+
+                                            </>
+                                        )}
+                                </div>
+                            </div>
+                        </div>
+                        {/* FIN DEL Header del Modal - Información del bien */}
+
+
+
+
+                        <form onSubmit={handleSubmitReasignacion}>
+
+                            <div className="form-group">
+                                <label htmlFor="">Nueva persona encargada</label>
+                                <select onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
+                                    <option value="" >--- Elegir Personal---</option>
+
+                                    {personalActivo.map((objPersonal, i) => {
+                                        return (
+
+                                            <option key={objPersonal.id} value={objPersonal.id} >{objPersonal.grado + " |-> " + objPersonal.apellido + " " + objPersonal.nombre}</option>
+
+                                        );
+                                    })}
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="">Area Oficina Sección</label>
+                                <select onChange={handleChange} name="area_oficina_seccion_id" required className="form-select custom-select mr-sm-2">
+                                    <option value="">--- Elegir Subunidad---</option>
+                                    {areaoficinaseccion.map((objTipoFormato, i) => {
+                                        let { subunidad } = objTipoFormato
+                                        return (
+                                            <option key={objTipoFormato.id} value={objTipoFormato.id}>{objTipoFormato.nombre + " |-> " + subunidad.nombre}</option>
+
+                                        );
+                                    })}
+
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="">Estado del Bien: </label>
+                                <input type="text" className="form-control"
+                                    name="estado_del_bien" required onChange={handleChange} />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="">Observaciones: </label>
+                                <textarea className="form-control" rows={4} cols={50}
+                                    name="observaciones" onChange={handleChange} />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="">Fecha: </label>
+                                <input type="date" className="form-control"
+                                    name="fecha" required onChange={handleChange} />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="">Documento Alta </label>
+                                <input type="file" className="form-control"
+                                    name="documento_alta" onChange={handleDocumentoAlta} />
+                            </div>
+
+                            <div className="form-group" hidden>
+                                <label htmlFor="">Id del Bien: </label>
+                                <input type="text" className="form-control"
+                                    value={idActualDelBien} name="bien_id" onChange={handleChange} readOnly />
+                            </div>
+
+
+                            {/* <div className="form-group">
+                        <label htmlFor="">Tipo bien</label>
+                        <input type="text" className="form-control"
+                          value={tipo_bien} name="tipo_bien" onChange={handleChange} />
+                      </div> */}
+
+                            <div className="form-group">
+                                <button className="btn btn-primary" type="submit">Reasignar Bien<i className="ml-2 fa fa-check"></i></button>
+                            </div>
+
+
+                        </form>
+
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseReasignar}>
+                            Cerrar
+                        </Button>
+
+                    </Modal.Footer>
+                </Modal>
+
+
+
+
+
             </div>
         </>
     )

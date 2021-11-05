@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import BienesAuxiliaresHistory from './BienesAuxiliaresHistory'
 import EquipoPolicialHistory from './EquipoPolicialHistory'
 import Formato1History from './Formato1History'
+import UnidadesTransporteHistory from './UnidadesTransporteHistory'
 
 const HistorialesRoute = () => {
     return (
@@ -16,6 +17,9 @@ const HistorialesRoute = () => {
                 </Route>
                 <Route path="/admin/bienes-auxiliares/historial/:id">
                     <BienesAuxiliaresHistory />
+                </Route>
+                <Route path="/admin/unidades-transporte/historial/:id">
+                    <UnidadesTransporteHistory />
                 </Route>
             </Switch>
         </>
