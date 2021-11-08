@@ -35,6 +35,11 @@ import UnidadesTransporteEditarPage from '../general/unidadesDeTransporte/Unidad
 import UnidadesTransporteCrearPage from '../general/unidadesDeTransporte/UnidadesTransporteCrearPage'
 import InternamientoUnidadesTransporte from '../general/internamientos/InternamientoUnidadesTransporte'
 import UnidadesTransporteHistory from '../general/historiales/UnidadesTransporteHistory'
+import BienesDirinEditarPage from '../general/bienesDirin/BienesDirinEditarPage'
+import BienesDirinCrearPage from '../general/bienesDirin/BienesDirinCrearPage'
+import BienesDirinListPage from '../general/bienesDirin/BienesDirinListPage'
+import InternamientoBienesDirin from '../general/internamientos/InternamientoBienesDirin'
+import BienesDirinHistory from '../general/historiales/BienesDirinHistory'
 
 const AdminRouter = () => {
     return (
@@ -57,6 +62,10 @@ const AdminRouter = () => {
                     <BienesAuxiliaresHistory />
                 </Route>
                
+                <Route path="/admin/bienes-dirin/historial/:id">
+                    <BienesDirinHistory />
+                </Route>
+               
 
 
                 {/* LISTADO DE INTERNAMIENTOS */}
@@ -72,6 +81,9 @@ const AdminRouter = () => {
                 </Route>
                 <Route path="/admin/bienes-internados/unidades-transporte">
                     <InternamientoUnidadesTransporte />
+                </Route>
+                <Route path="/admin/bienes-internados/bienes-dirin">
+                    <InternamientoBienesDirin />
                 </Route>
 
 
@@ -138,6 +150,18 @@ const AdminRouter = () => {
                 </Route>
                 <Route path="/admin/equipo-policial">
                     <EquipoPolicialListPage />
+                </Route>
+
+                <Route path="/admin/bienes-dirin/editar/:id">
+                    <BienesDirinEditarPage />
+                </Route>
+
+                <Route path="/admin/bienes-dirin/crear">
+                    <BienesDirinCrearPage />
+                </Route>
+
+                <Route path="/admin/bienes-dirin">
+                    <BienesDirinListPage />
                 </Route>
 
 

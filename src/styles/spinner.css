@@ -5,6 +5,8 @@
   .webody {
       
     background-image: radial-gradient(circle farthest-corner at center, #3C4B57 0%, #1C262B 100%);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5));
+
   }
   
   .loaderCargando {

@@ -100,8 +100,10 @@ const UnidadesTransporteEditarPage = () => {
     }
 
     useEffect(() => {
+        setCargando(true)
         getUnidadTransportById(params.id).then((rpta) => {
             setFormulario({ ...rpta.data })
+            setCargando(false)
         })
     }, [])
 

@@ -51,5 +51,11 @@ export const NAVEGACION_URL = [
         icon: "bx bxs-car-mechanic",
         iconDashboard: icon.unidadTransporte
     },
+    {
+        url: "/admin/bienes-dirin",
+        nombre: "Bienes DIRIN",
+        icon: "bx bxs-component",
+        iconDashboard: icon.bienesInternaDestru
+    },
 
 ];
