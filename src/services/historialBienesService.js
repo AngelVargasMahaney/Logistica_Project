@@ -17,7 +17,14 @@ export const getHistorialEquipoPolicialById = async(id) => {
     const rpta = await authAxios.get(`${URL_BACKEND}/bienes/historial?bien_id=${id}&tipo_bien=3`)
     return rpta
 }
-
+export const getHistorialUnidadTransporte = async(id) => {
+    const rpta = await authAxios.get(`${URL_BACKEND}/bienes/historial?bien_id=${id}&tipo_bien=4`)
+    return rpta
+}
+export const getHistorialBienesDirin = async(id) => {
+    const rpta = await authAxios.get(`${URL_BACKEND}/bienes/historial?bien_id=${id}&tipo_bien=5`)
+    return rpta
+}
 export const deleteHistorialById = async(id) => {
     const rpta = await authAxios.delete(`${URL_BACKEND}/historial/${id}`)
     return rpta

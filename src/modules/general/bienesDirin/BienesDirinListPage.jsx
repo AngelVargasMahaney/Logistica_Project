@@ -1,55 +1,75 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { deleteUnidadesTransporteById, getUnidadesTransporte } from '../../../services/unidadesTransporteService'
-import AdminSidebar from '../../admin/components/AdminSidebar'
-import GeneralNavBar from '../../layout/GeneralNavBar'
-import VisualizadorImagenes from '../../modales/VisualizadorImagenes'
+import AdminSidebar from '../../admin/components/AdminSidebar';
+import GeneralNavBar from '../../layout/GeneralNavBar';
+import { Button } from 'react-bootstrap'
 import imgNoDisponible from "../../../assets/23.png"
 import Swal from 'sweetalert2'
+import { Link } from 'react-router-dom';
+import { deleteBienDirinById, getBienesDirin } from '../../../services/bienesDirinService';
 import { Modal } from 'react-bootstrap'
-import { getAreaOficinaSeccion } from '../../../services/areaOficinaSeccionService'
-import { getPersonalActivo } from '../../../services/personalService'
-import { Button } from 'react-bootstrap'
-import { getHistorialUnidadTransporte } from '../../../services/historialBienesService'
-import { postInternarBienFormato1, postReasignarBienFormato1 } from '../../../services/internamientoFormato1Service'
+import VisualizadorImagenes from '../../modales/VisualizadorImagenes';
+import { postInternarBienFormato1, postReasignarBienFormato1 } from '../../../services/internamientoFormato1Service';
+import { getPersonalActivo } from '../../../services/personalService';
+import { getAreaOficinaSeccion } from '../../../services/areaOficinaSeccionService';
+import { getHistorialBienesDirin } from '../../../services/historialBienesService';
+import { getReporteFormato1Excel, getReportes } from "../../../services/reportesService";
 
-const UnidadesTransporteListPage = () => {
-
+const BienesDirinListPage = () => {
     const [cargando, setCargando] = useState(true)
-    const [unidadesTransporte, setUnidadesTransporte] = useState([])
+    const [bienesDirin, setBienesDirin] = useState([])
 
-    // TRAYENDO LAS UNIDADES DE TRANSPORTE (LSITADO)
-    const traerUnidadesTransporte = () => {
+    const traerBienesDirin = () => {
         setCargando(true)
-        getUnidadesTransporte().then(rpta => {
-            setUnidadesTransporte(rpta.data)
+        getBienesDirin().then((rpta) => {
+            setBienesDirin(rpta.data)
             setCargando(false)
         })
     }
-    console.log(unidadesTransporte)
+    console.log(bienesDirin)
 
-    // CERRANDO EL METODO DE LISTADO
     useEffect(() => {
-        traerUnidadesTransporte()
+        traerBienesDirin()
     }, [])
-    const eliminarUnidadTransporteById = id => {
+
+    const eliminarBienDirinById = id => {
         Swal.fire({
-            title: "¿Seguro que deseas eliminar la unidad ?",
+            title: "¿Seguro que deseas eliminar el bien ?",
             icon: "warning",
             text: "Los cambios serán irreversibles 😮",
             showCancelButton: true,
         }).then((rpta) => {
             if (rpta.isConfirmed) {
-                deleteUnidadesTransporteById(id).then((rpta) => {
+                deleteBienDirinById(id).then((rpta) => {
                     if (rpta.status === 200) {
                         console.log("BORRADO")
-                        traerUnidadesTransporte();
+                        traerBienesDirin();
                     }
                 });
             }
         });
-    };
+    }
 
+    const [formulario, setFormulario] = useState({
+        estado_del_bien: "",
+        fecha: "",
+        observaciones: "",
+        documento_alta: "",
+        // bien_id: "",
+        tipo_bien: 5,
+        area_oficina_seccion_id: "",
+        personal_id: ""
+    })
+
+    const handleChange = (e) => {
+        setFormulario({
+            ...formulario,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const handleCloseReasignar = () => setshowModalReasignar(false);
+    const [dataHistorial, setDataHistorial] = useState([])
+    let { historial } = dataHistorial;
     // Documentos
     const [pdfActual, setpdfActual] = useState("");
     const hideModal = () => { setIsOpen(false); };
@@ -71,11 +91,7 @@ const UnidadesTransporteListPage = () => {
         setImagenBien(imagen)
         setmodalImagenes(true)
     }
-    const [documentoAlta, setDocumentoAlta] = useState(null)
-
-    const handleDocumentoAlta = e => {
-        setDocumentoAlta(e.target.files[0])
-    }
+   
     const showModalReasignarBien = (idBien) => {
         setIdActualDelBien(idBien);
 
@@ -104,22 +120,17 @@ const UnidadesTransporteListPage = () => {
 
         // })
     }
-    const [formulario, setFormulario] = useState({
-        estado_del_bien: "",
-        fecha: "",
-        observaciones: "",
-        documento_alta: "",
-        // bien_id: "",
-        tipo_bien: 4,
-        area_oficina_seccion_id: "",
-        personal_id: ""
-    })
-    const handleChange = (e) => {
-        setFormulario({
-            ...formulario,
-            [e.target.name]: e.target.value
-        })
+    const [personalActivo, setPersonalActivo] = useState([]);
+    const [areaoficinaseccion, setAreaoficinaseccion] = useState([]);
+    const [documentoRecepcion, setDocumentoRecepcion] = useState(null)
+    const [documentoRegularizacion, setDocumentoRegularizacion] = useState(null)
+    const handleDocumentRecepcion = e => {
+        setDocumentoRecepcion(e.target.files[0])
     }
+    const handleDocumentRegularizacion = e => {
+        setDocumentoRegularizacion(e.target.files[0])
+    }
+
     const token = localStorage.getItem('token')
 
     const config = {
@@ -128,6 +139,7 @@ const UnidadesTransporteListPage = () => {
             'Authorization': `Bearer ${token}`
         }
     }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -140,10 +152,16 @@ const UnidadesTransporteListPage = () => {
         formData.append('tipo_bien', formulario.tipo_bien)
 
 
-        if (documentoAlta != null) {
-            formData.append('documento_acta_entrega_recepcion', documentoAlta)
+        if (documentoRecepcion != null) {
+            formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
         } else {
-            formData.delete('documento_acta_entrega_recepcion', documentoAlta)
+            formData.delete('documento_acta_entrega_recepcion', documentoRecepcion)
+        }
+
+        if (documentoRegularizacion != null) {
+            formData.append('documento_oficio_regularizacion', documentoRegularizacion)
+        } else {
+            formData.delete('documento_oficio_regularizacion', documentoRegularizacion)
         }
         postInternarBienFormato1(formData, config).then((rpta) => {
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
@@ -154,7 +172,7 @@ const UnidadesTransporteListPage = () => {
                     'El internamiento fue exitoso',
                     'success'
                 )
-                traerUnidadesTransporte()
+                traerBienesDirin()
             }
             console.log(rpta)
         }).catch((err) => {
@@ -165,22 +183,72 @@ const UnidadesTransporteListPage = () => {
             )
         })
     }
+    const traerPersonalActivo = () => {
+        setCargando(true)
+        getPersonalActivo().then((rpta) => {
+            //console.log(rpta);
+            setPersonalActivo(rpta.data);
+            setCargando(false)
+        });
+    };
+    useEffect(() => {
+        traerPersonalActivo();
+    }, []);
+    
+     //Aqui los metodos para traer las subunidades
+     const traerAreaOficina = () => {
+         setCargando(true)
+         getAreaOficinaSeccion().then((rpta) => {
+ 
+             setAreaoficinaseccion(rpta.data);
+             setCargando(false)
+         }).catch((err) => {
+             console.log("Data no cargada en traerSubunidades")
+         })
+ 
+     }
+     useEffect(() => {
+         traerAreaOficina();
+     }, []);
 
+     const traerHistorialById = () => {
 
-    const handleCloseReasignar = () => setshowModalReasignar(false);
-    const [dataHistorial, setDataHistorial] = useState([])
-    let { historial } = dataHistorial;
-    const handleSubmitReasignacion = e => {
+        if (idActualDelBien === "") {
+            setCargando(true);
+        } else {
+            getHistorialBienesDirin(idActualDelBien).then(rpta => {
+                //console.log("adwdwaw" + rpta.data)
+                setDataHistorial(rpta.data);
+                //console.log("PRUEBAA" + rpta);
+                setCargando(false);
 
+            }).catch((err) => {
+                console.log("Data no cargada en getHistorialFOrmatoByID")
+            })
+        }
+    }
+    console.log(dataHistorial)
+    useEffect(() => {
+        traerHistorialById()
+        // }, [idActualDelBien, historial, dataHistorial])
+    }, [idActualDelBien, showModalReasignar, showModalInternar])
+
+    const handleSubmitReasignacion = (e) => {
         e.preventDefault();
         const formDataReasignacion = new FormData();
         formDataReasignacion.append('estado_del_bien', formulario.estado_del_bien)
         formDataReasignacion.append('fecha', formulario.fecha)
         formDataReasignacion.append('observaciones', formulario.observaciones)
-        if (documentoAlta != null) {
-            formDataReasignacion.append('documento_alta', documentoAlta)
+        if (documentoRecepcion != null) {
+            formDataReasignacion.append('documento_acta_entrega_recepcion', documentoRecepcion)
         } else {
-            formDataReasignacion.delete('documento_alta', documentoAlta)
+            formDataReasignacion.delete('documento_acta_entrega_recepcion', documentoRecepcion)
+        }
+
+        if (documentoRegularizacion != null) {
+            formDataReasignacion.append('documento_oficio_regularizacion', documentoRegularizacion)
+        } else {
+            formDataReasignacion.delete('documento_oficio_regularizacion', documentoRegularizacion)
         }
         formDataReasignacion.append('bien_id', idActualDelBien)
         formDataReasignacion.append('tipo_bien', formulario.tipo_bien)
@@ -203,7 +271,7 @@ const UnidadesTransporteListPage = () => {
                     confirmButtonText: 'Continuar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        traerUnidadesTransporte()
+                        traerBienesDirin()
 
                     }
                 })
@@ -217,61 +285,14 @@ const UnidadesTransporteListPage = () => {
             )
         })
 
+        
     }
-    const [personalActivo, setPersonalActivo] = useState([]);
+    const tipoReporte = "bienesDirin"
+    const reportes = () => {
+        getReportes(tipoReporte).then(() => {
 
-    const traerPersonalActivo = () => {
-        setCargando(true)
-        getPersonalActivo().then((rpta) => {
-            //console.log(rpta);
-            setPersonalActivo(rpta.data);
-            setCargando(false)
-        });
-    };
-    useEffect(() => {
-        traerPersonalActivo();
-    }, []);
-    //Aqui los metodos para traer las subunidades
-    const [areaoficinaseccion, setAreaoficinaseccion] = useState([]);
-    const traerAreaOficina = () => {
-        setCargando(true)
-        getAreaOficinaSeccion().then((rpta) => {
-
-            setAreaoficinaseccion(rpta.data);
-            setCargando(false)
-        }).catch((err) => {
-            console.log("Data no cargada en traerSubunidades")
         })
-
     }
-
-    useEffect(() => {
-        traerAreaOficina();
-    }, []);
-
-
-    const traerHistorialById = () => {
-
-        if (idActualDelBien === "") {
-            setCargando(true);
-        } else {
-            getHistorialUnidadTransporte(idActualDelBien).then(rpta => {
-                //console.log("adwdwaw" + rpta.data)
-                setDataHistorial(rpta.data);
-                //console.log("PRUEBAA" + rpta);
-                setCargando(false);
-
-            }).catch((err) => {
-                console.log("Data no cargada en getHistorialFOrmatoByID")
-            })
-        }
-    }
-    console.log(dataHistorial)
-    useEffect(() => {
-        traerHistorialById()
-        // }, [idActualDelBien, historial, dataHistorial])
-    }, [idActualDelBien, showModalReasignar, showModalInternar])
-
     return (
         <>
             <AdminSidebar />
@@ -283,16 +304,16 @@ const UnidadesTransporteListPage = () => {
                         <div className="card-body">
 
                             <div className="d-flex justify-content-between mb-3">
-                                <h5>Lista de bienes de Unidades de Transporte</h5>
-                                <Link to="/admin/bienes-internados/unidades-transporte" className="btn btn-warning">
+                                <h5>Lista de Bienes DIRIN</h5>
+                                <Link to="/admin/bienes-internados/bienes-dirin" className="btn btn-warning">
                                     {" "}
                                     <i className="fa fa-list"></i> Lista de Bienes Internados
                                 </Link>
-                                <Button onClick={"reportes"} className="btn btn-success" disabled>
+                                <Button onClick={reportes} className="btn btn-success">
                                     {" "}
                                     <i className="fas fa-file-excel"></i> Generar Reporte
                                 </Button>
-                                <Link to={"/admin/unidades-transporte/crear"} className="btn btn-primary ">
+                                <Link to={"/admin/bienes-dirin/crear"} className="btn btn-primary ">
                                     {" "}
                                     <i className="fa fa-plus"></i> Crear un Bien
                                 </Link>
@@ -320,15 +341,14 @@ const UnidadesTransporteListPage = () => {
                                                         <tr>
                                                             <th>Id</th>
                                                             <th>Código</th>
-                                                            <th>Placa Interna</th>
-                                                            <th>Tipo de Vehículo</th>
-                                                            <th>Documento de Alta</th>
-                                                            <th>N° Chasis</th>
-                                                            <th>N° Cilindros</th>
-                                                            <th>Combustible</th>
-                                                            <th>Estado del Vehículo</th>
-                                                            <th>Vigencia SOAT</th>
-                                                            <th>Ubicación</th>
+                                                            <th>Correl</th>
+                                                            <th>Denominación</th>
+                                                            <th>Documento</th>
+                                                            <th>Marca</th>
+                                                            <th>Modelo</th>
+                                                            <th>Tipo</th>
+                                                            <th>Estado del bien</th>
+                                                            <th>Observaciones</th>
                                                             <th>Imagen del Bien</th>
 
 
@@ -337,39 +357,38 @@ const UnidadesTransporteListPage = () => {
                                                     </thead>
                                                     <tbody>
                                                         {
-                                                            unidadesTransporte.map((obj, i) => {
+                                                            bienesDirin.map((obj, i) => {
                                                                 return (
                                                                     <tr key={i}>
                                                                         <td>{obj.id}</td>
                                                                         <td>{obj.codigo}</td>
-                                                                        <td>{obj.placa_interna}</td>
-                                                                        <td>{obj.tipo_de_vehiculo}</td>
+                                                                        <td>{obj.correl}</td>
+                                                                        <td>{obj.denominacion}</td>
                                                                         <td>
                                                                             {obj.icon_file ? (<img
                                                                                 className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                 alt="some value"
-                                                                                title={obj.documento_alta_nombre}
+                                                                                title={obj.documento}
                                                                                 src={obj.icon_file}
                                                                                 onClick={() =>
-                                                                                    showModal(obj.documento_alta)
+                                                                                    showModal(obj.documento)
                                                                                 }
                                                                             />) : " "}
 
                                                                         </td>
-                                                                        <td>{obj.nro_de_chasis}</td>
-                                                                        <td>{obj.nro_de_cilindros}</td>
-                                                                        <td>{obj.combustible}</td>
-                                                                        <td>{obj.estado_vehiculo}</td>
-                                                                        <td>{obj.soat_vigencia}</td>
-                                                                        <td>{obj.ubicacion}</td>
+                                                                        <td>{obj.marca}</td>
+                                                                        <td>{obj.modelo}</td>
+                                                                        <td>{obj.tipo}</td>
+                                                                        <td>{obj.estado_bien}</td>
+                                                                        <td>{obj.observaciones}</td>
                                                                         <td>
                                                                             <img
                                                                                 className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                 alt="some value"
-                                                                                title={obj.placa_interna}
+                                                                                title={obj.denominacion}
                                                                                 src={obj.imagen_bien || imgNoDisponible}
                                                                                 onClick={() =>
-                                                                                    activarModalVIsualizardorImagen(obj.imagen_bien || imgNoDisponible, obj.placa_interna + " ")
+                                                                                    activarModalVIsualizardorImagen(obj.imagen_bien || imgNoDisponible, obj.denominacion + " ")
                                                                                 }
                                                                             />
                                                                         </td>
@@ -380,13 +399,13 @@ const UnidadesTransporteListPage = () => {
                                                                                 title="Eliminar"
                                                                                 className="btn btn-danger mx-1"
                                                                                 onClick={() => {
-                                                                                    eliminarUnidadTransporteById(obj.id);
+                                                                                    eliminarBienDirinById(obj.id);
                                                                                 }}
                                                                             >
                                                                                 <i className="fa fa-trash"></i>
                                                                             </button>
                                                                             <Link
-                                                                                to={`/admin/unidades-transporte/editar/${obj.id}`}
+                                                                                to={`/admin/bienes-dirin/editar/${obj.id}`}
                                                                                 className="btn btn-warning"
                                                                                 title="Modificar"
                                                                             >
@@ -419,7 +438,7 @@ const UnidadesTransporteListPage = () => {
                                                                             </Button>
                                                                             <Link
                                                                                 // to={`formatos/editar/${objFormato.id}`}
-                                                                                to={`/admin/unidades-transporte/historial/${obj.id}`}
+                                                                                to={`/admin/bienes-dirin/historial/${obj.id}`}
                                                                                 className="btn btn-info ml-1"
                                                                                 title="Historial del bien"
                                                                             >
@@ -462,10 +481,10 @@ const UnidadesTransporteListPage = () => {
                     </div>
                 </Modal>
 
-                {/* Modal Internar una Unidad de Transporte */}
+                {/* Modal Internar un Bien Dirin */}
                 <Modal show={showModalInternar} onHide={handleCloseInternar}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Internamiento de una Unidad de Transporte</Modal.Title>
+                        <Modal.Title>Internamiento de un Bien DIRIN</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <form onSubmit={handleSubmit}>
@@ -485,9 +504,15 @@ const UnidadesTransporteListPage = () => {
                                     name="observaciones" onChange={handleChange} />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="">Documento Alta:</label>
+                                <label htmlFor="">Documento Entrega recepción:</label>
                                 <input type="file" className="form-control"
-                                    name="documento_alta" onChange={handleDocumentoAlta} />
+                                    name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
+                            </div>
+                            
+                            <div className="form-group">
+                                <label htmlFor="">Documento Oficio Regularización:</label>
+                                <input type="file" className="form-control"
+                                    name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
                             </div>
 
                             <div className="form-group" hidden>
@@ -520,7 +545,7 @@ const UnidadesTransporteListPage = () => {
 
                 <Modal show={showModalReasignar} onHide={handleCloseReasignar}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Reasignación de una Unidad de Transporte</Modal.Title>
+                        <Modal.Title>Reasignación de un Bien DIRIN</Modal.Title>
                     </Modal.Header>
 
                     <Modal.Body>
@@ -547,7 +572,7 @@ const UnidadesTransporteListPage = () => {
                                             <>
                                                 <h3>Datos Actuales del Bien</h3>
                                                 <p>Código: {dataHistorial.codigo}</p>
-                                                <p>Descripción: {dataHistorial.descripcion}</p>
+                                                <p>Descripción: {dataHistorial.denominacion}</p>
                                             </>
                                         )}
 
@@ -647,9 +672,14 @@ const UnidadesTransporteListPage = () => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="">Documento Alta </label>
+                                <label htmlFor="">Documento Entrega Recepción </label>
                                 <input type="file" className="form-control"
-                                    name="documento_alta" onChange={handleDocumentoAlta} />
+                                    name="documento_alta" onChange={handleDocumentRecepcion} />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="">Documento Oficio Regularización </label>
+                                <input type="file" className="form-control"
+                                    name="documento_alta" onChange={handleDocumentRegularizacion} />
                             </div>
 
                             <div className="form-group" hidden>
@@ -690,4 +720,4 @@ const UnidadesTransporteListPage = () => {
     )
 }
 
-export default UnidadesTransporteListPage
+export default BienesDirinListPage
