@@ -12,6 +12,7 @@ import { getPersonalActivo } from '../../../services/personalService'
 import { Button } from 'react-bootstrap'
 import { getHistorialUnidadTransporte } from '../../../services/historialBienesService'
 import { postInternarBienFormato1, postReasignarBienFormato1 } from '../../../services/internamientoFormato1Service'
+import { getReportes } from '../../../services/reportesService'
 
 const UnidadesTransporteListPage = () => {
 
@@ -271,6 +272,14 @@ const UnidadesTransporteListPage = () => {
         traerHistorialById()
         // }, [idActualDelBien, historial, dataHistorial])
     }, [idActualDelBien, showModalReasignar, showModalInternar])
+
+    const tipoReporte = "bienesUnidadesTransporte"
+    const reportes = () => {
+        getReportes(tipoReporte).then(() => {
+
+        })
+    }
+
 
     return (
         <>

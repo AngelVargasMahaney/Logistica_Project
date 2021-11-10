@@ -192,10 +192,12 @@ body{
   pointer-events: none;
   white-space: nowrap;
 
+
 }
 .sidebar.active  .profile .profile_details{
   opacity: 1;
   pointer-events: auto;
+  
 }
 .profile .profile_details img{
   height: 45px;
