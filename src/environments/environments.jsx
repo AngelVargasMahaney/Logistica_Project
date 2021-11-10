@@ -47,7 +47,7 @@ export const NAVEGACION_URL = [
     },
     {
         url: "/admin/unidades-transporte",
-        nombre: "Unidades de Transporte",
+        nombre: "Uni. de Transporte",
         icon: "bx bxs-car-mechanic",
         iconDashboard: icon.unidadTransporte
     },

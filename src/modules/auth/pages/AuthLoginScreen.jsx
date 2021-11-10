@@ -29,6 +29,7 @@ const AuthLoginScreen = () => {
             if (rpta.status === 200) {
 
                 iniciarSesionContext(rpta.data.token)
+                
                 swal.fire({
                     icon: 'success',
                     title: 'Login Exitoso',
