@@ -349,9 +349,8 @@ const BienesDirinListPage = () => {
                                                             <th>Tipo</th>
                                                             <th>Estado del bien</th>
                                                             <th>Observaciones</th>
-                                                            <th>Código Qr</th>
                                                             <th>Imagen del Bien</th>
-
+                                                            <th>Código Qr</th>
 
                                                             <th className="acciones"> Acciones</th>
                                                         </tr>

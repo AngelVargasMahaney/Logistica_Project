@@ -338,9 +338,8 @@ const UnidadesTransporteListPage = () => {
                                                             <th>Estado del Vehículo</th>
                                                             <th>Vigencia SOAT</th>
                                                             <th>Ubicación</th>
-                                                            <th>Código Qr</th>
                                                             <th>Imagen del Bien</th>
-
+                                                            <th>Código Qr</th>
 
                                                             <th className="acciones"> Acciones</th>
                                                         </tr>

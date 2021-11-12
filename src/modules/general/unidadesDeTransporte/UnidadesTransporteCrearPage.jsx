@@ -128,7 +128,7 @@ const UnidadesTransporteCrearPage = () => {
                             <div className="card">
                                 <div className="card-header">
                                     <h4 className="card-title">
-                                        {"Formulario de Creación de Bienes Dirin"}
+                                        {"Formulario de Creación de Bienes Unidades de Transporte"}
                                     </h4>
                                 </div>
                                 <div className="card-body">
