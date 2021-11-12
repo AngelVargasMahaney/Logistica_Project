@@ -130,7 +130,7 @@ const InternamientoUnidadesTransporte = () => {
 
     }
 
-    const tipoReporte = "bienesInternados"
+    const tipoReporte = "unidadesTransporteInternados"
     const reportes = () => {
         getReportes(tipoReporte).then(() => {
 
@@ -149,7 +149,7 @@ const InternamientoUnidadesTransporte = () => {
                         <div className="card">
 
                             <div className="card-body">
-                                <Button onClick={reportes} className="btn btn-success pull-right text-white" disabled title={"Generación del Reporte en Proceso"}>
+                                <Button onClick={reportes} className="btn btn-success pull-right text-white" title={"Reporte"}>
                                     {" "}
                                     <i className="fas fa-file-excel"></i> Generar Reporte
                                 </Button>

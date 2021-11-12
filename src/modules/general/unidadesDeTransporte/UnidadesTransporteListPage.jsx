@@ -273,7 +273,7 @@ const UnidadesTransporteListPage = () => {
         // }, [idActualDelBien, historial, dataHistorial])
     }, [idActualDelBien, showModalReasignar, showModalInternar])
 
-    const tipoReporte = "bienesUnidadesTransporte"
+    const tipoReporte = "unidadesTransporte"
     const reportes = () => {
         getReportes(tipoReporte).then(() => {
 
@@ -297,7 +297,7 @@ const UnidadesTransporteListPage = () => {
                                     {" "}
                                     <i className="fa fa-list"></i> Lista de Bienes Internados
                                 </Link>
-                                <Button onClick={"reportes"} className="btn btn-success" disabled>
+                                <Button onClick={reportes} className="btn btn-success">
                                     {" "}
                                     <i className="fas fa-file-excel"></i> Generar Reporte
                                 </Button>
@@ -338,6 +338,7 @@ const UnidadesTransporteListPage = () => {
                                                             <th>Estado del Vehículo</th>
                                                             <th>Vigencia SOAT</th>
                                                             <th>Ubicación</th>
+                                                            <th>Código Qr</th>
                                                             <th>Imagen del Bien</th>
 
 
@@ -379,6 +380,17 @@ const UnidadesTransporteListPage = () => {
                                                                                 src={obj.imagen_bien || imgNoDisponible}
                                                                                 onClick={() =>
                                                                                     activarModalVIsualizardorImagen(obj.imagen_bien || imgNoDisponible, obj.placa_interna + " ")
+                                                                                }
+                                                                            />
+                                                                        </td>
+                                                                        <td>
+                                                                            <img
+                                                                                className="tamaño-icono-pdf rounded mx-auto d-block"
+                                                                                alt="some value"
+                                                                                title={obj.placa_interna}
+                                                                                src={obj.codigo_qr || imgNoDisponible}
+                                                                                onClick={() =>
+                                                                                    activarModalVIsualizardorImagen(obj.codigo_qr || imgNoDisponible, obj.placa_interna + " ")
                                                                                 }
                                                                             />
                                                                         </td>

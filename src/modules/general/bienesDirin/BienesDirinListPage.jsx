@@ -349,6 +349,7 @@ const BienesDirinListPage = () => {
                                                             <th>Tipo</th>
                                                             <th>Estado del bien</th>
                                                             <th>Observaciones</th>
+                                                            <th>Código Qr</th>
                                                             <th>Imagen del Bien</th>
 
 
@@ -389,6 +390,17 @@ const BienesDirinListPage = () => {
                                                                                 src={obj.imagen_bien || imgNoDisponible}
                                                                                 onClick={() =>
                                                                                     activarModalVIsualizardorImagen(obj.imagen_bien || imgNoDisponible, obj.denominacion + " ")
+                                                                                }
+                                                                            />
+                                                                        </td>
+                                                                        <td>
+                                                                            <img
+                                                                                className="tamaño-icono-pdf rounded mx-auto d-block"
+                                                                                alt="some value"
+                                                                                title={obj.denominacion}
+                                                                                src={obj.codigo_qr || imgNoDisponible}
+                                                                                onClick={() =>
+                                                                                    activarModalVIsualizardorImagen(obj.codigo_qr || imgNoDisponible, obj.denominacion + " ")
                                                                                 }
                                                                             />
                                                                         </td>
