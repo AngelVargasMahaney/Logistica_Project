@@ -17,4 +17,12 @@ export const getInfoEquipoPolicialById = async(id) => {
     const rpta = await authAxios.get(`${URL_BACKEND}/bienes/ubicacion?bien_id=${id}&tipo_bien=3`)
     return rpta
 }
+export const getInfoUnidadesTransporteById = async(id) => {
+    const rpta = await authAxios.get(`${URL_BACKEND}/bienes/ubicacion?bien_id=${id}&tipo_bien=4`)
+    return rpta
+}
+export const getInfoBienesDirinById = async(id) => {
+    const rpta = await authAxios.get(`${URL_BACKEND}/bienes/ubicacion?bien_id=${id}&tipo_bien=5`)
+    return rpta
+}
 
