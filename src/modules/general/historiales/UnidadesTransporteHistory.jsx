@@ -108,9 +108,17 @@ const UnidadesTransporteHistory = () => {
             'Authorization': `Bearer ${token}`
         }
     }
-    const [documentoAlta, setDocumentoAlta] = useState(null)
-    const handleDocumentoAlta = e => {
-        setDocumentoAlta(e.target.files[0])
+    const [documentoActa, setDocumentoActa] = useState(null)
+    const [documentoOficio, setDocumentoOficio] = useState(null)
+    const [documentoInformeTecnico, setDocumentoInformeTecnico] = useState(null)
+    const handleDocumentoActa = e => {
+        setDocumentoActa(e.target.files[0])
+    }
+    const handleDocumentoOficio = e => {
+        setDocumentoOficio(e.target.files[0])
+    }
+    const handleDocumentoInformeTecnico = e => {
+        setDocumentoInformeTecnico(e.target.files[0])
     }
     const handleSubmit = e => {
         e.preventDefault();
@@ -119,10 +127,20 @@ const UnidadesTransporteHistory = () => {
         formData.append('area_oficina_seccion_id', formularioHistorial.area_oficina_seccion_id)
         formData.append('estado_del_bien', formularioHistorial.estado_del_bien)
         formData.append('observaciones', formularioHistorial.observaciones)
-        if (documentoAlta !== null) {
-            formData.append('documento_acta_entrega_recepcion', documentoAlta)
+        if (documentoActa !== null) {
+            formData.append('documento_acta_entrega_recepcion', documentoActa)
         } else {
-            formData.delete('documento_acta_entrega_recepcion', documentoAlta)
+            formData.delete('documento_acta_entrega_recepcion', documentoActa)
+        }
+        if (documentoOficio !== null) {
+            formData.append('documento_memorandum', documentoOficio)
+        } else {
+            formData.delete('documento_memorandum', documentoOficio)
+        }
+        if (documentoInformeTecnico !== null) {
+            formData.append('informe_tecnico', documentoInformeTecnico)
+        } else {
+            formData.delete('informe_tecnico', documentoInformeTecnico)
         }
 
         postEditarHistorialById(formData, config, idActualHistorialItem).then((rpta) => {
@@ -138,7 +156,7 @@ const UnidadesTransporteHistory = () => {
             }
         })
     }
-    
+
     const [areaoficinaseccion, setAreaoficinaseccion] = useState([]);
     const [personalActivo, setPersonalActivo] = useState([]);
     const traerPersonalActivo = () => {
@@ -168,7 +186,7 @@ const UnidadesTransporteHistory = () => {
         traerSubunidades();
     }, []);
 
-    let { personal,area_oficina_seccion } = formularioHistorial
+    let { personal, area_oficina_seccion } = formularioHistorial
     return (
         <>
             <AdminSidebar />
@@ -194,14 +212,12 @@ const UnidadesTransporteHistory = () => {
                                         <div className="col-md-6">
                                             <div className="font-weight-bold mb-2">Ingreso del Bien</div>
                                             <div className="mt-1">código: {data.codigo} </div>
-                                            <div className="mt-1">descripción: {data.descripcion} </div>
+                                            <div className="mt-1">placa: {data.placa_interna} </div>
                                             <div className="mt-1">marca: {data.marca} </div>
                                             <div className="mt-1">modelo: {data.modelo} </div>
-                                            <div className="mt-1">serie: {data.serie} </div>
-                                            <div className="mt-1">tipo: {data.tipo} </div>
-                                            <div className="mt-1">color: {data.color} </div>
-                                            <div className="mt-1">dimensiones: {data.dimensiones} </div>
-                                            <div className="mt-1">estado del bien: {data.estado_bien} </div>
+                                            <div className="mt-1">n° de cilindros: {data.nro_de_cilindros} </div>
+                                            <div className="mt-1">tipo de vehículo: {data.tipo_de_vehiculo}  </div>
+                                            <div className="mt-1">estado del vehículo: {data.estado_vehiculo} </div>
                                             <div className="mt-1">observaciones: {data.observaciones} </div>
                                         </div>
                                         <div className="col-md-6">
@@ -246,6 +262,19 @@ const UnidadesTransporteHistory = () => {
                                                                 src={internamiento.icon_file_oficio_regularizacion}
 
                                                             /> <span className="">{internamiento.nombre_original_oficio_regularizacion}</span>
+                                                        </div>  </>) : (<></>)}
+                                                    </div>
+                                                    <div className="mt-1">Informe Técnico: {internamiento?.informe_tecnico ? (<>
+                                                        <div className="d-inline-block pointer" onClick={() =>
+                                                            showModal(internamiento.informe_tecnico)
+                                                        }>
+                                                            <img
+                                                                className="icon-propios"
+                                                                alt="some value"
+                                                                title="hola"
+                                                                src={internamiento.informe_tecnico_icon}
+
+                                                            /> <span className="">{internamiento.informe_tecnico_nombre}</span>
                                                         </div>  </>) : (<></>)}
                                                     </div>
 
@@ -320,6 +349,19 @@ const UnidadesTransporteHistory = () => {
                                                                 /> <span className="">{item.nombre_original_memorandum}</span>
                                                             </div>  </>) : (<></>)}
                                                         </div>
+                                                        <div className="mt-1">Informe Técnico: {item?.informe_tecnico ? (<>
+                                                            <div className="d-inline-block pointer" onClick={() =>
+                                                                showModal(item.informe_tecnico)
+                                                            }>
+                                                                <img
+                                                                    className="icon-propios"
+                                                                    alt="some value"
+                                                                    title="hola"
+                                                                    src={item.informe_tecnico_icon}
+
+                                                                /> <span className="">{item.informe_tecnico_nombre}</span>
+                                                            </div>  </>) : (<></>)}
+                                                        </div>
 
                                                     </div></div>)
                                             })}
@@ -365,7 +407,7 @@ const UnidadesTransporteHistory = () => {
                         <div className="form-group">
                             <label htmlFor="">Nueva persona encargada</label>
                             <select defaultValue="DEFAULT" onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
-                                <option value="DEFAULT" disabled>{personal?.grado +  " |-> " + personal?.apellido + " " + personal?.nombre}</option>
+                                <option value="DEFAULT" disabled>{personal?.grado + " |-> " + personal?.apellido + " " + personal?.nombre}</option>
 
                                 {personalActivo.map((objPersonal, i) => {
                                     return (
@@ -377,8 +419,8 @@ const UnidadesTransporteHistory = () => {
                         <div className="form-group">
                             <label htmlFor="">Area Oficina Sección</label>
                             <select defaultValue="DEFAULT" onChange={handleChange} name="area_oficina_seccion_id" required className="form-select custom-select mr-sm-2">
-                                
-                                <option value="DEFAULT" disabled>{area_oficina_seccion?.nombre + " |-> " + area_oficina_seccion?.subunidad?.nombre }</option>
+
+                                <option value="DEFAULT" disabled>{area_oficina_seccion?.nombre + " |-> " + area_oficina_seccion?.subunidad?.nombre}</option>
                                 {areaoficinaseccion.map((objTipoFormato, i) => {
                                     let { subunidad } = objTipoFormato
                                     return (
@@ -402,11 +444,21 @@ const UnidadesTransporteHistory = () => {
                                 name="observaciones" onChange={handleChange} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="">Documento Acta Entrega Recepción: </label>
+                            <label htmlFor="">Documento: Acta </label>
                             <input type="file" className="form-control"
-                                name="documento_acta_entrega_recepcion" onChange={handleDocumentoAlta} />
+                                name="documento_acta_entrega_recepcion" onChange={handleDocumentoActa} />
                         </div>
-                     
+                        <div className="form-group">
+                            <label htmlFor="">Documento: Oficio </label>
+                            <input type="file" className="form-control"
+                                name="documento_acta_entrega_recepcion" onChange={handleDocumentoOficio} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="">Documento: Informe técnico </label>
+                            <input type="file" className="form-control"
+                                name="documento_acta_entrega_recepcion" onChange={handleDocumentoInformeTecnico} />
+                        </div>
+
                         {/* <div className="form-group">
                             <label htmlFor="">SubUnidad:</label>
                             <input type="text" className="form-control"

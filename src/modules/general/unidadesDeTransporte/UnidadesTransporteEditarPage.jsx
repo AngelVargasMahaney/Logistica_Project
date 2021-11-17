@@ -43,13 +43,21 @@ const UnidadesTransporteEditarPage = () => {
     const params = useParams()
     const config = { headers: { 'Content-Type': 'multipart/form-data' } }
     const history = useHistory()
-    const [documento, setDocumento] = useState(null)
+    const [documentoActa, setDocumentoActa] = useState(null)
+    const [documentoOficio, setDocumentoOficio] = useState(null)
+    const [documentoInformeTecnico, setDocumentoInformeTecnico] = useState(null)
     const [imagenBien, setImagenBien] = useState(null)
     const handleChangeImages = e => {
         setImagenBien(e.target.files[0])
     }
-    const handleChangeDocs = e => {
-        setDocumento(e.target.files[0])
+    const handleChangeDocsActa = e => {
+        setDocumentoActa(e.target.files[0])
+    }
+    const handleChangeDocsOficio = e => {
+        setDocumentoOficio(e.target.files[0])
+    }
+    const handleChangeDocsInformeTecnico = e => {
+        setDocumentoInformeTecnico(e.target.files[0])
     }
 
     const handleSubmit = (e) => {
@@ -81,10 +89,20 @@ const UnidadesTransporteEditarPage = () => {
         formData.append(`ubicacion`, formulario.ubicacion ? formulario.ubicacion : " ")
         formData.append(`observaciones`, formulario.observaciones ? formulario.observaciones : " ")
 
-        if (documento !== null) {
-            formData.append('documento_alta', documento)
+        if (documentoActa !== null) {
+            formData.append('acta', documentoActa)
         } else {
-            formData.delete('documento_alta', documento)
+            formData.delete('acta', documentoActa)
+        }
+        if (documentoOficio !== null) {
+            formData.append('oficio', documentoOficio)
+        } else {
+            formData.delete('oficio', documentoOficio)
+        }
+        if (documentoInformeTecnico !== null) {
+            formData.append('informe_tecnico', documentoInformeTecnico)
+        } else {
+            formData.delete('informe_tecnico', documentoInformeTecnico)
         }
         if (imagenBien !== null) {
             formData.append('imagen_bien', imagenBien)
@@ -223,15 +241,39 @@ const UnidadesTransporteEditarPage = () => {
                                                     onChange={handleChange}
                                                 />
                                                 <label htmlFor="" className="form-label">
-                                                    Documento Alta
+                                                    Documento: Acta
                                                 </label>
                                                 <input
                                                     type="file"
                                                     className="form-control my-2"
                                                     placeholder="Archivo.pdf"
-                                                    name="documento_alta"
+                                                    name="acta"
 
-                                                    onChange={handleChangeDocs}
+                                                    onChange={handleChangeDocsActa}
+
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Documento: Oficio
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    className="form-control my-2"
+                                                    placeholder="Archivo.pdf"
+                                                    name="oficio"
+
+                                                    onChange={handleChangeDocsOficio}
+
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Documento: Informe Técnico
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    className="form-control my-2"
+                                                    placeholder="Archivo.pdf"
+                                                    name="informe_tecnico"
+
+                                                    onChange={handleChangeDocsInformeTecnico}
 
                                                 />
                                                 <label htmlFor="" className="form-label">

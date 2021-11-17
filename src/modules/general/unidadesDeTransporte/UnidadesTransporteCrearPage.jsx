@@ -21,7 +21,7 @@ const UnidadesTransporteCrearPage = () => {
         nro_de_motor: "",
         nro_de_cilindros: "",
         traccion: "",
-        procedencia: "",
+        procedencia: "IX-MACREPOL-AREQUIPA",
         estado_vehiculo: "",
         soat_vigencia: "",
         seguro_particular: "",
@@ -31,7 +31,7 @@ const UnidadesTransporteCrearPage = () => {
         gata: "",
         tablet: "",
         camaras: "",
-        ubicacion: "",
+        ubicacion: "DIVMRI",
         observaciones: "",
     })
     const handleChange = (e) => {
@@ -44,14 +44,22 @@ const UnidadesTransporteCrearPage = () => {
         })
     }
     const history = useHistory()
-    const [documento, setDocumento] = useState(null)
+    const [documentoActa, setDocumentoActa] = useState(null)
+    const [documentoOficio, setDocumentoOficio] = useState(null)
+    const [documentoInformeTecnico, setDocumentoInformeTecnico] = useState(null)
     const [imagenBien, setImagenBien] = useState(null)
 
     const handleChangeImages = e => {
         setImagenBien(e.target.files[0])
     }
-    const handleChangeDocs = e => {
-        setDocumento(e.target.files[0])
+    const handleChangeDocsActa = e => {
+        setDocumentoActa(e.target.files[0])
+    }
+    const handleChangeDocsOficio = e => {
+        setDocumentoOficio(e.target.files[0])
+    }
+    const handleChangeDocsInformeTecnico = e => {
+        setDocumentoInformeTecnico(e.target.files[0])
     }
 
     const handleSubmit = (e) => {
@@ -87,10 +95,20 @@ const UnidadesTransporteCrearPage = () => {
         formData.append(`ubicacion`, formulario.ubicacion)
         formData.append(`observaciones`, formulario.observaciones)
 
-        if (documento !== null) {
-            formData.append('documento_alta', documento)
+        if (documentoActa !== null) {
+            formData.append('acta', documentoActa)
         } else {
-            formData.delete('documento_alta', documento)
+            formData.delete('acta', documentoActa)
+        }
+        if (documentoOficio !== null) {
+            formData.append('oficio', documentoOficio)
+        } else {
+            formData.delete('oficio', documentoOficio)
+        }
+        if (documentoInformeTecnico !== null) {
+            formData.append('informe_tecnico', documentoInformeTecnico)
+        } else {
+            formData.delete('informe_tecnico', documentoInformeTecnico)
         }
         if (imagenBien !== null) {
             formData.append('imagen_bien', imagenBien)
@@ -209,7 +227,7 @@ const UnidadesTransporteCrearPage = () => {
                                                     Año de fabricación
                                                 </label>
                                                 <input
-                                                    type="date"
+                                                    type="text"
                                                     className="form-control my-2"
                                                     placeholder="2011"
                                                     name="anio_de_fabricacion"
@@ -231,15 +249,39 @@ const UnidadesTransporteCrearPage = () => {
                                                     onChange={handleChange}
                                                 />
                                                 <label htmlFor="" className="form-label">
-                                                    Documento Alta
+                                                    Documento: Acta 
                                                 </label>
                                                 <input
                                                     type="file"
                                                     className="form-control my-2"
                                                     placeholder="Archivo.pdf"
-                                                    name="documento_alta"
+                                                    name="acta"
 
-                                                    onChange={handleChangeDocs}
+                                                    onChange={handleChangeDocsActa}
+
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Documento: Oficio 
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    className="form-control my-2"
+                                                    placeholder="Archivo.pdf"
+                                                    name="oficio"
+
+                                                    onChange={handleChangeDocsOficio}
+
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Documento: Informe técnico 
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    className="form-control my-2"
+                                                    placeholder="Archivo.pdf"
+                                                    name="informe_tecnico"
+
+                                                    onChange={handleChangeDocsInformeTecnico}
 
                                                 />
                                                 <label htmlFor="" className="form-label">
@@ -409,9 +451,9 @@ const UnidadesTransporteCrearPage = () => {
                                                 <input
                                                     type="text"
                                                     className="form-control my-2"
-                                                    placeholder="Contrainteligencia"
                                                     name="ubicacion"
                                                     value={formulario.ubicacion}
+                                                    disabled
                                                     onChange={handleChange}
                                                 />
                                                 <label htmlFor="" className="form-label">

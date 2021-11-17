@@ -78,10 +78,18 @@ const InternamientoUnidadesTransporte = () => {
         })
     }
     const handleCloseReasignar = () => setshowModalReasignar(false);
-    const [documentoAlta, setDocumentoAlta] = useState(null)
-    const handleDocumentoAlta = e => {
-        setDocumentoAlta(e.target.files[0])
-      }
+    const [documentoActa, setDocumentoActa] = useState(null)
+    const [documentoOficio, setDocumentoOficio] = useState(null)
+    const [documentoInformeTecnico, setDocumentoInformeTecnico] = useState(null)
+    const handleDocumentoActa = e => {
+        setDocumentoActa(e.target.files[0])
+    }
+    const handleDocumentoOficio = e => {
+        setDocumentoOficio(e.target.files[0])
+    }
+    const handleDocumentoInformeTecnico = e => {
+        setDocumentoInformeTecnico(e.target.files[0])
+    }
     const handleChange = (e) => {
         setFormularioInternamiento({
             ...formularioInternamiento,
@@ -105,13 +113,23 @@ const InternamientoUnidadesTransporte = () => {
         formData.append('estado_del_bien', formularioInternamiento.estado_del_bien ? formularioInternamiento.estado_del_bien : "")
 
 
-        if (documentoAlta != null) {
-            formData.append('documento_acta_entrega_recepcion', documentoAlta)
+        if (documentoActa != null) {
+            formData.append('documento_acta_entrega_recepcion', documentoActa)
         } else {
-            formData.delete('documento_acta_entrega_recepcion', documentoAlta)
+            formData.delete('documento_acta_entrega_recepcion', documentoActa)
+        }
+        if (documentoOficio != null) {
+            formData.append('documento_memorandum', documentoOficio)
+        } else {
+            formData.delete('documento_memorandum', documentoOficio)
+        }
+        if (documentoInformeTecnico != null) {
+            formData.append('informe_tecnico', documentoInformeTecnico)
+        } else {
+            formData.delete('informe_tecnico', documentoInformeTecnico)
         }
 
-      
+
         postEditarInternamientoById(formData, config, idActualDelBien).then((rpta) => {
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
                 console.log("Datos actualizados correctamente")
@@ -187,7 +205,9 @@ const InternamientoUnidadesTransporte = () => {
                                                                 <th>Estado de la Unidad</th>
                                                                 <th>Observaciones</th>
                                                                 <th>Fecha</th>
-                                                                <th>Documento de Alta</th>
+                                                                <th>Documento: Acta</th>
+                                                                <th>Documento: Oficio</th>
+                                                                <th>Documento: Informe Técnico</th>
                                                                 <th className="acciones"> Acciones</th>
                                                             </tr>
                                                         </thead>
@@ -233,6 +253,30 @@ const InternamientoUnidadesTransporte = () => {
                                                                                     src={objLista.icon_file_entrega_recepcion}
                                                                                     onClick={() =>
                                                                                         showModal(objLista.documento_acta_entrega_recepcion)
+                                                                                    }
+                                                                                />) : " "}
+
+                                                                            </td>
+                                                                            <td>
+                                                                                {objLista.documento_memorandum ? (<img
+                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
+                                                                                    alt="some value"
+                                                                                    title={objLista.nombre_original_memorandum}
+                                                                                    src={objLista.icon_file_memorandum}
+                                                                                    onClick={() =>
+                                                                                        showModal(objLista.documento_memorandum)
+                                                                                    }
+                                                                                />) : " "}
+
+                                                                            </td>
+                                                                            <td>
+                                                                                {objLista.informe_tecnico ? (<img
+                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
+                                                                                    alt="some value"
+                                                                                    title={objLista.informe_tecnico_nombre}
+                                                                                    src={objLista.informe_tecnico_icon}
+                                                                                    onClick={() =>
+                                                                                        showModal(objLista.informe_tecnico)
                                                                                     }
                                                                                 />) : " "}
 
@@ -312,11 +356,21 @@ const InternamientoUnidadesTransporte = () => {
                                 value={formularioInternamiento.observaciones} name="observaciones" onChange={handleChange} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="">Documento Alta</label>
+                            <label htmlFor="">Documento: Acta</label>
                             <input type="file" className="form-control"
-                                name="documento_acta_entrega_recepcion" onChange={handleDocumentoAlta} />
+                                name="documento_acta_entrega_recepcion" onChange={handleDocumentoActa} />
                         </div>
-                     
+                        <div className="form-group">
+                            <label htmlFor="">Documento: Oficio</label>
+                            <input type="file" className="form-control"
+                                name="documento_memorandum" onChange={handleDocumentoOficio} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="">Documento: Informe Técnico</label>
+                            <input type="file" className="form-control"
+                                name="informe_tecnico" onChange={handleDocumentoInformeTecnico} />
+                        </div>
+
 
                         <div className="form-group">
                             <button className="btn btn-primary" type="submit">Actualizar</button>

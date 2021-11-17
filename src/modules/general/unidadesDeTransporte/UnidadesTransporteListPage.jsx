@@ -72,10 +72,18 @@ const UnidadesTransporteListPage = () => {
         setImagenBien(imagen)
         setmodalImagenes(true)
     }
-    const [documentoAlta, setDocumentoAlta] = useState(null)
+    const [documentoActa, setDocumentoActa] = useState(null)
+    const [documentoOficio, setDocumentoOficio] = useState(null)
+    const [documentoInformeTecnico, setDocumentoInformeTecnico] = useState(null)
 
-    const handleDocumentoAlta = e => {
-        setDocumentoAlta(e.target.files[0])
+    const handleDocumentoActa = e => {
+        setDocumentoActa(e.target.files[0])
+    }
+    const handleDocumentoOficio = e => {
+        setDocumentoOficio(e.target.files[0])
+    }
+    const handleDocumentoInformeTecnico = e => {
+        setDocumentoInformeTecnico(e.target.files[0])
     }
     const showModalReasignarBien = (idBien) => {
         setIdActualDelBien(idBien);
@@ -141,10 +149,20 @@ const UnidadesTransporteListPage = () => {
         formData.append('tipo_bien', formulario.tipo_bien)
 
 
-        if (documentoAlta != null) {
-            formData.append('documento_acta_entrega_recepcion', documentoAlta)
+        if (documentoActa != null) {
+            formData.append('documento_acta_entrega_recepcion', documentoActa)
         } else {
-            formData.delete('documento_acta_entrega_recepcion', documentoAlta)
+            formData.delete('documento_acta_entrega_recepcion', documentoActa)
+        }
+        if (documentoOficio != null) {
+            formData.append('documento_oficio_regularizacion', documentoOficio)
+        } else {
+            formData.delete('documento_oficio_regularizacion', documentoOficio)
+        }
+        if (documentoInformeTecnico != null) {
+            formData.append('informe_tecnico', documentoInformeTecnico)
+        } else {
+            formData.delete('informe_tecnico', documentoInformeTecnico)
         }
         postInternarBienFormato1(formData, config).then((rpta) => {
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
@@ -178,10 +196,20 @@ const UnidadesTransporteListPage = () => {
         formDataReasignacion.append('estado_del_bien', formulario.estado_del_bien)
         formDataReasignacion.append('fecha', formulario.fecha)
         formDataReasignacion.append('observaciones', formulario.observaciones)
-        if (documentoAlta != null) {
-            formDataReasignacion.append('documento_alta', documentoAlta)
+        if (documentoActa != null) {
+            formDataReasignacion.append('documento_acta_entrega_recepcion', documentoActa)
         } else {
-            formDataReasignacion.delete('documento_alta', documentoAlta)
+            formDataReasignacion.delete('documento_acta_entrega_recepcion', documentoActa)
+        }
+        if (documentoOficio != null) {
+            formDataReasignacion.append('documento_memorandum', documentoOficio)
+        } else {
+            formDataReasignacion.delete('documento_memorandum', documentoOficio)
+        }
+        if (documentoInformeTecnico != null) {
+            formDataReasignacion.append('informe_tecnico', documentoInformeTecnico)
+        } else {
+            formDataReasignacion.delete('informe_tecnico', documentoInformeTecnico)
         }
         formDataReasignacion.append('bien_id', idActualDelBien)
         formDataReasignacion.append('tipo_bien', formulario.tipo_bien)
@@ -331,7 +359,9 @@ const UnidadesTransporteListPage = () => {
                                                             <th>Código</th>
                                                             <th>Placa Interna</th>
                                                             <th>Tipo de Vehículo</th>
-                                                            <th>Documento de Alta</th>
+                                                            <th>Documento: Acta</th>
+                                                            <th>Documento: Oficio</th>
+                                                            <th>Documento: Informe Técnico</th>
                                                             <th>N° Chasis</th>
                                                             <th>N° Cilindros</th>
                                                             <th>Combustible</th>
@@ -354,13 +384,37 @@ const UnidadesTransporteListPage = () => {
                                                                         <td>{obj.placa_interna}</td>
                                                                         <td>{obj.tipo_de_vehiculo}</td>
                                                                         <td>
-                                                                            {obj.icon_file ? (<img
+                                                                            {obj.acta_icon ? (<img
                                                                                 className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                 alt="some value"
-                                                                                title={obj.documento_alta_nombre}
-                                                                                src={obj.icon_file}
+                                                                                title={obj.acta}
+                                                                                src={obj.acta_icon}
                                                                                 onClick={() =>
-                                                                                    showModal(obj.documento_alta)
+                                                                                    showModal(obj.acta)
+                                                                                }
+                                                                            />) : " "}
+
+                                                                        </td>
+                                                                        <td>
+                                                                            {obj.oficio_icon ? (<img
+                                                                                className="tamaño-icono-pdf rounded mx-auto d-block"
+                                                                                alt="some value"
+                                                                                title={obj.oficio}
+                                                                                src={obj.oficio_icon}
+                                                                                onClick={() =>
+                                                                                    showModal(obj.oficio)
+                                                                                }
+                                                                            />) : " "}
+
+                                                                        </td>
+                                                                        <td>
+                                                                            {obj.informe_tecnico_icon ? (<img
+                                                                                className="tamaño-icono-pdf rounded mx-auto d-block"
+                                                                                alt="some value"
+                                                                                title={obj.informe_tecnico}
+                                                                                src={obj.informe_tecnico_icon}
+                                                                                onClick={() =>
+                                                                                    showModal(obj.informe_tecnico)
                                                                                 }
                                                                             />) : " "}
 
@@ -505,9 +559,19 @@ const UnidadesTransporteListPage = () => {
                                     name="observaciones" onChange={handleChange} />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="">Documento Alta:</label>
+                                <label htmlFor="">Documento: Acta</label>
                                 <input type="file" className="form-control"
-                                    name="documento_alta" onChange={handleDocumentoAlta} />
+                                    name="documento_acta_entrega_recepcion" onChange={handleDocumentoActa} />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="">Documento: Oficio</label>
+                                <input type="file" className="form-control"
+                                    name="documento_oficio_regularizacion" onChange={handleDocumentoOficio} />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="">Documento: Informe Técnico</label>
+                                <input type="file" className="form-control"
+                                    name="informe_tecnico" onChange={handleDocumentoInformeTecnico} />
                             </div>
 
                             <div className="form-group" hidden>
@@ -667,9 +731,19 @@ const UnidadesTransporteListPage = () => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="">Documento Alta </label>
+                                <label htmlFor="">Documento: Acta </label>
                                 <input type="file" className="form-control"
-                                    name="documento_alta" onChange={handleDocumentoAlta} />
+                                    name="documento_acta_entrega_recepcion" onChange={handleDocumentoActa} />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="">Documento: Oficio </label>
+                                <input type="file" className="form-control"
+                                    name="documento_memorandum" onChange={handleDocumentoOficio} />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="">Documento: Informe Técnico</label>
+                                <input type="file" className="form-control"
+                                    name="informe_tecnico" onChange={handleDocumentoInformeTecnico} />
                             </div>
 
                             <div className="form-group" hidden>
