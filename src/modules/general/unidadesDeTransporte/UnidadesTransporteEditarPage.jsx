@@ -153,7 +153,7 @@ const UnidadesTransporteEditarPage = () => {
                                                     className="form-control my-2"
                                                     placeholder="VHA-827"
                                                     name="codigo"
-                                                    required
+                                                    
                                                     value={formulario.codigo}
                                                     onChange={handleChange}
                                                 />
@@ -165,7 +165,7 @@ const UnidadesTransporteEditarPage = () => {
                                                     className="form-control my-2"
                                                     placeholder="VHA-827"
                                                     name="placa_interna"
-                                                    required
+                                                    
                                                     value={formulario.placa_interna}
                                                     onChange={handleChange}
                                                 />
@@ -179,7 +179,7 @@ const UnidadesTransporteEditarPage = () => {
                                                     placeholder="AXK-221"
                                                     name="placa_de_rodaje"
                                                     value={formulario.placa_de_rodaje}
-                                                    required
+                                                    
                                                     onChange={handleChange}
                                                 />
                                                 <label htmlFor="" className="form-label">

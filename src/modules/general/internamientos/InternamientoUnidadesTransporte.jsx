@@ -258,13 +258,13 @@ const InternamientoUnidadesTransporte = () => {
 
                                                                             </td>
                                                                             <td>
-                                                                                {objLista.documento_memorandum ? (<img
+                                                                                {objLista.documento_oficio_regularizacion ? (<img
                                                                                     className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                     alt="some value"
-                                                                                    title={objLista.nombre_original_memorandum}
-                                                                                    src={objLista.icon_file_memorandum}
+                                                                                    title={objLista.nombre_original_oficio_regularizacion}
+                                                                                    src={objLista.icon_file_oficio_regularizacion}
                                                                                     onClick={() =>
-                                                                                        showModal(objLista.documento_memorandum)
+                                                                                        showModal(objLista.documento_oficio_regularizacion)
                                                                                     }
                                                                                 />) : " "}
 

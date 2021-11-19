@@ -133,7 +133,7 @@ const BienesDirinEditarPage = () => {
                                                     className="form-control my-2"
                                                     placeholder="BD-27182"
                                                     name="codigo"
-                                                    required
+                                                    
                                                     value={formulario.codigo}
                                                     onChange={handleChange}
                                                 />
@@ -145,7 +145,7 @@ const BienesDirinEditarPage = () => {
                                                     className="form-control my-2"
                                                     placeholder="ACH-123"
                                                     name="correl"
-                                                    required
+                                                    
                                                     value={formulario.correl}
                                                     onChange={handleChange}
                                                 />
@@ -157,7 +157,7 @@ const BienesDirinEditarPage = () => {
                                                     className="form-control my-2"
                                                     placeholder="Archivador de Metal"
                                                     name="denominacion"
-                                                    required
+                                                    
                                                     value={formulario.denominacion}
                                                     onChange={handleChange}
                                                 />

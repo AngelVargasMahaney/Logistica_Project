@@ -152,7 +152,7 @@ const UnidadesTransporteCrearPage = () => {
                                 <div className="card-body">
                                     <form onSubmit={handleSubmit}>
                                         <div className="row">
-                                            <div className="col-6">
+                                            <div className="col-4">
                                                 <label htmlFor="" className="form-label">
                                                     Código Patrimonial
                                                 </label>
@@ -161,7 +161,7 @@ const UnidadesTransporteCrearPage = () => {
                                                     className="form-control my-2"
                                                     placeholder="VHA-827"
                                                     name="codigo"
-                                                    required
+
                                                     value={formulario.codigo}
                                                     onChange={handleChange}
                                                 />
@@ -173,7 +173,7 @@ const UnidadesTransporteCrearPage = () => {
                                                     className="form-control my-2"
                                                     placeholder="VHA-827"
                                                     name="placa_interna"
-                                                    required
+
                                                     value={formulario.placa_interna}
                                                     onChange={handleChange}
                                                 />
@@ -187,7 +187,7 @@ const UnidadesTransporteCrearPage = () => {
                                                     placeholder="AXK-221"
                                                     name="placa_de_rodaje"
                                                     value={formulario.placa_de_rodaje}
-                                                    required
+
                                                     onChange={handleChange}
                                                 />
                                                 <label htmlFor="" className="form-label">
@@ -234,9 +234,42 @@ const UnidadesTransporteCrearPage = () => {
                                                     value={formulario.anio_de_fabricacion}
                                                     onChange={handleChange}
                                                 />
+                                                <label htmlFor="" className="form-label">
+                                                    Traccion
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control my-2"
+                                                    placeholder="Delantera"
+                                                    name="traccion"
+                                                    value={formulario.traccion}
+                                                    onChange={handleChange}
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Procedencia
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control my-2"
+                                                    placeholder="Contrainteligencia"
+                                                    name="procedencia"
+                                                    value={formulario.procedencia}
+                                                    onChange={handleChange}
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Estado del Vehículo
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control my-2"
+                                                    placeholder="Operativo"
+                                                    name="estado_vehiculo"
+                                                    value={formulario.estado_vehiculo}
+                                                    onChange={handleChange}
+                                                />
 
                                             </div>
-                                            <div className="col-6">
+                                            <div className="col-4">
                                                 <label htmlFor="" className="form-label">
                                                     Combustible
                                                 </label>
@@ -249,7 +282,7 @@ const UnidadesTransporteCrearPage = () => {
                                                     onChange={handleChange}
                                                 />
                                                 <label htmlFor="" className="form-label">
-                                                    Documento: Acta 
+                                                    Documento: Acta
                                                 </label>
                                                 <input
                                                     type="file"
@@ -261,7 +294,7 @@ const UnidadesTransporteCrearPage = () => {
 
                                                 />
                                                 <label htmlFor="" className="form-label">
-                                                    Documento: Oficio 
+                                                    Documento: Oficio
                                                 </label>
                                                 <input
                                                     type="file"
@@ -273,7 +306,7 @@ const UnidadesTransporteCrearPage = () => {
 
                                                 />
                                                 <label htmlFor="" className="form-label">
-                                                    Documento: Informe técnico 
+                                                    Documento: Informe técnico
                                                 </label>
                                                 <input
                                                     type="file"
@@ -318,43 +351,6 @@ const UnidadesTransporteCrearPage = () => {
                                                     onChange={handleChange}
                                                 />
                                                 <label htmlFor="" className="form-label">
-                                                    Traccion
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control my-2"
-                                                    placeholder="Delantera"
-                                                    name="traccion"
-                                                    value={formulario.traccion}
-                                                    onChange={handleChange}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-6">
-                                                <label htmlFor="" className="form-label">
-                                                    Procedencia
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control my-2"
-                                                    placeholder="Contrainteligencia"
-                                                    name="procedencia"
-                                                    value={formulario.procedencia}
-                                                    onChange={handleChange}
-                                                />
-                                                <label htmlFor="" className="form-label">
-                                                    Estado del Vehículo
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control my-2"
-                                                    placeholder="Operativo"
-                                                    name="estado_vehiculo"
-                                                    value={formulario.estado_vehiculo}
-                                                    onChange={handleChange}
-                                                />
-                                                <label htmlFor="" className="form-label">
                                                     Vigencia del Soat
                                                 </label>
                                                 <input
@@ -376,6 +372,9 @@ const UnidadesTransporteCrearPage = () => {
                                                     value={formulario.seguro_particular}
                                                     onChange={handleChange}
                                                 />
+                                            </div>
+                                          
+                                            <div className="col-4">
                                                 <label htmlFor="" className="form-label">
                                                     Valor de Adquisición
                                                 </label>
@@ -395,12 +394,9 @@ const UnidadesTransporteCrearPage = () => {
                                                     name="llanta_repuesto"
                                                     onChange={handleChange}
                                                 >
-                                                    <option value="Si" >Si</option>
                                                     <option value="No" >No</option>
+                                                    <option value="Si" >Si</option>
                                                 </select>
-                                            </div>
-                                            <div className="col-6">
-
                                                 <label htmlFor="" className="form-label">
                                                     Llave de Ruedas
                                                 </label>
@@ -409,8 +405,8 @@ const UnidadesTransporteCrearPage = () => {
                                                     name="llave_ruedas"
                                                     onChange={handleChange}
                                                 >
-                                                    <option value="Si" >Si</option>
                                                     <option value="No" >No</option>
+                                                    <option value="Si" >Si</option>
                                                 </select>
                                                 <label htmlFor="" className="form-label">
                                                     Gata
@@ -420,8 +416,8 @@ const UnidadesTransporteCrearPage = () => {
                                                     name="gata"
                                                     onChange={handleChange}
                                                 >
-                                                    <option value="Si" >Si</option>
                                                     <option value="No" >No</option>
+                                                    <option value="Si" >Si</option>
                                                 </select>
                                                 <label htmlFor="" className="form-label">
                                                     Tablet
@@ -431,8 +427,8 @@ const UnidadesTransporteCrearPage = () => {
                                                     name="tablet"
                                                     onChange={handleChange}
                                                 >
-                                                    <option value="Si" >Si</option>
                                                     <option value="No" >No</option>
+                                                    <option value="Si" >Si</option>
                                                 </select>
                                                 <label htmlFor="" className="form-label">
                                                     Camaras
@@ -442,8 +438,8 @@ const UnidadesTransporteCrearPage = () => {
                                                     name="camaras"
                                                     onChange={handleChange}
                                                 >
-                                                    <option value="Si" >Si</option>
                                                     <option value="No" >No</option>
+                                                    <option value="Si" >Si</option>
                                                 </select>
                                                 <label htmlFor="" className="form-label">
                                                     Ubicación
@@ -459,14 +455,17 @@ const UnidadesTransporteCrearPage = () => {
                                                 <label htmlFor="" className="form-label">
                                                     Observaciones
                                                 </label>
-                                                <input
-                                                    type="text"
+                                                <textarea className="form-control" rows={4} cols={50}
+
+                                                    name="observaciones" onChange={handleChange} />
+                                                {/* <input
+                                                    type="textarea" rows="15" cols="15"
                                                     className="form-control my-2"
                                                     placeholder="Presenta una ruptura en la puerta delantera"
                                                     name="observaciones"
                                                     value={formulario.observaciones}
                                                     onChange={handleChange}
-                                                />
+                                                /> */}
                                                 <label htmlFor="" className="form-label">
                                                     Imagen del Bien
                                                 </label>
@@ -479,6 +478,10 @@ const UnidadesTransporteCrearPage = () => {
                                                 />
                                             </div>
                                         </div>
+
+
+
+
                                         <div>
                                             <div>
                                                 {!cargando && <button className="btn btn-primary" type="submit">
