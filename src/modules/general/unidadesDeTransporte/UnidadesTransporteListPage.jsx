@@ -13,10 +13,11 @@ import { Button } from 'react-bootstrap'
 import { getHistorialUnidadTransporte } from '../../../services/historialBienesService'
 import { postInternarBienFormato1, postReasignarBienFormato1 } from '../../../services/internamientoFormato1Service'
 import { getReportes } from '../../../services/reportesService'
+import CargandoComponente from '../../layout/CargandoComponente'
 
 const UnidadesTransporteListPage = () => {
 
-    const [cargando, setCargando] = useState(true)
+    const [cargando, setCargando] = useState(false)
     const [unidadesTransporte, setUnidadesTransporte] = useState([])
 
     // TRAYENDO LAS UNIDADES DE TRANSPORTE (LSITADO)
@@ -217,11 +218,12 @@ const UnidadesTransporteListPage = () => {
         formDataReasignacion.append('personal_id', formulario.personal_id)
 
         postReasignarBienFormato1(formDataReasignacion, config).then((rpta) => {
+            setCargando(true)
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
                 console.log("Datos subida correctamente")
 
                 setshowModalReasignar(false)
-
+                setCargando(false)
                 Swal.fire({
                     title: 'Reasignación Exitosa',
                     text: 'La reasignación fue exitosa',
@@ -513,6 +515,7 @@ const UnidadesTransporteListPage = () => {
 
                             </div>
                         </div>
+                     
                     </div>
                 </main>
                 <VisualizadorImagenes visible={modalImagenes} onClose={() => setmodalImagenes(false)} imagen={imagenBien} imagenDescripcion={imagenDescripcion} />
@@ -631,7 +634,8 @@ const UnidadesTransporteListPage = () => {
                                             <>
                                                 <h3>Datos Actuales del Bien</h3>
                                                 <p>Código: {dataHistorial.codigo}</p>
-                                                <p>Descripción: {dataHistorial.descripcion}</p>
+                                                <p>Tipo de Vehículo: {dataHistorial.tipo_de_vehiculo}</p>
+                                                <p>Placa: {dataHistorial.placa_interna}</p>
                                             </>
                                         )}
 
@@ -759,10 +763,13 @@ const UnidadesTransporteListPage = () => {
                           value={tipo_bien} name="tipo_bien" onChange={handleChange} />
                       </div> */}
 
-                            <div className="form-group">
-                                <button className="btn btn-primary" type="submit">Reasignar Bien<i className="ml-2 fa fa-check"></i></button>
-                            </div>
 
+                            {!cargando && <button className="btn btn-primary" type="submit">Reasignar Bien
+                            <i className="ml-2 fa fa-check"></i></button>
+                            }
+                            {cargando && <button className="btn btn-primary" type="submit" disabled={cargando}>
+                                <span className="mx-1"><i className="fa fa-floppy-o" aria-hidden="true"></i></span>  Esperando respuesta del Servidor
+                            </button>}
 
                         </form>
 
@@ -777,9 +784,10 @@ const UnidadesTransporteListPage = () => {
 
 
 
-
+             
 
             </div>
+            {cargando && <CargandoComponente />}
         </>
     )
 }

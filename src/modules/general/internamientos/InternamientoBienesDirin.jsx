@@ -345,7 +345,7 @@ const InternamientoBienesDirin = () => {
             </div>
             <Modal show={showModalReasignar} onHide={handleCloseReasignar}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Internamiento de una Unidad de Transporte</Modal.Title>
+                    <Modal.Title>Internamiento de un Bien Dirin</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={handleSubmit}>

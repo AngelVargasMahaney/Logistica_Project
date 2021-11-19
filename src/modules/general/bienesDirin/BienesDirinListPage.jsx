@@ -547,7 +547,7 @@ const BienesDirinListPage = () => {
                     <Modal.Body>
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
-                                <label htmlFor="">Estado del Vehículo:</label>
+                                <label htmlFor="">Estado del Bien:</label>
                                 <input type="text" className="form-control"
                                     name="estado_del_bien" required onChange={handleChange} />
                             </div>

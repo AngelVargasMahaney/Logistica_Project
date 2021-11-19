@@ -238,7 +238,7 @@ const UnidadesTransporteHistory = () => {
                                                     <div className="mt-1">Fecha: {internamiento?.fecha} </div>
                                                     <div className="mt-1">Estado del bien: {internamiento?.estado_del_bien} </div>
                                                     <div className="mt-1">Observaciones: {internamiento?.observaciones} </div>
-                                                    <div className="mt-1">Acta de Entrega y Recepción: {internamiento?.documento_acta_entrega_recepcion ? (<>
+                                                    <div className="mt-1">Acta: {internamiento?.documento_acta_entrega_recepcion ? (<>
                                                         <div className="d-inline-block pointer" onClick={() =>
                                                             showModal(internamiento.documento_acta_entrega_recepcion)
                                                         }>
@@ -251,7 +251,7 @@ const UnidadesTransporteHistory = () => {
                                                             /> <span className="">{internamiento.nombre_original_acta_entrega_recepcion}</span>
                                                         </div>  </>) : (<></>)}
                                                     </div>
-                                                    <div className="mt-1">Oficio de Regularización: {internamiento?.documento_oficio_regularizacion ? (<>
+                                                    <div className="mt-1">Oficio: {internamiento?.documento_oficio_regularizacion ? (<>
                                                         <div className="d-inline-block pointer" onClick={() =>
                                                             showModal(internamiento.documento_oficio_regularizacion)
                                                         }>
@@ -322,7 +322,7 @@ const UnidadesTransporteHistory = () => {
                                                         <div className="mt-1">Area: {area_oficina_seccion?.nombre}</div>
                                                         <div className="mt-1">Estado del bien: {item?.estado_del_bien} </div>
                                                         <div className="mt-1">Observaciones: {item?.observaciones} </div>
-                                                        <div className="mt-1">Acta de Entrega y Recepción: {item?.documento_acta_entrega_recepcion ? (<>
+                                                        <div className="mt-1">Acta: {item?.documento_acta_entrega_recepcion ? (<>
                                                             <div className="d-inline-block pointer" onClick={() =>
                                                                 showModal(item.documento_acta_entrega_recepcion)
                                                             }>
@@ -336,7 +336,7 @@ const UnidadesTransporteHistory = () => {
                                                             </div>  </>) : (<></>)}
                                                         </div>
 
-                                                        <div className="mt-1">Memorandum: {item?.documento_memorandum ? (<>
+                                                        <div className="mt-1">Oficio: {item?.documento_memorandum ? (<>
                                                             <div className="d-inline-block pointer" onClick={() =>
                                                                 showModal(item.documento_memorandum)
                                                             }>

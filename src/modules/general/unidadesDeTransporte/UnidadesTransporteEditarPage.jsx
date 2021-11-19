@@ -219,7 +219,7 @@ const UnidadesTransporteEditarPage = () => {
                                                     Año de fabricación
                                                 </label>
                                                 <input
-                                                    type="date"
+                                                    type="text"
                                                     className="form-control my-2"
                                                     placeholder="2011"
                                                     name="anio_de_fabricacion"

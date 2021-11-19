@@ -82,7 +82,7 @@ const EquipoPolicialEditarPage = () => {
                             <div className="card">
                                 <div className="card-header">
                                     <h4 className="card-title">
-                                        {"Formulario de Edición de un Bien del Formato 1"}
+                                        {"Formulario de Edición de un Equipo Policial"}
                                     </h4>
                                 </div>
                                 <div className="card-body">
