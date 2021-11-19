@@ -8,12 +8,13 @@ import { Modal } from 'react-bootstrap';
 import { getPersonalActivo } from '../../../services/personalService';
 import { getAreaOficinaSeccion } from '../../../services/areaOficinaSeccionService';
 import { Button } from 'react-bootstrap'
+import CargandoComponente from '../../layout/CargandoComponente';
 
 
 const BienesDirinHistory = () => {
     const TITULO = "Historial de Bienes DIRIN";
     const [data, setData] = useState([])
-    const [cargando, setCargando] = useState(true)
+    const [cargando, setCargando] = useState(false)
     let { internamiento, historial } = data;
     const [pdfActual, setpdfActual] = useState("");
     const [isOpen, setIsOpen] = useState(false);
@@ -117,7 +118,12 @@ const BienesDirinHistory = () => {
     const handleDocumentoMemorandum = e => {
         setDocumentoMemorandum(e.target.files[0])
     }
+    const [documentoInformeTecnico, setDocumentoInformeTecnico] = useState(null)
+    const handleDocumentoInformeTecnico = e => {
+        setDocumentoInformeTecnico(e.target.files[0])
+    }
     const handleSubmit = e => {
+        setCargando(true)
         e.preventDefault();
         const formData = new FormData();
         formData.append('personal_id', formularioHistorial.personal_id)
@@ -134,8 +140,14 @@ const BienesDirinHistory = () => {
         } else {
             formData.delete('documento_memorandum', documentoMemorandum)
         }
+        if (documentoInformeTecnico !== null) {
+            formData.append('informe_tecnico', documentoInformeTecnico)
+        } else {
+            formData.delete('informe_tecnico', documentoInformeTecnico)
+        }
 
         postEditarHistorialById(formData, config, idActualHistorialItem).then((rpta) => {
+            setCargando(true)
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
                 console.log("Datos actualizados correctamente")
                 Swal.fire(
@@ -144,11 +156,12 @@ const BienesDirinHistory = () => {
                     'success'
                 )
                 traerData()
+                setCargando(false)
                 setShowModalHistorial(false)
             }
         })
     }
-    
+
     const [areaoficinaseccion, setAreaoficinaseccion] = useState([]);
     const [personalActivo, setPersonalActivo] = useState([]);
     const traerPersonalActivo = () => {
@@ -178,7 +191,7 @@ const BienesDirinHistory = () => {
         traerSubunidades();
     }, []);
 
-    let { personal,area_oficina_seccion } = formularioHistorial
+    let { personal, area_oficina_seccion } = formularioHistorial
     return (
         <>
             <AdminSidebar />
@@ -258,6 +271,19 @@ const BienesDirinHistory = () => {
                                                             /> <span className="">{internamiento.nombre_original_oficio_regularizacion}</span>
                                                         </div>  </>) : (<></>)}
                                                     </div>
+                                                    <div className="mt-1">Informe Técnico: {internamiento?.informe_tecnico ? (<>
+                                                        <div className="d-inline-block pointer" onClick={() =>
+                                                            showModal(internamiento.informe_tecnico)
+                                                        }>
+                                                            <img
+                                                                className="icon-propios"
+                                                                alt="some value"
+                                                                title="hola"
+                                                                src={internamiento.informe_tecnico_icon}
+
+                                                            /> <span className="">{internamiento.informe_tecnico_nombre}</span>
+                                                        </div>  </>) : (<></>)}
+                                                    </div>
 
 
                                                 </div>
@@ -330,6 +356,19 @@ const BienesDirinHistory = () => {
                                                                 /> <span className="">{item.nombre_original_memorandum}</span>
                                                             </div>  </>) : (<></>)}
                                                         </div>
+                                                        <div className="mt-1">Informe Técnico: {item?.informe_tecnico ? (<>
+                                                            <div className="d-inline-block pointer" onClick={() =>
+                                                                showModal(item.informe_tecnico)
+                                                            }>
+                                                                <img
+                                                                    className="icon-propios"
+                                                                    alt="some value"
+                                                                    title="hola"
+                                                                    src={item.informe_tecnico_icon}
+
+                                                                /> <span className="">{item.informe_tecnico_nombre}</span>
+                                                            </div>  </>) : (<></>)}
+                                                        </div>
 
                                                     </div></div>)
                                             })}
@@ -375,7 +414,7 @@ const BienesDirinHistory = () => {
                         <div className="form-group">
                             <label htmlFor="">Nueva persona encargada</label>
                             <select defaultValue="DEFAULT" onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
-                                <option value="DEFAULT" disabled>{personal?.grado +  " |-> " + personal?.apellido + " " + personal?.nombre}</option>
+                                <option value="DEFAULT" disabled>{personal?.grado + " |-> " + personal?.apellido + " " + personal?.nombre}</option>
 
                                 {personalActivo.map((objPersonal, i) => {
                                     return (
@@ -387,8 +426,8 @@ const BienesDirinHistory = () => {
                         <div className="form-group">
                             <label htmlFor="">Area Oficina Sección</label>
                             <select defaultValue="DEFAULT" onChange={handleChange} name="area_oficina_seccion_id" required className="form-select custom-select mr-sm-2">
-                                
-                                <option value="DEFAULT" disabled>{area_oficina_seccion?.nombre + " |-> " + area_oficina_seccion?.subunidad?.nombre }</option>
+
+                                <option value="DEFAULT" disabled>{area_oficina_seccion?.nombre + " |-> " + area_oficina_seccion?.subunidad?.nombre}</option>
                                 {areaoficinaseccion.map((objTipoFormato, i) => {
                                     let { subunidad } = objTipoFormato
                                     return (
@@ -416,13 +455,18 @@ const BienesDirinHistory = () => {
                             <input type="file" className="form-control"
                                 name="documento_acta_entrega_recepcion" onChange={handleDocumentoEntregarecepcion} />
                         </div>
-                     
+
                         <div className="form-group">
                             <label htmlFor="">Documento Memorandum </label>
                             <input type="file" className="form-control"
                                 name="documento_memorandum" onChange={handleDocumentoMemorandum} />
                         </div>
-                     
+                        <div className="form-group">
+                            <label htmlFor="">Documento: Informe Técnico </label>
+                            <input type="file" className="form-control"
+                                name="informe_tecnico" onChange={handleDocumentoInformeTecnico} />
+                        </div>
+
                         {/* <div className="form-group">
                             <label htmlFor="">SubUnidad:</label>
                             <input type="text" className="form-control"
@@ -461,10 +505,12 @@ const BienesDirinHistory = () => {
                           value={tipo_bien} name="tipo_bien" onChange={handleChange} />
                       </div> */}
 
-                        <div className="form-group">
-                            <button className="btn btn-primary" type="submit">Actualizar <i className="ml-2 fa fa-check"></i></button>
-                        </div>
 
+                        {!cargando && <button className="btn btn-primary" type="submit">Actualizar <i className="ml-2 fa fa-check"></i></button>
+                        }
+                        {cargando && <button className="btn btn-primary" type="submit" disabled={cargando}>
+                            <span className="mx-1"><i className="fa fa-floppy-o" aria-hidden="true"></i></span>  Esperando respuesta del Servidor
+                        </button>}
 
                     </form>
                 </Modal.Body>
@@ -475,6 +521,7 @@ const BienesDirinHistory = () => {
 
                 </Modal.Footer>
             </Modal>
+            {cargando && <CargandoComponente />}
         </>
     )
 }

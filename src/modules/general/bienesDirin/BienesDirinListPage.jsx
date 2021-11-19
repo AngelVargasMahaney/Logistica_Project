@@ -13,9 +13,10 @@ import { getPersonalActivo } from '../../../services/personalService';
 import { getAreaOficinaSeccion } from '../../../services/areaOficinaSeccionService';
 import { getHistorialBienesDirin } from '../../../services/historialBienesService';
 import { getReporteFormato1Excel, getReportes } from "../../../services/reportesService";
+import CargandoComponente from '../../layout/CargandoComponente';
 
 const BienesDirinListPage = () => {
-    const [cargando, setCargando] = useState(true)
+    const [cargando, setCargando] = useState(false)
     const [bienesDirin, setBienesDirin] = useState([])
 
     const traerBienesDirin = () => {
@@ -91,7 +92,7 @@ const BienesDirinListPage = () => {
         setImagenBien(imagen)
         setmodalImagenes(true)
     }
-   
+
     const showModalReasignarBien = (idBien) => {
         setIdActualDelBien(idBien);
 
@@ -123,12 +124,16 @@ const BienesDirinListPage = () => {
     const [personalActivo, setPersonalActivo] = useState([]);
     const [areaoficinaseccion, setAreaoficinaseccion] = useState([]);
     const [documentoRecepcion, setDocumentoRecepcion] = useState(null)
-    const [documentoRegularizacion, setDocumentoRegularizacion] = useState(null)
+    const [documentoMemorandum, setDocumentoMemoradum] = useState(null)
+    const [documentoInformeTecnico, setDocumentoInformeTecnico] = useState(null)
     const handleDocumentRecepcion = e => {
         setDocumentoRecepcion(e.target.files[0])
     }
-    const handleDocumentRegularizacion = e => {
-        setDocumentoRegularizacion(e.target.files[0])
+    const handleDocumentMemorandum = e => {
+        setDocumentoMemoradum(e.target.files[0])
+    }
+    const handleDocumentInformeTecnico = e => {
+        setDocumentoInformeTecnico(e.target.files[0])
     }
 
     const token = localStorage.getItem('token')
@@ -141,6 +146,7 @@ const BienesDirinListPage = () => {
     }
 
     const handleSubmit = (e) => {
+        setCargando(true)
         e.preventDefault();
         const formData = new FormData();
         formData.append('estado_del_bien', formulario.estado_del_bien)
@@ -158,10 +164,15 @@ const BienesDirinListPage = () => {
             formData.delete('documento_acta_entrega_recepcion', documentoRecepcion)
         }
 
-        if (documentoRegularizacion != null) {
-            formData.append('documento_oficio_regularizacion', documentoRegularizacion)
+        if (documentoMemorandum != null) {
+            formData.append('documento_oficio_regularizacion', documentoMemorandum)
         } else {
-            formData.delete('documento_oficio_regularizacion', documentoRegularizacion)
+            formData.delete('documento_oficio_regularizacion', documentoMemorandum)
+        }
+        if (documentoInformeTecnico != null) {
+            formData.append('informe_tecnico', documentoInformeTecnico)
+        } else {
+            formData.delete('informe_tecnico', documentoInformeTecnico)
         }
         postInternarBienFormato1(formData, config).then((rpta) => {
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
@@ -172,7 +183,9 @@ const BienesDirinListPage = () => {
                     'El internamiento fue exitoso',
                     'success'
                 )
+                setCargando(false)
                 traerBienesDirin()
+
             }
             console.log(rpta)
         }).catch((err) => {
@@ -194,24 +207,24 @@ const BienesDirinListPage = () => {
     useEffect(() => {
         traerPersonalActivo();
     }, []);
-    
-     //Aqui los metodos para traer las subunidades
-     const traerAreaOficina = () => {
-         setCargando(true)
-         getAreaOficinaSeccion().then((rpta) => {
- 
-             setAreaoficinaseccion(rpta.data);
-             setCargando(false)
-         }).catch((err) => {
-             console.log("Data no cargada en traerSubunidades")
-         })
- 
-     }
-     useEffect(() => {
-         traerAreaOficina();
-     }, []);
 
-     const traerHistorialById = () => {
+    //Aqui los metodos para traer las subunidades
+    const traerAreaOficina = () => {
+        setCargando(true)
+        getAreaOficinaSeccion().then((rpta) => {
+
+            setAreaoficinaseccion(rpta.data);
+            setCargando(false)
+        }).catch((err) => {
+            console.log("Data no cargada en traerSubunidades")
+        })
+
+    }
+    useEffect(() => {
+        traerAreaOficina();
+    }, []);
+
+    const traerHistorialById = () => {
 
         if (idActualDelBien === "") {
             setCargando(true);
@@ -234,6 +247,7 @@ const BienesDirinListPage = () => {
     }, [idActualDelBien, showModalReasignar, showModalInternar])
 
     const handleSubmitReasignacion = (e) => {
+        setCargando(true)
         e.preventDefault();
         const formDataReasignacion = new FormData();
         formDataReasignacion.append('estado_del_bien', formulario.estado_del_bien)
@@ -245,10 +259,15 @@ const BienesDirinListPage = () => {
             formDataReasignacion.delete('documento_acta_entrega_recepcion', documentoRecepcion)
         }
 
-        if (documentoRegularizacion != null) {
-            formDataReasignacion.append('documento_oficio_regularizacion', documentoRegularizacion)
+        if (documentoMemorandum != null) {
+            formDataReasignacion.append('documento_memorandum', documentoMemorandum)
         } else {
-            formDataReasignacion.delete('documento_oficio_regularizacion', documentoRegularizacion)
+            formDataReasignacion.delete('documento_memorandum', documentoMemorandum)
+        }
+        if (documentoInformeTecnico != null) {
+            formDataReasignacion.append('informe_tecnico', documentoInformeTecnico)
+        } else {
+            formDataReasignacion.delete('informe_tecnico', documentoInformeTecnico)
         }
         formDataReasignacion.append('bien_id', idActualDelBien)
         formDataReasignacion.append('tipo_bien', formulario.tipo_bien)
@@ -258,6 +277,7 @@ const BienesDirinListPage = () => {
         postReasignarBienFormato1(formDataReasignacion, config).then((rpta) => {
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
                 console.log("Datos subida correctamente")
+                setCargando(false)
 
                 setshowModalReasignar(false)
 
@@ -285,7 +305,7 @@ const BienesDirinListPage = () => {
             )
         })
 
-        
+
     }
     const tipoReporte = "bienesDirin"
     const reportes = () => {
@@ -343,7 +363,9 @@ const BienesDirinListPage = () => {
                                                             <th>Código</th>
                                                             <th>Correl</th>
                                                             <th>Denominación</th>
-                                                            <th>Documento</th>
+                                                            <th>Documento: Acta</th>
+                                                            <th>Documento: Oficio</th>
+                                                            <th>Documento: Informe Técnico</th>
                                                             <th>Marca</th>
                                                             <th>Modelo</th>
                                                             <th>Tipo</th>
@@ -358,6 +380,7 @@ const BienesDirinListPage = () => {
                                                     <tbody>
                                                         {
                                                             bienesDirin.map((obj, i) => {
+                                                                console.log(obj);
                                                                 return (
                                                                     <tr key={i}>
                                                                         <td>{obj.id}</td>
@@ -365,13 +388,37 @@ const BienesDirinListPage = () => {
                                                                         <td>{obj.correl}</td>
                                                                         <td>{obj.denominacion}</td>
                                                                         <td>
-                                                                            {obj.icon_file ? (<img
+                                                                            {obj.acta_icon ? (<img
                                                                                 className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                 alt="some value"
-                                                                                title={obj.documento}
-                                                                                src={obj.icon_file}
+                                                                                title={obj.acta}
+                                                                                src={obj.acta_icon}
                                                                                 onClick={() =>
-                                                                                    showModal(obj.documento)
+                                                                                    showModal(obj.acta)
+                                                                                }
+                                                                            />) : " "}
+
+                                                                        </td>
+                                                                        <td>
+                                                                            {obj.oficio_icon ? (<img
+                                                                                className="tamaño-icono-pdf rounded mx-auto d-block"
+                                                                                alt="some value"
+                                                                                title={obj.oficio}
+                                                                                src={obj.oficio_icon}
+                                                                                onClick={() =>
+                                                                                    showModal(obj.oficio)
+                                                                                }
+                                                                            />) : " "}
+
+                                                                        </td>
+                                                                        <td>
+                                                                            {obj.informe_tecnico_icon ? (<img
+                                                                                className="tamaño-icono-pdf rounded mx-auto d-block"
+                                                                                alt="some value"
+                                                                                title={obj.informe_tecnico}
+                                                                                src={obj.informe_tecnico_icon}
+                                                                                onClick={() =>
+                                                                                    showModal(obj.informe_tecnico)
                                                                                 }
                                                                             />) : " "}
 
@@ -519,11 +566,17 @@ const BienesDirinListPage = () => {
                                 <input type="file" className="form-control"
                                     name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
                             </div>
-                            
+
                             <div className="form-group">
                                 <label htmlFor="">Documento Oficio Regularización:</label>
                                 <input type="file" className="form-control"
-                                    name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
+                                    name="documento_oficio_regularizacion" onChange={handleDocumentMemorandum} />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="">Documento Informe Técnico</label>
+                                <input type="file" className="form-control"
+                                    name="informe_tecnico" onChange={handleDocumentInformeTecnico} />
                             </div>
 
                             <div className="form-group" hidden>
@@ -537,9 +590,11 @@ const BienesDirinListPage = () => {
                           value={tipo_bien} name="tipo_bien" onChange={handleChange} />
                       </div> */}
 
-                            <div className="form-group">
-                                <button className="btn btn-primary" type="submit">Internar<i className="ml-2 fa fa-check"></i></button>
-                            </div>
+
+                            {!cargando && <button className="btn btn-primary" type="submit">Internar<i className="ml-2 fa fa-check"></i></button>}
+                            {cargando && <button className="btn btn-primary" type="submit" disabled={cargando}>
+                                <span className="mx-1"><i className="fa fa-floppy-o" aria-hidden="true"></i></span>  Esperando respuesta del Servidor
+                            </button>}
 
 
                         </form>
@@ -683,14 +738,19 @@ const BienesDirinListPage = () => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="">Documento Entrega Recepción </label>
+                                <label htmlFor="">Documento Acta Entrega Recepción </label>
                                 <input type="file" className="form-control"
-                                    name="documento_alta" onChange={handleDocumentRecepcion} />
+                                    name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="">Documento Oficio Regularización </label>
                                 <input type="file" className="form-control"
-                                    name="documento_alta" onChange={handleDocumentRegularizacion} />
+                                    name="documento_memorandum" onChange={handleDocumentMemorandum} />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="">Documento Informe Técnico </label>
+                                <input type="file" className="form-control"
+                                    name="informe_tecnico" onChange={handleDocumentInformeTecnico} />
                             </div>
 
                             <div className="form-group" hidden>
@@ -706,9 +766,10 @@ const BienesDirinListPage = () => {
                           value={tipo_bien} name="tipo_bien" onChange={handleChange} />
                       </div> */}
 
-                            <div className="form-group">
-                                <button className="btn btn-primary" type="submit">Reasignar Bien<i className="ml-2 fa fa-check"></i></button>
-                            </div>
+                            {!cargando && <button className="btn btn-primary" type="submit">Reasignar Bien<i className="ml-2 fa fa-check"></i></button>}
+                            {cargando && <button className="btn btn-primary" type="submit" disabled={cargando}>
+                                <span className="mx-1"><i className="fa fa-floppy-o" aria-hidden="true"></i></span>  Esperando respuesta del Servidor
+                            </button>}
 
 
                         </form>
@@ -727,6 +788,7 @@ const BienesDirinListPage = () => {
 
 
             </div>
+            {cargando && <CargandoComponente />}
         </>
     )
 }

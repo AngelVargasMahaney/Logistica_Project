@@ -7,11 +7,12 @@ import Swal from 'sweetalert2';
 import { getBienesDirin } from '../../../services/bienesDirinService';
 import { deleteDesinternarBien, getBienesInternadosBienesDirin, postEditarInternamientoById } from '../../../services/internamientoFormato1Service';
 import { getReportes } from '../../../services/reportesService';
+import CargandoComponente from '../../layout/CargandoComponente';
 
 const InternamientoBienesDirin = () => {
 
     const [listaInternamientoBienesDirin, setListaInternamientoBienesDirin] = useState([])
-    const [cargando, setCargando] = useState(true)
+    const [cargando, setCargando] = useState(false)
     const traerData = () => {
         setCargando(true)
         getBienesInternadosBienesDirin().then(rpta => {
@@ -79,10 +80,18 @@ const InternamientoBienesDirin = () => {
         })
     }
     const handleCloseReasignar = () => setshowModalReasignar(false);
-    const [documentoAlta, setDocumentoAlta] = useState(null)
-    const handleDocumentoAlta = e => {
-        setDocumentoAlta(e.target.files[0])
-      }
+    const [documentoActa, setDocumentoActa] = useState(null)
+    const [documentoOficio, setDocumentoOficio] = useState(null)
+    const [documentoInformeTecnico, setDocumentoInformeTecnico] = useState(null)
+    const handleDocumentoActa = e => {
+        setDocumentoActa(e.target.files[0])
+    }
+    const handleDocumentoOficio = e => {
+        setDocumentoOficio(e.target.files[0])
+    }
+    const handleDocumentoInformeTecnico = e => {
+        setDocumentoInformeTecnico(e.target.files[0])
+    }
     const handleChange = (e) => {
         setFormularioInternamiento({
             ...formularioInternamiento,
@@ -97,6 +106,7 @@ const InternamientoBienesDirin = () => {
         }
     }
     const handleSubmit = e => {
+        setCargando(true)
         e.preventDefault();
         const formData = new FormData();
 
@@ -106,13 +116,23 @@ const InternamientoBienesDirin = () => {
         formData.append('estado_del_bien', formularioInternamiento.estado_del_bien ? formularioInternamiento.estado_del_bien : "")
 
 
-        if (documentoAlta != null) {
-            formData.append('documento_acta_entrega_recepcion', documentoAlta)
+        if (documentoActa != null) {
+            formData.append('documento_acta_entrega_recepcion', documentoActa)
         } else {
-            formData.delete('documento_acta_entrega_recepcion', documentoAlta)
+            formData.delete('documento_acta_entrega_recepcion', documentoActa)
+        }
+        if (documentoOficio != null) {
+            formData.append('documento_oficio_regularizacion', documentoOficio)
+        } else {
+            formData.delete('documento_oficio_regularizacion', documentoOficio)
+        }
+        if (documentoInformeTecnico != null) {
+            formData.append('informe_tecnico', documentoInformeTecnico)
+        } else {
+            formData.delete('informe_tecnico', documentoInformeTecnico)
         }
 
-      
+
         postEditarInternamientoById(formData, config, idActualDelBien).then((rpta) => {
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
                 console.log("Datos actualizados correctamente")
@@ -121,6 +141,7 @@ const InternamientoBienesDirin = () => {
                     'El internamiento se actualizó correctamente',
                     'success'
                 )
+                setCargando(false)
                 traerData();
 
             } else {
@@ -193,8 +214,9 @@ const InternamientoBienesDirin = () => {
                                                                 <th>Estado del bien</th>
                                                                 <th>Observaciones</th>
                                                                 <th>Fecha</th>
-                                                                <th>Documento Acta Entrega Recepción</th>
-                                                                <th>Documento Regularización</th>
+                                                                <th>Documento Acta</th>
+                                                                <th>Documento Oficio</th>
+                                                                <th>Documento Informe Técnico</th>
                                                                 <th className="acciones"> Acciones</th>
                                                             </tr>
                                                         </thead>
@@ -256,6 +278,18 @@ const InternamientoBienesDirin = () => {
                                                                                 />) : " "}
 
                                                                             </td>
+                                                                            <td>
+                                                                                {objLista.informe_tecnico ? (<img
+                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
+                                                                                    alt="some value"
+                                                                                    title={objLista.informe_tecnico_nombre}
+                                                                                    src={objLista.informe_tecnico_icon}
+                                                                                    onClick={() =>
+                                                                                        showModal(objLista.informe_tecnico)
+                                                                                    }
+                                                                                />) : " "}
+
+                                                                            </td>
 
                                                                             {/* <td>{objLista.nombre_original_acta_entrega_recepcion}</td>
                                                                         <td>{objLista.nombre_original_oficio_regularizacion}</td> */}
@@ -281,7 +315,7 @@ const InternamientoBienesDirin = () => {
                                                                                 </Button>
                                                                                 <Link
                                                                                     // to={`formatos/editar/${objFormato.id}`}
-                                                                                    to={`/admin/formato1/historial/${objLista.bien_id}`}
+                                                                                    to={`/admin/bienes-dirin/historial/${objLista.bien_id}`}
                                                                                     className="btn btn-info ml-1"
                                                                                     title="Historial del bien"
                                                                                 >
@@ -331,15 +365,28 @@ const InternamientoBienesDirin = () => {
                                 value={formularioInternamiento.observaciones} name="observaciones" onChange={handleChange} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="">Documento Alta</label>
+                            <label htmlFor="">Documento: Acta</label>
                             <input type="file" className="form-control"
-                                name="documento_acta_entrega_recepcion" onChange={handleDocumentoAlta} />
+                                name="documento_acta_entrega_recepcion" onChange={handleDocumentoActa} />
                         </div>
-
-
                         <div className="form-group">
-                            <button className="btn btn-primary" type="submit">Actualizar</button>
+                            <label htmlFor="">Documento: Oficio</label>
+                            <input type="file" className="form-control"
+                                name="documento_oficio_regularizacion" onChange={handleDocumentoOficio} />
                         </div>
+                        <div className="form-group">
+                            <label htmlFor="">Documento: Informe Técnico</label>
+                            <input type="file" className="form-control"
+                                name="informe_tecnico" onChange={handleDocumentoInformeTecnico} />
+                        </div>
+
+
+                        {!cargando && <button className="btn btn-primary" type="submit">
+                            <span className="mx-1"></span>   Actualizar
+                        </button>}
+                        {cargando && <button className="btn btn-primary" type="submit" disabled={cargando}>
+                            <span className="mx-1"><i className="fa fa-floppy-o" aria-hidden="true"></i></span>  Esperando respuesta del Servidor
+                        </button>}
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
@@ -349,6 +396,7 @@ const InternamientoBienesDirin = () => {
 
                 </Modal.Footer>
             </Modal>
+            {cargando && <CargandoComponente />}
         </>
     )
 }

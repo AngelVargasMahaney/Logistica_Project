@@ -1,5 +1,6 @@
 .htmlss {
     height: 100%;
+    
   }
   
   .webody {
@@ -12,7 +13,6 @@
   .loaderCargando {
     position: absolute;
     background-image: radial-gradient(circle farthest-corner at center, #3C4B57 0%, #1C262B 100%);
-
     top: calc(50% - 32px);
     left: calc(50% - 32px);
     width: 120px;
