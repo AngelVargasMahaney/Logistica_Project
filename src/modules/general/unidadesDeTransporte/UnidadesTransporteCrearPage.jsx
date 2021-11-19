@@ -154,7 +154,7 @@ const UnidadesTransporteCrearPage = () => {
                                         <div className="row">
                                             <div className="col-6">
                                                 <label htmlFor="" className="form-label">
-                                                    Código
+                                                    Código Patrimonial
                                                 </label>
                                                 <input
                                                     type="text"
