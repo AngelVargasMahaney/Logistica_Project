@@ -100,7 +100,7 @@ const Formato1History = () => {
         area_oficina_seccion_id: "",
         estado_del_bien: "",
         observaciones: "",
-        fecha:"",
+        fecha: "",
 
     }))
     const handleCloseModalHistorial = () => setShowModalHistorial(false);
@@ -135,11 +135,11 @@ const Formato1History = () => {
     const handleSubmit = e => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('personal_id', formularioHistorial.personal_id ? formularioHistorial.personal_id:"")
-        formData.append('area_oficina_seccion_id', formularioHistorial.area_oficina_seccion_id?formularioHistorial.personal_id:"")
-        formData.append('estado_del_bien', formularioHistorial.estado_del_bien?formularioHistorial.estado_del_bien:"")
-        formData.append('observaciones', formularioHistorial.observaciones?formularioHistorial.observaciones:"")
-        formData.append('fecha', formularioHistorial.fecha?formularioHistorial.fecha:"")
+        formData.append('personal_id', formularioHistorial.personal_id ? formularioHistorial.personal_id : "")
+        formData.append('area_oficina_seccion_id', formularioHistorial.area_oficina_seccion_id ? formularioHistorial.personal_id : "")
+        formData.append('estado_del_bien', formularioHistorial.estado_del_bien ? formularioHistorial.estado_del_bien : "")
+        formData.append('observaciones', formularioHistorial.observaciones ? formularioHistorial.observaciones : "")
+        formData.append('fecha', formularioHistorial.fecha ? formularioHistorial.fecha : "")
         if (documentoEntregaRecepcion !== null) {
             formData.append('documento_acta_entrega_recepcion', documentoEntregaRecepcion)
         } else {
@@ -194,8 +194,8 @@ const Formato1History = () => {
     useEffect(() => {
         traerSubunidades();
     }, []);
-    let { personal,area_oficina_seccion } = formularioHistorial
-   
+    let { personal, area_oficina_seccion } = formularioHistorial
+
     return (
         <>
 
@@ -231,6 +231,22 @@ const Formato1History = () => {
                                             <div className="mt-1">dimensiones: {data.dimensiones} </div>
                                             <div className="mt-1">estado del bien: {data.estado_bien} </div>
                                             <div className="mt-1">observaciones: {data.observaciones} </div>
+                                            <div className="mt-1">fecha de adquisición: {data.fecha_adquisicion} </div>
+                                            <div className="mt-1">forma de adquisición{data.forma_adquisicion} </div>
+                                            <div className="mt-1">documento: {data?.documento ? (<>
+                                                <div className="d-inline-block pointer" onClick={() =>
+                                                    showModal(data.documento)
+                                                }>
+                                                    <img
+                                                        className="icon-propios"
+                                                        alt="some value"
+                                                        title="hola"
+                                                        src={data.icon_file}
+
+                                                    /> <span className="">{data.documento_nombre_original}</span>
+                                                </div>  </>) : (<></>)}
+                                            </div>
+
                                         </div>
                                         <div className="col-md-6">
                                             <div className="mb-4">
@@ -394,7 +410,7 @@ const Formato1History = () => {
                         <div className="form-group">
                             <label htmlFor="">Nueva persona encargada</label>
                             <select onChange={handleChange} name="personal_id" required className="form-select custom-select mr-sm-2">
-                                <option value="DEFAULT" >{personal?.grado +  " |-> " + personal?.apellido + " " + personal?.nombre}</option>
+                                <option value="DEFAULT" >{personal?.grado + " |-> " + personal?.apellido + " " + personal?.nombre}</option>
 
                                 {personalActivo.map((objPersonal, i) => {
                                     return (
@@ -406,8 +422,8 @@ const Formato1History = () => {
                         <div className="form-group">
                             <label htmlFor="">Area Oficina Sección</label>
                             <select defaultValue="DEFAULT" onChange={handleChange} name="area_oficina_seccion_id" required className="form-select custom-select mr-sm-2">
-                                
-                                <option value="DEFAULT" disabled>{area_oficina_seccion?.nombre + " |-> " + area_oficina_seccion?.subunidad?.nombre }</option>
+
+                                <option value="DEFAULT" disabled>{area_oficina_seccion?.nombre + " |-> " + area_oficina_seccion?.subunidad?.nombre}</option>
                                 {areaoficinaseccion.map((objTipoFormato, i) => {
                                     let { subunidad } = objTipoFormato
                                     return (

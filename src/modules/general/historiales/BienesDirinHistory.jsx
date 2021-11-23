@@ -216,9 +216,11 @@ const BienesDirinHistory = () => {
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="font-weight-bold mb-2">Ingreso del Bien</div>
-                                            <div className="mt-1">código: {data.codigo} </div>
+                                            <div className="mt-1">código:  {data.codigo} </div>
+                                            <div className="mt-1">correl: {data.correl} </div>
                                             <div className="mt-1">descripción: {data.denominacion} </div>
                                             <div className="mt-1">marca: {data.marca} </div>
+                                            <div className="mt-1">color: {data.color} </div>
                                             <div className="mt-1">modelo: {data.modelo} </div>
                                             <div className="mt-1">serie: {data.serie} </div>
                                             <div className="mt-1">tipo: {data.tipo} </div>
@@ -226,6 +228,45 @@ const BienesDirinHistory = () => {
                                             <div className="mt-1">dimensiones: {data.dimensiones} </div>
                                             <div className="mt-1">estado del bien: {data.estado_bien} </div>
                                             <div className="mt-1">observaciones: {data.observaciones} </div>
+                                            <div className="mt-1">acta: {data?.acta ? (<>
+                                                <div className="d-inline-block pointer" onClick={() =>
+                                                    showModal(data.acta)
+                                                }>
+                                                    <img
+                                                        className="icon-propios"
+                                                        alt="some value"
+                                                        title="hola"
+                                                        src={data.acta_icon}
+
+                                                    /> <span className="">{data.acta_nombre}</span>
+                                                </div>  </>) : (<></>)}
+                                            </div>
+                                            <div className="mt-1">oficio: {data?.oficio ? (<>
+                                                <div className="d-inline-block pointer" onClick={() =>
+                                                    showModal(data.oficio)
+                                                }>
+                                                    <img
+                                                        className="icon-propios"
+                                                        alt="some value"
+                                                        title="hola"
+                                                        src={data.oficio_icon}
+
+                                                    /> <span className="">{data.oficio_nombre}</span>
+                                                </div>  </>) : (<></>)}
+                                            </div>
+                                            <div className="mt-1">informe técnico: {data?.informe_tecnico ? (<>
+                                                <div className="d-inline-block pointer" onClick={() =>
+                                                    showModal(data.informe_tecnico)
+                                                }>
+                                                    <img
+                                                        className="icon-propios"
+                                                        alt="some value"
+                                                        title="hola"
+                                                        src={data.informe_tecnico_icon}
+
+                                                    /> <span className="">{data.informe_tecnico_nombre}</span>
+                                                </div>  </>) : (<></>)}
+                                            </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="mb-4">

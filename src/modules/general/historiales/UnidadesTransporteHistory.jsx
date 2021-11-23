@@ -210,16 +210,81 @@ const UnidadesTransporteHistory = () => {
                                     </div>
                                     <div className="row">
                                         <div className="col-md-6">
-                                            <div className="font-weight-bold mb-2">Ingreso del Bien</div>
-                                            <div className="mt-1">código: {data.codigo} </div>
-                                            <div className="mt-1">placa: {data.placa_interna} </div>
-                                            <div className="mt-1">marca: {data.marca} </div>
-                                            <div className="mt-1">modelo: {data.modelo} </div>
-                                            <div className="mt-1">n° de cilindros: {data.nro_de_cilindros} </div>
-                                            <div className="mt-1">tipo de vehículo: {data.tipo_de_vehiculo}  </div>
-                                            <div className="mt-1">estado del vehículo: {data.estado_vehiculo} </div>
-                                            <div className="mt-1">observaciones: {data.observaciones} </div>
+                                            <div className="row">
+                                                <div className="col-6">
+                                                    <div className="font-weight-bold mb-2">Ingreso del Bien</div>
+                                                    <div className="mt-1">código: {data.codigo} </div>
+                                                    <div className="mt-1">placa interna: {data.placa_interna} </div>
+                                                    <div className="mt-1">placa de rodaje: {data.placa_de_rodaje} </div>
+                                                    <div className="mt-1">tipo de vehículo: {data.tipo_de_vehiculo}  </div>
+                                                    <div className="mt-1">marca: {data.marca} </div>
+                                                    <div className="mt-1">modelo: {data.modelo} </div>
+                                                    <div className="mt-1">año de fabricación: {data.anio_de_fabricacion} </div>
+                                                    <div className="mt-1">combustible: {data.combustible} </div>
+                                                    <div className="mt-1">número de chasis: {data.nro_de_chasis} </div>
+                                                    <div className="mt-1">número de motor: {data.nro_de_motor} </div>
+                                                    <div className="mt-1">n° de cilindros: {data.nro_de_cilindros} </div>
+                                                    <div className="mt-1">tracción: {data.traccion} </div>
+                                                    <div className="mt-1">procedencia: {data.procedencia} </div>
+                                                </div>
+                                                <div className="col-6">
+                                           
+                                                    <div className="mt-1">vigencia soat: {data.soat_vigencia} </div>
+                                                    <div className="mt-1">seguro particular: {data.seguro_particular} </div>
+                                                    <div className="mt-1">llanta de repuesto: {data.llanta_repuesto} </div>
+                                                    <div className="mt-1">llave de ruedas: {data.llave_ruedas} </div>
+                                                    <div className="mt-1">gata: {data.gata} </div>
+                                                    <div className="mt-1">tablet: {data.tablet} </div>
+                                                    <div className="mt-1">cámaras: {data.camaras} </div>
+                                                    <div className="mt-1">ubicación: {data.ubicacion} </div>
+                                                    <div className="mt-1">valor de adquisición: {data.valor_adquisicion} </div>
+                                                    <div className="mt-1">estado del vehículo: {data.estado_vehiculo} </div>
+                                                    <div className="mt-1">observaciones: {data.observaciones} </div>
+                                                    <div className="mt-1">acta: {data?.acta ? (<>
+                                                        <div className="d-inline-block pointer" onClick={() =>
+                                                            showModal(data.acta)
+                                                        }>
+                                                            <img
+                                                                className="icon-propios"
+                                                                alt="some value"
+                                                                title="hola"
+                                                                src={data.acta_icon}
+
+                                                            /> <span className="">{data.acta_nombre}</span>
+                                                        </div>  </>) : (<></>)}
+                                                    </div>
+                                                    <div className="mt-1">oficio: {data?.oficio ? (<>
+                                                        <div className="d-inline-block pointer" onClick={() =>
+                                                            showModal(data.oficio)
+                                                        }>
+                                                            <img
+                                                                className="icon-propios"
+                                                                alt="some value"
+                                                                title="hola"
+                                                                src={data.oficio_icon}
+
+                                                            /> <span className="">{data.oficio_nombre}</span>
+                                                        </div>  </>) : (<></>)}
+                                                    </div>
+                                                    <div className="mt-1">informe técnico: {data?.informe_tecnico ? (<>
+                                                        <div className="d-inline-block pointer" onClick={() =>
+                                                            showModal(data.informe_tecnico)
+                                                        }>
+                                                            <img
+                                                                className="icon-propios"
+                                                                alt="some value"
+                                                                title="hola"
+                                                                src={data.informe_tecnico_icon}
+
+                                                            /> <span className="">{data.informe_tecnico_nombre}</span>
+                                                        </div>  </>) : (<></>)}
+                                                    </div>
+
+                                                </div>
+                                            </div>
                                         </div>
+
+
                                         <div className="col-md-6">
                                             <div className="mb-4">
                                                 <img src={data.imagen_bien} className="rounded w-50" alt="Imagen del Bien" />

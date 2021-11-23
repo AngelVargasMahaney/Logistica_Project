@@ -515,7 +515,7 @@ const UnidadesTransporteListPage = () => {
 
                             </div>
                         </div>
-                     
+
                     </div>
                 </main>
                 <VisualizadorImagenes visible={modalImagenes} onClose={() => setmodalImagenes(false)} imagen={imagenBien} imagenDescripcion={imagenDescripcion} />
@@ -605,7 +605,8 @@ const UnidadesTransporteListPage = () => {
 
                 {/* Modal de Reasignación */}
 
-                <Modal show={showModalReasignar} onHide={handleCloseReasignar}>
+                <Modal show={showModalReasignar} onHide={handleCloseReasignar} size="lg" aria-labelledby="contained-modal-title-vcenter"
+                    centered>
                     <Modal.Header closeButton>
                         <Modal.Title>Reasignación de una Unidad de Transporte</Modal.Title>
                     </Modal.Header>
@@ -765,7 +766,7 @@ const UnidadesTransporteListPage = () => {
 
 
                             {!cargando && <button className="btn btn-primary" type="submit">Reasignar Bien
-                            <i className="ml-2 fa fa-check"></i></button>
+                                <i className="ml-2 fa fa-check"></i></button>
                             }
                             {cargando && <button className="btn btn-primary" type="submit" disabled={cargando}>
                                 <span className="mx-1"><i className="fa fa-floppy-o" aria-hidden="true"></i></span>  Esperando respuesta del Servidor
@@ -784,7 +785,7 @@ const UnidadesTransporteListPage = () => {
 
 
 
-             
+
 
             </div>
             {cargando && <CargandoComponente />}

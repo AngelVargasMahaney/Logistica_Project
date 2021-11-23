@@ -216,8 +216,24 @@ const EquipoPolicialHistory = () => {
                                             <div className="mt-1">serie: {data.serie} </div>
                                             <div className="mt-1">pais de fabricación: {data.pais_fabricacion} </div>
                                             <div className="mt-1">estado del bien: {data.estado_bien} </div>
+                                            <div className="mt-1">forma de adquisición: {data.forma_adquisicion} </div>
+                                            <div className="mt-1">año de adquisición: {data.anio_adquisicion} </div>
                                             <div className="mt-1">tasacion: {data.tasacion} </div>
+                                            <div className="mt-1">tipo de afectación: {data.tipo_afectacion} </div>
                                             <div className="mt-1">observaciones: {data.observaciones} </div>
+                                            <div className="mt-1">documento: {data?.documento ? (<>
+                                                <div className="d-inline-block pointer" onClick={() =>
+                                                    showModal(data.documento)
+                                                }>
+                                                    <img
+                                                        className="icon-propios"
+                                                        alt="some value"
+                                                        title="hola"
+                                                        src={data.icon_file}
+
+                                                    /> <span className="">{data.documento_nombre_original}</span>
+                                                </div>  </>) : (<></>)}
+                                            </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="mb-4">

@@ -63,6 +63,7 @@ const HistorialBienesAux = () => {
                                         <div className="mt-1">dimensiones: {data.dimensiones} </div>
                                         <div className="mt-1">estado del bien: {data.estado_bien} </div>
                                         <div className="mt-1">observaciones: {data.observaciones} </div>
+                                        
                                     </div>
                                     <div className="col-md-6">
                                         <div className="mb-4">

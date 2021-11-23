@@ -223,7 +223,21 @@ const BienesAuxiliaresHistory = () => {
                                             <div className="mt-1">color: {data.color} </div>
                                             <div className="mt-1">dimensiones: {data.dimensiones} </div>
                                             <div className="mt-1">estado del bien: {data.estado_bien} </div>
+                                            <div className="mt-1">tipo de material: {data.tipo_material} </div>
                                             <div className="mt-1">observaciones: {data.observaciones} </div>
+                                            <div className="mt-1">documento: {data?.documento ? (<>
+                                                <div className="d-inline-block pointer" onClick={() =>
+                                                    showModal(data.documento)
+                                                }>
+                                                    <img
+                                                        className="icon-propios"
+                                                        alt="some value"
+                                                        title="hola"
+                                                        src={data.icon_file}
+
+                                                    /> <span className="">{data.documento_nombre_original}</span>
+                                                </div>  </>) : (<></>)}
+                                            </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="mb-4">
