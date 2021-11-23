@@ -28,9 +28,9 @@ const AuthState = (props) => {
 
     }
     const iniciarSesionLocalStorage = () => {
-        const toquen = localStorage.getItem('token')
-        if (toquen) {
-            postVerificarToken(toquen).then(rpta => {
+       
+        if (localStorage.getItem('token')) {
+            postVerificarToken(localStorage.getItem('token')).then(rpta => {
                 if (rpta.status === 200) {
                     iniciarSesionContext(localStorage.getItem('token'))
                 } else {

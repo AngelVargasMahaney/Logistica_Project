@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import AdminSidebar from '../../components/AdminSidebar'
 
 
@@ -8,6 +8,10 @@ import { Link } from 'react-router-dom';
 
 const AdminDashboardPage = () => {
 
+    useEffect(() => {
+        
+        
+    }, [])
     const itemsUrl = NAVEGACION_URL;
     return (
 
