@@ -14,6 +14,7 @@ const AuthState = (props) => {
     })
 
     const iniciarSesionContext = (token) => {
+        
         localStorage.setItem('token', token);
         const payloadString = token.split('.')[1]
         const payloadDecrypt = atob(payloadString)
@@ -27,23 +28,12 @@ const AuthState = (props) => {
         })
 
     }
-    const [tokenV, setTokenV] = useState("")
-    const checkToken = async () => {
-        const token = await localStorage.getItem('token')
-        setTokenV(token)
-        // console.log("TOEKOTEK " + token);
-    }
-
-    useEffect(() => {
-        checkToken()
-    }, [])
-
     const iniciarSesionLocalStorage = () => {
-
-        if (tokenV) {
-            postVerificarToken(tokenV).then(rpta => {
+       
+        if (localStorage.getItem('token')) {
+            postVerificarToken(localStorage.getItem('token')).then(rpta => {
                 if (rpta.status === 200) {
-                    iniciarSesionContext(tokenV)
+                    iniciarSesionContext(localStorage.getItem('token'))
                 } else {
                     console.log("inicio de sesión fallido");
                     localStorage.removeItem('token')
@@ -74,7 +64,19 @@ const AuthState = (props) => {
         iniciarSesionLocalStorage()
         // eslint-disable-next-line
     }, [])
-
+    const asyncLocalStorage = {
+        setItem: function (key, value) {
+            return Promise.resolve().then(function () {
+                localStorage.setItem(key, value);
+            });
+        },
+        getItem: function (key) {
+            return Promise.resolve().then(function () {
+                return localStorage.getItem(key);
+            });
+        }
+    };
+    
 
 
     return (
