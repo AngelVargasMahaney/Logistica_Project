@@ -36,7 +36,7 @@ const AuthLoginScreen = () => {
                     text: 'BIENVENIDO',
                     footer: 'SISTEMA DE CONTROL DE BIENES'
                 })
-                history.push("/admin")
+              window.location.href = "/admin";
             }else{
                 console.log("ERRRRRRRRRRRRRRRRRo")
             }
