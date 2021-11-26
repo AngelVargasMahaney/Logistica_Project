@@ -4,24 +4,23 @@ import AuthContext from './context/auth/authContext'
 import { postVerificarToken } from './services/authService'
 const PrivateRoute = (props) => {
 
-    const [cargando, setCargando] = useState(true);
-    const { autenticado, iniciarSesionContext } = useContext(AuthContext)
+    const { autenticado, cargando} = useContext(AuthContext)
 
-    // let autenticado = false;
-    const verificarToken = () => {
-        postVerificarToken(localStorage.getItem('token')).then(rpta => {
-            if (rpta.status === 200) {
-                iniciarSesionContext(localStorage.getItem('token'))
-                //autenticado = true;
-            }
-            setCargando(false);
-        }).catch(err => {
-            setCargando(false);
-        })
-    }
-    useEffect(() => {
-        verificarToken();
-    }, [])
+    // // let autenticado = false;
+    // const verificarToken = () => {
+    //     postVerificarToken(localStorage.getItem('token')).then(rpta => {
+    //         if (rpta.status === 200) {
+    //             iniciarSesionContext(localStorage.getItem('token'))
+    //             //autenticado = true;
+    //         }
+    //         setCargando(false);
+    //     }).catch(err => {
+    //         setCargando(false);
+    //     })
+    // }
+    // useEffect(() => {
+    //     verificarToken();
+    // }, [])
 
     return (
 

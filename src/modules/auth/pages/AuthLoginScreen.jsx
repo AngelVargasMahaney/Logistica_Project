@@ -29,18 +29,18 @@ const AuthLoginScreen = () => {
             if (rpta.status === 200) {
 
                 iniciarSesionContext(rpta.data.token)
-                
+
                 swal.fire({
                     icon: 'success',
                     title: 'Login Exitoso',
                     text: 'BIENVENIDO',
                     footer: 'SISTEMA DE CONTROL DE BIENES'
                 })
-              window.location.href = "/admin";
-            }else{
+                history.push('/admin')
+            } else {
                 console.log("ERRRRRRRRRRRRRRRRRo")
             }
-        }).catch(err=>{
+        }).catch(err => {
             swal.fire({
                 icon: 'error',
                 title: 'Login Incorrecto',
@@ -48,9 +48,9 @@ const AuthLoginScreen = () => {
                 footer: 'SISTEMA DE CONTROL DE BIENES'
             })
         })
-            
-        
-       
+
+
+
 
     }
 

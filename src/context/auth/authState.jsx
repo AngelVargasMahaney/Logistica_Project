@@ -27,12 +27,23 @@ const AuthState = (props) => {
         })
 
     }
+    const [tokenV, setTokenV] = useState("")
+    const checkToken = async () => {
+        const token = await localStorage.getItem('token')
+        setTokenV(token)
+        // console.log("TOEKOTEK " + token);
+    }
+
+    useEffect(() => {
+        checkToken()
+    }, [])
+
     const iniciarSesionLocalStorage = () => {
-       
-        if (localStorage.getItem('token')) {
-            postVerificarToken(localStorage.getItem('token')).then(rpta => {
+
+        if (tokenV) {
+            postVerificarToken(tokenV).then(rpta => {
                 if (rpta.status === 200) {
-                    iniciarSesionContext(localStorage.getItem('token'))
+                    iniciarSesionContext(tokenV)
                 } else {
                     console.log("inicio de sesión fallido");
                     localStorage.removeItem('token')
