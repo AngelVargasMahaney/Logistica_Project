@@ -123,17 +123,18 @@ const BienesDirinListPage = () => {
     }
     const [personalActivo, setPersonalActivo] = useState([]);
     const [areaoficinaseccion, setAreaoficinaseccion] = useState([]);
-    const [documentoRecepcion, setDocumentoRecepcion] = useState(null)
-    const [documentoMemorandum, setDocumentoMemoradum] = useState(null)
-    const [documentoInformeTecnico, setDocumentoInformeTecnico] = useState(null)
-    const handleDocumentRecepcion = e => {
-        setDocumentoRecepcion(e.target.files[0])
+    const [acta, setActa] = useState(null)
+    const [oficio, setOficio] = useState(null)
+    const [informeTecnico, setInformeTecnico] = useState(null)
+
+    const handleDocumentActa = e => {
+        setActa(e.target.files[0])
     }
-    const handleDocumentMemorandum = e => {
-        setDocumentoMemoradum(e.target.files[0])
+    const handleDocumentOficio = e => {
+        setOficio(e.target.files[0])
     }
     const handleDocumentInformeTecnico = e => {
-        setDocumentoInformeTecnico(e.target.files[0])
+        setInformeTecnico(e.target.files[0])
     }
 
     const token = localStorage.getItem('token')
@@ -158,21 +159,21 @@ const BienesDirinListPage = () => {
         formData.append('tipo_bien', formulario.tipo_bien)
 
 
-        if (documentoRecepcion != null) {
-            formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
+        if (acta != null) {
+            formData.append('acta', acta)
         } else {
-            formData.delete('documento_acta_entrega_recepcion', documentoRecepcion)
+            formData.delete('acta', acta)
         }
 
-        if (documentoMemorandum != null) {
-            formData.append('documento_oficio_regularizacion', documentoMemorandum)
+        if (oficio != null) {
+            formData.append('oficio', oficio)
         } else {
-            formData.delete('documento_oficio_regularizacion', documentoMemorandum)
+            formData.delete('oficio', oficio)
         }
-        if (documentoInformeTecnico != null) {
-            formData.append('informe_tecnico', documentoInformeTecnico)
+        if (informeTecnico != null) {
+            formData.append('informe_tecnico', informeTecnico)
         } else {
-            formData.delete('informe_tecnico', documentoInformeTecnico)
+            formData.delete('informe_tecnico', informeTecnico)
         }
         postInternarBienFormato1(formData, config).then((rpta) => {
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
@@ -253,21 +254,21 @@ const BienesDirinListPage = () => {
         formDataReasignacion.append('estado_del_bien', formulario.estado_del_bien)
         formDataReasignacion.append('fecha', formulario.fecha)
         formDataReasignacion.append('observaciones', formulario.observaciones)
-        if (documentoRecepcion != null) {
-            formDataReasignacion.append('documento_acta_entrega_recepcion', documentoRecepcion)
+        if (acta != null) {
+            formDataReasignacion.append('acta', acta)
         } else {
-            formDataReasignacion.delete('documento_acta_entrega_recepcion', documentoRecepcion)
+            formDataReasignacion.delete('acta', acta)
         }
 
-        if (documentoMemorandum != null) {
-            formDataReasignacion.append('documento_memorandum', documentoMemorandum)
+        if (oficio != null) {
+            formDataReasignacion.append('oficio', oficio)
         } else {
-            formDataReasignacion.delete('documento_memorandum', documentoMemorandum)
+            formDataReasignacion.delete('oficio', oficio)
         }
-        if (documentoInformeTecnico != null) {
-            formDataReasignacion.append('informe_tecnico', documentoInformeTecnico)
+        if (informeTecnico != null) {
+            formDataReasignacion.append('informe_tecnico', informeTecnico)
         } else {
-            formDataReasignacion.delete('informe_tecnico', documentoInformeTecnico)
+            formDataReasignacion.delete('informe_tecnico', informeTecnico)
         }
         formDataReasignacion.append('bien_id', idActualDelBien)
         formDataReasignacion.append('tipo_bien', formulario.tipo_bien)
@@ -562,19 +563,19 @@ const BienesDirinListPage = () => {
                                     name="observaciones" onChange={handleChange} />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="">Documento Entrega recepción:</label>
+                                <label htmlFor="">Acta:</label>
                                 <input type="file" className="form-control"
-                                    name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
+                                    name="documento_acta_entrega_recepcion" onChange={handleDocumentActa} />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="">Documento Oficio Regularización:</label>
+                                <label htmlFor="">Oficio:</label>
                                 <input type="file" className="form-control"
-                                    name="documento_oficio_regularizacion" onChange={handleDocumentMemorandum} />
+                                    name="documento_oficio_regularizacion" onChange={handleDocumentOficio} />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="">Documento Informe Técnico</label>
+                                <label htmlFor="">Informe Técnico</label>
                                 <input type="file" className="form-control"
                                     name="informe_tecnico" onChange={handleDocumentInformeTecnico} />
                             </div>
@@ -738,17 +739,17 @@ const BienesDirinListPage = () => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="">Documento Acta Entrega Recepción </label>
+                                <label htmlFor="">Acta </label>
                                 <input type="file" className="form-control"
-                                    name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
+                                    name="documento_acta_entrega_recepcion" onChange={handleDocumentActa} />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="">Documento Oficio Regularización </label>
+                                <label htmlFor="">Oficio </label>
                                 <input type="file" className="form-control"
-                                    name="documento_memorandum" onChange={handleDocumentMemorandum} />
+                                    name="documento_memorandum" onChange={handleDocumentOficio} />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="">Documento Informe Técnico </label>
+                                <label htmlFor="">Informe Técnico </label>
                                 <input type="file" className="form-control"
                                     name="informe_tecnico" onChange={handleDocumentInformeTecnico} />
                             </div>

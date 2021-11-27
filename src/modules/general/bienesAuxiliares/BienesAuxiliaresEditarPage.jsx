@@ -11,10 +11,14 @@ const BienesAuxiliaresEditarPage = () => {
 
     const TITULO = 'Formulario de Edición de un Bien Auxiliar'
     const HISTORY = "/admin/bienes-auxiliares";
-    const [documentoBienAuxiliar, setDocumentoBienAuxiliar] = useState(null)
+    const [acta, setActa] = useState(null)
+    const [oficio, setOficio] = useState(null)
+    const [informeTecnico, setInformeTecnico] = useState(null)
     const [ImagenBienAuxiliar, setImagenBienAuxiliar] = useState(null)
 
-    const handleDocumentoBienAuxiliar = e => { setDocumentoBienAuxiliar(e.target.files[0]) }
+    const handleDocumentoActa = e => { setActa(e.target.files[0]) }
+    const handleDocumentoOficio = e => { setOficio(e.target.files[0]) }
+    const handleDocumentoInformeTecnico = e => { setInformeTecnico(e.target.files[0]) }
     const handleImagenBienAuxiliar = e => { setImagenBienAuxiliar(e.target.files[0]) }
 
     const config = { headers: { 'Content-Type': 'multipart/form-data' } }
@@ -87,10 +91,20 @@ const BienesAuxiliaresEditarPage = () => {
         formData.append('estado_bien', formulario.estado_bien ? formulario.estado_bien : "")
         formData.append('observaciones', formulario.observaciones ? formulario.observaciones : "")
 
-        if (documentoBienAuxiliar !== null) {
-            formData.append('documento', documentoBienAuxiliar)
+        if (acta !== null) {
+            formData.append('acta', acta)
         } else {
-            formData.delete('documento', documentoBienAuxiliar)
+            formData.delete('acta', acta)
+        }
+        if (oficio !== null) {
+            formData.append('oficio', oficio)
+        } else {
+            formData.delete('oficio', oficio)
+        }
+        if (informeTecnico !== null) {
+            formData.append('informe_tecnico', informeTecnico)
+        } else {
+            formData.delete('informe_tecnico', informeTecnico)
         }
         if (ImagenBienAuxiliar !== null) {
             formData.append('imagen_bien', ImagenBienAuxiliar)
@@ -266,13 +280,35 @@ const BienesAuxiliaresEditarPage = () => {
 
                                                 <div>
                                                     <label htmlFor="" className="form-label my-2">
-                                                        Documento
+                                                        Acta
                                                     </label>
                                                     <input
                                                         type="file"
                                                         className="form-control mt-2"
                                                         name="documento"
-                                                        onChange={handleDocumentoBienAuxiliar}
+                                                        onChange={handleDocumentoActa}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="" className="form-label my-2">
+                                                        Oficio
+                                                    </label>
+                                                    <input
+                                                        type="file"
+                                                        className="form-control mt-2"
+                                                        name="documento"
+                                                        onChange={handleDocumentoOficio}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="" className="form-label my-2">
+                                                        Informe Técnico
+                                                    </label>
+                                                    <input
+                                                        type="file"
+                                                        className="form-control mt-2"
+                                                        name="documento"
+                                                        onChange={handleDocumentoInformeTecnico}
                                                     />
                                                 </div>
 

@@ -228,7 +228,7 @@ const BienesDirinEditarPage = () => {
                                                     type="file"
                                                     className="form-control my-2"
                                                     placeholder="Archivo.pdf"
-                                                    name="documento"
+                                                    name="acta"
 
                                                     onChange={handleDocumentoActa}
 
@@ -240,7 +240,7 @@ const BienesDirinEditarPage = () => {
                                                     type="file"
                                                     className="form-control my-2"
                                                     placeholder="Archivo.pdf"
-                                                    name="documento"
+                                                    name="oficio"
 
                                                     onChange={handleDocumentoOficio}
 
@@ -252,7 +252,7 @@ const BienesDirinEditarPage = () => {
                                                     type="file"
                                                     className="form-control my-2"
                                                     placeholder="Archivo.pdf"
-                                                    name="documento"
+                                                    name="informe_tecnico"
 
                                                     onChange={handleDocumentoInformeTecnico}
 

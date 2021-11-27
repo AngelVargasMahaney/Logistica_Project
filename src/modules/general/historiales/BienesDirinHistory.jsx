@@ -110,17 +110,17 @@ const BienesDirinHistory = () => {
             'Authorization': `Bearer ${token}`
         }
     }
-    const [documentoActaEntregaRecepcion, setDocumentoActaEntregaRecepcion] = useState(null)
-    const handleDocumentoEntregarecepcion = e => {
-        setDocumentoActaEntregaRecepcion(e.target.files[0])
+    const [acta, setActa] = useState(null)
+    const [oficio, setOficio] = useState(null)
+    const [informeTecnico, setInformeTecnico] = useState(null)
+    const handleChangeDocsActa = e => {
+        setActa(e.target.files[0])
     }
-    const [documentoMemorandum, setDocumentoMemorandum] = useState(null)
-    const handleDocumentoMemorandum = e => {
-        setDocumentoMemorandum(e.target.files[0])
+    const handleChangeDocsOficio = e => {
+        setOficio(e.target.files[0])
     }
-    const [documentoInformeTecnico, setDocumentoInformeTecnico] = useState(null)
-    const handleDocumentoInformeTecnico = e => {
-        setDocumentoInformeTecnico(e.target.files[0])
+    const handleChangeDocsInformeTecnico = e => {
+        setInformeTecnico(e.target.files[0])
     }
     const handleSubmit = e => {
         setCargando(true)
@@ -130,20 +130,20 @@ const BienesDirinHistory = () => {
         formData.append('area_oficina_seccion_id', formularioHistorial.area_oficina_seccion_id)
         formData.append('estado_del_bien', formularioHistorial.estado_del_bien)
         formData.append('observaciones', formularioHistorial.observaciones)
-        if (documentoActaEntregaRecepcion !== null) {
-            formData.append('documento_acta_entrega_recepcion', documentoActaEntregaRecepcion)
+        if (acta !== null) {
+            formData.append('acta', acta)
         } else {
-            formData.delete('documento_acta_entrega_recepcion', documentoActaEntregaRecepcion)
+            formData.delete('acta', acta)
         }
-        if (documentoMemorandum !== null) {
-            formData.append('documento_memorandum', documentoMemorandum)
+        if (oficio !== null) {
+            formData.append('oficio', oficio)
         } else {
-            formData.delete('documento_memorandum', documentoMemorandum)
+            formData.delete('oficio', oficio)
         }
-        if (documentoInformeTecnico !== null) {
-            formData.append('informe_tecnico', documentoInformeTecnico)
+        if (informeTecnico !== null) {
+            formData.append('informe_tecnico', informeTecnico)
         } else {
-            formData.delete('informe_tecnico', documentoInformeTecnico)
+            formData.delete('informe_tecnico', informeTecnico)
         }
 
         postEditarHistorialById(formData, config, idActualHistorialItem).then((rpta) => {
@@ -492,21 +492,20 @@ const BienesDirinHistory = () => {
                                 name="observaciones" onChange={handleChange} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="">Documento Acta Entrega Recepción: </label>
-                            <input type="file" className="form-control"
-                                name="documento_acta_entrega_recepcion" onChange={handleDocumentoEntregarecepcion} />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="">Documento Memorandum </label>
-                            <input type="file" className="form-control"
-                                name="documento_memorandum" onChange={handleDocumentoMemorandum} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="">Documento: Informe Técnico </label>
-                            <input type="file" className="form-control"
-                                name="informe_tecnico" onChange={handleDocumentoInformeTecnico} />
-                        </div>
+                        <label htmlFor="">Acta</label>
+                        <input type="file" className="form-control"
+                          name="acta" onChange={handleChangeDocsActa} />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="">Oficio:</label>
+                        <input type="file" className="form-control"
+                          name="oficio" onChange={handleChangeDocsOficio} />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="">Informe Técnico:</label>
+                        <input type="file" className="form-control"
+                          name="informe_tecnico" onChange={handleChangeDocsInformeTecnico} />
+                      </div>
 
                         {/* <div className="form-group">
                             <label htmlFor="">SubUnidad:</label>

@@ -104,14 +104,17 @@ const InternamientoEquipoPolicial = () => {
     //        console.log(listaInternamientoFormato1[i])
     //    }
 
-    const [documentoRecepcion, setDocumentoRecepcion] = useState(null)
-    const [documentoRegularizacion, setDocumentoRegularizacion] = useState(null)
-
-    const handleDocumentRecepcion = e => {
-        setDocumentoRecepcion(e.target.files[0])
+    const [documentoActa, setDocumentoActa] = useState(null)
+    const [documentoOficio, setDocumentoOficio] = useState(null)
+    const [documentoInformeTecnico, setDocumentoInformeTecnico] = useState(null)
+    const handleDocumentoActa = e => {
+        setDocumentoActa(e.target.files[0])
     }
-    const handleDocumentRegularizacion = e => {
-        setDocumentoRegularizacion(e.target.files[0])
+    const handleDocumentoOficio = e => {
+        setDocumentoOficio(e.target.files[0])
+    }
+    const handleDocumentoInformeTecnico = e => {
+        setDocumentoInformeTecnico(e.target.files[0])
     }
 
     const handleSubmit = e => {
@@ -124,16 +127,20 @@ const InternamientoEquipoPolicial = () => {
         formData.append('estado_del_bien', formularioInternamiento.estado_del_bien ? formularioInternamiento.estado_del_bien : "")
 
 
-        if (documentoRecepcion != null) {
-            formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
+        if (documentoActa != null) {
+            formData.append('documento_acta_entrega_recepcion', documentoActa)
         } else {
-            formData.delete('documento_acta_entrega_recepcion', documentoRecepcion)
+            formData.delete('documento_acta_entrega_recepcion', documentoActa)
         }
-
-        if (documentoRegularizacion !== null) {
-            formData.append('documento_oficio_regularizacion', documentoRegularizacion)
+        if (documentoOficio != null) {
+            formData.append('documento_oficio_regularizacion', documentoOficio)
         } else {
-            formData.delete('documento_oficio_regularizacion', documentoRegularizacion)
+            formData.delete('documento_oficio_regularizacion', documentoOficio)
+        }
+        if (documentoInformeTecnico != null) {
+            formData.append('informe_tecnico', documentoInformeTecnico)
+        } else {
+            formData.delete('informe_tecnico', documentoInformeTecnico)
         }
 
         postEditarInternamientoById(formData, config, idActualDelBien).then((rpta) => {
@@ -336,14 +343,19 @@ const InternamientoEquipoPolicial = () => {
                                 value={formularioInternamiento.observaciones} name="observaciones" onChange={handleChange} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="">Documento-Acta entrega y recepción:</label>
+                            <label htmlFor="">Documento: Acta</label>
                             <input type="file" className="form-control"
-                                name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
+                                name="acta" onChange={handleDocumentoActa} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="">Documento-Oficio regularización:</label>
+                            <label htmlFor="">Documento: Oficio</label>
                             <input type="file" className="form-control"
-                                name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
+                                name="oficio" onChange={handleDocumentoOficio} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="">Documento: Informe Técnico</label>
+                            <input type="file" className="form-control"
+                                name="informe_tecnico" onChange={handleDocumentoInformeTecnico} />
                         </div>
 
                         <div className="form-group">

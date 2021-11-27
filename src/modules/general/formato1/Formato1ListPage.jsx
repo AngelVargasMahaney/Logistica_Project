@@ -39,7 +39,7 @@ const Formato1ListPage = () => {
   })
 
   let { estado_del_bien, fecha, observaciones } = formulario
-  
+
   const [showModall, setShow] = useState(false);
   const [showModalReasignar, setshowModalReasignar] = useState(false);
   const [showModalInternar, setshowModalInternar] = useState(false);
@@ -48,19 +48,17 @@ const Formato1ListPage = () => {
   const handleCloseReasignar = () => setshowModalReasignar(false);
   const handleShowModalInternarBien = () => setShow(true);
   const handleShowModalReasignarBien = () => setshowModalReasignar(true);
-
-  const [documentoRecepcion, setDocumentoRecepcion] = useState(null)
-  const [documentoRegularizacion, setDocumentoRegularizacion] = useState(null)
-  const [documentoMemorandum, setDocumentoMemorandum] = useState(null)
-
-  const handleDocumentRecepcion = e => {
-    setDocumentoRecepcion(e.target.files[0])
+  const [acta, setActa] = useState(null)
+  const [oficio, setOficio] = useState(null)
+  const [informeTecnico, setInformeTecnico] = useState(null)
+  const handleChangeDocsActa = e => {
+    setActa(e.target.files[0])
   }
-  const handleDocumentRegularizacion = e => {
-    setDocumentoRegularizacion(e.target.files[0])
+  const handleChangeDocsOficio = e => {
+    setOficio(e.target.files[0])
   }
-  const handleDocumentMemorandum = e => {
-    setDocumentoMemorandum(e.target.files[0])
+  const handleChangeDocsInformeTecnico = e => {
+    setInformeTecnico(e.target.files[0])
   }
 
 
@@ -93,18 +91,21 @@ const Formato1ListPage = () => {
     formData.append('tipo_bien', formulario.tipo_bien)
 
 
-    if (documentoRecepcion != null) {
-      formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
+    if (acta !== null) {
+      formData.append('acta', acta)
     } else {
-      formData.delete('documento_acta_entrega_recepcion', documentoRecepcion)
+      formData.delete('acta', acta)
     }
-
-    if (documentoRegularizacion !== null) {
-      formData.append('documento_oficio_regularizacion', documentoRegularizacion)
+    if (oficio !== null) {
+      formData.append('oficio', oficio)
     } else {
-      formData.delete('documento_oficio_regularizacion', documentoRegularizacion)
+      formData.delete('oficio', oficio)
     }
-
+    if (informeTecnico !== null) {
+      formData.append('informe_tecnico', informeTecnico)
+    } else {
+      formData.delete('informe_tecnico', informeTecnico)
+    }
     postInternarBienFormato1(formData, config).then((rpta) => {
       if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
         setshowModalInternar(false)
@@ -148,16 +149,20 @@ const Formato1ListPage = () => {
     formDataReasignacion.append('estado_del_bien', formulario.estado_del_bien)
     formDataReasignacion.append('fecha', formulario.fecha)
     formDataReasignacion.append('observaciones', formulario.observaciones)
-    if (documentoRecepcion != null) {
-      formDataReasignacion.append('documento_acta_entrega_recepcion', documentoRecepcion)
+    if (acta !== null) {
+      formDataReasignacion.append('acta', acta)
     } else {
-      formDataReasignacion.delete('documento_acta_entrega_recepcion', documentoRecepcion)
+      formDataReasignacion.delete('acta', acta)
     }
-
-    if (documentoMemorandum !== null) {
-      formDataReasignacion.append('documento_memorandum', documentoMemorandum)
+    if (oficio !== null) {
+      formDataReasignacion.append('oficio', oficio)
     } else {
-      formDataReasignacion.delete('documento_memorandum', documentoMemorandum)
+      formDataReasignacion.delete('oficio', oficio)
+    }
+    if (informeTecnico !== null) {
+      formDataReasignacion.append('informe_tecnico', informeTecnico)
+    } else {
+      formDataReasignacion.delete('informe_tecnico', informeTecnico)
     }
 
     formDataReasignacion.append('bien_id', idActualDelBien)
@@ -173,7 +178,7 @@ const Formato1ListPage = () => {
         console.log("Datos subida correctamente")
 
         setshowModalReasignar(false)
-       
+
         Swal.fire({
           title: 'Reasignación Exitosa',
           text: 'La reasignación fue exitosa',
@@ -197,7 +202,7 @@ const Formato1ListPage = () => {
         'No se puede internar un bien dos veces',
         'error'
       )
-    
+
     })
   }
 
@@ -606,7 +611,7 @@ const Formato1ListPage = () => {
                       <div className="form-group">
                         <label htmlFor="">Estado del Bien:</label>
                         <input type="text" className="form-control"
-                           name="estado_del_bien" required onChange={handleChange} />
+                          name="estado_del_bien" required onChange={handleChange} />
                       </div>
                       <div className="form-group">
                         <label htmlFor="">Fecha:</label>
@@ -616,17 +621,22 @@ const Formato1ListPage = () => {
                       <div className="form-group">
                         <label htmlFor="">Observaciones:</label>
                         <input type="text" className="form-control"
-                           name="observaciones" onChange={handleChange} />
+                          name="observaciones" onChange={handleChange} />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="">Documento-Acta entrega y recepción:</label>
+                        <label htmlFor="">Acta</label>
                         <input type="file" className="form-control"
-                          name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
+                          name="acta" onChange={handleChangeDocsActa} />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="">Documento-Oficio regularización:</label>
+                        <label htmlFor="">Oficio:</label>
                         <input type="file" className="form-control"
-                          name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
+                          name="oficio" onChange={handleChangeDocsOficio} />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="">Informe Técnico:</label>
+                        <input type="file" className="form-control"
+                          name="informe_tecnico" onChange={handleChangeDocsInformeTecnico} />
                       </div>
                       <div className="form-group" hidden>
                         <label htmlFor="">Id del Bien:</label>
@@ -769,28 +779,33 @@ const Formato1ListPage = () => {
                       <div className="form-group">
                         <label htmlFor="">Estado del Bien: </label>
                         <input type="text" className="form-control"
-                           name="estado_del_bien" required onChange={handleChange} />
+                          name="estado_del_bien" required onChange={handleChange} />
                       </div>
                       <div className="form-group">
                         <label htmlFor="">Observaciones: </label>
                         <textarea className="form-control" rows={4} cols={50}
-                           name="observaciones" onChange={handleChange} />
+                          name="observaciones" onChange={handleChange} />
                       </div>
                       <div className="form-group">
                         <label htmlFor="">Fecha: </label>
                         <input type="date" className="form-control"
-                           name="fecha" required onChange={handleChange} />
+                          name="fecha" required onChange={handleChange} />
                       </div>
 
                       <div className="form-group">
-                        <label htmlFor="">Documento-Acta entrega y recepción: </label>
+                        <label htmlFor="">Acta</label>
                         <input type="file" className="form-control"
-                          name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
+                          name="acta" onChange={handleChangeDocsActa} />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="">Documento Memorandum: </label>
+                        <label htmlFor="">Oficio:</label>
                         <input type="file" className="form-control"
-                          name="documento_memorandum" onChange={handleDocumentMemorandum} />
+                          name="oficio" onChange={handleChangeDocsOficio} />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="">Informe Técnico:</label>
+                        <input type="file" className="form-control"
+                          name="informe_tecnico" onChange={handleChangeDocsInformeTecnico} />
                       </div>
                       <div className="form-group" hidden>
                         <label htmlFor="">Id del Bien: </label>

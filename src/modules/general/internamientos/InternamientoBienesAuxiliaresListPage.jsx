@@ -103,14 +103,17 @@ const InternamientoBienesAuxiliaresListPage = () => {
     //        console.log(listaInternamientoFormato1[i])
     //    }
 
-    const [documentoRecepcion, setDocumentoRecepcion] = useState(null)
-    const [documentoRegularizacion, setDocumentoRegularizacion] = useState(null)
-
-    const handleDocumentRecepcion = e => {
-        setDocumentoRecepcion(e.target.files[0])
+    const [acta, setActa] = useState(null)
+    const [oficio, setOficio] = useState(null)
+    const [informeTecnico, setInformeTecnico] = useState(null)
+    const handleChangeDocsActa = e => {
+        setActa(e.target.files[0])
     }
-    const handleDocumentRegularizacion = e => {
-        setDocumentoRegularizacion(e.target.files[0])
+    const handleChangeDocsOficio = e => {
+        setOficio(e.target.files[0])
+    }
+    const handleChangeDocsInformeTecnico = e => {
+        setInformeTecnico(e.target.files[0])
     }
 
     const handleSubmit = e => {
@@ -123,17 +126,21 @@ const InternamientoBienesAuxiliaresListPage = () => {
         formData.append('estado_del_bien', formularioInternamiento.estado_del_bien ? formularioInternamiento.estado_del_bien : "")
 
 
-        if (documentoRecepcion != null) {
-            formData.append('documento_acta_entrega_recepcion', documentoRecepcion)
-        } else {
-            formData.delete('documento_acta_entrega_recepcion', documentoRecepcion)
-        }
-
-        if (documentoRegularizacion !== null) {
-            formData.append('documento_oficio_regularizacion', documentoRegularizacion)
-        } else {
-            formData.delete('documento_oficio_regularizacion', documentoRegularizacion)
-        }
+        if (acta !== null) {
+            formData.append('acta', acta)
+          } else {
+            formData.delete('acta', acta)
+          }
+          if (oficio !== null) {
+            formData.append('oficio', oficio)
+          } else {
+            formData.delete('oficio', oficio)
+          }
+          if (informeTecnico !== null) {
+            formData.append('informe_tecnico', informeTecnico)
+          } else {
+            formData.delete('informe_tecnico', informeTecnico)
+          }
 
         postEditarInternamientoById(formData, config, idActualDelBien).then((rpta) => {
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
@@ -335,14 +342,19 @@ const InternamientoBienesAuxiliaresListPage = () => {
                                 value={formularioInternamiento.observaciones} name="observaciones" onChange={handleChange} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="">Documento-Acta entrega y recepción:</label>
+                            <label htmlFor="">Documento: Acta</label>
                             <input type="file" className="form-control"
-                                name="documento_acta_entrega_recepcion" onChange={handleDocumentRecepcion} />
+                                name="acta" onChange={handleChangeDocsActa} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="">Documento-Oficio regularización:</label>
+                            <label htmlFor="">Documento: Oficio</label>
                             <input type="file" className="form-control"
-                                name="documento_oficio_regularizacion" onChange={handleDocumentRegularizacion} />
+                                name="oficio" onChange={handleChangeDocsOficio} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="">Documento: Informe Técnico</label>
+                            <input type="file" className="form-control"
+                                name="informe_tecnico" onChange={handleChangeDocsInformeTecnico} />
                         </div>
 
                         <div className="form-group">

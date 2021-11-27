@@ -5,9 +5,14 @@ import AdminSidebar from '../../admin/components/AdminSidebar'
 import GeneralNavBar from '../../layout/GeneralNavBar'
 
 const EquipoPolicialEditarPage = () => {
-    const [documentoEquipoPolicial, setDocumentoEquipoPolicial] = useState(null)
+    const [acta, setActa] = useState(null)
+    const [oficio, setOficio] = useState(null)
+    const [informeTecnico, setInformeTecnico] = useState(null)
+
     const [imagenBienEquipoPolicial, setImagenBienEquipoPolicial] = useState(null)
-    const handleDocumentoEquipoPolicial = e => (setDocumentoEquipoPolicial(e.target.files[0]))
+    const handleDocumentoActa = e => (setActa(e.target.files[0]))
+    const handleDocumentoOficio= e => (setOficio(e.target.files[0]))
+    const handleDocumentoInformeTecnico = e => (setInformeTecnico(e.target.files[0]))
     const handleImagenEquipoPolicial = e => (setImagenBienEquipoPolicial(e.target.files[0]))
     const [formulario, setFormulario] = useState({
         codigo: "",
@@ -49,10 +54,20 @@ const EquipoPolicialEditarPage = () => {
         formData.append(`tipo_afectacion`, formulario.tipo_afectacion ? formulario.tipo_afectacion : "")
         formData.append(`observaciones`, formulario.observaciones ? formulario.observaciones : "")
 
-        if (documentoEquipoPolicial !== null) {
-            formData.append(`documento`, documentoEquipoPolicial)
+        if (acta !== null) {
+            formData.append(`acta`, acta)
         } else {
-            formData.delete(`documento`, documentoEquipoPolicial)
+            formData.delete(`acta`, acta)
+        }
+        if (oficio !== null) {
+            formData.append(`oficio`, oficio)
+        } else {
+            formData.delete(`oficio`, oficio)
+        }
+        if (informeTecnico !== null) {
+            formData.append(`informe_tecnico`, informeTecnico)
+        } else {
+            formData.delete(`informe_tecnico`, informeTecnico)
         }
         if (imagenBienEquipoPolicial !== null) {
             formData.append(`imagen_bien`, imagenBienEquipoPolicial)
@@ -254,15 +269,41 @@ const EquipoPolicialEditarPage = () => {
 
                                                 <div>
                                                     <label htmlFor="" className="form-label my-2">
-                                                        Documento
+                                                        Acta
                                                     </label>
                                                     <input
                                                         type="file"
                                                         className="form-control mt-2"
 
-                                                        name="documento"
+                                                        name="acta"
 
-                                                        onChange={handleDocumentoEquipoPolicial}
+                                                        onChange={handleDocumentoActa}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="" className="form-label my-2">
+                                                        Oficio
+                                                    </label>
+                                                    <input
+                                                        type="file"
+                                                        className="form-control mt-2"
+
+                                                        name="oficio"
+
+                                                        onChange={handleDocumentoOficio}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="" className="form-label my-2">
+                                                        Informe Técnico
+                                                    </label>
+                                                    <input
+                                                        type="file"
+                                                        className="form-control mt-2"
+
+                                                        name="informe_tecnico"
+
+                                                        onChange={handleDocumentoInformeTecnico}
                                                     />
                                                 </div>
 

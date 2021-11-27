@@ -114,14 +114,17 @@ const BienesAuxiliaresHistory = () => {
             'Authorization': `Bearer ${token}`
         }
     }
-    const [documentoEntregaRecepcion, setDocumentoEntregaRecepcion] = useState(null)
-    const handleDocumentoEntregaRecepcion = e => {
-        setDocumentoEntregaRecepcion(e.target.files[0])
+    const [acta, setActa] = useState(null)
+    const [oficio, setOficio] = useState(null)
+    const [informeTecnico, setInformeTecnico] = useState(null)
+    const handleChangeDocsActa = e => {
+        setActa(e.target.files[0])
     }
-
-    const [documentoMemorandum, setDocumentoMemorandum] = useState(null)
-    const handleDocumentoMemorandum = e => {
-        setDocumentoMemorandum(e.target.files[0])
+    const handleChangeDocsOficio = e => {
+        setOficio(e.target.files[0])
+    }
+    const handleChangeDocsInformeTecnico = e => {
+        setInformeTecnico(e.target.files[0])
     }
 
     const handleSubmit = e => {
@@ -132,17 +135,21 @@ const BienesAuxiliaresHistory = () => {
         formData.append('estado_del_bien', formularioHistorial.estado_del_bien ? formularioHistorial.estado_del_bien : "")
         formData.append('observaciones', formularioHistorial.observaciones ? formularioHistorial.observaciones : "")
         formData.append('fecha', formularioHistorial.fecha ? formularioHistorial.fecha : "")
-        if (documentoEntregaRecepcion !== null) {
-            formData.append('documento_acta_entrega_recepcion', documentoEntregaRecepcion)
+        if (acta !== null) {
+            formData.append('acta', acta)
         } else {
-            formData.delete('documento_acta_entrega_recepcion', documentoEntregaRecepcion)
+            formData.delete('acta', acta)
         }
-        if (documentoMemorandum !== null) {
-            formData.append('documento_memorandum', documentoMemorandum)
+        if (oficio !== null) {
+            formData.append('oficio', oficio)
         } else {
-            formData.delete('documento_memorandum', documentoMemorandum)
+            formData.delete('oficio', oficio)
         }
-
+        if (informeTecnico !== null) {
+            formData.append('informe_tecnico', informeTecnico)
+        } else {
+            formData.delete('informe_tecnico', informeTecnico)
+        }
 
         postEditarHistorialById(formData, config, idActualHistorialItem).then((rpta) => {
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
@@ -440,14 +447,19 @@ const BienesAuxiliaresHistory = () => {
                                 value={formularioHistorial.fecha} name="fecha" onChange={handleChange} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="">Documento Acta Entrega Recepción: </label>
+                            <label htmlFor="">Acta</label>
                             <input type="file" className="form-control"
-                                name="documento_acta_entrega_recepcion" onChange={handleDocumentoEntregaRecepcion} />
+                                name="acta" onChange={handleChangeDocsActa} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="">Documento Memorandum: </label>
+                            <label htmlFor="">Oficio:</label>
                             <input type="file" className="form-control"
-                                name="documento_memorandum" onChange={handleDocumentoMemorandum} />
+                                name="oficio" onChange={handleChangeDocsOficio} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="">Informe Técnico:</label>
+                            <input type="file" className="form-control"
+                                name="informe_tecnico" onChange={handleChangeDocsInformeTecnico} />
                         </div>
                         {/* <div className="form-group">
                             <label htmlFor="">SubUnidad:</label>

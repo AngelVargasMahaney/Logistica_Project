@@ -29,9 +29,9 @@ const BienesDirinCrearPage = () => {
         })
     }
     const history = useHistory()
-    const [documentoActa, setDocumentoActa] = useState(null)
-    const [documentoOficio, setDocumentoOficio] = useState(null)
-    const [documentoInformeTecnico, setDocumentoInformeTecnico] = useState(null)
+    const [acta, setActa] = useState(null)
+    const [oficio, setOficio] = useState(null)
+    const [informeTecnico, setInformeTecnico] = useState(null)
 
     const [imagenBien, setImagenBien] = useState(null)
 
@@ -39,13 +39,13 @@ const BienesDirinCrearPage = () => {
         setImagenBien(e.target.files[0])
     }
     const handleDocumentoActa = e => {
-        setDocumentoActa(e.target.files[0])
+        setActa(e.target.files[0])
     }
     const handleDocumentoOficio = e => {
-        setDocumentoOficio(e.target.files[0])
+        setOficio(e.target.files[0])
     }
     const handleDocumentoInformeTecnico = e => {
-        setDocumentoInformeTecnico(e.target.files[0])
+        setInformeTecnico(e.target.files[0])
     }
 
     const handleSubmit = (e) => {
@@ -67,20 +67,20 @@ const BienesDirinCrearPage = () => {
         formData.append(`estado_bien`, formulario.estado_bien)
         formData.append(`observaciones`, formulario.observaciones)
 
-        if (documentoActa != null) {
-            formData.append('acta', documentoActa)
+        if (acta != null) {
+            formData.append('acta', acta)
         } else {
-            formData.delete('acta', documentoActa)
+            formData.delete('acta', acta)
         }
-        if (documentoOficio != null) {
-            formData.append('oficio', documentoOficio)
+        if (oficio != null) {
+            formData.append('oficio', oficio)
         } else {
-            formData.delete('oficio', documentoOficio)
+            formData.delete('oficio', oficio)
         }
-        if (documentoInformeTecnico != null) {
-            formData.append('informe_tecnico', documentoInformeTecnico)
+        if (informeTecnico != null) {
+            formData.append('informe_tecnico', informeTecnico)
         } else {
-            formData.delete('informe_tecnico', documentoInformeTecnico)
+            formData.delete('informe_tecnico', informeTecnico)
         }
         if (imagenBien !== null) {
             formData.append('imagen_bien', imagenBien)

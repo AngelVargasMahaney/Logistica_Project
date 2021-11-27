@@ -1,9 +1,5 @@
 import axios from 'axios';
 
-import { URL_BACKEND } from "../environments/environments"
-
-
-
 
 
 export const authAxios = axios.create();
@@ -28,7 +24,7 @@ authAxios.interceptors.response.use((response) => {
     const primerRequest = error.config;
     if (error.response.status === 403 && !primerRequest._retry) {
         primerRequest._retry = true;
-         const token_llamada2 = await localStorage.getItem('token');
+        const token_llamada2 = await localStorage.getItem('token');
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + token_llamada2;
         return authAxios(primerRequest);
     }

@@ -6,9 +6,13 @@ import GeneralNavBar from '../../layout/GeneralNavBar'
 
 const Formato1EditarPage = () => {
     // Estados y handlers, para el manejo de documentos e imágenes
-    const [documentoFormato1, setDocumentoFormato1] = useState(null)
+    const [acta, setActa] = useState(null)
+    const [oficio, setOficio] = useState(null)
+    const [informeTecnico, setInformeTecnico] = useState(null)
     const [imagenBienFormato1, setImagenBienFormato1] = useState(null)
-    const handleDocumentoFormato1 = e => { setDocumentoFormato1(e.target.files[0]) }
+    const handleDocumentoActa = e => { setActa(e.target.files[0]) }
+    const handleDocumentoOficio = e => { setOficio(e.target.files[0]) }
+    const handleDocumentoInformeTecnico = e => { setInformeTecnico(e.target.files[0]) }
     const handleImagenFormato1 = e => { setImagenBienFormato1(e.target.files[0]) }
     //
     const [formulario, setFormulario] = useState({
@@ -53,10 +57,20 @@ const Formato1EditarPage = () => {
         formData.append(`forma_adquisicion`, formulario.forma_adquisicion ? formulario.forma_adquisicion : " ")
         formData.append(`observaciones`, formulario.observaciones ? formulario.observaciones : " ")
 
-        if (documentoFormato1 !== null) {
-            formData.append(`documento`, documentoFormato1)
+        if (acta !== null) {
+            formData.append('acta', acta)
         } else {
-            formData.delete(`documento`, documentoFormato1)
+            formData.delete('acta', acta)
+        }
+        if (oficio !== null) {
+            formData.append('oficio', oficio)
+        } else {
+            formData.delete('oficio', oficio)
+        }
+        if (informeTecnico !== null) {
+            formData.append('informe_tecnico', informeTecnico)
+        } else {
+            formData.delete('informe_tecnico', informeTecnico)
         }
         if (imagenBienFormato1 !== null) {
             formData.append(`imagen_bien`, imagenBienFormato1)
@@ -253,7 +267,33 @@ const Formato1EditarPage = () => {
 
                                         <div>
                                             <label htmlFor="" className="form-label my-2">
-                                                Documento
+                                                Acta
+                                            </label>
+                                            <input
+                                                type="file"
+                                                className="form-control mt-2"
+
+                                                name="acta"
+
+                                                onChange={handleDocumentoActa}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="" className="form-label my-2">
+                                                Oficio
+                                            </label>
+                                            <input
+                                                type="file"
+                                                className="form-control mt-2"
+
+                                                name="oficio"
+
+                                                onChange={handleDocumentoOficio}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="" className="form-label my-2">
+                                                Informe Técnico
                                             </label>
                                             <input
                                                 type="file"
@@ -261,7 +301,7 @@ const Formato1EditarPage = () => {
 
                                                 name="documento"
 
-                                                onChange={handleDocumentoFormato1}
+                                                onChange={handleDocumentoInformeTecnico}
                                             />
                                         </div>
 
