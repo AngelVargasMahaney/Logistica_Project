@@ -4,8 +4,7 @@ import {
     getPersonalById,
     putPersonalById,
   } from "../../../services/personalService";
-import AdminSidebar from '../../admin/components/AdminSidebar'
-import GeneralNavBar from '../../layout/GeneralNavBar'
+
 import swal from 'sweetalert2'
 const PersonalEditarPage = () => {
     
@@ -40,7 +39,7 @@ const PersonalEditarPage = () => {
 
     const errorResponse = (({response}) => {
         let mensaje = ""
-        if (response.status == 400) {
+        if (response.status === 400) {
             for (const [key, value] of Object.entries(response.data)) {
                 mensaje += key + ": " + value + "<br>";
                 console.log(key, value);
@@ -76,8 +75,7 @@ const PersonalEditarPage = () => {
 
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+           
             <div className="home_content">
                 <main className="container">
                     <div className="row mt-4">
@@ -162,7 +160,7 @@ const PersonalEditarPage = () => {
                                         
                                         <div>
                                             <button className="btn btn-primary" type="submit">
-                                           <span className="mx-1"><i class="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
+                                           <span className="mx-1"><i className="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
                                             </button>
                                             <button
                                                 className="btn btn-danger my-3 mx-3"
@@ -171,7 +169,7 @@ const PersonalEditarPage = () => {
                                                     history.push(HISTORY);
                                                 }}
                                             >
-                                               <span className="mx-1"><i class="fa fa-ban" aria-hidden="true"></i></span> Cancelar
+                                               <span className="mx-1"><i className="fa fa-ban" aria-hidden="true"></i></span> Cancelar
                                             </button>
                                         </div>
                                     </form>

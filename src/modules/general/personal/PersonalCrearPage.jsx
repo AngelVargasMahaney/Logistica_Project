@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 
 import { useHistory } from 'react-router-dom'
-import AdminSidebar from '../../admin/components/AdminSidebar'
-import GeneralNavBar from '../../layout/GeneralNavBar'
+
 
 import { postPersonal } from "../../../services/personalService";
 import swal from 'sweetalert2';
@@ -34,7 +33,7 @@ const PersonalCrearPage = () => {
   
     const errorResponse = (({response}) => {
         let mensaje = ""
-        if (response.status == 400) {
+        if (response.status === 400) {
             for (const [key, value] of Object.entries(response.data)) {
                 mensaje += key + ": " + value + "<br>";
                 console.log(key, value);
@@ -66,8 +65,7 @@ const PersonalCrearPage = () => {
 
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+           
             <div className="home_content">
                 <main className="container">
                     <div className="row mt-4">

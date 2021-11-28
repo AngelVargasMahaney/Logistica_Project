@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
 import Swal from 'sweetalert2';
 import { deleteHistorialById, getHistorialBienesDirin, postEditarHistorialById } from '../../../services/historialBienesService';
-import AdminSidebar from '../../admin/components/AdminSidebar';
-import GeneralNavBar from '../../layout/GeneralNavBar';
+
 import { Modal } from 'react-bootstrap';
 import { getPersonalActivo } from '../../../services/personalService';
 import { getAreaOficinaSeccion } from '../../../services/areaOficinaSeccionService';
@@ -194,9 +193,9 @@ const BienesDirinHistory = () => {
     let { personal, area_oficina_seccion } = formularioHistorial
     return (
         <>
-            <AdminSidebar />
+           
             <div className="home_content">
-                <GeneralNavBar />
+              
                 <main className="container mt-3 mb-5">
 
                     <div className="card">
@@ -347,7 +346,7 @@ const BienesDirinHistory = () => {
 
                                                         <button
                                                             type="button"
-                                                            class="btn pull-right mx-3 btn-outline-danger"
+                                                            className="btn pull-right mx-3 btn-outline-danger"
                                                             onClick={() => {
                                                                 eliminarHistorial(item.id);
                                                             }}
@@ -356,7 +355,7 @@ const BienesDirinHistory = () => {
                                                         </button>
                                                         <button
                                                             type="button"
-                                                            class="btn pull-right mx-3 btn-outline-info"
+                                                            className="btn pull-right mx-3 btn-outline-info"
                                                             onClick={() => {
                                                                 showModalEditarHistorial(item.id, item);
                                                             }}

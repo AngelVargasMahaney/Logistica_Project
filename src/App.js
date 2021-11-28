@@ -11,6 +11,7 @@ import './styles/allstyles.css';
 import './styles/authLoginPage.css';
 import './styles/pdfViewerStyle.css';
 import './styles/spinner.css';
+import './styles/404page.css';
 
 import PrivateRoute from './PrivateRoute';
 import HomePage from './modules/layout/HomePage';

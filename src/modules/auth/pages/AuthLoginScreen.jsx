@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react'
-import { useHistory } from 'react-router'
 import AuthContext from '../../../context/auth/authContext'
 import { postLogin } from '../../../services/authService'
 
@@ -13,7 +12,6 @@ const AuthLoginScreen = () => {
 
     const { iniciarSesionContext } = useContext(AuthContext)
 
-    const history = useHistory()
 
     const handleChange = e => {
         setFormulario({
@@ -36,7 +34,8 @@ const AuthLoginScreen = () => {
                     text: 'BIENVENIDO',
                     footer: 'SISTEMA DE CONTROL DE BIENES'
                 })
-                history.push('/admin')
+                window.location.href = "/admin";
+                // history.push('/admin')
             } else {
                 console.log("ERRRRRRRRRRRRRRRRRo")
             }

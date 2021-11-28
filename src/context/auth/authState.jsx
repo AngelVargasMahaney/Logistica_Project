@@ -10,11 +10,12 @@ const AuthState = (props) => {
         name: null,
         apellido: null,
         token: null,
+        is_admin: false,
         cargando: true
     })
 
     const iniciarSesionContext = (token) => {
-        
+
         localStorage.setItem('token', token);
         const payloadString = token.split('.')[1]
         const payloadDecrypt = atob(payloadString)
@@ -23,13 +24,14 @@ const AuthState = (props) => {
             autenticado: true,
             name: payloadJson.name,
             apellido: payloadJson.apellido,
+            is_admin: payloadJson.is_admin,
             token: token,
             cargando: false
         })
 
     }
     const iniciarSesionLocalStorage = () => {
-       
+
         if (localStorage.getItem('token')) {
             postVerificarToken(localStorage.getItem('token')).then(rpta => {
                 if (rpta.status === 200) {
@@ -41,6 +43,7 @@ const AuthState = (props) => {
                         autenticado: false,
                         name: null,
                         apellido: null,
+                        is_admin: false,
                         token: null,
                         cargando: false
                     })
@@ -54,8 +57,18 @@ const AuthState = (props) => {
                     name: null,
                     apellido: null,
                     token: null,
+                    is_admin: false,
                     cargando: false
                 })
+            })
+        } else {
+            setState({
+                autenticado: false,
+                name: null,
+                apellido: null,
+                token: null,
+                is_admin: false,
+                cargando: false
             })
         }
     }
@@ -64,19 +77,8 @@ const AuthState = (props) => {
         iniciarSesionLocalStorage()
         // eslint-disable-next-line
     }, [])
-    const asyncLocalStorage = {
-        setItem: function (key, value) {
-            return Promise.resolve().then(function () {
-                localStorage.setItem(key, value);
-            });
-        },
-        getItem: function (key) {
-            return Promise.resolve().then(function () {
-                return localStorage.getItem(key);
-            });
-        }
-    };
-    
+
+
 
 
     return (

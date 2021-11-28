@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
-import { postUsuario } from '../../../services/usuarioService'
+import React, { useEffect, useState } from 'react'
+import { getRoles, postUsuario } from '../../../services/usuarioService'
 import { useHistory } from 'react-router-dom'
-import AdminSidebar from '../../admin/components/AdminSidebar'
-import GeneralNavBar from '../../layout/GeneralNavBar'
+
 import swal from 'sweetalert2'
 const UserCrearPage = () => {
     const tituloOperacion = 'Formulario de Creación de un Usuario'
@@ -12,7 +11,8 @@ const UserCrearPage = () => {
         apellido: "",
         dni: "",
         email: "",
-        password: ""
+        password: "",
+        role_id: 0
     })
 
 
@@ -28,13 +28,25 @@ const UserCrearPage = () => {
             [e.target.name]: e.target.value //Darle valor del name según el formulario
         })
     }
+    const [roles, setRoles] = useState([])
+    const obtenerRoles = () => {
+        getRoles().then((rpta) => {
+            setRoles(rpta.data)
 
+        })
+    }
+    useEffect(() => {
+        obtenerRoles()
+    }, [])
+
+
+    console.log(roles)
     const handleSubmit = (e) => {
         e.preventDefault() //Evito que se refresque la página
 
-        const errorResponse = (({response}) => {
+        const errorResponse = (({ response }) => {
             let mensaje = ""
-            if (response.status == 400) {
+            if (response.status === 400) {
                 for (const [key, value] of Object.entries(response.data)) {
                     mensaje += key + ": " + value + "<br>";
                     console.log(key, value);
@@ -47,7 +59,7 @@ const UserCrearPage = () => {
                 html: mensaje,
                 footer: 'SISTEMA DE CONTROL DE BIENES'
             })
-        } );
+        });
         postUsuario(formulario).then((rpta) => {
             console.log(rpta)
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
@@ -56,11 +68,11 @@ const UserCrearPage = () => {
         }).catch(errorResponse);
     }
 
+    console.log(formulario)
 
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+           
             <div className="home_content">
                 <main className="container">
                     <div className="row mt-4">
@@ -72,7 +84,7 @@ const UserCrearPage = () => {
                                     </h4>
                                 </div>
                                 <div className="card-body">
-                                  
+
                                     <form onSubmit={handleSubmit}>
                                         <div>
                                             <label htmlFor="" className="form-label">
@@ -138,6 +150,20 @@ const UserCrearPage = () => {
                                                 onChange={handleChange}
                                                 required
                                             />
+
+                                            <div className="form-group">
+                                                <label htmlFor="">Rol de Usuario</label>
+                                                <select onChange={handleChange} name="role_id" value={formulario.role_id} required className="form-select custom-select mr-sm-2">
+                                                    <option value="">Seleccione Rol de Usuario</option>
+                                                    {roles.map((objRol, i) => {
+                                                        return (
+                                                            <option key={objRol.id} value={objRol.id}>{objRol.name}</option>
+                                                        );
+                                                    })}
+
+                                                </select>
+                                            </div>
+
                                         </div>
                                         <div>
 

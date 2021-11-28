@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import AdminSidebar from '../../admin/components/AdminSidebar';
-import GeneralNavBar from '../../layout/GeneralNavBar';
+
 import { Link } from "react-router-dom";
 import { Button, Modal } from 'react-bootstrap'
 import Swal from 'sweetalert2';
-import { getBienesDirin } from '../../../services/bienesDirinService';
 import { deleteDesinternarBien, getBienesInternadosBienesDirin, postEditarInternamientoById } from '../../../services/internamientoFormato1Service';
 import { getReportes } from '../../../services/reportesService';
 import CargandoComponente from '../../layout/CargandoComponente';
@@ -165,8 +163,7 @@ const InternamientoBienesDirin = () => {
 
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+           
             <div className="home_content">
 
 

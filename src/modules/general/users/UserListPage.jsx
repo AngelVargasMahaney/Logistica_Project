@@ -4,9 +4,6 @@ import Swal from 'sweetalert2'
 import { deleteUsuarioById, getUsuarios, putActiveUsuarioById, putDesactiveUsuarioById } from '../../../services/usuarioService'
 
 
-import AdminSidebar from '../../admin/components/AdminSidebar';
-import GeneralNavBar from '../../layout/GeneralNavBar';
-import swal from 'sweetalert2';
 const UserListPage = () => {
 
     const urlUsuarioCrear = '/admin/usuario/crear'
@@ -63,8 +60,7 @@ const UserListPage = () => {
 
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+           
             <div className="home_content">
 
 
@@ -75,6 +71,7 @@ const UserListPage = () => {
                             <div className="card-body">
 
                                 <div className="d-flex justify-content-between mb-3">
+                                    
                                     <h5>Usuarios</h5>
                                     <Link to={urlUsuarioCrear} className="btn btn-primary "> <i className="fa fa-plus"></i> Crear Usuario</Link>
                                 </div>
@@ -106,6 +103,7 @@ const UserListPage = () => {
                                                                 <th>DNI</th>
                                                                 <th>Email</th>
                                                                 <th>Estado</th>
+                                                                <th>Rol</th>
                                                                 <th></th>
                                                                 <th className="acciones"></th>
                                                             </tr>
@@ -122,6 +120,11 @@ const UserListPage = () => {
                                                                             <td>{objUsuario.apellido}</td>
                                                                             <td>{objUsuario.dni}</td>
                                                                             <td>{objUsuario.email}</td>
+                                                                            <td>
+                                                                                {
+                                                                                    objUsuario.role
+                                                                                }
+                                                                            </td>
                                                                             <td>{objUsuario.is_active ? (<>ACTIVO</>) : (<>DESACTIVO</>)}  </td>
                                                                             <td><button type="button" className="btn btn-outline-dark btn-sm personalizado" onClick={() => {
                                                                                 cambiarEstado(objUsuario);
@@ -143,6 +146,7 @@ const UserListPage = () => {
                                                                                 > <i className="fa fa-pencil"></i>
                                                                                 </Link>
                                                                             </td>
+
                                                                         </tr>
 
                                                                     )

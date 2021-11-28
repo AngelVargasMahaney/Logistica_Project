@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import { useHistory } from 'react-router-dom'
-import AdminSidebar from '../../admin/components/AdminSidebar'
-import GeneralNavBar from '../../layout/GeneralNavBar'
+
 
 import { postAreaOficinaSeccion } from "../../../services/areaOficinaSeccionService";
 import { getSubunidades } from "../../../services/subunidadesService";
@@ -57,8 +56,7 @@ const AreaOficinaSeccionCrearPage = () => {
 
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+           
             <div className="home_content">
                 <main className="container">
                     <div className="row mt-4">

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router'
 import { getBienFormato1ById, postEditarFormato1ById } from '../../../services/formatoService'
-import AdminSidebar from '../../admin/components/AdminSidebar'
-import GeneralNavBar from '../../layout/GeneralNavBar'
+
 
 const Formato1EditarPage = () => {
     // Estados y handlers, para el manejo de documentos e imágenes
@@ -98,8 +97,7 @@ const Formato1EditarPage = () => {
 
 
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+           
             <div className="home_content">
                 <main className="container">
                     <div className="row mt-4">
@@ -321,7 +319,7 @@ const Formato1EditarPage = () => {
 
                                         <div>
                                             <button className="btn btn-primary" type="submit">
-                                                <span className="mx-1"><i class="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
+                                                <span className="mx-1"><i className="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
                                             </button>
                                             <button
                                                 className="btn btn-danger my-3 mx-3"
@@ -330,7 +328,7 @@ const Formato1EditarPage = () => {
                                                     history.push(`/admin/formatos`);
                                                 }}
                                             >
-                                                <span className="mx-1"><i class="fa fa-ban" aria-hidden="true"></i></span> Cancelar
+                                                <span className="mx-1"><i className="fa fa-ban" aria-hidden="true"></i></span> Cancelar
                                             </button>
                                         </div>
                                     </form>

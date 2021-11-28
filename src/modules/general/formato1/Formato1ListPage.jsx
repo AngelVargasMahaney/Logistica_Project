@@ -4,16 +4,12 @@ import {
   deleteFormatoById,
   getFormatos,
 } from "../../../services/formatoService";
-import AdminSidebar from "../../admin/components/AdminSidebar";
 
-import GeneralNavBar from "../../layout/GeneralNavBar";
 import Swal from "sweetalert2";
 import Modal from "react-bootstrap/Modal";
 import { Button } from "react-bootstrap";
 import { postInternarBienFormato1, postReasignarBienFormato1 } from "../../../services/internamientoFormato1Service";
-import { getSubunidades } from "../../../services/subunidadesService";
 import { getPersonal, getPersonalActivo } from "../../../services/personalService";
-import { useParams } from 'react-router-dom'
 import { getHistorialFormatoById } from "../../../services/historialBienesService";
 import imgNoDisponible from "../../../assets/23.png"
 import { getAreaOficinaSeccion } from "../../../services/areaOficinaSeccionService";
@@ -38,16 +34,12 @@ const Formato1ListPage = () => {
     personal_id: ""
   })
 
-  let { estado_del_bien, fecha, observaciones } = formulario
 
-  const [showModall, setShow] = useState(false);
   const [showModalReasignar, setshowModalReasignar] = useState(false);
   const [showModalInternar, setshowModalInternar] = useState(false);
-  const handleClose = () => setShow(false);
   const handleCloseInternar = () => setshowModalInternar(false);
   const handleCloseReasignar = () => setshowModalReasignar(false);
-  const handleShowModalInternarBien = () => setShow(true);
-  const handleShowModalReasignarBien = () => setshowModalReasignar(true);
+
   const [acta, setActa] = useState(null)
   const [oficio, setOficio] = useState(null)
   const [informeTecnico, setInformeTecnico] = useState(null)
@@ -129,17 +121,7 @@ const Formato1ListPage = () => {
 
   }
 
-  const [dataInicialModalReasignacuon, setDataInicialModalReasignacuon] = useState({
-    estado_del_bien: "",
-    fecha: "",
-    observaciones: "",
-    documento_acta_entrega_recepcion: "",
-    documento_oficio_regularizacion: "",
-    // bien_id: "",
-    tipo_bien: 1,
-    area_oficina_seccion_id: "",
-    personal_id: ""
-  })
+  
 
   const handleSubmitReasignacion = e => {
 
@@ -269,6 +251,7 @@ const Formato1ListPage = () => {
   useEffect(() => {
     prueba()
     // }, [idActualDelBien, historial, dataHistorial])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idActualDelBien, showModalReasignar, showModalInternar])
   // Metodos para traer el historial
 
@@ -328,22 +311,7 @@ const Formato1ListPage = () => {
   useEffect(() => {
     traerSubunidades();
   }, []);
-  //Aqui los metodos para traer las personales
-  const [personal, setPersonal] = useState([]);
-  const traerPersonal = () => {
-    setCargando(true)
-    getPersonal().then((rpta) => {
-      //console.log(rpta);
-      setPersonal(rpta.data);
-      setCargando(false)
-    });
-  };
-  useEffect(() => {
-    traerPersonal();
-  }, []);
-
-
-
+  
   const [personalActivo, setPersonalActivo] = useState([]);
   const traerPersonalActivo = () => {
     setCargando(true)
@@ -357,7 +325,6 @@ const Formato1ListPage = () => {
     traerPersonalActivo();
   }, []);
 
-  const [generarReporte, setGenerarReporte] = useState("")
   const reportes = () => {
     getReporteFormato1Excel().then(() => {
 
@@ -378,29 +345,41 @@ const Formato1ListPage = () => {
 
   return (
     <>
-      <AdminSidebar />
-      <GeneralNavBar />
+
       <div className="home_content">
         <div>
           <main className="container-fluid mt-5">
             <div className="card">
               <div className="card-body">
-                <div className="d-flex justify-content-between mb-3">
-                  <h5>Lista de Bienes del Formato 1</h5>
-                  <Link to="/admin/bienes-internados/formato1" className="btn btn-warning">
-                    {" "}
-                    <i className="fa fa-list"></i> Lista de Bienes Internados
-                  </Link>
-                  <Button onClick={reportes} className="btn btn-success">
-                    {" "}
-                    <i className="fas fa-file-excel"></i> Generar Reporte
-                  </Button>
+                <div className="row">
+                  <div className="col-md-3">
+                    <h5 className="mx-3">Lista de Bienes del Formato 1</h5>
+                  </div>
+                  <div className="col-md-3">
+                    <Link to="/admin/bienes-internados/formato1" className="btn btn-warning">
+                      {" "}
+                      <i className="fa fa-list"></i> Lista de Bienes Internados
+                    </Link>
+                  </div>
+                  <div className="col-md-3">
+                    <Button onClick={reportes} className="btn btn-success">
+                      {" "}
+                      <i className="fas fa-file-excel"></i> Generar Reporte
+                    </Button>
+                  </div>
+                  <div className="col-md-3">
+                    <Link to={urlFormatoCrear} className="btn btn-primary ">
+                      {" "}
+                      <i className="fa fa-plus"></i> Crear un Bien
+                    </Link>
+                  </div>
 
 
-                  <Link to={urlFormatoCrear} className="btn btn-primary ">
-                    {" "}
-                    <i className="fa fa-plus"></i> Crear un Bien
-                  </Link>
+
+
+
+
+
                 </div>
 
                 <div className="row mt-2">

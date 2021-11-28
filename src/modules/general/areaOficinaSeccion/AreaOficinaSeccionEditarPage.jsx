@@ -4,8 +4,7 @@ import {
     getAreaOficinaSeccionById,
     putAreaOficinaSeccionById,
 } from "../../../services/areaOficinaSeccionService";
-import AdminSidebar from '../../admin/components/AdminSidebar'
-import GeneralNavBar from '../../layout/GeneralNavBar'
+
 import { getSubunidades } from "../../../services/subunidadesService";
 const AreaOficinaSeccionEditarPage = () => {
 
@@ -69,8 +68,7 @@ const AreaOficinaSeccionEditarPage = () => {
 
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+           
             <div className="home_content">
                 <main className="container">
                     <div className="row mt-4">

@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router'
 import { postBienDirin } from '../../../services/bienesDirinService';
-import AdminSidebar from '../../admin/components/AdminSidebar';
 import CargandoComponente from '../../layout/CargandoComponente';
-import GeneralNavBar from '../../layout/GeneralNavBar';
 
 const BienesDirinCrearPage = () => {
     const [cargando, setCargando] = useState(false);
@@ -106,8 +104,7 @@ const BienesDirinCrearPage = () => {
     }
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+           
 
             <div className="home_content">
                 <main className="container">

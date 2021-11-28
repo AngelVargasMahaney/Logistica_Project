@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 
 import { useHistory } from 'react-router-dom'
-import AdminSidebar from '../../admin/components/AdminSidebar'
-import GeneralNavBar from '../../layout/GeneralNavBar'
 
-import { postEquipoPolicial, postEquipoPolicialFiles } from '../../../services/equipoPolicialService';
+
+import { postEquipoPolicialFiles } from '../../../services/equipoPolicialService';
 
 
 const EquipoPolicialCrearPage = () => {
@@ -126,8 +125,7 @@ const EquipoPolicialCrearPage = () => {
 
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+           
             <div className="home_content">
                 <main className="container">
                     <div className="row mt-4">
@@ -142,7 +140,7 @@ const EquipoPolicialCrearPage = () => {
 
                                     <form onSubmit={handleSubmit}>
                                         <div className="row">
-                                            <div class="col-6">
+                                            <div className="col-6">
                                                 <label htmlFor="" className="form-label">
                                                     Codigo
                                                 </label>
@@ -243,7 +241,7 @@ const EquipoPolicialCrearPage = () => {
                                                     onChange={handleChange}
                                                 />
                                             </div>
-                                            <div class="col-6">
+                                            <div className="col-6">
                                                 <label htmlFor="" className="form-label">
                                                     Estado del Bien
                                                 </label>

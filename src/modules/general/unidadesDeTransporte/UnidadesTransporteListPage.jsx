@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { deleteUnidadesTransporteById, getUnidadesTransporte } from '../../../services/unidadesTransporteService'
-import AdminSidebar from '../../admin/components/AdminSidebar'
-import GeneralNavBar from '../../layout/GeneralNavBar'
+
 import VisualizadorImagenes from '../../modales/VisualizadorImagenes'
 import imgNoDisponible from "../../../assets/23.png"
 import Swal from 'sweetalert2'
@@ -300,7 +299,9 @@ const UnidadesTransporteListPage = () => {
     console.log(dataHistorial)
     useEffect(() => {
         traerHistorialById()
+        // eslint-disable-next-line
         // }, [idActualDelBien, historial, dataHistorial])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [idActualDelBien, showModalReasignar, showModalInternar])
 
     const tipoReporte = "unidadesTransporte"
@@ -313,29 +314,39 @@ const UnidadesTransporteListPage = () => {
 
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+
             <div className="home_content">
                 <main className="container-fluid mt-5">
 
                     <div className="card">
                         <div className="card-body">
+                            <div className="row">
+                                <div className="col-md-3">
+                                    <h5 className="mx-3">Lista de bienes de Unidades de Transporte</h5>
 
-                            <div className="d-flex justify-content-between mb-3">
-                                <h5>Lista de bienes de Unidades de Transporte</h5>
-                                <Link to="/admin/bienes-internados/unidades-transporte" className="btn btn-warning">
-                                    {" "}
-                                    <i className="fa fa-list"></i> Lista de Bienes Internados
-                                </Link>
-                                <Button onClick={reportes} className="btn btn-success">
-                                    {" "}
-                                    <i className="fas fa-file-excel"></i> Generar Reporte
-                                </Button>
-                                <Link to={"/admin/unidades-transporte/crear"} className="btn btn-primary ">
-                                    {" "}
-                                    <i className="fa fa-plus"></i> Crear un Bien
-                                </Link>
+                                </div>
+                                <div className="col-md-3">
+                                    <Link to="/admin/bienes-internados/unidades-transporte" className="btn btn-warning">
+                                        {" "}
+                                        <i className="fa fa-list"></i> Lista de Bienes Internados
+                                    </Link>
+                                </div>
+                                <div className="col-md-3">
+                                    <Button onClick={reportes} className="btn btn-success">
+                                        {" "}
+                                        <i className="fas fa-file-excel"></i> Generar Reporte
+                                    </Button>
+                                </div>
+                                <div className="col-md-3">
+                                    <Link to={"/admin/unidades-transporte/crear"} className="btn btn-primary ">
+                                        {" "}
+                                        <i className="fa fa-plus"></i> Crear un Bien
+                                    </Link>
+                                </div>
                             </div>
+
+
+
                             <div className="row mt-2">
 
                                 <div className="col">
@@ -675,7 +686,7 @@ const UnidadesTransporteListPage = () => {
                                                         } else {
                                                             // not last one
                                                         }
-
+                                                        return null
                                                     })
                                                 }
 

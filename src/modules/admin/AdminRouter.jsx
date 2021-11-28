@@ -40,13 +40,17 @@ import BienesDirinCrearPage from '../general/bienesDirin/BienesDirinCrearPage'
 import BienesDirinListPage from '../general/bienesDirin/BienesDirinListPage'
 import InternamientoBienesDirin from '../general/internamientos/InternamientoBienesDirin'
 import BienesDirinHistory from '../general/historiales/BienesDirinHistory'
+import AdminSidebar from './components/AdminSidebar'
+import GeneralNavBar from '../layout/GeneralNavBar'
 
 const AdminRouter = () => {
     return (
         <>
+            <AdminSidebar />
+            <GeneralNavBar />
             <Switch>
 
-               
+
 
                 {/* HISTORIALES  */}
                 <Route path="/admin/unidades-transporte/historial/:id">
@@ -61,11 +65,11 @@ const AdminRouter = () => {
                 <Route path="/admin/bienes-auxiliares/historial/:id">
                     <BienesAuxiliaresHistory />
                 </Route>
-               
+
                 <Route path="/admin/bienes-dirin/historial/:id">
                     <BienesDirinHistory />
                 </Route>
-               
+
 
 
                 {/* LISTADO DE INTERNAMIENTOS */}
@@ -88,15 +92,15 @@ const AdminRouter = () => {
 
 
                 <Route path="/admin/unidades-transporte/editar/:id">
-                    <UnidadesTransporteEditarPage/>
+                    <UnidadesTransporteEditarPage />
                 </Route>
                 <Route path="/admin/unidades-transporte/crear">
-                    <UnidadesTransporteCrearPage/>
+                    <UnidadesTransporteCrearPage />
                 </Route>
                 <Route path="/admin/unidades-transporte">
                     <UnidadesTransporteListPage />
                 </Route>
-                
+
                 <Route path="/admin/usuario/editar/:id">
                     <UserEditarPage />
                 </Route>

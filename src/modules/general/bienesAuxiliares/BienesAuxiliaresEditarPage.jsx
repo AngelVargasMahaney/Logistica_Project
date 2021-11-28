@@ -4,8 +4,7 @@ import {
     getBienAuxiliarById,
     postBienAuxiliarById,
 } from "../../../services/bienesAuxiliaresService";
-import AdminSidebar from '../../admin/components/AdminSidebar'
-import GeneralNavBar from '../../layout/GeneralNavBar'
+
 
 const BienesAuxiliaresEditarPage = () => {
 
@@ -40,7 +39,6 @@ const BienesAuxiliaresEditarPage = () => {
     })
 
     let {
-        documento,
         descripcion,
         marca,
         modelo,
@@ -49,8 +47,7 @@ const BienesAuxiliaresEditarPage = () => {
         color,
         dimensiones,
         estado_bien,
-        imagen_bien,
-        fecha_adquisicion,
+    
         observaciones } = formulario
 
 
@@ -131,8 +128,7 @@ const BienesAuxiliaresEditarPage = () => {
 
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+           
             <div className="home_content">
                 <main className="container">
                     <div className="row mt-4">
@@ -327,7 +323,7 @@ const BienesAuxiliaresEditarPage = () => {
                                         </div>
                                         <div>
                                             <button className="btn btn-primary" type="submit">
-                                                <span className="mx-1"><i class="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
+                                                <span className="mx-1"><i className="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
                                             </button>
                                             <button
                                                 className="btn btn-danger my-3 mx-3"
@@ -336,7 +332,7 @@ const BienesAuxiliaresEditarPage = () => {
                                                     history.push(HISTORY);
                                                 }}
                                             >
-                                                <span className="mx-1"><i class="fa fa-ban" aria-hidden="true"></i></span> Cancelar
+                                                <span className="mx-1"><i className="fa fa-ban" aria-hidden="true"></i></span> Cancelar
                                             </button>
                                         </div>
 

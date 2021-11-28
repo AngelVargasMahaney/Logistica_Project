@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router';
 import { getUnidadTransportById, putEditarUnidadTransporteById } from '../../../services/unidadesTransporteService';
-import AdminSidebar from '../../admin/components/AdminSidebar';
 import CargandoComponente from '../../layout/CargandoComponente';
-import GeneralNavBar from '../../layout/GeneralNavBar';
 
 const UnidadesTransporteEditarPage = () => {
     const [cargando, setCargando] = useState(false);
@@ -123,13 +121,13 @@ const UnidadesTransporteEditarPage = () => {
             setFormulario({ ...rpta.data })
             setCargando(false)
         })
+        // eslint-disable-next-line
     }, [])
 
 
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+
 
             <div className="home_content">
                 <main className="container">
@@ -144,7 +142,7 @@ const UnidadesTransporteEditarPage = () => {
                                 <div className="card-body">
                                     <form onSubmit={handleSubmit}>
                                         <div className="row">
-                                            <div className="col-6">
+                                            <div className="col-4">
                                                 <label htmlFor="" className="form-label">
                                                     Código
                                                 </label>
@@ -153,7 +151,7 @@ const UnidadesTransporteEditarPage = () => {
                                                     className="form-control my-2"
                                                     placeholder="VHA-827"
                                                     name="codigo"
-                                                    
+
                                                     value={formulario.codigo}
                                                     onChange={handleChange}
                                                 />
@@ -165,7 +163,7 @@ const UnidadesTransporteEditarPage = () => {
                                                     className="form-control my-2"
                                                     placeholder="VHA-827"
                                                     name="placa_interna"
-                                                    
+
                                                     value={formulario.placa_interna}
                                                     onChange={handleChange}
                                                 />
@@ -179,7 +177,7 @@ const UnidadesTransporteEditarPage = () => {
                                                     placeholder="AXK-221"
                                                     name="placa_de_rodaje"
                                                     value={formulario.placa_de_rodaje}
-                                                    
+
                                                     onChange={handleChange}
                                                 />
                                                 <label htmlFor="" className="form-label">
@@ -191,6 +189,105 @@ const UnidadesTransporteEditarPage = () => {
                                                     placeholder="Camioneta"
                                                     name="tipo_de_vehiculo"
                                                     value={formulario.tipo_de_vehiculo}
+                                                    onChange={handleChange}
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Seguro Particular
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control my-2"
+                                                    placeholder="Si presenta"
+                                                    name="seguro_particular"
+                                                    value={formulario.seguro_particular}
+                                                    onChange={handleChange}
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Valor de Adquisición
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control my-2"
+                                                    placeholder="S/. 25000"
+                                                    name="valor_adquisicion"
+                                                    value={formulario.valor_adquisicion}
+                                                    onChange={handleChange}
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Llanta de Repuesto
+                                                </label>
+                                                <select
+                                                    required className="form-select custom-select mr-sm-2 my-2"
+                                                    name="llanta_repuesto"
+                                                    onChange={handleChange}
+                                                    value={formulario.llanta_repuesto}
+                                                >
+                                                    <option value="Si" >Si</option>
+                                                    <option value="No" >No</option>
+                                                </select>
+
+
+
+                                                <label htmlFor="" className="form-label">
+                                                    Llave de Ruedas
+                                                </label>
+                                                <select
+                                                    required className="form-select custom-select mr-sm-2 my-2"
+                                                    name="llave_ruedas"
+                                                    onChange={handleChange}
+                                                    value={formulario.llave_ruedas}
+                                                >
+                                                    <option value="Si" >Si</option>
+                                                    <option value="No" >No</option>
+                                                </select>
+                                                <label htmlFor="" className="form-label">
+                                                    Gata
+                                                </label>
+                                                <select
+                                                    required className="form-select custom-select mr-sm-2 my-2"
+                                                    name="gata"
+                                                    onChange={handleChange}
+                                                    value={formulario.gata}
+                                                >
+                                                    <option value="Si" >Si</option>
+                                                    <option value="No" >No</option>
+                                                </select>
+                                                <label htmlFor="" className="form-label">
+                                                    Tablet
+                                                </label>
+                                                <select
+                                                    required className="form-select custom-select mr-sm-2 my-2"
+                                                    name="tablet"
+                                                    onChange={handleChange}
+                                                    value={formulario.tablet}
+                                                >
+                                                    <option value="Si" >Si</option>
+                                                    <option value="No" >No</option>
+                                                </select>
+
+
+                                            </div>
+                                            <div className="col-4">
+                                                <label htmlFor="" className="form-label">
+                                                    Ubicación
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control my-2"
+                                                    placeholder="Contrainteligencia"
+                                                    name="ubicacion"
+                                                    value={formulario.ubicacion}
+                                                    onChange={handleChange}
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Observaciones
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control my-2"
+                                                    placeholder="Presenta una ruptura en la puerta delantera"
+                                                    name="observaciones"
+                                                    value={formulario.observaciones}
                                                     onChange={handleChange}
                                                 />
                                                 <label htmlFor="" className="form-label">
@@ -227,8 +324,8 @@ const UnidadesTransporteEditarPage = () => {
                                                     onChange={handleChange}
                                                 />
 
-                                            </div>
-                                            <div className="col-6">
+
+
                                                 <label htmlFor="" className="form-label">
                                                     Combustible
                                                 </label>
@@ -240,6 +337,53 @@ const UnidadesTransporteEditarPage = () => {
                                                     value={formulario.combustible}
                                                     onChange={handleChange}
                                                 />
+                                                <label htmlFor="" className="form-label">
+                                                    Número de Motor
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control my-2"
+                                                    placeholder="V2200"
+                                                    name="nro_de_motor"
+                                                    value={formulario.nro_de_motor}
+                                                    onChange={handleChange}
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Número de Cilindros
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control my-2"
+                                                    placeholder="V6"
+                                                    name="nro_de_cilindros"
+                                                    value={formulario.nro_de_cilindros}
+                                                    onChange={handleChange}
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Traccion
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control my-2"
+                                                    placeholder="Delantera"
+                                                    name="traccion"
+                                                    value={formulario.traccion}
+                                                    onChange={handleChange}
+                                                />
+                                                <label htmlFor="" className="form-label">
+                                                    Camaras
+                                                </label>
+                                                <select
+                                                    required className="form-select custom-select mr-sm-2 my-2"
+                                                    name="camaras"
+                                                    onChange={handleChange}
+                                                    value={formulario.camaras}
+                                                >
+                                                    <option value="Si" >Si</option>
+                                                    <option value="No" >No</option>
+                                                </select>
+                                            </div>
+                                            <div className="col-4">
                                                 <label htmlFor="" className="form-label">
                                                     Documento: Acta
                                                 </label>
@@ -288,43 +432,6 @@ const UnidadesTransporteEditarPage = () => {
                                                     onChange={handleChange}
                                                 />
                                                 <label htmlFor="" className="form-label">
-                                                    Número de Motor
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control my-2"
-                                                    placeholder="V2200"
-                                                    name="nro_de_motor"
-                                                    value={formulario.nro_de_motor}
-                                                    onChange={handleChange}
-                                                />
-                                                <label htmlFor="" className="form-label">
-                                                    Número de Cilindros
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control my-2"
-                                                    placeholder="V6"
-                                                    name="nro_de_cilindros"
-                                                    value={formulario.nro_de_cilindros}
-                                                    onChange={handleChange}
-                                                />
-                                                <label htmlFor="" className="form-label">
-                                                    Traccion
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control my-2"
-                                                    placeholder="Delantera"
-                                                    name="traccion"
-                                                    value={formulario.traccion}
-                                                    onChange={handleChange}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-6">
-                                                <label htmlFor="" className="form-label">
                                                     Procedencia
                                                 </label>
                                                 <input
@@ -358,113 +465,6 @@ const UnidadesTransporteEditarPage = () => {
                                                     onChange={handleChange}
                                                 />
                                                 <label htmlFor="" className="form-label">
-                                                    Seguro Particular
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control my-2"
-                                                    placeholder="Si presenta"
-                                                    name="seguro_particular"
-                                                    value={formulario.seguro_particular}
-                                                    onChange={handleChange}
-                                                />
-                                                <label htmlFor="" className="form-label">
-                                                    Valor de Adquisición
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control my-2"
-                                                    placeholder="S/. 25000"
-                                                    name="valor_adquisicion"
-                                                    value={formulario.valor_adquisicion}
-                                                    onChange={handleChange}
-                                                />
-                                                <label htmlFor="" className="form-label">
-                                                    Llanta de Repuesto
-                                                </label>
-                                                <select
-                                                    required className="form-select custom-select mr-sm-2 my-2"
-                                                    name="llanta_repuesto"
-                                                    onChange={handleChange}
-                                                    value={formulario.llanta_repuesto}
-                                                >
-                                                    <option value="Si" >Si</option>
-                                                    <option value="No" >No</option>
-                                                </select>
-                                            </div>
-                                            <div className="col-6">
-
-                                                <label htmlFor="" className="form-label">
-                                                    Llave de Ruedas
-                                                </label>
-                                                <select
-                                                    required className="form-select custom-select mr-sm-2 my-2"
-                                                    name="llave_ruedas"
-                                                    onChange={handleChange}
-                                                    value={formulario.llave_ruedas}
-                                                >
-                                                    <option value="Si" >Si</option>
-                                                    <option value="No" >No</option>
-                                                </select>
-                                                <label htmlFor="" className="form-label">
-                                                    Gata
-                                                </label>
-                                                <select
-                                                    required className="form-select custom-select mr-sm-2 my-2"
-                                                    name="gata"
-                                                    onChange={handleChange}
-                                                    value={formulario.gata}
-                                                >
-                                                    <option value="Si" >Si</option>
-                                                    <option value="No" >No</option>
-                                                </select>
-                                                <label htmlFor="" className="form-label">
-                                                    Tablet
-                                                </label>
-                                                <select
-                                                    required className="form-select custom-select mr-sm-2 my-2"
-                                                    name="tablet"
-                                                    onChange={handleChange}
-                                                    value={formulario.tablet}
-                                                >
-                                                    <option value="Si" >Si</option>
-                                                    <option value="No" >No</option>
-                                                </select>
-                                                <label htmlFor="" className="form-label">
-                                                    Camaras
-                                                </label>
-                                                <select
-                                                    required className="form-select custom-select mr-sm-2 my-2"
-                                                    name="camaras"
-                                                    onChange={handleChange}
-                                                    value={formulario.camaras}
-                                                >
-                                                    <option value="Si" >Si</option>
-                                                    <option value="No" >No</option>
-                                                </select>
-                                                <label htmlFor="" className="form-label">
-                                                    Ubicación
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control my-2"
-                                                    placeholder="Contrainteligencia"
-                                                    name="ubicacion"
-                                                    value={formulario.ubicacion}
-                                                    onChange={handleChange}
-                                                />
-                                                <label htmlFor="" className="form-label">
-                                                    Observaciones
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control my-2"
-                                                    placeholder="Presenta una ruptura en la puerta delantera"
-                                                    name="observaciones"
-                                                    value={formulario.observaciones}
-                                                    onChange={handleChange}
-                                                />
-                                                <label htmlFor="" className="form-label">
                                                     Imagen del Bien
                                                 </label>
                                                 <input
@@ -475,7 +475,20 @@ const UnidadesTransporteEditarPage = () => {
                                                     onChange={handleChangeImages}
                                                 />
                                             </div>
+
+
+
+
+
+
                                         </div>
+
+
+
+
+
+
+
                                         <div>
                                             <div>
                                                 {!cargando && <button className="btn btn-primary" type="submit">

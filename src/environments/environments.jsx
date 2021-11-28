@@ -3,11 +3,13 @@ export const URL_BACKEND = 'https://demo-logistica-pnp.relengcorp.com/api'
 
 
 export const NAVEGACION_URL = [
+    
     {
         url: "/admin/usuario",
         nombre: "Usuarios",
         icon: "bx bxs-user-badge",
-        iconDashboard: icon.usuario
+        iconDashboard: icon.usuario,
+        is_admin: true
     },
     {
         url: "/admin/personal",

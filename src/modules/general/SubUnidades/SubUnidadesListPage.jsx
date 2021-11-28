@@ -6,8 +6,7 @@ import {
   deleteSubunidadById,
 } from "../../../services/subunidadesService";
 
-import AdminSidebar from "../../admin/components/AdminSidebar";
-import GeneralNavBar from "../../layout/GeneralNavBar";
+
 
 const SubUnidadesListPage = () => {
   const URL_CREAR = "/admin/subunidades/crear";
@@ -48,8 +47,7 @@ const SubUnidadesListPage = () => {
 
   return (
     <>
-      <AdminSidebar />
-      <GeneralNavBar />
+    
       <div className="home_content">
         <div>
           <main className="container-fluid mt-5">

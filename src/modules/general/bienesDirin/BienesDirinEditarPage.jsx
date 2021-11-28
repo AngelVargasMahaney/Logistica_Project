@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router';
 import { getBienDirinById, postEditarBienDirinById } from '../../../services/bienesDirinService';
-import AdminSidebar from '../../admin/components/AdminSidebar';
 import CargandoComponente from '../../layout/CargandoComponente';
-import GeneralNavBar from '../../layout/GeneralNavBar';
 
 const BienesDirinEditarPage = () => {
     const [cargando, setCargando] = useState(false);
@@ -27,7 +25,6 @@ const BienesDirinEditarPage = () => {
         })
     }
     const params = useParams()
-    const config = { headers: { 'Content-Type': 'multipart/form-data' } }
     const history = useHistory()
     const [documentoActa, setDocumentoActa] = useState(null)
     const [documentoOficio, setDocumentoOficio] = useState(null)
@@ -104,12 +101,12 @@ const BienesDirinEditarPage = () => {
             setFormulario({ ...rpta.data })
             setCargando(false)
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+           
 
             <div className="home_content">
                 <main className="container">

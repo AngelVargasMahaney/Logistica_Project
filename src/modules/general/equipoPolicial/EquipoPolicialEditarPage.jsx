@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router'
-import { getEquipoPolicial, getEquipoPolicialById, postEditarEquipoPolicialById } from '../../../services/equipoPolicialService'
-import AdminSidebar from '../../admin/components/AdminSidebar'
-import GeneralNavBar from '../../layout/GeneralNavBar'
+import { getEquipoPolicialById, postEditarEquipoPolicialById } from '../../../services/equipoPolicialService'
+
 
 const EquipoPolicialEditarPage = () => {
     const [acta, setActa] = useState(null)
@@ -84,12 +83,12 @@ const EquipoPolicialEditarPage = () => {
         getEquipoPolicialById(params.id).then((rpta) => {
             setFormulario({ ...rpta.data })
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+           
             <div className="home_content">
                 <main className="container">
                     <div className="row mt-4">
@@ -104,7 +103,7 @@ const EquipoPolicialEditarPage = () => {
 
                                     <form onSubmit={handleSubmit}>
                                         <div className="row">
-                                            <div class="col-6">
+                                            <div className="col-6">
                                                 <div>
                                                     <label htmlFor="" className="form-label my-2">Id</label>
                                                     <input type="text" className="form-control mt-2" required disabled value={formulario.id} />
@@ -324,7 +323,7 @@ const EquipoPolicialEditarPage = () => {
                                         </div>
                                         <div>
                                             <button className="btn btn-primary" type="submit">
-                                                <span className="mx-1"><i class="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
+                                                <span className="mx-1"><i className="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
                                             </button>
                                             <button
                                                 className="btn btn-danger my-3 mx-3"
@@ -333,7 +332,7 @@ const EquipoPolicialEditarPage = () => {
                                                     history.push(`/admin/equipo-policial`);
                                                 }}
                                             >
-                                                <span className="mx-1"><i class="fa fa-ban" aria-hidden="true"></i></span> Cancelar
+                                                <span className="mx-1"><i className="fa fa-ban" aria-hidden="true"></i></span> Cancelar
                                             </button>
                                         </div>
                                     </form>

@@ -4,8 +4,6 @@ import Swal from 'sweetalert2'
 import { getAreaOficinaSeccion, deleteAreaOficinaSeccionById } from '../../../services/areaOficinaSeccionService'
 
 
-import AdminSidebar from '../../admin/components/AdminSidebar';
-import GeneralNavBar from '../../layout/GeneralNavBar';
 
 const AreaOficinaSeccionListPage = () => {
 
@@ -49,8 +47,7 @@ const AreaOficinaSeccionListPage = () => {
 
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+           
             <div className="home_content">
 
 

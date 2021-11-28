@@ -5,9 +5,6 @@ import { getPersonal, deletePersonalById, putActivePersonalById, putDesactivePer
 import { getReportes } from '../../../services/reportesService';
 
 
-import AdminSidebar from '../../admin/components/AdminSidebar';
-import GeneralNavBar from '../../layout/GeneralNavBar';
-
 const PersonalListPage = () => {
 
     const URL_CREAR = '/admin/personal/crear'
@@ -70,8 +67,7 @@ const PersonalListPage = () => {
 
 return (
     <>
-        <AdminSidebar />
-        <GeneralNavBar />
+      
         <div className="home_content">
 
 

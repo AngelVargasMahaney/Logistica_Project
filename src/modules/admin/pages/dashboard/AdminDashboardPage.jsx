@@ -1,24 +1,22 @@
-import React, { useEffect } from 'react'
-import AdminSidebar from '../../components/AdminSidebar'
+import React, { useContext } from 'react'
 
-
-import GeneralNavBar from '../../../layout/GeneralNavBar';
 import { NAVEGACION_URL } from '../../../../environments/environments';
 import { Link } from 'react-router-dom';
+import AuthContext from '../../../../context/auth/authContext';
 
 const AdminDashboardPage = () => {
 
-    useEffect(() => {
-        
-        
-    }, [])
-    const itemsUrl = NAVEGACION_URL;
+    const { ...state } = useContext(AuthContext)
+    let itemsUrl = NAVEGACION_URL;
+    if (state.is_admin === false) {
+        itemsUrl = itemsUrl.slice(1, itemsUrl.length)
+    }
     return (
 
         <>
-            <AdminSidebar />
+          
             <div className="home_content">
-                <GeneralNavBar />
+                
                 <div className="text ml-4">TABLERO DE CONTROL</div>
 
                 <div>
@@ -28,19 +26,19 @@ const AdminDashboardPage = () => {
                             {itemsUrl.map((item, i) => {
                                 return (
                                     <div key={i} className="col-lg-3 col-md-6">
-                                         <Link to={item.url}>
-                                        <div className="card text-center card-dash m-2">
-                                            <div className="card-body p-4">
-                                               
+                                        <Link to={item.url}>
+                                            <div className="card text-center card-dash m-2">
+                                                <div className="card-body p-4">
+
                                                     <img
                                                         src={item.iconDashboard}
                                                         className="rounded img-thumbnail svg-img"
                                                         alt="insertar"
                                                     />
                                                     <h6 className="card-title text-center m-2">{item.nombre}</h6>
-                                                
+
+                                                </div>
                                             </div>
-                                        </div>
                                         </Link>
                                     </div>
                                 )

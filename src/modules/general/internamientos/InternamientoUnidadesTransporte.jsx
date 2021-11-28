@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import AdminSidebar from '../../admin/components/AdminSidebar';
-import GeneralNavBar from '../../layout/GeneralNavBar';
+
 import { Link } from "react-router-dom";
 import { Button, Modal } from 'react-bootstrap'
 import { getReportes } from '../../../services/reportesService';
@@ -156,8 +155,7 @@ const InternamientoUnidadesTransporte = () => {
     }
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+           
             <div className="home_content">
 
 

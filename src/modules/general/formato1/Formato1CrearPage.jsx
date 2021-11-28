@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { postFormatosFiles } from '../../../services/formatoService'
-import AdminSidebar from '../../admin/components/AdminSidebar'
-import GeneralNavBar from '../../layout/GeneralNavBar'
+
 const Formato1CrearPage = () => {
     const tituloOperacion = 'Formulario de Creación de Bienes del Formato 1'
     //Variable de estado que se encarga de manejar los campos de nuestro formulario que servirán para llenar la bd (tener en cuenta los campos que el back-end envió, ver documentación)
@@ -129,8 +128,7 @@ const Formato1CrearPage = () => {
 
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+           
 
             <div className="home_content">
 

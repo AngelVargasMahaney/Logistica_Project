@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { deleteDesinternarBien, getBienesInternadosFormato1, postEditarInternamientoById } from '../../../services/internamientoFormato1Service'
-import AdminSidebar from '../../admin/components/AdminSidebar'
-import GeneralNavBar from '../../layout/GeneralNavBar'
+
 import Swal from 'sweetalert2'
 import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
@@ -160,12 +159,10 @@ const InternamientoFormato1ListPage = () => {
 
         })
     }
-    let { estado_del_bien, fecha, observaciones } = formularioInternamiento;
     return (
 
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+           
             <div className="home_content">
 
 

@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 
 import { useHistory } from 'react-router-dom'
-import AdminSidebar from '../../admin/components/AdminSidebar'
-import GeneralNavBar from '../../layout/GeneralNavBar'
 
-import { postBienAuxiliar, postBienAuxiliarFiles } from '../../../services/bienesAuxiliaresService';
+
+import { postBienAuxiliarFiles } from '../../../services/bienesAuxiliaresService';
 
 
 const BienesAuxiliaresCrearPage = () => {
@@ -116,8 +115,7 @@ const BienesAuxiliaresCrearPage = () => {
 
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+           
             <div className="home_content">
                 <main className="container">
                     <div className="row mt-4">

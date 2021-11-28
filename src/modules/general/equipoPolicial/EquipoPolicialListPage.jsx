@@ -1,28 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { deleteEquipoPolicialById, getEquipoPolicial, getEquipoPolicialById } from '../../../services/equipoPolicialService'
+import { deleteEquipoPolicialById, getEquipoPolicial } from '../../../services/equipoPolicialService'
 
 
-import AdminSidebar from '../../admin/components/AdminSidebar';
-import GeneralNavBar from '../../layout/GeneralNavBar';
 
 import Swal from "sweetalert2";
 import Modal from "react-bootstrap/Modal";
 import { Button } from "react-bootstrap";
 import { postInternarBienFormato1, postReasignarBienFormato1 } from "../../../services/internamientoFormato1Service";
-import { getSubunidades } from "../../../services/subunidadesService";
 import { getPersonal, getPersonalActivo } from "../../../services/personalService";
-import { useParams } from 'react-router-dom'
-import { getHistorialFormatoById, getHistorialEquipoPolicialById } from "../../../services/historialBienesService";
+import { getHistorialEquipoPolicialById } from "../../../services/historialBienesService";
 import imgNoDisponible from "../../../assets/23.png"
 import { getAreaOficinaSeccion } from "../../../services/areaOficinaSeccionService";
-import { getReporteFormato1Excel, getReportes } from "../../../services/reportesService";
+import { getReportes } from "../../../services/reportesService";
 import VisualizadorImagenes from '../../modales/VisualizadorImagenes';
 
 
 const EquipoPolicialListPage = () => {
 
-    const URL_CREAR = '/admin/equipo-policial/crear'
     const TITULO = "Equipo Policial";
     const [data, setData] = useState([])
     const [cargando, setCargando] = useState(true)
@@ -134,7 +129,7 @@ const EquipoPolicialListPage = () => {
             formData.delete('informe_tecnico', informeTecnico)
         }
 
-     
+
         postInternarBienFormato1(formData, config).then((rpta) => {
             if (rpta.status === 200) { //Si el status es OK, entonces redirecciono a la lista de usuarios
                 setshowModalInternar(false)
@@ -259,11 +254,17 @@ const EquipoPolicialListPage = () => {
     console.log(dataHistorial)
     useEffect(() => {
         prueba()
-    }, [idActualDelBien, showModalReasignar, showModalInternar])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    },     // eslint-disable-next-line react-hooks/exhaustive-deps
+    [idActualDelBien, showModalReasignar, showModalInternar])
+
     // Metodos para traer el historial
 
     useEffect(() => {
         traerSubunidades();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+
     }, []);
     //Aqui los metodos para traer las personales
     const [personal, setPersonal] = useState([]);
@@ -277,6 +278,7 @@ const EquipoPolicialListPage = () => {
     };
     useEffect(() => {
         traerPersonal();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     //Variable "historial" que permite entrar al arreglo "historial" dentro de mi arreglo dataHistorial
@@ -349,8 +351,7 @@ const EquipoPolicialListPage = () => {
 
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+
             <div className="home_content">
 
 
@@ -362,23 +363,28 @@ const EquipoPolicialListPage = () => {
 
                         <div className="card">
                             <div className="card-body">
-
-                                <div className="d-flex justify-content-between mb-3">
-                                    <h5>{TITULO}</h5>
-
-                                    <Link to="/admin/bienes-internados/equipo-policial" className="btn btn-warning">
-                                        {" "}
-                                        <i className="fa fa-list"></i> Lista de Bienes Internados
-                                    </Link>
-                                    <Button onClick={reportes} className="btn btn-success">
-                                        {" "}
-                                        <i className="fas fa-file-excel"></i> Generar Reporte
-                                    </Button>
-                                    <Link to={"/admin/equipo-policial/crear"} className="btn btn-primary ">
-                                        {" "}
-                                        <i className="fa fa-plus"></i> Crear un Bien
-                                    </Link>
-
+                                <div className="row">
+                                    <div className="col-md-3">
+                                        <h5 className="mx-3">{TITULO}</h5>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <Link to="/admin/bienes-internados/equipo-policial" className="btn btn-warning">
+                                            {" "}
+                                            <i className="fa fa-list"></i> Lista de Bienes Internados
+                                        </Link>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <Button onClick={reportes} className="btn btn-success">
+                                            {" "}
+                                            <i className="fas fa-file-excel"></i> Generar Reporte
+                                        </Button>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <Link to={"/admin/equipo-policial/crear"} className="btn btn-primary ">
+                                            {" "}
+                                            <i className="fa fa-plus"></i> Crear un Bien
+                                        </Link>
+                                    </div>
                                 </div>
 
                                 <div className="row mt-2">

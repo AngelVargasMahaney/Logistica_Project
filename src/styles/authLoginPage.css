@@ -2,12 +2,7 @@
     --input-padding-x: 1.5rem;
     --input-padding-y: .75rem;
   }
-  
-  body {
-    background: #007bff;
-    background: linear-gradient(to right, #012a36, #01290a);
-  }
-  
+  .loginbackground
   .card-signin {
     border: 0;
     border-radius: 1rem;

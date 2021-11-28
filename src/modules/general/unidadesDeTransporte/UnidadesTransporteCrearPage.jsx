@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router'
 import { postUnidadesTransporte } from '../../../services/unidadesTransporteService'
-import AdminSidebar from '../../admin/components/AdminSidebar'
 import CargandoComponente from '../../layout/CargandoComponente'
-import GeneralNavBar from '../../layout/GeneralNavBar'
 
 const UnidadesTransporteCrearPage = () => {
     const [cargando, setCargando] = useState(false);
@@ -136,8 +134,7 @@ const UnidadesTransporteCrearPage = () => {
     return (
 
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+
 
             <div className="home_content">
                 <main className="container">
@@ -161,7 +158,6 @@ const UnidadesTransporteCrearPage = () => {
                                                     className="form-control my-2"
                                                     placeholder="VHA-827"
                                                     name="codigo"
-
                                                     value={formulario.codigo}
                                                     onChange={handleChange}
                                                 />
@@ -373,7 +369,7 @@ const UnidadesTransporteCrearPage = () => {
                                                     onChange={handleChange}
                                                 />
                                             </div>
-                                          
+
                                             <div className="col-4">
                                                 <label htmlFor="" className="form-label">
                                                     Valor de Adquisición

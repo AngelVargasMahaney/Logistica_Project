@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 
 import { useHistory } from "react-router-dom";
-import AdminSidebar from "../../admin/components/AdminSidebar";
-import GeneralNavBar from "../../layout/GeneralNavBar";
+
 
 import { postSubunidad } from "../../../services/subunidadesService";
 
@@ -44,8 +43,7 @@ const SubUnidadesCrearPage = () => {
 
   return (
     <>
-      <AdminSidebar />
-      <GeneralNavBar />
+    
       <div className="home_content">
         <main className="container">
           <div className="row mt-4">

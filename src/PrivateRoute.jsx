@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { Redirect, Route } from 'react-router-dom'
 import AuthContext from './context/auth/authContext'
-import { postVerificarToken } from './services/authService'
 const PrivateRoute = (props) => {
 
-    const { autenticado, cargando} = useContext(AuthContext)
+    const { autenticado, cargando } = useContext(AuthContext)
 
     // // let autenticado = false;
     // const verificarToken = () => {

@@ -5,14 +5,13 @@ import { deleteBienAuxiliarById, getBienAuxiliar, postReasignarBienAuxiliar } fr
 import imgNoDisponible from "../../../assets/23.png"
 import Modal from "react-bootstrap/Modal";
 import { Button } from "react-bootstrap";
-import { getPersonal, getPersonalActivo } from "../../../services/personalService";
-import AdminSidebar from '../../admin/components/AdminSidebar';
-import GeneralNavBar from '../../layout/GeneralNavBar';
-import { postInternarBienAuxliar, postInternarBienFormato1, postReasignarBienFormato1 } from '../../../services/internamientoFormato1Service'
+
+import { postInternarBienAuxliar } from '../../../services/internamientoFormato1Service'
 import { getAreaOficinaSeccion } from "../../../services/areaOficinaSeccionService";
-import { getHistorialBienAuxiliarById, getHistorialFormatoById } from '../../../services/historialBienesService'
+import { getHistorialBienAuxiliarById } from '../../../services/historialBienesService'
 import { getReportes } from '../../../services/reportesService'
 import VisualizadorImagenes from '../../modales/VisualizadorImagenes'
+import { getPersonalActivo } from '../../../services/personalService'
 
 const BienesAuxiliaresListPage = () => {
 
@@ -83,6 +82,7 @@ const BienesAuxiliaresListPage = () => {
     console.log(dataHistorial)
     useEffect(() => {
         prueba()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [idActualDelBien, showModalReasignar, showModalInternar])
     // Metodos para traer el historial
 
@@ -160,7 +160,6 @@ const BienesAuxiliaresListPage = () => {
         area_oficina_seccion_id: "",
         personal_id: ""
     })
-    let { estado_del_bien, fecha, observaciones } = formulario
     const handleChange = (e) => {
         setFormulario({
             ...formulario,
@@ -225,7 +224,7 @@ const BienesAuxiliaresListPage = () => {
         formDataReasignacion.append('estado_del_bien', formulario.estado_del_bien)
         formDataReasignacion.append('fecha', formulario.fecha)
         formDataReasignacion.append('observaciones', formulario.observaciones)
-    
+
         formDataReasignacion.append('bien_id', idActualDelBien)
         formDataReasignacion.append('tipo_bien', formulario.tipo_bien)
         formDataReasignacion.append('area_oficina_seccion_id', formulario.area_oficina_seccion_id)
@@ -296,8 +295,7 @@ const BienesAuxiliaresListPage = () => {
     //Aqui termina el estate del modal de Visualizador de Imagenes
     return (
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+
             <div className="home_content">
                 <div>
                     <main className="container-fluid mt-5">
@@ -305,19 +303,27 @@ const BienesAuxiliaresListPage = () => {
                         <div className="card">
                             <div className="card-body">
 
-                                <div className="d-flex justify-content-between mb-3">
-                                    <h5>{TITULO}</h5>
-                                    <Link to="/admin/bienes-internados/bienes-auxiliares" className="btn btn-warning">
-                                        {" "}
-                                        <i className="fa fa-list"></i> Lista de Bienes Internados
-                                    </Link>
-                                    <Button onClick={reportes} className="btn btn-success">
-                                        {" "}
-                                        <i className="fas fa-file-excel"></i> Generar Reporte
-                                    </Button>
-                                    <Link to={URL_CREAR} className="btn btn-primary "> <i className="fa fa-plus"></i> Crear un Bien</Link>
-                                </div>
+                                <div className="row">
+                                    <div className="col-md-3">
+                                        <h5 className="mx-3">{TITULO}</h5>
 
+                                    </div>
+                                    <div className="col-md-3">
+                                        <Link to="/admin/bienes-internados/bienes-auxiliares" className="btn btn-warning">
+                                            {" "}
+                                            <i className="fa fa-list"></i> Lista de Bienes Internados
+                                        </Link>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <Button onClick={reportes} className="btn btn-success">
+                                            {" "}
+                                            <i className="fas fa-file-excel"></i> Generar Reporte
+                                        </Button>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <Link to={URL_CREAR} className="btn btn-primary "> <i className="fa fa-plus"></i> Crear un Bien</Link>
+                                    </div>
+                                </div>
                                 <div className="row mt-2">
 
                                     <div className="col">
@@ -499,7 +505,7 @@ const BienesAuxiliaresListPage = () => {
                                             <div className="form-group">
                                                 <label htmlFor="">Estado del Bien:</label>
                                                 <input type="text" className="form-control" required
-                                                     name="estado_del_bien" onChange={handleChange} />
+                                                    name="estado_del_bien" onChange={handleChange} />
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Fecha:</label>
@@ -662,7 +668,7 @@ const BienesAuxiliaresListPage = () => {
                                             <div className="form-group">
                                                 <label htmlFor="">Estado del Bien: </label>
                                                 <input type="text" className="form-control" required
-                                                     name="estado_del_bien" onChange={handleChange} />
+                                                    name="estado_del_bien" onChange={handleChange} />
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="">Observaciones: </label>
@@ -672,7 +678,7 @@ const BienesAuxiliaresListPage = () => {
                                             <div className="form-group">
                                                 <label htmlFor="">Fecha: </label>
                                                 <input type="date" className="form-control" required
-                                                     name="fecha" onChange={handleChange} />
+                                                    name="fecha" onChange={handleChange} />
                                             </div>
 
                                             <div className="form-group">

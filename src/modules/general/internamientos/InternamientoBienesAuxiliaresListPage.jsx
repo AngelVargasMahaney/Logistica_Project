@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { deleteDesinternarBien, getBienesInternadosBienesAuxiliares, postEditarInternamientoById } from '../../../services/internamientoFormato1Service'
-import AdminSidebar from '../../admin/components/AdminSidebar'
-import GeneralNavBar from '../../layout/GeneralNavBar'
+
 import Swal from 'sweetalert2'
 import Modal from "react-bootstrap/Modal";
 import { getReportes } from '../../../services/reportesService'
@@ -162,8 +161,7 @@ const InternamientoBienesAuxiliaresListPage = () => {
     return (
 
         <>
-            <AdminSidebar />
-            <GeneralNavBar />
+           
             <div className="home_content">
 
 

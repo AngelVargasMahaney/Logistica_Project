@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/logo_innova.png'
+import AuthContext from '../../../context/auth/authContext';
 import { NAVEGACION_URL } from '../../../environments/environments';
 const AdminSidebar = () => {
     const [sidebar, setsidebar] = useState(false)
+    const { ...state } = useContext(AuthContext)
 
     const showSidebar = () => setsidebar(!sidebar);
 
-    const itemsUrl = NAVEGACION_URL;
+    let itemsUrl = NAVEGACION_URL;
+    if (state.is_admin === false) {
+        itemsUrl = itemsUrl.slice(1, itemsUrl.length)
+    }
     return (
         <>
 
@@ -33,6 +38,7 @@ const AdminSidebar = () => {
 
 
                     {itemsUrl.map((item, i) => {
+
                         return (
                             <li key={i}>
                                 <Link to={item.url} >
@@ -42,6 +48,8 @@ const AdminSidebar = () => {
                                 <span className="tooltip">{item.nombre}</span>
                             </li>
                         )
+
+
                     })}
 
 

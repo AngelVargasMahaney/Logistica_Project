@@ -4,8 +4,7 @@ import {
   getSubunidadById,
   putSubunidadById,
 } from "../../../services/subunidadesService";
-import AdminSidebar from "../../admin/components/AdminSidebar";
-import GeneralNavBar from "../../layout/GeneralNavBar";
+
 
 const SubUnidadesEditarPage = () => {
   const TITULO = "Formulario de Edición de Subunidades";
@@ -59,8 +58,7 @@ const SubUnidadesEditarPage = () => {
 
   return (
     <>
-      <AdminSidebar />
-      <GeneralNavBar />
+  
       <div className="home_content">
         <main className="container">
           <div className="row mt-4">

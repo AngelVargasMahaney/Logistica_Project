@@ -1,6 +1,5 @@
 import React from 'react'
-import AdminSidebar from '../../admin/components/AdminSidebar'
-import GeneralNavBar from '../../layout/GeneralNavBar'
+
 
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -199,9 +198,7 @@ const BienesAuxiliaresHistory = () => {
     return (
         <>
 
-            <AdminSidebar />
             <div className="home_content">
-                <GeneralNavBar />
                 <main className="container mt-3 mb-5">
 
                     <div className="card">
@@ -311,7 +308,7 @@ const BienesAuxiliaresHistory = () => {
 
                                                         <button
                                                             type="button"
-                                                            class="btn pull-right mx-3 btn-outline-danger"
+                                                            className="btn pull-right mx-3 btn-outline-danger"
                                                             onClick={() => {
                                                                 eliminarHistorial(item.id);
                                                             }}
@@ -320,7 +317,7 @@ const BienesAuxiliaresHistory = () => {
                                                         </button>
                                                         <button
                                                             type="button"
-                                                            class="btn pull-right mx-3 btn-outline-info"
+                                                            className="btn pull-right mx-3 btn-outline-info"
                                                             onClick={() => {
                                                                 showModalEditarHistorial(item.id, item);
                                                             }}
