@@ -127,8 +127,8 @@ const BienesDirinHistory = () => {
         const formData = new FormData();
         formData.append('personal_id', formularioHistorial.personal_id)
         formData.append('area_oficina_seccion_id', formularioHistorial.area_oficina_seccion_id)
-        formData.append('estado_del_bien', formularioHistorial.estado_del_bien)
-        formData.append('observaciones', formularioHistorial.observaciones)
+        formData.append('estado_del_bien', formularioHistorial.estado_del_bien ? formularioHistorial.estado_del_bien : " ")
+        formData.append('observaciones', formularioHistorial.observaciones ? formularioHistorial.observaciones: " ")
         if (acta !== null) {
             formData.append('acta', acta)
         } else {
@@ -193,9 +193,9 @@ const BienesDirinHistory = () => {
     let { personal, area_oficina_seccion } = formularioHistorial
     return (
         <>
-           
+
             <div className="home_content">
-              
+
                 <main className="container mt-3 mb-5">
 
                     <div className="card">
@@ -269,7 +269,7 @@ const BienesDirinHistory = () => {
                                         </div>
                                         <div className="col-md-6">
                                             <div className="mb-4">
-                                                <img src={data.imagen_bien} className="rounded w-50" alt="Imagen del Bien" />
+                                                <img src={data.imagen_bien} className="img-fluid img-thumbnail" alt="Imagen del Bien" />
                                             </div>
                                         </div>
                                     </div>
@@ -369,31 +369,31 @@ const BienesDirinHistory = () => {
                                                         <div className="mt-1">Area: {area_oficina_seccion?.nombre}</div>
                                                         <div className="mt-1">Estado del bien: {item?.estado_del_bien} </div>
                                                         <div className="mt-1">Observaciones: {item?.observaciones} </div>
-                                                        <div className="mt-1">Acta: {item?.documento_acta_entrega_recepcion ? (<>
+                                                        <div className="mt-1">Acta: {item?.acta ? (<>
                                                             <div className="d-inline-block pointer" onClick={() =>
-                                                                showModal(item.documento_acta_entrega_recepcion)
+                                                                showModal(item.acta)
                                                             }>
                                                                 <img
                                                                     className="icon-propios"
                                                                     alt="some value"
                                                                     title="hola"
-                                                                    src={item.icon_file_entrega_recepcion}
+                                                                    src={item.acta_icon}
 
-                                                                /> <span className="">{item.nombre_original_acta_entrega_recepcion}</span>
+                                                                /> <span className="">{item.acta_nombre}</span>
                                                             </div>  </>) : (<></>)}
                                                         </div>
 
-                                                        <div className="mt-1">Oficio: {item?.documento_memorandum ? (<>
+                                                        <div className="mt-1">Oficio: {item?.oficio ? (<>
                                                             <div className="d-inline-block pointer" onClick={() =>
-                                                                showModal(item.documento_memorandum)
+                                                                showModal(item.oficio)
                                                             }>
                                                                 <img
                                                                     className="icon-propios"
                                                                     alt="some value"
                                                                     title="hola"
-                                                                    src={item.icon_file_memorandum}
+                                                                    src={item.oficio_icon}
 
-                                                                /> <span className="">{item.nombre_original_memorandum}</span>
+                                                                /> <span className="">{item.oficio_nombre}</span>
                                                             </div>  </>) : (<></>)}
                                                         </div>
                                                         <div className="mt-1">Informe Técnico: {item?.informe_tecnico ? (<>
@@ -491,20 +491,20 @@ const BienesDirinHistory = () => {
                                 name="observaciones" onChange={handleChange} />
                         </div>
                         <div className="form-group">
-                        <label htmlFor="">Acta</label>
-                        <input type="file" className="form-control"
-                          name="acta" onChange={handleChangeDocsActa} />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="">Oficio:</label>
-                        <input type="file" className="form-control"
-                          name="oficio" onChange={handleChangeDocsOficio} />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="">Informe Técnico:</label>
-                        <input type="file" className="form-control"
-                          name="informe_tecnico" onChange={handleChangeDocsInformeTecnico} />
-                      </div>
+                            <label htmlFor="">Acta</label>
+                            <input type="file" className="form-control"
+                                name="acta" onChange={handleChangeDocsActa} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="">Oficio:</label>
+                            <input type="file" className="form-control"
+                                name="oficio" onChange={handleChangeDocsOficio} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="">Informe Técnico:</label>
+                            <input type="file" className="form-control"
+                                name="informe_tecnico" onChange={handleChangeDocsInformeTecnico} />
+                        </div>
 
                         {/* <div className="form-group">
                             <label htmlFor="">SubUnidad:</label>

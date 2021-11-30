@@ -67,7 +67,7 @@ const HistorialBienesAux = () => {
                                     </div>
                                     <div className="col-md-6">
                                         <div className="mb-4">
-                                            <img src={data.imagen_bien} className="rounded w-50" alt="Imagen del Bien" />
+                                            <img src={data.imagen_bien} className="img-fluid img-thumbnail" alt="Imagen del Bien" />
                                         </div>
                                     </div>
                                 </div>

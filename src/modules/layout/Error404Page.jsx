@@ -11,8 +11,10 @@ const Error404Page = () => {
                 <p className="output">La página a la que desea acceder no existe</p>
                 <p className="output">Redirigirse a
                     <Link to={`/admin`}
-                        className="btn btn-warning"
-                    ></Link>
+                        className="btn btn-success mx-3"
+                    >
+                        Admin
+                    </Link>
                 </p>
                 <p className="output">Good luck.</p>
             </div>

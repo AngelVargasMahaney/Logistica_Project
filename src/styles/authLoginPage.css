@@ -2,11 +2,13 @@
     --input-padding-x: 1.5rem;
     --input-padding-y: .75rem;
   }
-  .loginbackground
+  .loginbackground{
+    background-color: rgb(227, 231, 229);
+  }
   .card-signin {
     border: 0;
     border-radius: 1rem;
-    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.5rem 1rem 0 rgba(243, 230, 230, 0.692);
     overflow: hidden;
   }
   

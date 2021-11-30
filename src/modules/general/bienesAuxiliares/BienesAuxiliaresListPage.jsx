@@ -347,7 +347,9 @@ const BienesAuxiliaresListPage = () => {
                                                             <tr>
                                                                 <th>ID</th>
                                                                 <th>Descripción</th>
-                                                                <th>Documento</th>
+                                                                <th>Acta</th>
+                                                                <th>Oficio</th>
+                                                                <th>Informe Técnico</th>
                                                                 <th>Marca</th>
                                                                 <th>Modelo</th>
                                                                 <th>Serie</th>
@@ -390,13 +392,37 @@ const BienesAuxiliaresListPage = () => {
                                                                             <td>{obj.id}</td>
                                                                             <td>{obj.descripcion}</td>
                                                                             <td>
-                                                                                {obj.icon_file ? (<img
+                                                                                {obj.acta_icon ? (<img
                                                                                     className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                     alt="some value"
-                                                                                    title={obj.documento_nombre_original}
-                                                                                    src={obj.icon_file}
+                                                                                    title={obj.acta_nombre}
+                                                                                    src={obj.acta_icon}
                                                                                     onClick={() =>
-                                                                                        showModal(obj.documento)
+                                                                                        showModal(obj.acta)
+                                                                                    }
+                                                                                />) : " "}
+
+                                                                            </td>
+                                                                            <td>
+                                                                                {obj.oficio_icon ? (<img
+                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
+                                                                                    alt="some value"
+                                                                                    title={obj.oficio_nombre}
+                                                                                    src={obj.oficio_icon}
+                                                                                    onClick={() =>
+                                                                                        showModal(obj.oficio)
+                                                                                    }
+                                                                                />) : " "}
+
+                                                                            </td>
+                                                                            <td>
+                                                                                {obj.informe_tecnico_icon ? (<img
+                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
+                                                                                    alt="some value"
+                                                                                    title={obj.informe_tecnico_nombre}
+                                                                                    src={obj.informe_tecnico_icon}
+                                                                                    onClick={() =>
+                                                                                        showModal(obj.informe_tecnico)
                                                                                     }
                                                                                 />) : " "}
 

@@ -241,23 +241,50 @@ const EquipoPolicialHistory = () => {
                                                         <div className="mt-1">tasacion: {data.tasacion} </div>
                                                         <div className="mt-1">tipo de afectación: {data.tipo_afectacion} </div>
                                                         <div className="mt-1">observaciones: {data.observaciones} </div>
-                                                        <div className="mt-1">documento: {data?.documento ? (<>
+                                                        <div className="mt-1">acta: {data?.acta ? (<>
                                                             <div className="d-inline-block pointer" onClick={() =>
-                                                                showModal(data.documento)
+                                                                showModal(data.acta)
                                                             }>
                                                                 <img
                                                                     className="icon-propios"
                                                                     alt="some value"
                                                                     title="hola"
-                                                                    src={data.icon_file}
+                                                                    src={data.acta_icon}
 
-                                                                /> <span className="">{data.documento_nombre_original}</span>
+                                                                /> <span className="">{data.acta_nombre}</span>
                                                             </div>  </>) : (<></>)}
                                                         </div>
+                                                        <div className="mt-1">oficio: {data?.oficio ? (<>
+                                                            <div className="d-inline-block pointer" onClick={() =>
+                                                                showModal(data.oficio)
+                                                            }>
+                                                                <img
+                                                                    className="icon-propios"
+                                                                    alt="some value"
+                                                                    title="hola"
+                                                                    src={data.oficio_icon}
+
+                                                                /> <span className="">{data.oficio_nombre}</span>
+                                                            </div>  </>) : (<></>)}
+                                                        </div>
+                                                        <div className="mt-1">informe técnico: {data?.informe_tecnico ? (<>
+                                                            <div className="d-inline-block pointer" onClick={() =>
+                                                                showModal(data.informe_tecnico)
+                                                            }>
+                                                                <img
+                                                                    className="icon-propios"
+                                                                    alt="some value"
+                                                                    title="hola"
+                                                                    src={data.informe_tecnico_icon}
+
+                                                                /> <span className="">{data.informe_tecnico_nombre}</span>
+                                                            </div>  </>) : (<></>)}
+                                                        </div>
+
                                                     </div>
                                                     <div className="col-md-6">
                                                         <div className="mb-4">
-                                                            <img src={data.imagen_bien} className="rounded w-50" alt="Imagen del Bien" />
+                                                            <img src={data.imagen_bien} className="img-fluid img-thumbnail" alt="Imagen del Bien" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -273,30 +300,30 @@ const EquipoPolicialHistory = () => {
                                                                 <div className="mt-1">Fecha: {internamiento?.fecha} </div>
                                                                 <div className="mt-1">Estado del bien: {internamiento?.estado_del_bien} </div>
                                                                 <div className="mt-1">Observaciones: {internamiento?.observaciones} </div>
-                                                                <div className="mt-1">Acta de Entrega y Recepción: {internamiento?.documento_acta_entrega_recepcion ? (<>
+                                                                <div className="mt-1">Acta de Entrega y Recepción: {internamiento?.acta ? (<>
                                                                     <div className="d-inline-block pointer" onClick={() =>
-                                                                        showModal(internamiento.documento_acta_entrega_recepcion)
+                                                                        showModal(internamiento.acta)
                                                                     }>
                                                                         <img
                                                                             className="icon-propios"
                                                                             alt="some value"
                                                                             title="hola"
-                                                                            src={internamiento.icon_file_entrega_recepcion}
+                                                                            src={internamiento.acta_icon}
 
-                                                                        /> <span className="">{internamiento.nombre_original_acta_entrega_recepcion}</span>
+                                                                        /> <span className="">{internamiento.acta_nombre}</span>
                                                                     </div>  </>) : (<></>)}
                                                                 </div>
-                                                                <div className="mt-1">Oficio de Regularización: {internamiento?.documento_oficio_regularizacion ? (<>
+                                                                <div className="mt-1">Oficio de Regularización: {internamiento?.oficio ? (<>
                                                                     <div className="d-inline-block pointer" onClick={() =>
-                                                                        showModal(internamiento.documento_oficio_regularizacion)
+                                                                        showModal(internamiento.oficio)
                                                                     }>
                                                                         <img
                                                                             className="icon-propios"
                                                                             alt="some value"
                                                                             title="hola"
-                                                                            src={internamiento.icon_file_oficio_regularizacion}
+                                                                            src={internamiento.oficio_icon}
 
-                                                                        /> <span className="">{internamiento.nombre_original_oficio_regularizacion}</span>
+                                                                        /> <span className="">{internamiento.oficio_nombre}</span>
                                                                     </div>  </>) : (<></>)}
                                                                 </div>
 
@@ -341,31 +368,43 @@ const EquipoPolicialHistory = () => {
                                                                     <div className="mt-1">Area: {area_oficina_seccion?.nombre}</div>
                                                                     <div className="mt-1">Estado del bien: {item?.estado_del_bien} </div>
                                                                     <div className="mt-1">Observaciones: {item?.observaciones} </div>
-                                                                    <div className="mt-1">Acta de Entrega y Recepción: {item?.documento_acta_entrega_recepcion ? (<>
+                                                                    <div className="mt-1">acta: {item?.acta ? (<>
                                                                         <div className="d-inline-block pointer" onClick={() =>
-                                                                            showModal(item.documento_acta_entrega_recepcion)
+                                                                            showModal(item.acta)
                                                                         }>
                                                                             <img
                                                                                 className="icon-propios"
                                                                                 alt="some value"
                                                                                 title="hola"
-                                                                                src={item.icon_file_entrega_recepcion}
+                                                                                src={item.acta_icon}
 
-                                                                            /> <span className="">{item.nombre_original_acta_entrega_recepcion}</span>
+                                                                            /> <span className="">{item.acta_nombre}</span>
                                                                         </div>  </>) : (<></>)}
                                                                     </div>
-
-                                                                    <div className="mt-1">Memorandum: {item?.documento_memorandum ? (<>
+                                                                    <div className="mt-1">oficio: {item?.oficio ? (<>
                                                                         <div className="d-inline-block pointer" onClick={() =>
-                                                                            showModal(item.documento_memorandum)
+                                                                            showModal(item.oficio)
                                                                         }>
                                                                             <img
                                                                                 className="icon-propios"
                                                                                 alt="some value"
                                                                                 title="hola"
-                                                                                src={item.icon_file_memorandum}
+                                                                                src={item.oficio_icon}
 
-                                                                            /> <span className="">{item.nombre_original_memorandum}</span>
+                                                                            /> <span className="">{item.oficio_nombre}</span>
+                                                                        </div>  </>) : (<></>)}
+                                                                    </div>
+                                                                    <div className="mt-1">informe técnico: {item?.informe_tecnico ? (<>
+                                                                        <div className="d-inline-block pointer" onClick={() =>
+                                                                            showModal(item.informe_tecnico)
+                                                                        }>
+                                                                            <img
+                                                                                className="icon-propios"
+                                                                                alt="some value"
+                                                                                title="hola"
+                                                                                src={item.informe_tecnico_icon}
+
+                                                                            /> <span className="">{item.informe_tecnico_nombre}</span>
                                                                         </div>  </>) : (<></>)}
                                                                     </div>
 

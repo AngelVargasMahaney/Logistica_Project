@@ -1,6 +1,8 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState} from 'react'
 import AuthContext from '../../../context/auth/authContext'
 import { postLogin } from '../../../services/authService'
+import { useHistory } from "react-router-dom";
+
 
 import swal from 'sweetalert2'
 const AuthLoginScreen = () => {
@@ -9,16 +11,21 @@ const AuthLoginScreen = () => {
         email: '',
         password: ''
     })
+    const history = useHistory();
 
     const { iniciarSesionContext } = useContext(AuthContext)
 
-
+    const getTolen = () => {
+        const token = localStorage.getItem('token')
+    }
+    
     const handleChange = e => {
         setFormulario({
             ...formulario,
             [e.target.name]: e.target.value
         })
     }
+    
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -34,8 +41,7 @@ const AuthLoginScreen = () => {
                     text: 'BIENVENIDO',
                     footer: 'SISTEMA DE CONTROL DE BIENES'
                 })
-                window.location.href = "/admin";
-                // history.push('/admin')
+                history.push('/admin')
             } else {
                 console.log("ERRRRRRRRRRRRRRRRRo")
             }
@@ -54,7 +60,7 @@ const AuthLoginScreen = () => {
     }
 
     return (
-        <>
+        <div className="loginbackground">
             <div className="container">
                 <div className="row">
                     <h1 className="card-title text-center mt-5 text-light">LOGÍSTICA PNP</h1>
@@ -88,7 +94,7 @@ const AuthLoginScreen = () => {
 
                 </div>
             </div>
-        </>
+        </div>
 
         /* 
                 <main classNameName="container">

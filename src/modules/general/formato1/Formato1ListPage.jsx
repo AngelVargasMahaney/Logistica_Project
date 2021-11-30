@@ -121,7 +121,7 @@ const Formato1ListPage = () => {
 
   }
 
-  
+
 
   const handleSubmitReasignacion = e => {
 
@@ -311,7 +311,7 @@ const Formato1ListPage = () => {
   useEffect(() => {
     traerSubunidades();
   }, []);
-  
+
   const [personalActivo, setPersonalActivo] = useState([]);
   const traerPersonalActivo = () => {
     setCargando(true)
@@ -404,7 +404,9 @@ const Formato1ListPage = () => {
                                 <th>Id</th>
                                 <th>Código</th>
                                 {/* <th>Documento_nombre_original</th> */}
-                                <th>Documento</th>
+                                <th>Acta</th>
+                                <th>Oficio</th>
+                                <th>Informe Técnico</th>
                                 <th>Descripcion</th>
                                 <th>Marca</th>
                                 <th>Modelo</th>
@@ -456,13 +458,37 @@ const Formato1ListPage = () => {
                                     {/* <td>{objFormato.documento}</td> */}
 
                                     <td>
-                                      {objFormato.icon_file ? (<img
+                                      {objFormato.acta_icon ? (<img
                                         className="tamaño-icono-pdf rounded mx-auto d-block"
                                         alt="some value"
-                                        title={objFormato.documento_nombre_original}
-                                        src={objFormato.icon_file}
+                                        title={objFormato.acta_nombre}
+                                        src={objFormato.acta_icon}
                                         onClick={() =>
-                                          showModal(objFormato.documento)
+                                          showModal(objFormato.acta)
+                                        }
+                                      />) : " "}
+
+                                    </td>
+                                    <td>
+                                      {objFormato.oficio_icon ? (<img
+                                        className="tamaño-icono-pdf rounded mx-auto d-block"
+                                        alt="some value"
+                                        title={objFormato.oficio_nombre}
+                                        src={objFormato.oficio_icon}
+                                        onClick={() =>
+                                          showModal(objFormato.oficio)
+                                        }
+                                      />) : " "}
+
+                                    </td>
+                                    <td>
+                                      {objFormato.informe_tecnico_icon ? (<img
+                                        className="tamaño-icono-pdf rounded mx-auto d-block"
+                                        alt="some value"
+                                        title={objFormato.informe_tecnico_nombre}
+                                        src={objFormato.informe_tecnico_icon}
+                                        onClick={() =>
+                                          showModal(objFormato.informe_tecnico)
                                         }
                                       />) : " "}
 

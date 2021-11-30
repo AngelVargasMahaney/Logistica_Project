@@ -27,6 +27,7 @@
 }
  .overlay {
 	 pointer-events: none;
+	 
 	 position: absolute;
 	 width: 100%;
 	 height: 100%;
@@ -61,7 +62,7 @@
      
      box-sizing: inherit;
 	 position: absolute;
-	
+	color: #000;
      top: 50%;
      left: 50%;
      transform: translate(-50%, -50%);
@@ -71,7 +72,7 @@
 	 text-transform: uppercase;
 }
  .output {
-	 color: rgba(128, 255, 128, 0.8);
+	 color: rgba(16, 26, 16, 0.8);
 	 text-shadow: 0 0 1px rgba(51, 255, 51, 0.4), 0 0 2px rgba(255, 255, 255, 0.8);
 }
  .output::before {
@@ -87,6 +88,6 @@
  */
 
  .errorcode {
-	 color: white;
+	color: #000;
 }
  
