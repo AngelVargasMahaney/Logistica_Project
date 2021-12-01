@@ -9,6 +9,7 @@ import Swal from 'sweetalert2'
 import { Button } from 'react-bootstrap'
 import { getPersonalActivo } from '../../../services/personalService'
 import { getAreaOficinaSeccion } from '../../../services/areaOficinaSeccionService'
+import DataTable from 'react-data-table-component';
 const BienesAuxiliaresHistory = () => {
 
     const TITULO = "Bienes Auxiliares";
@@ -45,6 +46,26 @@ const BienesAuxiliaresHistory = () => {
     }, [])
     let { internamiento, historial } = data;
 
+    const columns = [
+        {
+            name: 'Id',
+            selector: row => row.id,
+            sortable: true,
+            maxWidth: "2px",
+            reorder: true,
+            center: true,
+        },
+        {
+
+            name: 'Descripción',
+            cell: row => row.descripcion,
+            center: true,
+            sortable: true,
+            reorder: true,
+            button: true
+      
+          },
+    ]
 
     const eliminarHistorial = (idBien) => {
         Swal.fire({
@@ -416,7 +437,43 @@ const BienesAuxiliaresHistory = () => {
                                         </div>
                                     </div>
                                 </div></div>
+
+                            {/* <DataTable title="Lista de Bienes del Formato 1"
+                                striped={true}
+                                columns={columns}
+                                data={buscar(formatos)}
+                                pagination
+                                paginationComponentOptions={
+                                    {
+                                        rowsPerPageText: "Filas por página",
+                                        rangeSeparatorText: "de",
+                                    }
+                                }
+                                fixedHeader
+                                fixedHeaderScrollHeight="600px"
+                                subHeader
+                                subHeaderComponent={
+                                    <div style={{ position: 'relative', display: 'inline-block' }}>
+                                        <SearchIcon style={{ position: 'absolute', right: 0, top: 5, width: 20, height: 20 }} />
+                                        <TextField
+                                            id="search"
+                                            style={{ width: '250px' }}
+                                            type="text"
+                                            placeholder="Filtrado de Información"
+                                            aria-label="Search Input"
+                                            value={txtBuscar}
+                                            onChange={(e) => setTxtBuscar(e.target.value)}
+                                        />
+                                    </div>
+                                }
+                                highlightOnHover
+                                progressPending={cargando}
+                                progressComponent={<SpinnerTable />}
+
+                            /> */}
                         </div>
+
+
                     </div>
                 </main>
                 <Modal show={isOpen} onHide={hideModal} size="lg">

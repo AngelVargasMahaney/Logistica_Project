@@ -4,10 +4,11 @@ import {
   deleteFormatoById,
   getFormatos,
 } from "../../../services/formatoService";
+import SearchIcon from "@material-ui/icons/Search";
 
 import Swal from "sweetalert2";
 import Modal from "react-bootstrap/Modal";
-import { Button } from "react-bootstrap";
+import { Button, Card, Image } from "react-bootstrap";
 import { postInternarBienFormato1, postReasignarBienFormato1 } from "../../../services/internamientoFormato1Service";
 import { getPersonal, getPersonalActivo } from "../../../services/personalService";
 import { getHistorialFormatoById } from "../../../services/historialBienesService";
@@ -15,7 +16,20 @@ import imgNoDisponible from "../../../assets/23.png"
 import { getAreaOficinaSeccion } from "../../../services/areaOficinaSeccionService";
 import { getReporteFormato1Excel } from "../../../services/reportesService";
 import VisualizadorImagenes from "../../modales/VisualizadorImagenes";
+import DataTable, { Alignment } from 'react-data-table-component';
+import { Avatar, IconButton, TextField } from "@material-ui/core";
+import { Title } from "@material-ui/icons";
+import CargandoComponte from "../../layout/CargandoComponente"
+import SpinnerTable from "../../layout/SpinnerTable";
 const Formato1ListPage = () => {
+  const [columnas, setColumnas] = useState([
+    {
+      name: ''
+    }
+  ])
+  const [filas, setFilas] = useState([])
+
+
 
   const tokens = localStorage.getItem('token')
   console.log(tokens)
@@ -37,7 +51,280 @@ const Formato1ListPage = () => {
     personal_id: ""
   })
 
+  const [modalObseraciones, setModalObseraciones] = useState(false)
+  const [observacionesVer, setObservacionesVer] = useState("")
+  const showModalObservaciones = (objObservaciones) => {
+    setObservacionesVer(objObservaciones);
 
+    setModalObseraciones(true);
+    console.log("ENTRANDO AL LLAMADO DE DATA de : " + objObservaciones)
+    // setCargando(true);
+    // getHistorialFormatoById(idBien).then(rpta => {
+    //   console.log("adwdwaw" + rpta)
+    //   setDataHistorial(rpta.data);
+    //   console.log("PRUEBAA" + rpta);
+    //   setCargando(false);
+
+    // })
+  }
+  const columns = [
+
+    {
+      name: 'Id',
+      selector: row => row.id,
+      sortable: true,
+      maxWidth: "2px",
+      reorder: true,
+      center: true,
+    },
+    {
+
+      name: 'Codigo',
+      selector: row => row.codigo,
+      sortable: true,
+      reorder: true,
+      center: true,
+
+    },
+    {
+
+      name: 'Descripción',
+      cell: row => row.descripcion,
+      center: true,
+      sortable: true,
+      reorder: true,
+      button: true
+
+    },
+
+    {
+      name: 'Estado',
+
+      selector: row => row.estado_bien,
+      sortable: true,
+      maxWidth: "2px",
+      reorder: true,
+      center: true,
+    },
+    {
+
+      name: 'Fecha de Adquisición',
+      selector: row => row.fecha_adquisicion,
+      center: true,
+      sortable: true,
+      Width: "1px",
+      reorder: true,
+
+    },
+    {
+
+      name: 'Observaciones',
+
+      selector: row =>
+        <p title="Haga click en el texto para ver más detalles" onClick={() => showModalObservaciones(row.observaciones)}>{(row.observaciones)?.slice(0, 35).concat(" ...")}</p>
+      ,
+      style: {
+        cursor: "pointer"
+      },
+      Width: "10px",
+      sortable: true,
+      center: true,
+      reorder: true,
+      wrap: true
+
+    },
+    {
+
+      name: 'Acta',
+      selector: row =>
+        <td>
+          {row.acta_icon ? (<img
+            className="tamaño-icono-pdf rounded mx-auto d-block"
+            alt="some value"
+            title={row.acta_nombre}
+            src={row.acta_icon}
+            onClick={() =>
+              showModal(row.acta)
+            }
+          />) : " "}
+
+        </td>,
+
+      center: true,
+      sortable: true,
+      Width: "1px",
+      reorder: true,
+
+    },
+    {
+
+      name: 'Oficio',
+      selector: row =>
+        <td>
+          {row.oficio_icon ? (<img
+            className="tamaño-icono-pdf rounded mx-auto d-block"
+            alt="some value"
+            title={row.oficio_nombre}
+            src={row.oficio_icon}
+            onClick={() =>
+              showModal(row.oficio)
+            }
+          />) : " "}
+
+        </td>,
+
+      center: true,
+      sortable: true,
+      Width: "1px",
+      reorder: true,
+
+    },
+    {
+
+      name: 'Informe Técnico',
+      selector: row =>
+
+        <td>
+          {row.informe_tecnico_icon ? (<img
+            className="tamaño-icono-pdf rounded mx-auto d-block"
+            alt="some value"
+            title={row.informe_tecnico_nombre}
+            src={row.informe_tecnico_icon}
+            onClick={() =>
+              showModal(row.informe_tecnico)
+            }
+          />) : " "}
+
+        </td>,
+
+      center: true,
+      sortable: true,
+      Width: "1px",
+      reorder: true,
+
+    },
+    {
+
+      name: 'Imagen del Bien',
+      center: true,
+
+      selector: row =>
+        <IconButton>
+          <Avatar
+            variant="rounded"
+            src={row.imagen_bien || imgNoDisponible}
+            sx={{ width: 56, height: 56 }}
+            alt="some value"
+            title={row.descripcion}
+            onClick={() => activarModalVIsualizardorImagen(row.imagen_bien || imgNoDisponible, row.descripcion + " ")}
+          />
+        </IconButton>,
+      reorder: true,
+    },
+    {
+
+      name: 'Código Qr',
+      center: true,
+      selector: row =>
+        <IconButton>
+          <Avatar
+            variant="rounded"
+            src={row.codigo_qr || imgNoDisponible}
+            sx={{ width: 56, height: 56 }}
+            alt="some value"
+            title={row.descripcion}
+            onClick={() => activarModalVIsualizardorImagen(row.codigo_qr || imgNoDisponible, `Código QR de: ${row.descripcion} `)}
+          />
+        </IconButton>,
+      reorder: true,
+
+    },
+    {
+      name: "Acciones",
+      center: true,
+
+      allowOverflow: true,
+      cell: row => (
+        <>
+          <button
+            data-toggle="tooltip"
+            data-placement="top"
+            title="Eliminar"
+            className="btn btn-danger mx-1"
+            onClick={() => {
+              eliminarFormato(row.id);
+            }}
+          >
+            <i className="fa fa-trash"></i>
+          </button>
+          <Link
+            to={`/admin/formatos/editar/${row.id}`}
+            className="btn btn-warning"
+            title="Modificar"
+          >
+            {" "}
+            <i className="fa fa-pencil"></i>
+          </Link>
+          <Button
+
+            onClick={() => {
+              showModalReasignarBien(row.id)
+
+            }}
+            className="btn btn-info mx-1"
+            title="Reasignar un Bien"
+          >
+            {" "}
+            <i className="fas fa-clipboard-check"></i>
+          </Button>
+
+          <Button
+
+            onClick={() => {
+              showModalInternarBien(row.id)
+
+            }}
+            className="btn btn-info"
+            title="Internar un Bien"
+          >
+            {" "}
+            <i className="fas fa-angle-double-down"></i>
+          </Button>
+          <Link
+            // to={`formatos/editar/${row.id}`}
+            to={`/admin/formato1/historial/${row.id}`}
+            className="btn btn-info ml-1"
+            title="Historial del bien"
+          >
+            {" "}
+            <i className="fa fa-history"></i>
+          </Link>
+
+        </>
+      ),
+
+    }
+
+
+  ]
+
+  const customStyles = {
+    rows: {
+      style: {
+        textAlign: "center" // override the row height
+      },
+    },
+    headCells: {
+      style: {
+        textAlign: "center"
+      },
+    },
+    cells: {
+      style: {
+        textAlign: "center"
+      },
+    },
+  };
   const [showModalReasignar, setshowModalReasignar] = useState(false);
   const [showModalInternar, setshowModalInternar] = useState(false);
   const handleCloseInternar = () => setshowModalInternar(false);
@@ -199,6 +486,7 @@ const Formato1ListPage = () => {
   const showModal = (pdfActual) => {
     setpdfActual(pdfActual);
     setIsOpen(true);
+    console.log(pdfActual)
   };
   const [dataHistorial, setDataHistorial] = useState([])
 
@@ -345,8 +633,21 @@ const Formato1ListPage = () => {
     setImagenBien(imagen)
     setmodalImagenes(true)
   }
-  //Aqui termina el estate del modal de Visualizador de Imagenes
 
+  const [txtBuscar, setTxtBuscar] = useState('')
+  function buscar(rows) {
+    const columns = rows[0] && Object.keys(rows[0])
+    return rows.filter((row) =>
+      columns.some(
+        (column) => row[column]?.toString().toLowerCase().indexOf(txtBuscar) > -1
+      )
+    )
+  }
+
+  //Aqui termina el estate del modal de Visualizador de Imagenes
+  const legend = formatos.map(val =>
+    val.codigo);
+  console.log(formatos)
   return (
     <>
 
@@ -356,252 +657,24 @@ const Formato1ListPage = () => {
             <div className="card">
               <div className="card-body">
                 <div className="row">
-                  <div className="col-md-3">
-                    <h5 className="mx-3">Lista de Bienes del Formato 1</h5>
-                  </div>
-                  <div className="col-md-3">
+
+                  <div className="col-md-4">
                     <Link to="/admin/bienes-internados/formato1" className="btn btn-warning">
                       {" "}
                       <i className="fa fa-list"></i> Lista de Bienes Internados
                     </Link>
                   </div>
-                  <div className="col-md-3">
+                  <div className="col-md-4">
                     <Button onClick={reportes} className="btn btn-success">
                       {" "}
                       <i className="fas fa-file-excel"></i> Generar Reporte
                     </Button>
                   </div>
-                  <div className="col-md-3">
+                  <div className="col-md-4">
                     <Link to={urlFormatoCrear} className="btn btn-primary ">
                       {" "}
                       <i className="fa fa-plus"></i> Crear un Bien
                     </Link>
-                  </div>
-
-
-
-
-
-
-
-                </div>
-
-                <div className="row mt-2">
-                  <div className="col">
-                    {cargando ?
-                      <div className="loader__father">
-                        <div className="loader">
-                          <div className="face">
-                            <div className="circle"></div>
-                          </div>
-                          <div className="face">
-                            <div className="circle"></div>
-                          </div>
-                        </div>
-                      </div>
-
-                      : (
-                        <div className="table-responsive miTabla ">
-                          <table className="table table-bordered text-center">
-                            <thead>
-                              <tr>
-                                <th>Id</th>
-                                <th>Código</th>
-                                {/* <th>Documento_nombre_original</th> */}
-                                <th>Acta</th>
-                                <th>Oficio</th>
-                                <th>Informe Técnico</th>
-                                <th>Descripcion</th>
-                                <th>Marca</th>
-                                <th>Modelo</th>
-                                <th>Serie</th>
-                                <th>Tipo</th>
-                                <th>Color</th>
-                                <th>Dimensiones</th>
-                                <th>Estado_bien</th>
-                                <th>Fecha_adquisicion</th>
-                                <th>Forma_adquisicion</th>
-                                <th>Codigo Qr</th>
-                                <th>Observaciones</th>
-                                <th>Imagen_bien</th>
-
-
-                                <th className="acciones">Acciones</th>
-                              </tr>
-                            </thead>
-
-                            <tbody>
-                              <Modal show={isOpen} onHide={hideModal} size="lg">
-                                <div>
-                                  <Modal.Body>
-                                    <div className="ModalStyles">
-                                      <iframe
-                                        id="pdf-js-viewer"
-                                        src={pdfActual}
-                                        title="webviewer"
-                                        frameBorder="0"
-                                        width="100%"
-                                        height="100%"
-                                      ></iframe>
-                                    </div>
-                                  </Modal.Body>
-                                  <Modal.Footer>
-                                    <button onClick={hideModal}>Cancel</button>
-                                  </Modal.Footer>
-                                </div>
-                              </Modal>
-                              {formatos.map((objFormato, i) => {
-                                console.log(objFormato)
-                                return (
-                                  <tr key={objFormato.id}>
-                                    <td>{objFormato.id}</td>
-                                    <td>{objFormato.codigo}</td>
-                                    {/* <td>
-                                    {objFormato.documento_nombre_original}
-                                  </td> */}
-                                    {/* <td>{objFormato.documento}</td> */}
-
-                                    <td>
-                                      {objFormato.acta_icon ? (<img
-                                        className="tamaño-icono-pdf rounded mx-auto d-block"
-                                        alt="some value"
-                                        title={objFormato.acta_nombre}
-                                        src={objFormato.acta_icon}
-                                        onClick={() =>
-                                          showModal(objFormato.acta)
-                                        }
-                                      />) : " "}
-
-                                    </td>
-                                    <td>
-                                      {objFormato.oficio_icon ? (<img
-                                        className="tamaño-icono-pdf rounded mx-auto d-block"
-                                        alt="some value"
-                                        title={objFormato.oficio_nombre}
-                                        src={objFormato.oficio_icon}
-                                        onClick={() =>
-                                          showModal(objFormato.oficio)
-                                        }
-                                      />) : " "}
-
-                                    </td>
-                                    <td>
-                                      {objFormato.informe_tecnico_icon ? (<img
-                                        className="tamaño-icono-pdf rounded mx-auto d-block"
-                                        alt="some value"
-                                        title={objFormato.informe_tecnico_nombre}
-                                        src={objFormato.informe_tecnico_icon}
-                                        onClick={() =>
-                                          showModal(objFormato.informe_tecnico)
-                                        }
-                                      />) : " "}
-
-                                    </td>
-
-                                    <td>{objFormato.descripcion || " "}</td>
-                                    <td>{objFormato.marca}</td>
-                                    <td>{objFormato.modelo}</td>
-                                    <td>{objFormato.serie}</td>
-                                    <td>{objFormato.tipo}</td>
-                                    <td>{objFormato.color}</td>
-                                    <td>{objFormato.dimensiones}</td>
-                                    <td>{objFormato.estado_bien}</td>
-                                    <td>{objFormato.fecha_adquisicion}</td>
-                                    <td>{objFormato.forma_adquisicion}</td>
-
-                                    <td>
-                                      <img
-                                        className="tamaño-icono-pdf rounded mx-auto d-block"
-                                        alt="some value"
-                                        title="Codigo Qr del Bien"
-
-                                        src={objFormato.codigo_qr || imgNoDisponible}
-                                        onClick={() =>
-                                          activarModalVIsualizardorImagen(objFormato.codigo_qr || imgNoDisponible, `Código QR de: ${objFormato.descripcion} `)
-                                        }
-                                      />
-                                    </td>
-
-                                    <td>{objFormato.observaciones}</td>
-                                    {/* <td>{objFormato.imagen_bien}</td> */}
-                                    <td>
-                                      <img
-                                        className="tamaño-icono-pdf rounded mx-auto d-block"
-                                        alt="some value"
-                                        title={objFormato.descripcion}
-                                        src={objFormato.imagen_bien || imgNoDisponible}
-                                        onClick={() =>
-                                          activarModalVIsualizardorImagen(objFormato.imagen_bien || imgNoDisponible, objFormato.descripcion + " ")
-                                        }
-                                      />
-                                    </td>
-
-
-                                    <td>
-                                      <button
-                                        data-toggle="tooltip"
-                                        data-placement="top"
-                                        title="Eliminar"
-                                        className="btn btn-danger mx-1"
-                                        onClick={() => {
-                                          eliminarFormato(objFormato.id);
-                                        }}
-                                      >
-                                        <i className="fa fa-trash"></i>
-                                      </button>
-                                      <Link
-                                        to={`/admin/formatos/editar/${objFormato.id}`}
-                                        className="btn btn-warning"
-                                        title="Modificar"
-                                      >
-                                        {" "}
-                                        <i className="fa fa-pencil"></i>
-                                      </Link>
-
-
-
-                                      <Button
-
-                                        onClick={() => {
-                                          showModalReasignarBien(objFormato.id)
-
-                                        }}
-                                        className="btn btn-info mx-1"
-                                        title="Reasignar un Bien"
-                                      >
-                                        {" "}
-                                        <i className="fas fa-clipboard-check"></i>
-                                      </Button>
-                                      <Button
-
-                                        onClick={() => {
-                                          showModalInternarBien(objFormato.id)
-
-                                        }}
-                                        className="btn btn-info"
-                                        title="Internar un Bien"
-                                      >
-                                        {" "}
-                                        <i className="fas fa-angle-double-down"></i>
-                                      </Button>
-                                      <Link
-                                        // to={`formatos/editar/${objFormato.id}`}
-                                        to={`/admin/formato1/historial/${objFormato.id}`}
-                                        className="btn btn-info ml-1"
-                                        title="Historial del bien"
-                                      >
-                                        {" "}
-                                        <i className="fa fa-history"></i>
-                                      </Link>
-
-                                    </td>
-                                  </tr>
-                                );
-                              })}
-                            </tbody>
-                          </table>
-                        </div>
-                      )}
                   </div>
                 </div>
 
@@ -807,12 +880,12 @@ const Formato1ListPage = () => {
                           name="acta" onChange={handleChangeDocsActa} />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="">Oficio:</label>
+                        <label htmlFor="">Oficio: </label>
                         <input type="file" className="form-control"
                           name="oficio" onChange={handleChangeDocsOficio} />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="">Informe Técnico:</label>
+                        <label htmlFor="">Informe Técnico: </label>
                         <input type="file" className="form-control"
                           name="informe_tecnico" onChange={handleChangeDocsInformeTecnico} />
                       </div>
@@ -848,13 +921,94 @@ const Formato1ListPage = () => {
 
 
               </div>
+              <DataTable title="Lista de Bienes del Formato 1"
+
+                striped={true}
+
+                columns={columns}
+                data={buscar(formatos)}
+                pagination
+                paginationComponentOptions={
+                  {
+                    rowsPerPageText: "Filas por página",
+                    rangeSeparatorText: "de",
+                  }
+                }
+                fixedHeader
+                fixedHeaderScrollHeight="600px"
+                subHeader
+                subHeaderComponent={
+                  <div style={{ position: 'relative', display: 'inline-block' }}>
+                    <SearchIcon style={{ position: 'absolute', right: 0, top: 5, width: 20, height: 20 }} />
+                    <TextField
+                      id="search"
+                      style={{ width: '250px' }}
+                      type="text"
+                      placeholder="Filtrado de Información"
+                      aria-label="Search Input"
+                      value={txtBuscar}
+                      onChange={(e) => setTxtBuscar(e.target.value)}
+                    />
+                  </div>
+                }
+                highlightOnHover
+                progressPending={cargando}
+                progressComponent={<SpinnerTable />}
+
+              />
+
             </div>
+
           </main>
           {/* Aqui llamo a mi componente que permite hacer uso del visualizadorImagenes */}
           <VisualizadorImagenes visible={modalImagenes} onClose={() => setmodalImagenes(false)} imagen={imagenBien} imagenDescripcion={imagenDescripcion} />
 
+          {/* Este es mi modal para visualizar documentos */}
+          <Modal show={isOpen} onHide={hideModal} size="lg">
+            <div>
+              <Modal.Body>
+                <div className="ModalStyles">
+                  <iframe
+                    id="pdf-js-viewer"
+                    src={pdfActual}
+                    title="webviewer"
+                    frameBorder="0"
+                    width="100%"
+                    height="100%"
+                  ></iframe>
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <button onClick={hideModal}>Cancel</button>
+              </Modal.Footer>
+            </div>
+          </Modal>
+
+          {/* Este es mi modal para ver más detalle de las observaciones */}
+          <Modal
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            show={modalObseraciones}
+            onHide={() => setModalObseraciones(false)}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                Observaciones
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>
+                {observacionesVer}
+              </p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button onClick={() => setModalObseraciones(false)}>Close</Button>
+            </Modal.Footer>
+          </Modal>
         </div>
-      </div>
+      </div >
+
     </>
   );
 };

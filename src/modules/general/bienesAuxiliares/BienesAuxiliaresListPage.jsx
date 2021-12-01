@@ -12,6 +12,8 @@ import { getHistorialBienAuxiliarById } from '../../../services/historialBienesS
 import { getReportes } from '../../../services/reportesService'
 import VisualizadorImagenes from '../../modales/VisualizadorImagenes'
 import { getPersonalActivo } from '../../../services/personalService'
+import MaterialTable from 'material-table'
+import { Avatar, Icon, IconButton } from '@material-ui/core'
 
 const BienesAuxiliaresListPage = () => {
 
@@ -35,7 +37,93 @@ const BienesAuxiliaresListPage = () => {
     const [areaoficinaseccion, setAreaoficinaseccion] = useState([]);
     const [personalActivo, setPersonalActivo] = useState([]);
 
+    const columns =
+        [
+            { title: 'Id', field: 'id' },
+            { title: 'Descripcion', field: 'descripcion' },
+            {
+                title: 'Imagen', field: 'imagen_bien', render:
+                    obj =>
+                        <>
+                            <IconButton>
+                                <Avatar
+                                    variant="rounded"
+                                    src={obj.imagen_bien || imgNoDisponible}
+                                    style={{ height: '60px', width: '60px' }}
+                                    alt="some value"
+                                    title={obj.descripcion}
+                                    onClick={() => activarModalVIsualizardorImagen(obj.imagen_bien || imgNoDisponible, obj.descripcion + " ")}
+                                />
+                            </IconButton>
+                        </>
+            },
+            {
+                title: 'Acta', field: 'acta', render:
+                    obj =>
+                        <>
+                            {
+                                obj.acta_icon ? (<img
+                                    className="tamaño-icono-pdf rounded mx-auto d-block"
+                                    alt="some value"
+                                    title={obj.acta_nombre}
+                                    src={obj.acta_icon}
+                                    onClick={() =>
+                                        showModal(obj.acta)
+                                    }
+                                />) : " "
+                            }
+                        </>
+            },
+            {
+                title: 'Oficio', field: 'oficio', render:
+                    obj =>
+                        <>
+                            {
+                                obj.oficio_icon ? (<img
+                                    className="tamaño-icono-pdf rounded mx-auto d-block"
+                                    alt="some value"
+                                    title={obj.oficio_nombre}
+                                    src={obj.oficio_icon}
+                                    onClick={() =>
+                                        showModal(obj.oficio)
+                                    }
+                                />) : " "
+                            }
+                        </>
+            },
+            {
+                title: 'Informe Técnico', field: 'informe_tecnico', render:
+                    obj =>
+                        <>
+                            {
+                                obj.informe_tecnico_icon ? (<img
+                                    className="tamaño-icono-pdf rounded mx-auto d-block"
+                                    alt="some value"
+                                    title={obj.informe_tecnico_nombre}
+                                    src={obj.informe_tecnico_icon}
+                                    onClick={() =>
+                                        showModal(obj.informe_tecnico)
+                                    }
+                                />) : " "
+                            }
+                        </>
+            },
 
+            { title: 'Estado del bien', field: 'estado_bien' },
+            { title: 'Fecha de Adquisición', field: 'fecha_adquisicion' },
+            {
+                title: 'Observaciones', field: 'observaciones', render: obj =>
+                    <>
+                        <p title="Haga click en el texto para ver más detalles" >{(obj.observaciones)?.slice(0, 15).concat(" ...")}</p>
+                    </>,
+                cellStyle: {
+                    cellWidth: '5%'
+                }
+
+            },
+           
+
+        ]
     const traerPersonalActivo = () => {
         setCargando(true)
         getPersonalActivo().then((rpta) => {
@@ -323,6 +411,66 @@ const BienesAuxiliaresListPage = () => {
                                     <div className="col-md-3">
                                         <Link to={URL_CREAR} className="btn btn-primary "> <i className="fa fa-plus"></i> Crear un Bien</Link>
                                     </div>
+                                </div>
+                                <div style={{}}>
+                                    <MaterialTable
+                                        title="Lista de Bienes Auxiliares"
+                                        columns={columns}
+                                        data={data}
+
+                                        actions={[
+                                            {
+                                                icon: () =>
+
+                                                    <Button className="btn btn-danger">
+                                                        <i className="fas fa-clipboard-check" />
+                                                    </Button>
+                                                ,
+                                                tooltip: "Editar Bien",
+                                                onClick: () => alert("Funciona")
+                                            },
+                                            {
+                                                icon: () =>
+
+                                                    <Button className="btn btn-danger">
+                                                        <i className="fas fa-clipboard-check" />
+                                                    </Button>
+                                                ,
+                                                tooltip: "Editar Bien",
+                                                onClick: () => alert("Funciona")
+                                            },
+                                            {
+                                                icon: () =>
+
+                                                    <Button className="btn btn-danger">
+                                                        <i className="fas fa-clipboard-check" />
+                                                    </Button>
+                                                ,
+                                                tooltip: "Editar Bien",
+                                                onClick: () => alert("Funciona")
+                                            },
+                                            {
+                                                icon: () =>
+
+                                                    <Button className="btn btn-danger">
+                                                        <i className="fas fa-clipboard-check" />
+                                                    </Button>
+                                                ,
+                                                tooltip: "Editar Bien",
+                                                onClick: () => alert("Funciona")
+                                            },
+                                        ]}
+                                        options={{
+                                            tableLayout: 'auto',
+                                            actionsColumnIndex: -1,
+                                            rowStyle: {
+                                                fontSize: 14,
+                                            },
+                                            headerStyle: {
+                                                fontSize:12
+                                            }
+                                        }}
+                                    />
                                 </div>
                                 <div className="row mt-2">
 

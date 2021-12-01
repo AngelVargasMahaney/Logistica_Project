@@ -3,6 +3,7 @@ import AuthContext from '../../../context/auth/authContext'
 import { postLogin } from '../../../services/authService'
 import { useHistory } from "react-router-dom";
 import policia from "../../../assets/PNP-FONDO-2.jpg"
+import policia2 from "../../../assets/final_pnp.png"
 
 import swal from 'sweetalert2'
 const AuthLoginScreen = () => {
@@ -68,7 +69,7 @@ const AuthLoginScreen = () => {
                     <div className="row">
                         <div className="col-lg-6">
                             <div className="mb-4">
-                                <img src={policia} className="img-fluid" alt="Imagen del Bien" />
+                                <img src={policia2} className="img-fluid" alt="Imagen del Bien" />
                             </div>
                         </div>
                         <div className="col-lg-6">
