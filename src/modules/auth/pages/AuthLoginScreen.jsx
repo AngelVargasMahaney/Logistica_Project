@@ -1,4 +1,4 @@
-import React, { useContext, useState} from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AuthContext from '../../../context/auth/authContext'
 import { postLogin } from '../../../services/authService'
 import { useHistory } from "react-router-dom";
@@ -13,26 +13,25 @@ const AuthLoginScreen = () => {
     })
     const history = useHistory();
 
-    const { iniciarSesionContext } = useContext(AuthContext)
+    const { iniciarSesionContext} = useContext(AuthContext)
 
-    const getTolen = () => {
-        const token = localStorage.getItem('token')
-    }
-    
+
+    // console.log(tokencito)
+  
+
+
     const handleChange = e => {
         setFormulario({
             ...formulario,
             [e.target.name]: e.target.value
         })
     }
-    
 
     const handleSubmit = e => {
         e.preventDefault()
         postLogin(formulario).then((rpta) => {
             console.log(rpta)
             if (rpta.status === 200) {
-
                 iniciarSesionContext(rpta.data.token)
 
                 swal.fire({
@@ -42,6 +41,7 @@ const AuthLoginScreen = () => {
                     footer: 'SISTEMA DE CONTROL DE BIENES'
                 })
                 history.push('/admin')
+                
             } else {
                 console.log("ERRRRRRRRRRRRRRRRRo")
             }

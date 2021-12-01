@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
 import AdminRouter from './modules/admin/AdminRouter';
 import AuthRouter from './modules/auth/AuthRouter';
@@ -16,9 +16,13 @@ import './styles/404page.css';
 import PrivateRoute from './PrivateRoute';
 import HomePage from './modules/layout/HomePage';
 import PublicRoute from './modules/general/vistasPublicasQR/PublicRoute';
+import axios from 'axios';
+import AuthContext from './context/auth/authContext';
 
 
 const App = () => {
+
+  // 
   return (
 
     <Router>

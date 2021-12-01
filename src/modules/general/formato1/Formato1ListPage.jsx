@@ -16,6 +16,9 @@ import { getAreaOficinaSeccion } from "../../../services/areaOficinaSeccionServi
 import { getReporteFormato1Excel } from "../../../services/reportesService";
 import VisualizadorImagenes from "../../modales/VisualizadorImagenes";
 const Formato1ListPage = () => {
+
+  const tokens = localStorage.getItem('token')
+  console.log(tokens)
   const urlFormatoCrear = "/admin/formatos/crear";
   const [formatos, setFormatos] = useState([]);
   const [cargando, setCargando] = useState(true);
@@ -120,6 +123,7 @@ const Formato1ListPage = () => {
     })
 
   }
+
 
 
 

@@ -2,9 +2,23 @@ import axios from 'axios';
 
 
 const token = localStorage.getItem('token')
+// axios.interceptors.response.use(req => {
+//     // `req` is the Axios request config, so you can modify
+//     // the `headers`.
+//     req.headers.authorization = `Bearer ${token}`;
+//     return req;
+// });
 export const authAxios = axios.create({
-    headers: {'Authorization': `Bearer ${token}`}
+    //esta variable me ayuda a brindarle el header authorization token a todas las consultas por medio de su interceptors, 
+    // creo que si le hacía al axios de frente tendría que hacer para cada uno de los servicios, por eso mejor lo creo aquí
 })
+
+
+authAxios.interceptors.request.use(function (config) {
+    const token = localStorage.getItem('token');
+    config.headers.Authorization = token ? `Bearer ${token}` : '';
+    return config;
+});
 
 // export const authAxios = axios.create();
 

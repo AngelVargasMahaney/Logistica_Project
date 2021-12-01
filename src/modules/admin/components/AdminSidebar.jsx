@@ -8,12 +8,15 @@ const AdminSidebar = () => {
     const { ...state } = useContext(AuthContext)
 
     const showSidebar = () => setsidebar(!sidebar);
+    
 
     let itemsUrl = NAVEGACION_URL;
     if (state.is_admin === false) {
         itemsUrl = itemsUrl.slice(1, itemsUrl.length)
     }
+  
     return (
+
         <>
 
             <div className={sidebar ? 'sidebar' : 'sidebar active'}>

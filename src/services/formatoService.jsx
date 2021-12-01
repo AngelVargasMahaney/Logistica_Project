@@ -1,4 +1,5 @@
 
+import axios from "axios";
 import { URL_BACKEND } from "../environments/environments"
 import { authAxios } from './axiosHelpers';
 
@@ -8,6 +9,7 @@ export const getFormatos = async () => {
     const rpta = await authAxios.get(`${URL_BACKEND}/formatos`)
     return rpta
 }
+
 
 
 

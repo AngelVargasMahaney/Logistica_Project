@@ -1,10 +1,10 @@
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { postVerificarToken } from '../../services/authService'
 import AuthContext from './authContext'
 
 
 const AuthState = (props) => {
-
     const [state, setState] = useState({
         autenticado: false,
         name: null,
@@ -14,6 +14,7 @@ const AuthState = (props) => {
         cargando: true
     })
 
+    console.log(state.token)
     const iniciarSesionContext = (token) => {
 
         localStorage.setItem('token', token);
@@ -84,7 +85,10 @@ const AuthState = (props) => {
     return (
         <AuthContext.Provider value={{
             ...state,
-            iniciarSesionContext
+            iniciarSesionContext,
+           
+
+
         }}>
             {props.children}
         </AuthContext.Provider>
