@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { deleteBienAuxiliarById, getBienAuxiliar, postReasignarBienAuxiliar } from '../../../services/bienesAuxiliaresService'
 import imgNoDisponible from "../../../assets/23.png"
@@ -18,7 +18,7 @@ import { Avatar, Icon, IconButton } from '@material-ui/core'
 const BienesAuxiliaresListPage = () => {
 
 
-
+    const history = useHistory()
     const URL_CREAR = '/admin/bienes-auxiliares/crear'
     const URL_EDITAR = "/admin/bienes-auxiliares/editar";
     const TITULO = "Bienes Auxiliares";
@@ -36,7 +36,22 @@ const BienesAuxiliaresListPage = () => {
     const [dataHistorial, setDataHistorial] = useState([])
     const [areaoficinaseccion, setAreaoficinaseccion] = useState([]);
     const [personalActivo, setPersonalActivo] = useState([]);
+    const [modalObseraciones, setModalObseraciones] = useState(false)
+    const [observacionesVer, setObservacionesVer] = useState("")
+    const showModalObservaciones = (objObservaciones) => {
+        setObservacionesVer(objObservaciones);
 
+        setModalObseraciones(true);
+        console.log("ENTRANDO AL LLAMADO DE DATA de : " + objObservaciones)
+        // setCargando(true);
+        // getHistorialFormatoById(idBien).then(rpta => {
+        //   console.log("adwdwaw" + rpta)
+        //   setDataHistorial(rpta.data);
+        //   console.log("PRUEBAA" + rpta);
+        //   setCargando(false);
+
+        // })
+    }
     const columns =
         [
             { title: 'Id', field: 'id' },
@@ -53,6 +68,22 @@ const BienesAuxiliaresListPage = () => {
                                     alt="some value"
                                     title={obj.descripcion}
                                     onClick={() => activarModalVIsualizardorImagen(obj.imagen_bien || imgNoDisponible, obj.descripcion + " ")}
+                                />
+                            </IconButton>
+                        </>
+            },
+            {
+                title: 'Código Qr', field: 'codigo_qr', render:
+                    obj =>
+                        <>
+                            <IconButton>
+                                <Avatar
+                                    variant="rounded"
+                                    src={obj.codigo_qr || imgNoDisponible}
+                                    style={{ height: '60px', width: '60px' }}
+                                    alt="some value"
+                                    title={obj.descripcion}
+                                    onClick={() => activarModalVIsualizardorImagen(obj.codigo_qr || imgNoDisponible, obj.descripcion + " ")}
                                 />
                             </IconButton>
                         </>
@@ -114,14 +145,15 @@ const BienesAuxiliaresListPage = () => {
             {
                 title: 'Observaciones', field: 'observaciones', render: obj =>
                     <>
-                        <p title="Haga click en el texto para ver más detalles" >{(obj.observaciones)?.slice(0, 15).concat(" ...")}</p>
+                        <p title="Haga click en el texto para ver más detalles" onClick={() => showModalObservaciones(obj.observaciones)}>{(obj.observaciones)?.slice(0, 25).concat(" ...")}</p>
                     </>,
                 cellStyle: {
                     cellWidth: '5%'
-                }
+                },
+
 
             },
-           
+
 
         ]
     const traerPersonalActivo = () => {
@@ -412,66 +444,7 @@ const BienesAuxiliaresListPage = () => {
                                         <Link to={URL_CREAR} className="btn btn-primary "> <i className="fa fa-plus"></i> Crear un Bien</Link>
                                     </div>
                                 </div>
-                                <div style={{}}>
-                                    <MaterialTable
-                                        title="Lista de Bienes Auxiliares"
-                                        columns={columns}
-                                        data={data}
 
-                                        actions={[
-                                            {
-                                                icon: () =>
-
-                                                    <Button className="btn btn-danger">
-                                                        <i className="fas fa-clipboard-check" />
-                                                    </Button>
-                                                ,
-                                                tooltip: "Editar Bien",
-                                                onClick: () => alert("Funciona")
-                                            },
-                                            {
-                                                icon: () =>
-
-                                                    <Button className="btn btn-danger">
-                                                        <i className="fas fa-clipboard-check" />
-                                                    </Button>
-                                                ,
-                                                tooltip: "Editar Bien",
-                                                onClick: () => alert("Funciona")
-                                            },
-                                            {
-                                                icon: () =>
-
-                                                    <Button className="btn btn-danger">
-                                                        <i className="fas fa-clipboard-check" />
-                                                    </Button>
-                                                ,
-                                                tooltip: "Editar Bien",
-                                                onClick: () => alert("Funciona")
-                                            },
-                                            {
-                                                icon: () =>
-
-                                                    <Button className="btn btn-danger">
-                                                        <i className="fas fa-clipboard-check" />
-                                                    </Button>
-                                                ,
-                                                tooltip: "Editar Bien",
-                                                onClick: () => alert("Funciona")
-                                            },
-                                        ]}
-                                        options={{
-                                            tableLayout: 'auto',
-                                            actionsColumnIndex: -1,
-                                            rowStyle: {
-                                                fontSize: 14,
-                                            },
-                                            headerStyle: {
-                                                fontSize:12
-                                            }
-                                        }}
-                                    />
-                                </div>
                                 <div className="row mt-2">
 
                                     <div className="col">
@@ -488,185 +461,90 @@ const BienesAuxiliaresListPage = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                :
-                                                <div className="table-responsive miTabla ">
-                                                    <table className="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>ID</th>
-                                                                <th>Descripción</th>
-                                                                <th>Acta</th>
-                                                                <th>Oficio</th>
-                                                                <th>Informe Técnico</th>
-                                                                <th>Marca</th>
-                                                                <th>Modelo</th>
-                                                                <th>Serie</th>
-                                                                <th>Tipo Material</th>
-                                                                <th>Color</th>
-                                                                <th>Dimensiones</th>
-                                                                <th>Estado del Bien</th>
-                                                                <th>Fecha Adquisición</th>
-                                                                <th>Observaciones</th>
-                                                                <th>Código QR</th>
-                                                                <th>Imagen</th>
-                                                                <th className="acciones"></th>
-                                                            </tr>
-                                                        </thead>
+                                                : (
+                                                    <div style={{}}>
+                                                        <MaterialTable
+                                                            title="Lista de Bienes Auxiliares"
+                                                            columns={columns}
+                                                            data={data}
 
-                                                        <tbody>
-                                                            <Modal show={isOpen} onHide={hideModal} size="lg">
-                                                                <div>
-                                                                    <Modal.Body>
-                                                                        <div className="ModalStyles">
-                                                                            <iframe
-                                                                                id="pdf-js-viewer"
-                                                                                src={pdfActual}
-                                                                                title="webviewer"
-                                                                                frameBorder="0"
-                                                                                width="100%"
-                                                                                height="100%"
-                                                                            ></iframe>
-                                                                        </div>
-                                                                    </Modal.Body>
-                                                                    <Modal.Footer>
-                                                                        <button onClick={hideModal}>Cancel</button>
-                                                                    </Modal.Footer>
-                                                                </div>
-                                                            </Modal>
-                                                            {
-                                                                data.map((obj, i) => {
-                                                                    return (
-                                                                        <tr key={obj.id}>
-                                                                            <td>{obj.id}</td>
-                                                                            <td>{obj.descripcion}</td>
-                                                                            <td>
-                                                                                {obj.acta_icon ? (<img
-                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                    alt="some value"
-                                                                                    title={obj.acta_nombre}
-                                                                                    src={obj.acta_icon}
-                                                                                    onClick={() =>
-                                                                                        showModal(obj.acta)
-                                                                                    }
-                                                                                />) : " "}
+                                                            actions={[
+                                                                {
+                                                                    icon: () =>
 
-                                                                            </td>
-                                                                            <td>
-                                                                                {obj.oficio_icon ? (<img
-                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                    alt="some value"
-                                                                                    title={obj.oficio_nombre}
-                                                                                    src={obj.oficio_icon}
-                                                                                    onClick={() =>
-                                                                                        showModal(obj.oficio)
-                                                                                    }
-                                                                                />) : " "}
+                                                                        <Button className="btn btn-danger">
+                                                                            <i className="fas fa-clipboard-check" />
+                                                                        </Button>
+                                                                    ,
+                                                                    tooltip: "Eliminar Bien",
+                                                                    onClick: (e, obj) => eliminar(obj.id)
+                                                                },
+                                                                {
+                                                                    icon: () =>
 
-                                                                            </td>
-                                                                            <td>
-                                                                                {obj.informe_tecnico_icon ? (<img
-                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                    alt="some value"
-                                                                                    title={obj.informe_tecnico_nombre}
-                                                                                    src={obj.informe_tecnico_icon}
-                                                                                    onClick={() =>
-                                                                                        showModal(obj.informe_tecnico)
-                                                                                    }
-                                                                                />) : " "}
+                                                                        <Button className="btn btn-warning">
+                                                                            <i className="fa fa-pencil" />
+                                                                        </Button>
+                                                                    ,
+                                                                    tooltip: "Editar Bien",
+                                                                    onClick: (e, obj) => history.push(`${URL_EDITAR}/${obj.id}`)
+                                                                },
+                                                                {
+                                                                    icon: () =>
 
-                                                                            </td>
-                                                                            <td>{obj.marca}</td>
-                                                                            <td>{obj.modelo}</td>
-                                                                            <td>{obj.serie}</td>
-                                                                            <td>{obj.tipo_material}</td>
-                                                                            <td>{obj.color}</td>
-                                                                            <td>{obj.dimensiones}</td>
-                                                                            <td>{obj.estado_bien}</td>
-                                                                            <td>{obj.fecha_adquisicion}</td>
-                                                                            <td>{obj.observaciones}</td>
-                                                                            <td>
-                                                                                <img
-                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                    alt="some value"
-                                                                                    title="Codigo Qr del B>ien"
+                                                                        <Button className="btn btn-info">
+                                                                            <i className="fas fa-clipboard-check" />
+                                                                        </Button>
+                                                                    ,
+                                                                    tooltip: "Reasignar un Bien",
+                                                                    onClick: (e, obj) => showModalInternarBien(obj.id)
+                                                                },
+                                                                {
+                                                                    icon: () =>
 
-                                                                                    src={obj.codigo_qr || imgNoDisponible}
-                                                                                    onClick={() =>
-                                                                                        activarModalVIsualizardorImagen(obj.codigo_qr || imgNoDisponible, `Código QR de ${obj.descripcion}`)
-                                                                                    }
-                                                                                />
-                                                                            </td>
+                                                                        <Button className="btn btn-info">
+                                                                            <i className="fas fa-angle-double-down" />
+                                                                        </Button>
+                                                                    ,
+                                                                    tooltip: "Internar Bien",
+                                                                    onClick: (e, obj) => showModalInternarBien(obj.id)
+                                                                },
+                                                                {
+                                                                    icon: () =>
 
-                                                                            <td>
-                                                                                <img
-                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                    alt="some value"
-                                                                                    title={obj.descripcion}
-                                                                                    src={obj.imagen_bien || imgNoDisponible}
-                                                                                    onClick={() =>
-                                                                                        activarModalVIsualizardorImagen(obj.imagen_bien || imgNoDisponible, obj.descripcion + " ")
-                                                                                    }
-                                                                                />
-                                                                            </td>
-                                                                            <td>
-
-                                                                                <button data-toggle="tooltip" data-placement="top" title="Eliminar"
-                                                                                    className="btn btn-danger mx-1"
-                                                                                    onClick={() => {
-                                                                                        eliminar(obj.id);
-                                                                                    }}
-                                                                                >
-                                                                                    <i className="fa fa-trash"></i>
-
-                                                                                </button>
-                                                                                <Link to={`${URL_EDITAR}/${obj.id}`}
-                                                                                    className="btn btn-warning"
-                                                                                > <i className="fa fa-pencil"></i>
-                                                                                </Link>
-                                                                                <Button
-
-                                                                                    onClick={() => {
-                                                                                        showModalReasignarBien(obj.id)
-
-                                                                                    }}
-                                                                                    className="btn btn-info mx-1"
-                                                                                    title="Reasignar un Bien"
-                                                                                >
-                                                                                    {" "}
-                                                                                    <i className="fas fa-clipboard-check"></i>
-                                                                                </Button>
-                                                                                <Button
-
-                                                                                    onClick={() => {
-                                                                                        showModalInternarBien(obj.id)
-
-                                                                                    }}
-                                                                                    className="btn btn-info"
-                                                                                    title="Internar un Bien"
-                                                                                >
-                                                                                    {" "}
-                                                                                    <i className="fas fa-angle-double-down"></i>
-                                                                                </Button>
-                                                                                <Link
-                                                                                    // to={`formatos/editar/${objFormato.id}`}
-                                                                                    to={`/admin/bienes-auxiliares/historial/${obj.id}`}
-                                                                                    className="btn btn-info ml-1"
-                                                                                    title="Historial del bien"
-                                                                                >
-                                                                                    {" "}
-                                                                                    <i className="fa fa-history"></i>
-                                                                                </Link>
-                                                                            </td>
+                                                                        <Button className="btn btn-info">
+                                                                            <i className="fa fa-history" />
+                                                                        </Button>
+                                                                    ,
+                                                                    tooltip: "Historial de un Bien",
+                                                                    onClick: (e, obj) => history.push(`/admin/bienes-auxiliares/historial/${obj.id}`)
+                                                                },
+                                                            ]}
+                                                            options={{
+                                                                tableLayout: 'auto',
+                                                                actionsColumnIndex: -1,
+                                                                rowStyle: {
+                                                                    fontSize: 14,
+                                                                },
+                                                                headerStyle: {
+                                                                    fontSize: 12
+                                                                }
+                                                            }}
+                                                            localization={{
+                                                                pagination: {
+                                                                    labelRowsSelect: "filas",
 
 
-                                                                        </tr>
 
-                                                                    )
-                                                                })
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                                                },
+                                                                header: {
+                                                                    actions: "Acciones"
+                                                                }
+                                                            }}
+                                                        />
+                                                    </div>
+                                                )
+
                                         }
                                     </div>
                                 </div>
@@ -903,7 +781,26 @@ const BienesAuxiliaresListPage = () => {
                     </main>
                     {/* Aqui llamo a mi componente que permite hacer uso del visualizadorImagenes */}
                     <VisualizadorImagenes visible={modalImagenes} onClose={() => setmodalImagenes(false)} imagen={imagenBien} imagenDescripcion={imagenDescripcion} />
-
+                    {/* Este es mi modal para ver más detalle de las observaciones */}
+                    <Modal
+                        size="lg"
+                        aria-labelledby="contained-modal-title-vcenter"
+                        centered
+                        show={modalObseraciones}
+                        onHide={() => setModalObseraciones(false)}
+                    >
+                        <Modal.Header closeButton>
+                            <Modal.Title id="contained-modal-title-vcenter">
+                                Observaciones
+                            </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body style={{ wordWrap: 'break-word' }}>
+                            {observacionesVer}
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button onClick={() => setModalObseraciones(false)}>Close</Button>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
             </div>
         </>
