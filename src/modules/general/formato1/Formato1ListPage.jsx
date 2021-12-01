@@ -928,12 +928,7 @@ const Formato1ListPage = () => {
                 columns={columns}
                 data={buscar(formatos)}
                 pagination
-                paginationComponentOptions={
-                  {
-                    rowsPerPageText: "Filas por página",
-                    rangeSeparatorText: "de",
-                  }
-                }
+                
                 fixedHeader
                 fixedHeaderScrollHeight="600px"
                 subHeader
