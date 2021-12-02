@@ -27,10 +27,14 @@ padding:0;
     font-size: 1.5rem;
     
   }
-  
+  .letra__titulo{
+    font-family: Arial, Helvetica, sans-serif;
+    text-shadow: 1px 1px 2px rgb(44, 44, 44), 0 0 1em rgb(179, 179, 179), 0 0 0.2em rgb(170, 170, 177);
+    
+  }
   .card-signin .card-img-left {
     width: 45%;
-    background: scroll center url('./../assets/PNP-FONDO-2.jpg');
+    background: scroll center url('./../assets/logo_login.png');
     background-size: cover;
   }
   
