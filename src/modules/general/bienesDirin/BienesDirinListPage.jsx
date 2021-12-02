@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import imgNoDisponible from "../../../assets/23.png"
 import Swal from 'sweetalert2'
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { deleteBienDirinById, getBienesDirin } from '../../../services/bienesDirinService';
 import { Modal } from 'react-bootstrap'
 import VisualizadorImagenes from '../../modales/VisualizadorImagenes';
@@ -13,6 +13,8 @@ import { getAreaOficinaSeccion } from '../../../services/areaOficinaSeccionServi
 import { getHistorialBienesDirin } from '../../../services/historialBienesService';
 import { getReportes } from "../../../services/reportesService";
 import CargandoComponente from '../../layout/CargandoComponente';
+import MaterialTable from 'material-table';
+import { Avatar, IconButton } from '@material-ui/core';
 
 const BienesDirinListPage = () => {
     const [cargando, setCargando] = useState(false)
@@ -314,6 +316,126 @@ const BienesDirinListPage = () => {
 
         })
     }
+    const [modalObseraciones, setModalObseraciones] = useState(false)
+    const [observacionesVer, setObservacionesVer] = useState("")
+    const showModalObservaciones = (objObservaciones) => {
+        setObservacionesVer(objObservaciones);
+
+        setModalObseraciones(true);
+        console.log("ENTRANDO AL LLAMADO DE DATA de : " + objObservaciones)
+        // setCargando(true);
+        // getHistorialFormatoById(idBien).then(rpta => {
+        //   console.log("adwdwaw" + rpta)
+        //   setDataHistorial(rpta.data);
+        //   console.log("PRUEBAA" + rpta);
+        //   setCargando(false);
+
+        // })
+    }
+    const history = useHistory()
+
+    const columns = [
+        { title: 'Id', field: 'id', align: 'left' },
+        { title: 'Denominación', field: 'denominacion', align: 'left' },
+        { title: 'Correl', field: 'correl', align: 'left' },
+
+        {
+            title: 'Imagen', align: 'left', field: 'imagen_bien', render:
+                obj =>
+                    <>
+                        <IconButton>
+                            <Avatar
+                                variant="rounded"
+                                src={obj.imagen_bien || imgNoDisponible}
+                                style={{ height: '50px', width: '50px', margin: '-5px' }}
+                                alt="some value"
+                                title={obj.descripcion}
+                                onClick={() => activarModalVIsualizardorImagen(obj.imagen_bien || imgNoDisponible, obj.descripcion + " ")}
+                            />
+                        </IconButton>
+                    </>
+        },
+        {
+            title: 'Código Qr', align: 'left', field: 'codigo_qr', render:
+                obj =>
+                    <>
+                        <IconButton>
+                            <Avatar
+                                variant="rounded"
+                                src={obj.codigo_qr || imgNoDisponible}
+                                style={{ height: '50px', width: '50px', margin: '-5px' }}
+                                alt="some value"
+                                title={obj.descripcion}
+                                onClick={() => activarModalVIsualizardorImagen(obj.codigo_qr || imgNoDisponible, obj.descripcion + " ")}
+                            />
+                        </IconButton>
+                    </>
+        },
+        {
+            title: 'Acta', align: 'left', field: 'acta', render:
+                obj =>
+                    <>
+                        {
+                            obj.acta_icon ? (<img
+                                className="tamaño-icono-pdf"
+                                alt="some value"
+                                title={obj.acta_nombre}
+                                src={obj.acta_icon}
+                                onClick={() =>
+                                    showModal(obj.acta)
+                                }
+                            />) : " "
+                        }
+                    </>
+        },
+        {
+            title: 'Oficio', align: 'left', field: 'oficio', render:
+                obj =>
+                    <>
+                        {
+                            obj.oficio_icon ? (<img
+                                className="tamaño-icono-pdf"
+                                alt="some value"
+                                title={obj.oficio_nombre}
+                                src={obj.oficio_icon}
+                                onClick={() =>
+                                    showModal(obj.oficio)
+                                }
+                            />) : " "
+                        }
+                    </>
+        },
+        {
+            title: 'Informe Técnico', align: 'left', field: 'informe_tecnico', render:
+                obj =>
+                    <>
+                        {
+                            obj.informe_tecnico_icon ? (<img
+                                className="tamaño-icono-pdf"
+                                alt="some value"
+                                title={obj.informe_tecnico_nombre}
+                                src={obj.informe_tecnico_icon}
+                                onClick={() =>
+                                    showModal(obj.informe_tecnico)
+                                }
+                            />) : " "
+                        }
+                    </>
+        },
+        { title: 'Estado del bien', field: 'estado_bien', align: 'left' },
+        {
+            title: 'Observaciones', align: 'left', field: 'observaciones', render: obj =>
+                <>
+                    <p title="Haga click en el texto para ver más detalles" onClick={() => showModalObservaciones(obj.observaciones)}>{(obj.observaciones)?.slice(0, 25).concat(" ...")}</p>
+                </>,
+            cellStyle: {
+                cellWidth: '5%'
+            },
+
+
+        },
+    ]
+
     return (
         <>
 
@@ -321,25 +443,23 @@ const BienesDirinListPage = () => {
                 <main className="container-fluid mt-5">
 
                     <div className="card">
-                        <div className="card-body">
+                        <div className="card-body bg-light">
+                            <h4 className="text-center letra__titulo">ACCIONES GENERALES</h4>
+                            <div className="row text-center border-bottom-0 my-3 rounded">
 
-                            <div className="row">
-                                <div className="col-md-3">
-                                    <h5 className="mx-3">Lista de Bienes DIRIN</h5>
-                                </div>
-                                <div className="col-md-3">
+                                <div className="col-md-4">
                                     <Link to="/admin/bienes-internados/bienes-dirin" className="btn btn-warning">
                                         {" "}
                                         <i className="fa fa-list"></i> Lista de Bienes Internados
                                     </Link>
                                 </div>
-                                <div className="col-md-3">
+                                <div className="col-md-4">
                                     <Button onClick={reportes} className="btn btn-success">
                                         {" "}
                                         <i className="fas fa-file-excel"></i> Generar Reporte
                                     </Button>
                                 </div>
-                                <div className="col-md-3">
+                                <div className="col-md-4">
                                     <Link to={"/admin/bienes-dirin/crear"} className="btn btn-primary ">
                                         {" "}
                                         <i className="fa fa-plus"></i> Crear un Bien
@@ -366,162 +486,92 @@ const BienesDirinListPage = () => {
                                                 </div>
                                             </div>
                                             :
-                                            <div className="table-responsive miTabla ">
-                                                <table className="table table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Id</th>
-                                                            <th>Código</th>
-                                                            <th>Correl</th>
-                                                            <th>Denominación</th>
-                                                            <th>Documento: Acta</th>
-                                                            <th>Documento: Oficio</th>
-                                                            <th>Documento: Informe Técnico</th>
-                                                            <th>Marca</th>
-                                                            <th>Modelo</th>
-                                                            <th>Tipo</th>
-                                                            <th>Estado del bien</th>
-                                                            <th>Observaciones</th>
-                                                            <th>Imagen del Bien</th>
-                                                            <th>Código Qr</th>
+                                            (
+                                                <div style={{}}>
+                                                    <MaterialTable
+                                                        title={"Lista de Bienes Auxiliares"}
 
-                                                            <th className="acciones"> Acciones</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {
-                                                            bienesDirin.map((obj, i) => {
-                                                                console.log(obj);
-                                                                return (
-                                                                    <tr key={i}>
-                                                                        <td>{obj.id}</td>
-                                                                        <td>{obj.codigo}</td>
-                                                                        <td>{obj.correl}</td>
-                                                                        <td>{obj.denominacion}</td>
-                                                                        <td>
-                                                                            {obj.acta_icon ? (<img
-                                                                                className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                alt="some value"
-                                                                                title={obj.acta}
-                                                                                src={obj.acta_icon}
-                                                                                onClick={() =>
-                                                                                    showModal(obj.acta)
-                                                                                }
-                                                                            />) : " "}
+                                                        columns={columns}
+                                                        data={bienesDirin}
+                                                        actions={[
+                                                            {
+                                                                icon: () =>
 
-                                                                        </td>
-                                                                        <td>
-                                                                            {obj.oficio_icon ? (<img
-                                                                                className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                alt="some value"
-                                                                                title={obj.oficio}
-                                                                                src={obj.oficio_icon}
-                                                                                onClick={() =>
-                                                                                    showModal(obj.oficio)
-                                                                                }
-                                                                            />) : " "}
 
-                                                                        </td>
-                                                                        <td>
-                                                                            {obj.informe_tecnico_icon ? (<img
-                                                                                className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                alt="some value"
-                                                                                title={obj.informe_tecnico}
-                                                                                src={obj.informe_tecnico_icon}
-                                                                                onClick={() =>
-                                                                                    showModal(obj.informe_tecnico)
-                                                                                }
-                                                                            />) : " "}
+                                                                    <i className="fas fa-trash" style={{ fontSize: '15px', color: "white", background: "#EC2300", padding: "5px", margin: "-5px", borderRadius: "5px" }} />,
 
-                                                                        </td>
-                                                                        <td>{obj.marca}</td>
-                                                                        <td>{obj.modelo}</td>
-                                                                        <td>{obj.tipo}</td>
-                                                                        <td>{obj.estado_bien}</td>
-                                                                        <td>{obj.observaciones}</td>
-                                                                        <td>
-                                                                            <img
-                                                                                className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                alt="some value"
-                                                                                title={obj.denominacion}
-                                                                                src={obj.imagen_bien || imgNoDisponible}
-                                                                                onClick={() =>
-                                                                                    activarModalVIsualizardorImagen(obj.imagen_bien || imgNoDisponible, obj.denominacion + " ")
-                                                                                }
-                                                                            />
-                                                                        </td>
-                                                                        <td>
-                                                                            <img
-                                                                                className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                alt="some value"
-                                                                                title={obj.denominacion}
-                                                                                src={obj.codigo_qr || imgNoDisponible}
-                                                                                onClick={() =>
-                                                                                    activarModalVIsualizardorImagen(obj.codigo_qr || imgNoDisponible, obj.denominacion + " ")
-                                                                                }
-                                                                            />
-                                                                        </td>
-                                                                        <td>
-                                                                            <button
-                                                                                data-toggle="tooltip"
-                                                                                data-placement="top"
-                                                                                title="Eliminar"
-                                                                                className="btn btn-danger mx-1"
-                                                                                onClick={() => {
-                                                                                    eliminarBienDirinById(obj.id);
-                                                                                }}
-                                                                            >
-                                                                                <i className="fa fa-trash"></i>
-                                                                            </button>
-                                                                            <Link
-                                                                                to={`/admin/bienes-dirin/editar/${obj.id}`}
-                                                                                className="btn btn-warning"
-                                                                                title="Modificar"
-                                                                            >
-                                                                                {" "}
-                                                                                <i className="fa fa-pencil"></i>
-                                                                            </Link>
-                                                                            <Button
+                                                                tooltip: "Eliminar Bien",
+                                                                onClick: (e, obj) => eliminarBienDirinById(obj.id)
+                                                            },
+                                                            {
+                                                                icon: () =>
 
-                                                                                onClick={() => {
-                                                                                    showModalReasignarBien(obj.id)
+                                                                    <i className="fa fa-pencil" style={{ fontSize: '15px', color: "black", background: "#ffd500", padding: "5px", margin: "-5px", borderRadius: "5px" }} />
 
-                                                                                }}
-                                                                                className="btn btn-info mx-1"
-                                                                                title="Reasignar un Bien"
-                                                                            >
-                                                                                {" "}
-                                                                                <i className="fas fa-clipboard-check"></i>
-                                                                            </Button>
-                                                                            <Button
+                                                                ,
+                                                                tooltip: "Editar Bien",
+                                                                onClick: (e, obj) => history.push(`/admin/bienes-dirin/editar/${obj.id}`)
+                                                            },
+                                                            {
+                                                                icon: () =>
 
-                                                                                onClick={() => {
-                                                                                    showModalInternarBien(obj.id)
 
-                                                                                }}
-                                                                                className="btn btn-info"
-                                                                                title="Internar un Bien"
-                                                                            >
-                                                                                {" "}
-                                                                                <i className="fas fa-angle-double-down"></i>
-                                                                            </Button>
-                                                                            <Link
-                                                                                // to={`formatos/editar/${objFormato.id}`}
-                                                                                to={`/admin/bienes-dirin/historial/${obj.id}`}
-                                                                                className="btn btn-info ml-1"
-                                                                                title="Historial del bien"
-                                                                            >
-                                                                                {" "}
-                                                                                <i className="fa fa-history"></i>
-                                                                            </Link>
-                                                                        </td>
-                                                                    </tr>
-                                                                )
-                                                            })
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                                    <i className="fas fa-clipboard-check" style={{ fontSize: '15px', color: "white", background: "#73a6e0", padding: "5px", margin: "-5px", borderRadius: "5px" }} />
+
+                                                                ,
+                                                                tooltip: "Reasignar un Bien",
+                                                                onClick: (e, obj) => showModalReasignarBien(obj.id)
+                                                            },
+                                                            {
+                                                                icon: () =>
+
+
+                                                                    <i className="fas fa-angle-double-down" style={{ fontSize: '15px', color: "white", background: "#73a6e0", padding: "5px", margin: "-5px", borderRadius: "5px" }} />
+
+                                                                ,
+                                                                tooltip: "Internar Bien",
+                                                                onClick: (e, obj) => showModalInternarBien(obj.id)
+                                                            },
+                                                            {
+                                                                icon: () =>
+
+
+                                                                    <i className="fa fa-history" style={{ fontSize: '15px', color: "white", background: "#73a6e0", padding: "5px", margin: "-5px", borderRadius: "5px" }} />
+
+                                                                ,
+                                                                tooltip: "Historial de un Bien",
+                                                                onClick: (e, obj) => history.push(`/admin/bienes-dirin/historial/${obj.id}`)
+                                                            },
+                                                        ]}
+                                                        options={
+
+                                                            {
+                                                                tableLayout: 'auto',
+
+                                                                actionsColumnIndex: -1,
+                                                                rowStyle: {
+                                                                    fontSize: 12,
+                                                                },
+                                                                headerStyle: {
+                                                                    fontSize: 12
+                                                                }
+                                                            }}
+                                                        localization={
+                                                            {
+                                                                pagination: {
+                                                                    labelRowsSelect: "filas",
+                                                                },
+                                                                header: {
+                                                                    actions: "Acciones"
+                                                                },
+                                                                toolbar: {
+                                                                    searchPlaceholder: "Buscar"
+
+                                                                }
+                                                            }}
+                                                    />
+                                                </div>
+                                            )
                                     }
                                 </div>
 
@@ -793,7 +843,26 @@ const BienesDirinListPage = () => {
 
                     </Modal.Footer>
                 </Modal>
-
+                {/* Este es mi modal para ver más detalle de las observaciones */}
+                <Modal
+                    size="lg"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                    show={modalObseraciones}
+                    onHide={() => setModalObseraciones(false)}
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter">
+                            Observaciones
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body style={{ wordWrap: 'break-word' }}>
+                        {observacionesVer}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={() => setModalObseraciones(false)}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
 
 
 

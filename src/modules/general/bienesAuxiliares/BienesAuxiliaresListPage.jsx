@@ -14,6 +14,7 @@ import VisualizadorImagenes from '../../modales/VisualizadorImagenes'
 import { getPersonalActivo } from '../../../services/personalService'
 import MaterialTable from 'material-table'
 import { Avatar, Icon, IconButton } from '@material-ui/core'
+import AddIcon from '@material-ui/icons/Add'
 
 const BienesAuxiliaresListPage = () => {
 
@@ -54,17 +55,17 @@ const BienesAuxiliaresListPage = () => {
     }
     const columns =
         [
-            { title: 'Id', field: 'id' },
-            { title: 'Descripcion', field: 'descripcion' },
+            { title: 'Id', field: 'id', align: 'left' },
+            { title: 'Descripcion', field: 'descripcion', align: 'left' },
             {
-                title: 'Imagen', field: 'imagen_bien', render:
+                title: 'Imagen', align: 'left', field: 'imagen_bien', render:
                     obj =>
                         <>
                             <IconButton>
                                 <Avatar
                                     variant="rounded"
                                     src={obj.imagen_bien || imgNoDisponible}
-                                    style={{ height: '60px', width: '60px' }}
+                                    style={{ height: '50px', width: '50px', margin: '-5px' }}
                                     alt="some value"
                                     title={obj.descripcion}
                                     onClick={() => activarModalVIsualizardorImagen(obj.imagen_bien || imgNoDisponible, obj.descripcion + " ")}
@@ -73,14 +74,14 @@ const BienesAuxiliaresListPage = () => {
                         </>
             },
             {
-                title: 'Código Qr', field: 'codigo_qr', render:
+                title: 'Código Qr', align: 'left', field: 'codigo_qr', render:
                     obj =>
                         <>
                             <IconButton>
                                 <Avatar
                                     variant="rounded"
                                     src={obj.codigo_qr || imgNoDisponible}
-                                    style={{ height: '60px', width: '60px' }}
+                                    style={{ height: '50px', width: '50px', margin: '-5px' }}
                                     alt="some value"
                                     title={obj.descripcion}
                                     onClick={() => activarModalVIsualizardorImagen(obj.codigo_qr || imgNoDisponible, obj.descripcion + " ")}
@@ -89,12 +90,12 @@ const BienesAuxiliaresListPage = () => {
                         </>
             },
             {
-                title: 'Acta', field: 'acta', render:
+                title: 'Acta', align: 'left', field: 'acta', render:
                     obj =>
                         <>
                             {
                                 obj.acta_icon ? (<img
-                                    className="tamaño-icono-pdf rounded mx-auto d-block"
+                                    className="tamaño-icono-pdf"
                                     alt="some value"
                                     title={obj.acta_nombre}
                                     src={obj.acta_icon}
@@ -106,12 +107,12 @@ const BienesAuxiliaresListPage = () => {
                         </>
             },
             {
-                title: 'Oficio', field: 'oficio', render:
+                title: 'Oficio', align: 'left', field: 'oficio', render:
                     obj =>
                         <>
                             {
                                 obj.oficio_icon ? (<img
-                                    className="tamaño-icono-pdf rounded mx-auto d-block"
+                                    className="tamaño-icono-pdf"
                                     alt="some value"
                                     title={obj.oficio_nombre}
                                     src={obj.oficio_icon}
@@ -123,12 +124,12 @@ const BienesAuxiliaresListPage = () => {
                         </>
             },
             {
-                title: 'Informe Técnico', field: 'informe_tecnico', render:
+                title: 'Informe Técnico', align: 'left', field: 'informe_tecnico', render:
                     obj =>
                         <>
                             {
                                 obj.informe_tecnico_icon ? (<img
-                                    className="tamaño-icono-pdf rounded mx-auto d-block"
+                                    className="tamaño-icono-pdf"
                                     alt="some value"
                                     title={obj.informe_tecnico_nombre}
                                     src={obj.informe_tecnico_icon}
@@ -140,10 +141,10 @@ const BienesAuxiliaresListPage = () => {
                         </>
             },
 
-            { title: 'Estado del bien', field: 'estado_bien' },
-            { title: 'Fecha de Adquisición', field: 'fecha_adquisicion' },
+            { title: 'Estado del bien', field: 'estado_bien', align: 'left' },
+            { title: 'Fecha de Adquisición', field: 'fecha_adquisicion', align: 'left' },
             {
-                title: 'Observaciones', field: 'observaciones', render: obj =>
+                title: 'Observaciones', align: 'left', field: 'observaciones', render: obj =>
                     <>
                         <p title="Haga click en el texto para ver más detalles" onClick={() => showModalObservaciones(obj.observaciones)}>{(obj.observaciones)?.slice(0, 25).concat(" ...")}</p>
                     </>,
@@ -421,26 +422,23 @@ const BienesAuxiliaresListPage = () => {
                     <main className="container-fluid mt-5">
 
                         <div className="card">
-                            <div className="card-body">
+                            <div className="card-body bg-light">
+                                <h4 className="text-center letra__titulo">ACCIONES GENERALES</h4>
+                                <div className="row text-center border-bottom-0 my-3 rounded">
 
-                                <div className="row">
-                                    <div className="col-md-3">
-                                        <h5 className="mx-3">{TITULO}</h5>
-
-                                    </div>
-                                    <div className="col-md-3">
+                                    <div className="col-md-4">
                                         <Link to="/admin/bienes-internados/bienes-auxiliares" className="btn btn-warning">
                                             {" "}
                                             <i className="fa fa-list"></i> Lista de Bienes Internados
                                         </Link>
                                     </div>
-                                    <div className="col-md-3">
+                                    <div className="col-md-4">
                                         <Button onClick={reportes} className="btn btn-success">
                                             {" "}
                                             <i className="fas fa-file-excel"></i> Generar Reporte
                                         </Button>
                                     </div>
-                                    <div className="col-md-3">
+                                    <div className="col-md-4">
                                         <Link to={URL_CREAR} className="btn btn-primary "> <i className="fa fa-plus"></i> Crear un Bien</Link>
                                     </div>
                                 </div>
@@ -464,27 +462,25 @@ const BienesAuxiliaresListPage = () => {
                                                 : (
                                                     <div style={{}}>
                                                         <MaterialTable
-                                                            title="Lista de Bienes Auxiliares"
+                                                            title={"Lista de Bienes Auxiliares"}
+
                                                             columns={columns}
                                                             data={data}
-
                                                             actions={[
                                                                 {
                                                                     icon: () =>
 
-                                                                        <Button className="btn btn-danger">
-                                                                            <i className="fas fa-clipboard-check" />
-                                                                        </Button>
-                                                                    ,
+
+                                                                        <i className="fas fa-trash" style={{ fontSize: '15px', color: "white", background: "#EC2300", padding: "5px", margin: "-5px", borderRadius: "5px" }} />,
+
                                                                     tooltip: "Eliminar Bien",
                                                                     onClick: (e, obj) => eliminar(obj.id)
                                                                 },
                                                                 {
                                                                     icon: () =>
 
-                                                                        <Button className="btn btn-warning">
-                                                                            <i className="fa fa-pencil" />
-                                                                        </Button>
+                                                                        <i className="fa fa-pencil" style={{ fontSize: '15px', color: "black", background: "#ffd500", padding: "5px", margin: "-5px", borderRadius: "5px" }} />
+
                                                                     ,
                                                                     tooltip: "Editar Bien",
                                                                     onClick: (e, obj) => history.push(`${URL_EDITAR}/${obj.id}`)
@@ -492,19 +488,19 @@ const BienesAuxiliaresListPage = () => {
                                                                 {
                                                                     icon: () =>
 
-                                                                        <Button className="btn btn-info">
-                                                                            <i className="fas fa-clipboard-check" />
-                                                                        </Button>
+
+                                                                        <i className="fas fa-clipboard-check" style={{ fontSize: '15px', color: "white", background: "#73a6e0", padding: "5px", margin: "-5px", borderRadius: "5px" }} />
+
                                                                     ,
                                                                     tooltip: "Reasignar un Bien",
-                                                                    onClick: (e, obj) => showModalInternarBien(obj.id)
+                                                                    onClick: (e, obj) => showModalReasignarBien(obj.id)
                                                                 },
                                                                 {
                                                                     icon: () =>
 
-                                                                        <Button className="btn btn-info">
-                                                                            <i className="fas fa-angle-double-down" />
-                                                                        </Button>
+
+                                                                        <i className="fas fa-angle-double-down" style={{ fontSize: '15px', color: "white", background: "#73a6e0", padding: "5px", margin: "-5px", borderRadius: "5px" }} />
+
                                                                     ,
                                                                     tooltip: "Internar Bien",
                                                                     onClick: (e, obj) => showModalInternarBien(obj.id)
@@ -512,35 +508,40 @@ const BienesAuxiliaresListPage = () => {
                                                                 {
                                                                     icon: () =>
 
-                                                                        <Button className="btn btn-info">
-                                                                            <i className="fa fa-history" />
-                                                                        </Button>
+
+                                                                        <i className="fa fa-history" style={{ fontSize: '15px', color: "white", background: "#73a6e0", padding: "5px", margin: "-5px", borderRadius: "5px" }} />
+
                                                                     ,
                                                                     tooltip: "Historial de un Bien",
                                                                     onClick: (e, obj) => history.push(`/admin/bienes-auxiliares/historial/${obj.id}`)
                                                                 },
                                                             ]}
-                                                            options={{
-                                                                tableLayout: 'auto',
-                                                                actionsColumnIndex: -1,
-                                                                rowStyle: {
-                                                                    fontSize: 14,
-                                                                },
-                                                                headerStyle: {
-                                                                    fontSize: 12
-                                                                }
-                                                            }}
-                                                            localization={{
-                                                                pagination: {
-                                                                    labelRowsSelect: "filas",
+                                                            options={
 
+                                                                {
+                                                                    tableLayout: 'auto',
 
+                                                                    actionsColumnIndex: -1,
+                                                                    rowStyle: {
+                                                                        fontSize: 12,
+                                                                    },
+                                                                    headerStyle: {
+                                                                        fontSize: 12
+                                                                    }
+                                                                }}
+                                                            localization={
+                                                                {
+                                                                    pagination: {
+                                                                        labelRowsSelect: "filas",
+                                                                    },
+                                                                    header: {
+                                                                        actions: "Acciones"
+                                                                    },
+                                                                    toolbar:{
+                                                                        searchPlaceholder:"Buscar" 
 
-                                                                },
-                                                                header: {
-                                                                    actions: "Acciones"
-                                                                }
-                                                            }}
+                                                                    }
+                                                                }}
                                                         />
                                                     </div>
                                                 )
