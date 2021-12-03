@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { getUsuariosById, putUsuarioById } from '../../../services/usuarioService'
+import { getUsuariosById, putUsuarioById, getRoles } from '../../../services/usuarioService'
 
 import swal from 'sweetalert2'
 const UserEditarPage = () => {
@@ -67,7 +67,15 @@ const UserEditarPage = () => {
 
     }
 
+    const [roles, setRoles] = useState([])
+    const obtenerRoles = () => {
+        getRoles().then((rpta) => {
+            setRoles(rpta.data)
+
+        })
+    }
     useEffect(() => {
+        obtenerRoles()
         getUsuariosById(params.id).then((rpta) => {
             //console.log(rpta)
             setFormulario({ ...rpta.data })
@@ -156,8 +164,12 @@ const UserEditarPage = () => {
                                                 onChange={handleChange}
                                                 value={role_id}
                                             >
-                                                <option value="1">Usuario</option>
-                                                <option value="2">Administrador</option>
+                                               {roles.map((objRol, i) => {
+                                                        return (
+                                                            <option key={objRol.id} value={objRol.id}>{objRol.name}</option>
+                                                        );
+                                                    })}
+
                                             </select>
 
                                             <label htmlFor="" className="form-label my-2">
