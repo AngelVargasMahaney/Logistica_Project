@@ -307,7 +307,7 @@ const BienesDirinHistory = () => {
                                                                 title="hola"
                                                                 src={internamiento.oficio_icon}
 
-                                                            /> <span className="">{internamiento.oficio_nomber}</span>
+                                                            /> <span className="">{internamiento.oficio_nombre}</span>
                                                         </div>  </>) : (<></>)}
                                                     </div>
                                                     <div className="mt-1">Informe Técnico: {internamiento?.informe_tecnico ? (<>
