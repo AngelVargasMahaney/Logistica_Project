@@ -682,17 +682,17 @@ const UnidadesTransporteHistory = () => {
                         <div className="form-group">
                             <label htmlFor="">Documento: Acta </label>
                             <input type="file" className="form-control"
-                                name="documento_acta_entrega_recepcion" onChange={handleDocumentoActa} />
+                                name="acta" onChange={handleDocumentoActa} />
                         </div>
                         <div className="form-group">
                             <label htmlFor="">Documento: Oficio </label>
                             <input type="file" className="form-control"
-                                name="documento_acta_entrega_recepcion" onChange={handleDocumentoOficio} />
+                                name="oficio" onChange={handleDocumentoOficio} />
                         </div>
                         <div className="form-group">
                             <label htmlFor="">Documento: Informe técnico </label>
                             <input type="file" className="form-control"
-                                name="documento_acta_entrega_recepcion" onChange={handleDocumentoInformeTecnico} />
+                                name="informe_tecnico" onChange={handleDocumentoInformeTecnico} />
                         </div>
 
                         {/* <div className="form-group">

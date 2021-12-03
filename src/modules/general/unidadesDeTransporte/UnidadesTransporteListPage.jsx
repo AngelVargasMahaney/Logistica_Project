@@ -152,14 +152,14 @@ const UnidadesTransporteListPage = () => {
 
 
         if (documentoActa != null) {
-            formData.append('documento_acta_entrega_recepcion', documentoActa)
+            formData.append('acta', documentoActa)
         } else {
-            formData.delete('documento_acta_entrega_recepcion', documentoActa)
+            formData.delete('acta', documentoActa)
         }
         if (documentoOficio != null) {
-            formData.append('documento_oficio_regularizacion', documentoOficio)
+            formData.append('oficio', documentoOficio)
         } else {
-            formData.delete('documento_oficio_regularizacion', documentoOficio)
+            formData.delete('oficio', documentoOficio)
         }
         if (documentoInformeTecnico != null) {
             formData.append('informe_tecnico', documentoInformeTecnico)
@@ -199,14 +199,14 @@ const UnidadesTransporteListPage = () => {
         formDataReasignacion.append('fecha', formulario.fecha)
         formDataReasignacion.append('observaciones', formulario.observaciones)
         if (documentoActa != null) {
-            formDataReasignacion.append('documento_acta_entrega_recepcion', documentoActa)
+            formDataReasignacion.append('acta', documentoActa)
         } else {
-            formDataReasignacion.delete('documento_acta_entrega_recepcion', documentoActa)
+            formDataReasignacion.delete('acta', documentoActa)
         }
         if (documentoOficio != null) {
-            formDataReasignacion.append('documento_memorandum', documentoOficio)
+            formDataReasignacion.append('oficio', documentoOficio)
         } else {
-            formDataReasignacion.delete('documento_memorandum', documentoOficio)
+            formDataReasignacion.delete('oficio', documentoOficio)
         }
         if (documentoInformeTecnico != null) {
             formDataReasignacion.append('informe_tecnico', documentoInformeTecnico)
@@ -625,12 +625,12 @@ const UnidadesTransporteListPage = () => {
                             <div className="form-group">
                                 <label htmlFor="">Documento: Acta</label>
                                 <input type="file" className="form-control"
-                                    name="documento_acta_entrega_recepcion" onChange={handleDocumentoActa} />
+                                    name="acta" onChange={handleDocumentoActa} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="">Documento: Oficio</label>
                                 <input type="file" className="form-control"
-                                    name="documento_oficio_regularizacion" onChange={handleDocumentoOficio} />
+                                    name="oficio" onChange={handleDocumentoOficio} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="">Documento: Informe Técnico</label>
@@ -799,12 +799,12 @@ const UnidadesTransporteListPage = () => {
                             <div className="form-group">
                                 <label htmlFor="">Documento: Acta </label>
                                 <input type="file" className="form-control"
-                                    name="documento_acta_entrega_recepcion" onChange={handleDocumentoActa} />
+                                    name="acta" onChange={handleDocumentoActa} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="">Documento: Oficio </label>
                                 <input type="file" className="form-control"
-                                    name="documento_memorandum" onChange={handleDocumentoOficio} />
+                                    name="oficio" onChange={handleDocumentoOficio} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="">Documento: Informe Técnico</label>

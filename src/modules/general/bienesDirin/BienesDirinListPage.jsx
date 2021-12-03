@@ -625,13 +625,13 @@ const BienesDirinListPage = () => {
                             <div className="form-group">
                                 <label htmlFor="">Acta:</label>
                                 <input type="file" className="form-control"
-                                    name="documento_acta_entrega_recepcion" onChange={handleDocumentActa} />
+                                    name="acta" onChange={handleDocumentActa} />
                             </div>
 
                             <div className="form-group">
                                 <label htmlFor="">Oficio:</label>
                                 <input type="file" className="form-control"
-                                    name="documento_oficio_regularizacion" onChange={handleDocumentOficio} />
+                                    name="oficio" onChange={handleDocumentOficio} />
                             </div>
 
                             <div className="form-group">
@@ -801,12 +801,12 @@ const BienesDirinListPage = () => {
                             <div className="form-group">
                                 <label htmlFor="">Acta </label>
                                 <input type="file" className="form-control"
-                                    name="documento_acta_entrega_recepcion" onChange={handleDocumentActa} />
+                                    name="acta" onChange={handleDocumentActa} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="">Oficio </label>
                                 <input type="file" className="form-control"
-                                    name="documento_memorandum" onChange={handleDocumentOficio} />
+                                    name="oficio" onChange={handleDocumentOficio} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="">Informe Técnico </label>
