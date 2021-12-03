@@ -335,7 +335,7 @@ const Formato1History = () => {
                                                                             title="hola"
                                                                             src={internamiento.oficio_icon}
 
-                                                                        /> <span className="">{internamiento.nombre_original_oficio_regularizacion}</span>
+                                                                        /> <span className="">{internamiento.oficio_nombre}</span>
                                                                     </div>  </>) : (<></>)}
                                                                 </div>
                                                                 <div className="mt-1">Informe Técnico:{internamiento?.informe_tecnico ? (<>
