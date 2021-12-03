@@ -361,17 +361,17 @@ const InternamientoBienesDirin = () => {
                                 value={formularioInternamiento.observaciones} name="observaciones" onChange={handleChange} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="">Documento: Acta</label>
+                            <label htmlFor="">Acta</label>
                             <input type="file" className="form-control"
                                 name="acta" onChange={handleDocumentoActa} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="">Documento: Oficio</label>
+                            <label htmlFor="">Oficio</label>
                             <input type="file" className="form-control"
                                 name="oficio" onChange={handleDocumentoOficio} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="">Documento: Informe Técnico</label>
+                            <label htmlFor="">Informe Técnico</label>
                             <input type="file" className="form-control"
                                 name="informe_tecnico" onChange={handleDocumentoInformeTecnico} />
                         </div>
