@@ -4,7 +4,7 @@ import { getUsuariosById, putUsuarioById } from '../../../services/usuarioServic
 
 import swal from 'sweetalert2'
 const UserEditarPage = () => {
-    
+
     const tituloOperacion = 'Formulario de Edición de un Usuario'
     //Variable de estado que se encarga de manejar los campos de nuestro formulario que servirán para llenar la bd (tener en cuenta los campos que el back-end envió, ver documentación)
     const [formulario, setFormulario] = useState({
@@ -13,16 +13,17 @@ const UserEditarPage = () => {
         apellido: "",
         dni: "",
         email: "",
-        password: ""
+        password: "",
+        role_id: ""
     })
-    
+
     //Recupero los parámetros de la URL
     const params = useParams()
 
     const history = useHistory()
 
     //Desestructuro los campos del formulario, con el objetivo de evitar poner formulario.valor en cada atributo del forumario (por limpieza de código)
-    let { name, apellido, dni, email, password } = formulario
+    let { name, apellido, dni, email, password, role_id } = formulario
 
     // Cada vez que se dispara el evento onChange del formulario, se llama a esta funcion para manejar el envío de datos
     const handleChange = (e) => {
@@ -32,7 +33,7 @@ const UserEditarPage = () => {
         })
     }
 
-    const errorResponse = (({response}) => {
+    const errorResponse = (({ response }) => {
         let mensaje = ""
         if (response.status === 400) {
             for (const [key, value] of Object.entries(response.data)) {
@@ -47,7 +48,7 @@ const UserEditarPage = () => {
             html: mensaje,
             footer: 'SISTEMA DE CONTROL DE BIENES'
         })
-    } );
+    });
     const handleSubmit = (e) => {
         e.preventDefault() //Evito que se refresque la página
         // postUsuario({ ...formulario }).then((rpta) => { //Copia del formulario
@@ -65,18 +66,18 @@ const UserEditarPage = () => {
         }).catch(errorResponse);
 
     }
- 
+
     useEffect(() => {
         getUsuariosById(params.id).then((rpta) => {
             //console.log(rpta)
             setFormulario({ ...rpta.data })
         })
         // eslint-disable-next-line
-    }, []) 
+    }, [])
 
     return (
         <>
-           
+
             <div className="home_content">
                 <main className="container">
                     <div className="row mt-4">
@@ -147,6 +148,19 @@ const UserEditarPage = () => {
                                                 onChange={handleChange}
                                             />
                                             <label htmlFor="" className="form-label my-2">
+                                                Rol
+                                            </label>
+                                            <select
+                                                required className="form-select custom-select mr-sm-2 my-2"
+                                                name="role_id"
+                                                onChange={handleChange}
+                                                value={role_id}
+                                            >
+                                                <option value="1" >Usuario</option>
+                                                <option value="2" >Administrador</option>
+                                            </select>
+
+                                            <label htmlFor="" className="form-label my-2">
                                                 Password
                                             </label>
                                             <input
@@ -161,7 +175,7 @@ const UserEditarPage = () => {
                                         </div>
                                         <div>
                                             <button className="btn btn-primary" type="submit">
-                                           <span className="mx-1"><i className="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
+                                                <span className="mx-1"><i className="fa fa-floppy-o" aria-hidden="true"></i></span>   Guardar
                                             </button>
                                             <button
                                                 className="btn btn-danger my-3 mx-3"
@@ -170,7 +184,7 @@ const UserEditarPage = () => {
                                                     history.push("/admin/usuario");
                                                 }}
                                             >
-                                               <span className="mx-1"><i className="fa fa-ban" aria-hidden="true"></i></span> Cancelar
+                                                <span className="mx-1"><i className="fa fa-ban" aria-hidden="true"></i></span> Cancelar
                                             </button>
                                         </div>
                                     </form>
