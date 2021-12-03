@@ -489,7 +489,7 @@ const BienesDirinListPage = () => {
                                             (
                                                 <div style={{}}>
                                                     <MaterialTable
-                                                        title={"Lista de Bienes Auxiliares"}
+                                                        title={"Lista de Bienes Dirin"}
 
                                                         columns={columns}
                                                         data={bienesDirin}

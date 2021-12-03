@@ -156,8 +156,8 @@ const UserEditarPage = () => {
                                                 onChange={handleChange}
                                                 value={role_id}
                                             >
-                                                <option value="1" >Usuario</option>
-                                                <option value="2" >Administrador</option>
+                                                <option value="1">Usuario</option>
+                                                <option value="2">Administrador</option>
                                             </select>
 
                                             <label htmlFor="" className="form-label my-2">

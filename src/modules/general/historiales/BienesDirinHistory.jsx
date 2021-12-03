@@ -224,7 +224,6 @@ const BienesDirinHistory = () => {
                                             <div className="mt-1">serie: {data.serie} </div>
                                             <div className="mt-1">tipo: {data.tipo} </div>
                                             <div className="mt-1">color: {data.color} </div>
-                                            <div className="mt-1">dimensiones: {data.dimensiones} </div>
                                             <div className="mt-1">estado del bien: {data.estado_bien} </div>
                                             <div className="mt-1">observaciones: {data.observaciones} </div>
                                             <div className="mt-1">acta: {data?.acta ? (<>

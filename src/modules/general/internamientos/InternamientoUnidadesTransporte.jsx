@@ -113,14 +113,14 @@ const InternamientoUnidadesTransporte = () => {
 
 
         if (documentoActa != null) {
-            formData.append('documento_acta_entrega_recepcion', documentoActa)
+            formData.append('acta', documentoActa)
         } else {
-            formData.delete('documento_acta_entrega_recepcion', documentoActa)
+            formData.delete('acta', documentoActa)
         }
         if (documentoOficio != null) {
-            formData.append('documento_memorandum', documentoOficio)
+            formData.append('oficio', documentoOficio)
         } else {
-            formData.delete('documento_memorandum', documentoOficio)
+            formData.delete('oficio', documentoOficio)
         }
         if (documentoInformeTecnico != null) {
             formData.append('informe_tecnico', documentoInformeTecnico)
@@ -155,7 +155,7 @@ const InternamientoUnidadesTransporte = () => {
     }
     return (
         <>
-           
+
             <div className="home_content">
 
 
@@ -203,9 +203,9 @@ const InternamientoUnidadesTransporte = () => {
                                                                 <th>Estado de la Unidad</th>
                                                                 <th>Observaciones</th>
                                                                 <th>Fecha</th>
-                                                                <th>Documento: Acta</th>
-                                                                <th>Documento: Oficio</th>
-                                                                <th>Documento: Informe Técnico</th>
+                                                                <th>Acta</th>
+                                                                <th>Oficio</th>
+                                                                <th>Informe Técnico</th>
                                                                 <th className="acciones"> Acciones</th>
                                                             </tr>
                                                         </thead>
@@ -244,25 +244,24 @@ const InternamientoUnidadesTransporte = () => {
                                                                             <td>{objLista.observaciones}</td>
                                                                             <td>{objLista.fecha}</td>
                                                                             <td>
-                                                                                {objLista.documento_acta_entrega_recepcion ? (<img
+                                                                                {objLista.acta ? (<img
                                                                                     className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                     alt="some value"
-                                                                                    title={objLista.nombre_original_acta_entrega_recepcion}
-                                                                                    src={objLista.icon_file_entrega_recepcion}
+                                                                                    title={objLista.acta_nombre}
+                                                                                    src={objLista.acta_icon}
                                                                                     onClick={() =>
-                                                                                        showModal(objLista.documento_acta_entrega_recepcion)
+                                                                                        showModal(objLista.acta)
                                                                                     }
                                                                                 />) : " "}
-
                                                                             </td>
                                                                             <td>
-                                                                                {objLista.documento_oficio_regularizacion ? (<img
+                                                                                {objLista.oficio ? (<img
                                                                                     className="tamaño-icono-pdf rounded mx-auto d-block"
                                                                                     alt="some value"
-                                                                                    title={objLista.nombre_original_oficio_regularizacion}
-                                                                                    src={objLista.icon_file_oficio_regularizacion}
+                                                                                    title={objLista.oficio_nombre}
+                                                                                    src={objLista.oficio_icon}
                                                                                     onClick={() =>
-                                                                                        showModal(objLista.documento_oficio_regularizacion)
+                                                                                        showModal(objLista.oficio)
                                                                                     }
                                                                                 />) : " "}
 
@@ -356,12 +355,12 @@ const InternamientoUnidadesTransporte = () => {
                         <div className="form-group">
                             <label htmlFor="">Documento: Acta</label>
                             <input type="file" className="form-control"
-                                name="documento_acta_entrega_recepcion" onChange={handleDocumentoActa} />
+                                name="acta" onChange={handleDocumentoActa} />
                         </div>
                         <div className="form-group">
                             <label htmlFor="">Documento: Oficio</label>
                             <input type="file" className="form-control"
-                                name="documento_memorandum" onChange={handleDocumentoOficio} />
+                                name="oficio" onChange={handleDocumentoOficio} />
                         </div>
                         <div className="form-group">
                             <label htmlFor="">Documento: Informe Técnico</label>

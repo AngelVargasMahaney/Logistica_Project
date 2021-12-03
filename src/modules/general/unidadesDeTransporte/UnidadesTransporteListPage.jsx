@@ -488,7 +488,7 @@ const UnidadesTransporteListPage = () => {
                                             (
                                                 <div style={{}}>
                                                     <MaterialTable
-                                                        title={"Lista de Bienes Auxiliares"}
+                                                        title={"Lista de Unidades de Transporte"}
 
                                                         columns={columns}
                                                         data={unidadesTransporte}
