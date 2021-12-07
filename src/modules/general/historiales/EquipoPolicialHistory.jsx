@@ -9,6 +9,8 @@ import Swal from 'sweetalert2'
 import { Button } from 'react-bootstrap'
 import { getPersonalActivo } from '../../../services/personalService'
 import { getAreaOficinaSeccion } from '../../../services/areaOficinaSeccionService'
+import imgNoDisponible from "../../../assets/23.png"
+
 const EquipoPolicialHistory = () => {
 
     const TITULO = "Equipo policial";
@@ -284,7 +286,7 @@ const EquipoPolicialHistory = () => {
                                                     </div>
                                                     <div className="col-md-6">
                                                         <div className="mb-4">
-                                                            <img src={data.imagen_bien} className="img-fluid img-thumbnail" alt="Imagen del Bien" />
+                                                            <img src={data.imagen_bien || imgNoDisponible} className="img-fluid img-thumbnail" alt="Imagen del Bien" />
                                                         </div>
                                                     </div>
                                                 </div>

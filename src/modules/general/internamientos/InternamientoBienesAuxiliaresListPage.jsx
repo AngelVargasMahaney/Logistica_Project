@@ -512,6 +512,26 @@ const InternamientoBienesAuxiliaresListPage = () => {
 
                 </Modal.Footer>
             </Modal>
+             {/* Modal visualizador pdf */}
+             <Modal show={isOpen} onHide={hideModal} size="lg">
+                <div>
+                    <Modal.Body>
+                        <div className="ModalStyles">
+                            <iframe
+                                id="pdf-js-viewer"
+                                src={pdfActual}
+                                title="webviewer"
+                                frameBorder="0"
+                                width="100%"
+                                height="100%"
+                            ></iframe>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button onClick={hideModal}>Cancel</button>
+                    </Modal.Footer>
+                </div>
+            </Modal>
         </>
 
     )

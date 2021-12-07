@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getHistorialBienAuxiliarById } from '../../../services/historialBienesService'
 import Modal from "react-bootstrap/Modal";
+import imgNoDisponible from "../../../assets/23.png"
 
 const HistorialBienesAux = () => {
     const TITULO = "Bienes Auxiliares";
@@ -67,7 +68,7 @@ const HistorialBienesAux = () => {
                                     </div>
                                     <div className="col-md-6">
                                         <div className="mb-4">
-                                            <img src={data.imagen_bien} className="img-fluid img-thumbnail" alt="Imagen del Bien" />
+                                            <img src={data.imagen_bien || imgNoDisponible} className="img-fluid img-thumbnail" alt="Imagen del Bien" />
                                         </div>
                                     </div>
                                 </div>

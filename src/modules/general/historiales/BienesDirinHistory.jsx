@@ -8,6 +8,7 @@ import { getPersonalActivo } from '../../../services/personalService';
 import { getAreaOficinaSeccion } from '../../../services/areaOficinaSeccionService';
 import { Button } from 'react-bootstrap'
 import CargandoComponente from '../../layout/CargandoComponente';
+import imgNoDisponible from "../../../assets/23.png"
 
 
 const BienesDirinHistory = () => {
@@ -268,7 +269,7 @@ const BienesDirinHistory = () => {
                                         </div>
                                         <div className="col-md-6">
                                             <div className="mb-4">
-                                                <img src={data.imagen_bien} className="img-fluid img-thumbnail" alt="Imagen del Bien" />
+                                                <img src={data.imagen_bien||imgNoDisponible} className="img-fluid img-thumbnail" alt="Imagen del Bien" />
                                             </div>
                                         </div>
                                     </div>

@@ -3,6 +3,7 @@ import { Modal } from 'react-bootstrap';
 import { useParams } from 'react-router';
 import Swal from 'sweetalert2';
 import { deleteHistorialById, getHistorialUnidadTransporte, postEditarHistorialById } from '../../../services/historialBienesService';
+import imgNoDisponible from "../../../assets/23.png"
 
 import { Button } from 'react-bootstrap'
 import { getPersonalActivo } from '../../../services/personalService';
@@ -299,7 +300,7 @@ const UnidadesTransporteHistory = () => {
 
                                                     <div className="col-md-6">
                                                         <div className="mb-4">
-                                                            <img src={data.imagen_bien} className="img-fluid img-thumbnail" alt="Imagen del Bien" />
+                                                            <img src={data.imagen_bien || imgNoDisponible} className="img-fluid img-thumbnail" alt="Imagen del Bien" />
                                                         </div>
                                                     </div>
                                                 </div>

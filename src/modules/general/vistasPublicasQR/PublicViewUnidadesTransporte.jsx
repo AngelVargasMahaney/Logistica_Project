@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
 import { getInfoUnidadesTransporteById } from '../../../services/bienesPublicosService';
+import imgNoDisponible from "../../../assets/23.png"
 
 const PublicViewUnidadesTransporte = () => {
     const TITULO = "Unidades de Transporte";
@@ -77,7 +78,7 @@ const PublicViewUnidadesTransporte = () => {
                                                 <div className="col-md-6">
 
                                                     <div className="mb-4">
-                                                        <img src={data.imagen_bien} className="img-fluid img-thumbnail" alt="Imagen del Bien" />
+                                                        <img src={data.imagen_bien || imgNoDisponible} className="img-fluid img-thumbnail" alt="Imagen del Bien" />
                                                     </div>
 
                                                     <div>
