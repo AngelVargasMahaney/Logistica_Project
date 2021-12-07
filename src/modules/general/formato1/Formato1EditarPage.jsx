@@ -113,7 +113,7 @@ const Formato1EditarPage = () => {
                                     <form onSubmit={handleSubmit}>
                                         <div>
                                             <label htmlFor="" className="form-label my-2">Id</label>
-                                            <input type="text" className="form-control mt-2" required disabled value={formulario.id} />
+                                            <input type="text" className="form-control mt-2"  disabled value={formulario.id} />
                                         </div>
                                         <div>
                                             <label htmlFor="" className="form-label my-2">
@@ -122,7 +122,7 @@ const Formato1EditarPage = () => {
                                             <input
                                                 type="text"
                                                 className="form-control mt-2"
-                                                required
+                                                
                                                 name="codigo"
                                                 value={formulario.codigo}
                                                 onChange={handleChange}
@@ -135,7 +135,7 @@ const Formato1EditarPage = () => {
                                             <input
                                                 type="text"
                                                 className="form-control mt-2"
-                                                required
+                                                
                                                 name="descripcion"
                                                 value={formulario.descripcion}
                                                 onChange={handleChange}
@@ -220,7 +220,7 @@ const Formato1EditarPage = () => {
                                             <input
                                                 type="text"
                                                 className="form-control mt-2"
-                                                required
+                                                
                                                 name="estado_bien"
                                                 value={formulario.estado_bien}
                                                 onChange={handleChange}

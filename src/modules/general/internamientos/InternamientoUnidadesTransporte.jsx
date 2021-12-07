@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Button, Modal } from 'react-bootstrap'
 import { getReportes } from '../../../services/reportesService';
 import { deleteDesinternarBien, postEditarInternamientoById } from '../../../services/internamientoFormato1Service';
 import Swal from 'sweetalert2';
 import { getBienesInternadoUnidadesTransporte } from '../../../services/unidadesTransporteService';
+import MaterialTable from 'material-table';
 
 const InternamientoUnidadesTransporte = () => {
+    const history = useHistory()
     const [listaInternamientoUnidadesTransporte, setListaInternamientoUnidadesTransporte] = useState([])
     const [cargando, setCargando] = useState(true)
     const traerData = () => {
@@ -103,6 +105,7 @@ const InternamientoUnidadesTransporte = () => {
         }
     }
     const handleSubmit = e => {
+        setCargando(true)
         e.preventDefault();
         const formData = new FormData();
 
@@ -137,6 +140,7 @@ const InternamientoUnidadesTransporte = () => {
                     'El internamiento se actualizó correctamente',
                     'success'
                 )
+                setCargando(false)
                 traerData();
 
             } else {
@@ -153,6 +157,66 @@ const InternamientoUnidadesTransporte = () => {
 
         })
     }
+    const columns = [
+        { title: 'Id', field: 'bien_id', align: 'left' },
+        { title: 'Placa Interna', field: 'unidad_transporte.placa_interna', align: 'left' },
+        { title: 'Placa Rodaje', field: 'unidad_transporte.placa_de_rodaje', align: 'left' },
+        { title: 'Tipo de Vehículo', field: 'unidad_transporte.tipo_de_vehiculo', align: 'left' },
+        { title: 'Estado del Bien', field: 'estado_del_bien', align: 'left' },
+        { title: 'Observaciones', field: 'observaciones', align: 'left' },
+        {
+            title: 'Acta', align: 'left', field: 'acta', render:
+                obj =>
+                    <>
+                        {
+                            obj.acta_icon ? (<img
+                                className="tamaño-icono-pdf"
+                                alt="some value"
+                                title={obj.acta_nombre}
+                                src={obj.acta_icon}
+                                onClick={() =>
+                                    showModal(obj.acta)
+                                }
+                            />) : " "
+                        }
+                    </>
+        },
+        {
+            title: 'Oficio', align: 'left', field: 'oficio', render:
+                obj =>
+                    <>
+                        {
+                            obj.oficio_icon ? (<img
+                                className="tamaño-icono-pdf"
+                                alt="some value"
+                                title={obj.oficio_nombre}
+                                src={obj.oficio_icon}
+                                onClick={() =>
+                                    showModal(obj.oficio)
+                                }
+                            />) : " "
+                        }
+                    </>
+        },
+        {
+            title: 'Informe Técnico', align: 'left', field: 'informe_tecnico', render:
+                obj =>
+                    <>
+                        {
+                            obj.informe_tecnico_icon ? (<img
+                                className="tamaño-icono-pdf"
+                                alt="some value"
+                                title={obj.informe_tecnico_nombre}
+                                src={obj.informe_tecnico_icon}
+                                onClick={() =>
+                                    showModal(obj.informe_tecnico)
+                                }
+                            />) : " "
+                        }
+                    </>
+        }
+
+    ]
     return (
         <>
 
@@ -165,12 +229,12 @@ const InternamientoUnidadesTransporte = () => {
                         <div className="card">
 
                             <div className="card-body">
-                                <Button onClick={reportes} className="btn btn-success pull-right text-white" title={"Reporte"}>
-                                    {" "}
-                                    <i className="fas fa-file-excel"></i> Generar Reporte
-                                </Button>
+
                                 <div className="d-flex justify-content-between mb-3">
-                                    <h5>Bienes Internados de Unidades de Transporte</h5>
+                                    <Button onClick={reportes} className="btn btn-success pull-right text-white" title={"Reporte"}>
+                                        {" "}
+                                        <i className="fas fa-file-excel"></i> Generar Reporte
+                                    </Button>
                                 </div>
 
                                 <div className="row mt-2">
@@ -191,135 +255,199 @@ const InternamientoUnidadesTransporte = () => {
                                                     </div>
                                                 </div>
 
-                                                :
-                                                <div className="table-responsive miTabla ">
-                                                    <table className="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>N°</th>
-                                                                <th>Código de la Unidad</th>
-                                                                <th>Placa</th>
-                                                                <th>Tipo de Vehículo</th>
-                                                                <th>Estado de la Unidad</th>
-                                                                <th>Observaciones</th>
-                                                                <th>Fecha</th>
-                                                                <th>Acta</th>
-                                                                <th>Oficio</th>
-                                                                <th>Informe Técnico</th>
-                                                                <th className="acciones"> Acciones</th>
-                                                            </tr>
-                                                        </thead>
+                                                : (
+                                                    <MaterialTable
+                                                        title={"Lista de Unidades de Transporte Internadas"}
 
-                                                        <tbody>
-                                                            <Modal show={isOpen} onHide={hideModal} size="lg">
-                                                                <div>
-                                                                    <Modal.Body>
-                                                                        <div className="ModalStyles">
-                                                                            <iframe
-                                                                                id="pdf-js-viewer"
-                                                                                src={pdfActual}
-                                                                                title="webviewer"
-                                                                                frameBorder="0"
-                                                                                width="100%"
-                                                                                height="100%"
-                                                                            ></iframe>
-                                                                        </div>
-                                                                    </Modal.Body>
-                                                                    <Modal.Footer>
-                                                                        <button onClick={hideModal}>Cancel</button>
-                                                                    </Modal.Footer>
-                                                                </div>
-                                                            </Modal>
+                                                        columns={columns}
+                                                        data={listaInternamientoUnidadesTransporte}
+                                                        actions={[
                                                             {
-                                                                listaInternamientoUnidadesTransporte.map((objLista, i) => {
-
-                                                                    return (
-                                                                        <tr key={objLista.id}>
-                                                                            <td>{i + 1}</td>
-
-                                                                            <td>{objLista.unidad_transporte.codigo}</td>
-                                                                            <td>{objLista.unidad_transporte.placa_interna}</td>
-                                                                            <td>{objLista.unidad_transporte.tipo_de_vehiculo}</td>
-                                                                            <td>{objLista.estado_del_bien}</td>
-                                                                            <td>{objLista.observaciones}</td>
-                                                                            <td>{objLista.fecha}</td>
-                                                                            <td>
-                                                                                {objLista.acta ? (<img
-                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                    alt="some value"
-                                                                                    title={objLista.acta_nombre}
-                                                                                    src={objLista.acta_icon}
-                                                                                    onClick={() =>
-                                                                                        showModal(objLista.acta)
-                                                                                    }
-                                                                                />) : " "}
-                                                                            </td>
-                                                                            <td>
-                                                                                {objLista.oficio ? (<img
-                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                    alt="some value"
-                                                                                    title={objLista.oficio_nombre}
-                                                                                    src={objLista.oficio_icon}
-                                                                                    onClick={() =>
-                                                                                        showModal(objLista.oficio)
-                                                                                    }
-                                                                                />) : " "}
-
-                                                                            </td>
-                                                                            <td>
-                                                                                {objLista.informe_tecnico ? (<img
-                                                                                    className="tamaño-icono-pdf rounded mx-auto d-block"
-                                                                                    alt="some value"
-                                                                                    title={objLista.informe_tecnico_nombre}
-                                                                                    src={objLista.informe_tecnico_icon}
-                                                                                    onClick={() =>
-                                                                                        showModal(objLista.informe_tecnico)
-                                                                                    }
-                                                                                />) : " "}
-
-                                                                            </td>
-
-                                                                            {/* <td>{objLista.nombre_original_acta_entrega_recepcion}</td>
-                                                                        <td>{objLista.nombre_original_oficio_regularizacion}</td> */}
-                                                                            <td>
+                                                                icon: () =>
 
 
-                                                                                <button data-toggle="tooltip" data-placement="top" title="Desinternar"
-                                                                                    className="btn btn-danger mx-1"
-                                                                                    onClick={() => {
-                                                                                        desinternarBien(objLista.id);
-                                                                                    }}
-                                                                                >
-                                                                                    <i className="fa fa-trash"></i>
+                                                                    <i className="fas fa-trash" style={{ fontSize: '15px', color: "white", background: "#EC2300", padding: "5px", margin: "-5px", borderRadius: "5px" }} />,
 
-                                                                                </button>
-                                                                                <Button
-                                                                                    onClick={() => { showModalReasignarBien(objLista.id, objLista) }}
-                                                                                    className="btn btn-warning"
-                                                                                    title="Editar"
-                                                                                >
-                                                                                    {" "}
-                                                                                    <i className="fa fa-pencil"></i>
-                                                                                </Button>
-                                                                                <Link
-                                                                                    // to={`formatos/editar/${objFormato.id}`}
-                                                                                    to={`/admin/unidades-transporte/historial/${objLista.bien_id}`}
-                                                                                    className="btn btn-info ml-1"
-                                                                                    title="Historial del bien"
-                                                                                >
-                                                                                    {" "}
-                                                                                    <i className="fa fa-history"></i>
-                                                                                </Link>
+                                                                tooltip: "Desinternar Bien",
+                                                                onClick: (e, obj) => desinternarBien(obj.id)
+                                                            },
+                                                            {
+                                                                icon: () =>
 
-                                                                            </td>
-                                                                        </tr>
+                                                                    <i className="fa fa-pencil" style={{ fontSize: '15px', color: "black", background: "#ffd500", padding: "5px", margin: "-5px", borderRadius: "5px" }} />
 
-                                                                    )
-                                                                })
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                                                ,
+                                                                tooltip: "Editar Bien",
+                                                                onClick: (e, obj) => showModalReasignarBien(obj.id, obj)
+                                                            },
+
+                                                            {
+                                                                icon: () =>
+
+
+                                                                    <i className="fa fa-history" style={{ fontSize: '15px', color: "white", background: "#73a6e0", padding: "5px", margin: "-5px", borderRadius: "5px" }} />
+
+                                                                ,
+                                                                tooltip: "Historial de un Bien",
+                                                                onClick: (e, obj) => history.push(`/admin/unidades-transporte/historial/${obj.bien_id}`)
+                                                            },
+                                                        ]}
+                                                        options={
+
+                                                            {
+                                                                tableLayout: 'auto',
+
+                                                                actionsColumnIndex: -1,
+                                                                rowStyle: {
+                                                                    fontSize: 12,
+                                                                },
+                                                                headerStyle: {
+                                                                    fontSize: 12
+                                                                }
+                                                            }}
+                                                        localization={
+                                                            {
+                                                                pagination: {
+                                                                    labelRowsSelect: "filas",
+                                                                },
+                                                                header: {
+                                                                    actions: "Acciones"
+                                                                },
+                                                                toolbar: {
+                                                                    searchPlaceholder: "Buscar"
+
+                                                                }
+                                                            }}
+                                                    />
+                                                )
+                                            // <div className="table-responsive miTabla ">
+                                            //     <table className="table table-bordered">
+                                            //         <thead>
+                                            //             <tr>
+                                            //                 <th>N°</th>
+                                            //                 <th>Código de la Unidad</th>
+                                            //                 <th>Placa</th>
+                                            //                 <th>Tipo de Vehículo</th>
+                                            //                 <th>Estado de la Unidad</th>
+                                            //                 <th>Observaciones</th>
+                                            //                 <th>Fecha</th>
+                                            //                 <th>Acta</th>
+                                            //                 <th>Oficio</th>
+                                            //                 <th>Informe Técnico</th>
+                                            //                 <th className="acciones"> Acciones</th>
+                                            //             </tr>
+                                            //         </thead>
+
+                                            //         <tbody>
+                                            //             <Modal show={isOpen} onHide={hideModal} size="lg">
+                                            //                 <div>
+                                            //                     <Modal.Body>
+                                            //                         <div className="ModalStyles">
+                                            //                             <iframe
+                                            //                                 id="pdf-js-viewer"
+                                            //                                 src={pdfActual}
+                                            //                                 title="webviewer"
+                                            //                                 frameBorder="0"
+                                            //                                 width="100%"
+                                            //                                 height="100%"
+                                            //                             ></iframe>
+                                            //                         </div>
+                                            //                     </Modal.Body>
+                                            //                     <Modal.Footer>
+                                            //                         <button onClick={hideModal}>Cancel</button>
+                                            //                     </Modal.Footer>
+                                            //                 </div>
+                                            //             </Modal>
+                                            //             {
+                                            //                 listaInternamientoUnidadesTransporte.map((objLista, i) => {
+
+                                            //                     return (
+                                            //                         <tr key={objLista.id}>
+                                            //                             <td>{i + 1}</td>
+
+                                            //                             <td>{objLista.unidad_transporte.codigo}</td>
+                                            //                             <td>{objLista.unidad_transporte.placa_interna}</td>
+                                            //                             <td>{objLista.unidad_transporte.tipo_de_vehiculo}</td>
+                                            //                             <td>{objLista.estado_del_bien}</td>
+                                            //                             <td>{objLista.observaciones}</td>
+                                            //                             <td>{objLista.fecha}</td>
+                                            //                             <td>
+                                            //                                 {objLista.acta ? (<img
+                                            //                                     className="tamaño-icono-pdf rounded mx-auto d-block"
+                                            //                                     alt="some value"
+                                            //                                     title={objLista.acta_nombre}
+                                            //                                     src={objLista.acta_icon}
+                                            //                                     onClick={() =>
+                                            //                                         showModal(objLista.acta)
+                                            //                                     }
+                                            //                                 />) : " "}
+                                            //                             </td>
+                                            //                             <td>
+                                            //                                 {objLista.oficio ? (<img
+                                            //                                     className="tamaño-icono-pdf rounded mx-auto d-block"
+                                            //                                     alt="some value"
+                                            //                                     title={objLista.oficio_nombre}
+                                            //                                     src={objLista.oficio_icon}
+                                            //                                     onClick={() =>
+                                            //                                         showModal(objLista.oficio)
+                                            //                                     }
+                                            //                                 />) : " "}
+
+                                            //                             </td>
+                                            //                             <td>
+                                            //                                 {objLista.informe_tecnico ? (<img
+                                            //                                     className="tamaño-icono-pdf rounded mx-auto d-block"
+                                            //                                     alt="some value"
+                                            //                                     title={objLista.informe_tecnico_nombre}
+                                            //                                     src={objLista.informe_tecnico_icon}
+                                            //                                     onClick={() =>
+                                            //                                         showModal(objLista.informe_tecnico)
+                                            //                                     }
+                                            //                                 />) : " "}
+
+                                            //                             </td>
+
+                                            //                             {/* <td>{objLista.nombre_original_acta_entrega_recepcion}</td>
+                                            //                         <td>{objLista.nombre_original_oficio_regularizacion}</td> */}
+                                            //                             <td>
+
+
+                                            //                                 <button data-toggle="tooltip" data-placement="top" title="Desinternar"
+                                            //                                     className="btn btn-danger mx-1"
+                                            //                                     onClick={() => {
+                                            //                                         desinternarBien(objLista.id);
+                                            //                                     }}
+                                            //                                 >
+                                            //                                     <i className="fa fa-trash"></i>
+
+                                            //                                 </button>
+                                            //                                 <Button
+                                            //                                     onClick={() => { showModalReasignarBien(objLista.id, objLista) }}
+                                            //                                     className="btn btn-warning"
+                                            //                                     title="Editar"
+                                            //                                 >
+                                            //                                     {" "}
+                                            //                                     <i className="fa fa-pencil"></i>
+                                            //                                 </Button>
+                                            //                                 <Link
+                                            //                                     // to={`formatos/editar/${objFormato.id}`}
+                                            //                                     to={`/admin/unidades-transporte/historial/${objLista.bien_id}`}
+                                            //                                     className="btn btn-info ml-1"
+                                            //                                     title="Historial del bien"
+                                            //                                 >
+                                            //                                     {" "}
+                                            //                                     <i className="fa fa-history"></i>
+                                            //                                 </Link>
+
+                                            //                             </td>
+                                            //                         </tr>
+
+                                            //                     )
+                                            //                 })
+                                            //             }
+                                            //         </tbody>
+                                            //     </table>
+                                            // </div>
                                         }
                                     </div>
 
@@ -369,9 +497,13 @@ const InternamientoUnidadesTransporte = () => {
                         </div>
 
 
-                        <div className="form-group">
-                            <button className="btn btn-primary" type="submit">Actualizar</button>
-                        </div>
+                        
+                        {!cargando && <button className="btn btn-primary" type="submit">
+                            <span className="mx-1"></span>   Actualizar
+                        </button>}
+                        {cargando && <button className="btn btn-primary" type="submit" disabled={cargando}>
+                            <span className="mx-1"><i className="fa fa-floppy-o" aria-hidden="true"></i></span>  Esperando respuesta del Servidor
+                        </button>}
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
