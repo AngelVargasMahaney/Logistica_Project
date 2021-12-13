@@ -290,7 +290,6 @@ const EquipoPolicialCrearPage = () => {
                                                     <input
                                                         type="text"
                                                         className="form-control mt-2"
-                                                        required
                                                         name="tipo_afectacion"
                                                         value={formulario.tipo_afectacion}
                                                         onChange={handleChange}

@@ -140,7 +140,6 @@ const BienesDirinCrearPage = () => {
                                                     className="form-control my-2"
                                                     placeholder="ACH-123"
                                                     name="correl"
-                                                    required
                                                     value={formulario.correl}
                                                     onChange={handleChange}
                                                 />
