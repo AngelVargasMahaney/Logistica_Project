@@ -102,8 +102,9 @@ const UserListPage = () => {
                                                                 <th>Apellido</th>
                                                                 <th>DNI</th>
                                                                 <th>Email</th>
+                                                                <th>Rol</th>    
                                                                 <th>Estado</th>
-                                                                <th>Rol</th>
+                                                                
                                                                 <th></th>
                                                                 <th className="acciones"></th>
                                                             </tr>
