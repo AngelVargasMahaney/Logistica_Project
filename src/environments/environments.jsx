@@ -1,6 +1,6 @@
 import icon from "./iconDashAdmin";
-export const URL_BACKEND = 'http://192.168.20.60:8080/back-end/public/index.php/api'
-
+//export const URL_BACKEND = 'http://192.168.20.60:8080/back-end/public/index.php/api'
+export const URL_BACKEND = 'http://demo-logistica-pnp.relengcorp.com/api';
 
 export const NAVEGACION_URL = [
     

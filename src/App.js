@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
+import { Switch, HashRouter as Router, Route } from 'react-router-dom';
 import AdminRouter from './modules/admin/AdminRouter';
 import AuthRouter from './modules/auth/AuthRouter';
 import Error404Page from './modules/layout/Error404Page';
